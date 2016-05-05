@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@drawable/background_color"
+    android:layout_height="match_parent">
+
+    <com.miss.imissyou.mycar.ui.TitleFragment
+        android:id="@+id/stting_title"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+    </com.miss.imissyou.mycar.ui.TitleFragment>
+
+    <!--设置页面-->
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:textSize="@dimen/FontSize"
+            android:textStyle="bold"
+            android:textColor="@color/color_back"
+            android:text="接收所有信息"
+            android:layout_gravity="center"
+            android:gravity="center|left"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+        <com.miss.imissyou.mycar.ui.ToggleButton
+            android:id="@+id/setting_allMessage_button"
+            android:layout_gravity="center"
+            android:padding="5dp"
+            android:layout_width="64dp"
+            android:layout_height="37dp"
+            android:layout_weight="0.03" />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_height="1dp"
+        android:background="@color/color_miniBack"/>
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:textSize="@dimen/FontSize"
+            android:textStyle="bold"
+            android:textColor="@color/color_back"
+            android:text="接收故障信息"
+            android:layout_gravity="center"
+            android:gravity="center|left"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+        <com.miss.imissyou.mycar.ui.ToggleButton
+            android:id="@+id/setting_errorMessage_button"
+            android:layout_gravity="center"
+            android:padding="5dp"
+            android:layout_width="64dp"
+            android:layout_height="37dp"
+            android:layout_weight="0.03" />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_height="1dp"
+        android:background="@color/color_miniBack"/>
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:textSize="@dimen/FontSize"
+            android:textStyle="bold"
+            android:textColor="@color/color_back"
+            android:text="接收警报信息"
+            android:layout_gravity="center"
+            android:gravity="center|left"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+        <com.miss.imissyou.mycar.ui.ToggleButton
+            android:id="@+id/setting_wareMessage_button"
+            android:layout_gravity="center"
+            android:padding="5dp"
+            android:layout_width="64dp"
+            android:layout_height="37dp"
+            android:layout_weight="0.03" />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_height="1dp"
+        android:background="@color/color_miniBack"/>
+
+</LinearLayout>

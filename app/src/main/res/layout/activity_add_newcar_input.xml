@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:miss="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--标题-->
+    <com.miss.imissyou.mycar.ui.TitleFragment
+        android:id="@+id/addnewCarInput_title"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"></com.miss.imissyou.mycar.ui.TitleFragment>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <com.miss.imissyou.mycar.ui.RadiusImageView
+                android:id="@+id/addCar_inputCarInfo_UserImage"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:layout_gravity="center"
+                miss:borderRadius="10dp"
+                miss:src="@mipmap/user_head"
+                miss:Radiustype="round" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingLeft="35dp"
+                android:paddingRight="20dp"
+                android:background="@color/colorPrimary">
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="车牌号:"
+                        android:textColor="@color/colorFont"
+                        android:textSize="@dimen/FontSize" />
+
+                    <EditText
+                        android:id="@+id/activity_add_newCar_carId_input"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </TableRow>
+
+            </TableLayout>
+
+            <Button
+                android:id="@+id/addCar_inputCarInfo_submit"
+                style="@style/MissButton"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="提交"
+                android:textColor="@color/colorFont"
+                android:textSize="@dimen/FontSize" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

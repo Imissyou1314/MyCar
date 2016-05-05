@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:gravity="center|left"
+    android:paddingTop="0dp"
+    android:padding="5dp"
+    android:layout_marginBottom="3dp"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/order_list_image"
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_weight="8"
+        android:padding="3dp"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/order_list_stationName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/order_list_gasType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/order_list_gasNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/order_list_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <View
+            android:background="@color/color_background"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:id="@+id/order_list_goStation"
+            android:textColor="@color/colorFont"
+            android:textSize="@dimen/FontSize"
+            android:gravity="center|left"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="到这里去"
+            android:layout_height="match_parent" />
+        <View
+            android:background="@color/color_background"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:id="@+id/order_list_callStation"
+            android:textColor="@color/colorFont"
+            android:textSize="@dimen/FontSize"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:text="联系加油站"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+    <View
+        android:background="@color/color_back"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"/>
+
+</LinearLayout>

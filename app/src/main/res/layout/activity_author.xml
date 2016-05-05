@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:miss="http://schemas.android.com/apk/res/com.miss.imissyou.mycar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_color"
+    android:orientation="vertical">
+
+    <!--标题-->
+    <com.miss.imissyou.mycar.ui.TitleFragment
+        android:id="@+id/author_title"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+    </com.miss.imissyou.mycar.ui.TitleFragment>
+
+    <!--关于页面-->
+    <RelativeLayout
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:background="@drawable/background_color"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <com.miss.imissyou.mycar.ui.RoundImageView
+        android:id="@+id/about_Image"
+        android:src="@mipmap/user_head"
+        miss:Radiustype="round"
+        miss:borderRadius="25dp"
+        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+        <TextView
+
+            android:id="@+id/about_author_Info"
+            android:text="伯爵技术团队"
+            android:layout_above="@+id/about_author_name"
+            style="@style/MissTextViweStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/about_author_name"
+            android:text="Imissyou"
+            android:layout_width="match_parent"
+            style="@style/MissTextViweStyle"
+            android:layout_marginBottom="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+</LinearLayout>

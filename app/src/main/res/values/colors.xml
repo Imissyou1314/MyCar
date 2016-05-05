@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <!--主题颜色-->
+    <color name="colorMianTheme">#16495A</color>
+    <color name="color_activty_title">#285D9F</color>
+    <color name="color_carView_mainMesage">#609AD7</color>
+    <color name="color_cardView">#44B4C1</color>
+    <color name="color_carView_background">#828B23</color>
+    <color name="color_blue_dark">#31bff7</color>
+
+    <color name="colorMianIndeicator">#acafdb</color>
+    <color name="colorFont">#fde203</color>
+    <color name="colorBackFont">#0e0e0e</color>
+    <color name="colorWhite">#50FFFFFF</color>
+    <color name="colorchuWhite">#c7ffffff</color>
+    <!--dialog-->
+    <color name="color_dialog_foot">#875E92</color>
+    <!--Button-->
+    <color name="color_Light_White">#FFFFFF</color>
+    <color name="color_back_gui">#50535151</color>
+    <color name="color_zi">#9e6dfc</color>
+    <color name="button_shape_normal">#727272</color>
+    <color name="button_shape_pressed">#60343d45</color>
+    <color name="color_blue">#335569FF</color>
+    <color name="color_miniblue">#185569FF</color>
+    <color name="color_background">#10cdb7b7</color>
+    <color name="color_Theme">#FF3A536C</color>
+    <color name="color_back">#0e0e0e</color>
+    <color name="color_miniBack">#5f0e0e0e</color>
+
+    <color name="color_distance">#f1de5a5a</color>
+
+
+    <color name="result_view">#b0000000</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="possible_result_points">#c0ffff00</color>
+    <color name="weizhanchaxun">#108cd5d9</color>
+
+    <color name="login_cardView_background">#117a58ea</color>
+
+</resources>

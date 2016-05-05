@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:background="@drawable/background_color"
+    android:layout_height="45dp">
+    <TextView
+        android:id="@+id/activity_title_back"
+        android:onClick="onFinish"
+        android:background="@drawable/ic_arrow_back_black_title"
+        android:layout_width="60dp"
+        android:layout_height="fill_parent" />
+
+    <TextView
+        android:id="@+id/activity_title"
+        android:text="Miss"
+        android:layout_weight="1"
+        android:layout_marginRight="60dp"
+        style="@style/title_back_textView" />
+</LinearLayout>

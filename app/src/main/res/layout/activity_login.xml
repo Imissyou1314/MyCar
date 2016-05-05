@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:miss="http://schemas.android.com/apk/res/com.miss.imissyou.mycar"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:gravity="center_horizontal"
+    android:background="@drawable/background_color"
+    android:layout_height="match_parent">
+
+
+    <com.miss.imissyou.mycar.ui.RadiusImageView
+        android:layout_marginTop="60dp"
+        android:layout_gravity="center"
+        miss:Radiustype="circle"
+        miss:src="@mipmap/user_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.CardView
+        app:cardBackgroundColor="@color/login_cardView_background"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="4dp"
+        app:cardMaxElevation="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="60dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+    <!--登录页面-->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:gravity="center"
+        android:padding="10dp"
+        android:layout_marginTop="15dp"
+        android:paddingBottom="10dp"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:background="@mipmap/user_icon"
+                android:layout_gravity="center"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+            <EditText
+                android:id="@+id/login_account_Edit"
+                android:layout_width="match_parent"
+                android:hint="请输入账号"
+                android:textColorHint="@color/colorWhite"
+                android:inputType="text"
+                android:layout_marginRight="20dp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+
+            <View
+                android:background="@mipmap/password_icon"
+                android:layout_gravity="center"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+            <EditText
+                android:id="@+id/login_password_Edit"
+                android:hint="请输入秘密"
+                android:textColorHint="@color/colorWhite"
+                android:inputType="textPassword"
+
+                android:layout_marginRight="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/login_savePassword_checkBox"
+                android:text="记住秘密"
+                android:textSize="@dimen/FontSize"
+                android:textColor="@color/color_Light_White"
+                android:layout_width="0dp"
+                android:saveEnabled="true"
+                android:layout_weight="1"
+                android:layout_marginLeft="20dp"
+                android:layout_height="match_parent"
+                android:checked="false" />
+
+            <TextView
+                android:id="@+id/login_findPassword_textView"
+                android:text="找回秘密>>"
+                android:textColor="@color/color_Light_White"
+                android:textSize="@dimen/FontSize"
+                android:layout_marginRight="20dp"
+                android:gravity="center|right"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/login_doRegister_Btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="注册"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/color_back"
+                android:textSize="@dimen/FontSize"
+                style="@style/MissButton"
+                />
+
+            <Button
+                android:id="@+id/login_doLogin_Btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="登录"
+                android:textColor="@color/color_back"
+                android:textSize="@dimen/FontSize"
+                style="@style/MissButton" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
+</LinearLayout>

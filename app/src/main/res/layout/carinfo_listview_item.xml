@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_margin="5dp"
+    android:layout_height="80dp">
+    <ImageView
+        android:id="@+id/carInfo_item_carImage"
+        android:layout_width="80dp"
+        android:src="@mipmap/icn_1"
+        android:background="@color/colorPrimaryDark"
+        android:layout_height="80dp" />
+    <TextView
+        android:id="@+id/carinfo_item_carID"
+        android:layout_toRightOf="@+id/carInfo_item_carImage"
+        android:text="车牌 : null"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp" />
+    <TextView
+        android:id="@+id/carinfo_item_carName"
+        android:layout_toRightOf="@+id/carInfo_item_carImage"
+        android:layout_below="@+id/carinfo_item_carID"
+        android:text="车名 : null"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp" />
+    <TextView
+        android:id="@+id/carinfo_item_carOil"
+        android:text="油量 : null"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+    <TextView
+        android:id="@+id/carinfo_item_carState"
+        android:text="状态 : null"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

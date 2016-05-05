@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.miss.imissyou.mycar">
+
+    <!--高德地图-->
+    <meta-data
+        android:name="com.amap.api.v2.apikey"
+        android:value="57fff430b9c5ffd28e6161849f5c84a6"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--Activity-->
+        <activity android:name=".view.activity.SettingActivity"/>
+        <activity android:name=".view.activity.AboutActivity"/>
+        <activity android:name=".view.activity.AuthorActivity"/>
+        <activity android:name=".view.activity.HelpActivity"/>
+
+        <!--用户登录-->
+        <activity android:name=".view.activity.FindPasswordActivity"/>
+        <activity android:name=".view.activity.LoginActivity"/>
+        <activity android:name=".view.activity.RegisterActivity"/>
+
+        <!--扫描二维码添加车辆-->
+        <activity android:name=".view.activity.AddNewCarActivity"/>
+        <activity android:name=".view.activity.AddNewCarInputActivity"/>
+
+        <!--定位服务-->
+        <service android:name="com.amap.api.location.APSService"/>
+
+        <!--注册服务-->
+        <service android:name=".service.impl.MusicPlayService"/>
+        <service android:name=".service.impl.UpdateCarInfoService"/>
+        <service android:name=".service.impl.PollService"/>
+
+        <!--车违章查询-->
+        <service android:name="com.cheshouye.api.client.WeizhangIntentService" />
+
+    </application>
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <!--地图包,搜索包需要的基本权限-->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+
+    <!--定位包、导航包需要的额外权限（注：基础权限也需要）-->
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
+</manifest>

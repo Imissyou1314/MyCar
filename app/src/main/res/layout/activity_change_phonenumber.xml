@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:padding="20dp"
+    android:layout_height="match_parent">
+
+    <!--改变用户手机或者亲人手机-->
+    <EditText
+        android:id="@+id/changePhoneNumber_phoneNumber_input"
+        android:textStyle="bold"
+        android:textColor="@color/color_back"
+        android:textSize="22sp"
+        android:hint="请输入手机号码"
+        android:drawableLeft="@drawable/ic_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/changePhoneNumber_code_input"
+            android:textStyle="bold"
+            android:textColor="@color/color_back"
+            android:textSize="22sp"
+            android:hint="输入验证码"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/changePhoneNumber_getCode_submit"
+            android:text="获取验证码"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/changePhoneNumber_submit"
+        android:layout_marginTop="5dp"
+        android:text="确认"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+
+</LinearLayout>
