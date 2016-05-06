@@ -23,8 +23,14 @@ public abstract class BaseFragment extends Fragment implements ScreenShotable {
         View view = inflater.inflate(layoutResID,container, false);
         initView(view);         //加载页面控件
         addViewsListener();     //添加页面监听事件
-        initData();             //加载数据
+
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        initData();             //加载数据
     }
 
     /**

@@ -1,6 +1,5 @@
 package com.miss.imissyou.mycar.presenter.impl;
 
-import com.cheshouye.api.client.json.CarInfo;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.bean.BaseBean;
 import com.miss.imissyou.mycar.bean.CarInfoBean;
@@ -63,7 +62,6 @@ public class CarInfoPresenterImpl implements CarInfoPresenter {
             LogUtils.d("请求车辆信息不能为空");
             return;
         }
-
         mCarInfoModle.loadCarInfoFormService(userId, carId);
     }
 }

@@ -32,19 +32,13 @@ public class CarListPresenterImpl implements CarListPresenter<CarListFragmentVie
     }
 
     @Override public void onFailure(int errorNo, String strMsg) {
-        if (mCarListFragmentView == null) {
-            LogUtils.d("视图为空");
-            return;
-        }
+
         mCarListFragmentView.hideProgress();
         mCarListFragmentView.showResultError(errorNo, strMsg);
     }
 
     @Override public void onSuccess(BaseBean resultBean) {
-        if (mCarListFragmentView == null) {
-            LogUtils.d("视图为空");
-            return;
-        }
+
         mCarListFragmentView.hideProgress();
 
         if (((ResultBean) resultBean).isServiceResult()) {
@@ -61,6 +55,6 @@ public class CarListPresenterImpl implements CarListPresenter<CarListFragmentVie
     }
 
     @Override public void detchView() {
-        this.mCarListFragmentView = null;
+
     }
 }

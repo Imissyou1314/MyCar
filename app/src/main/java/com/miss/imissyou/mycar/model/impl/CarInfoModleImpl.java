@@ -1,5 +1,6 @@
 package com.miss.imissyou.mycar.model.impl;
 
+import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.lidroid.xutils.util.LogUtils;
@@ -27,9 +28,8 @@ public class CarInfoModleImpl implements CarInfoModle {
     @Override public void loadCarInfoFormService(String userId, String carId) {
 
         String  url = Constant.SERVER_URL + "car/car=" + carId;
-
-        LinkService.Instance();
-        LinkService.get(url,new HttpCallback() {
+        LogUtils.d("请求路径" + url);
+        RxVolley.get(url,new HttpCallback() {
             @Override public void onFailure(int errorNo, String strMsg) {
                 mCarInfoPresenter.onFailure(errorNo, strMsg);
             }

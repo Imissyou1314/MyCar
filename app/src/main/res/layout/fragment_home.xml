@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:zhy="http://schemas.android.com/apk/res/com.miss.imissyou.mycar"
+    xmlns:zhy="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -35,14 +35,14 @@
                     android:orientation="horizontal"
                     android:padding="10dp">
 
-                    <com.miss.imissyou.mycar.ui.RadiusImageView
+                    <com.miss.imissyou.mycar.ui.RoundImageView
                         android:id="@+id/home_car_image"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
                         zhy:borderRadius="10dp"
-                        zhy:src="@mipmap/bz"
+                        android:src="@mipmap/bz"
                         zhy:Radiustype="round" />
 
                     <!--当前车辆信息的介绍-->

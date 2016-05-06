@@ -68,14 +68,7 @@ public class UserInfoFragment extends BaseFragment implements UserInfoView {
 
     @Override
     protected void addViewsListener() {
-        progress.startAnim();
-        progress.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override public void onLayoutChange(View v, int left, int top, int right,
-                                                 int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                v.removeOnLayoutChangeListener(this);
-                AnimatorView.showView(progress);
-            }
-        });
+
     }
 
     @Override
@@ -91,26 +84,14 @@ public class UserInfoFragment extends BaseFragment implements UserInfoView {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override public void showProgress() {
         progress.startAnim();
-        progress.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override public void onLayoutChange(View v, int left, int top, int right,
-                                                 int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                v.removeOnLayoutChangeListener(this);
-                AnimatorView.showView(progress);
-            }
-        });
+
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override public void hideProgress() {
 
         progress.stopAnim();
-        progress.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override public void onLayoutChange(View v, int left, int top, int right,
-                                                 int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                v.removeOnLayoutChangeListener(this);
-                AnimatorView.disShowView(progress);
-            }
-        });
+
     }
 
     @Override public void onDestroy() {

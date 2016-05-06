@@ -131,7 +131,6 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
                 holder.replaceText(R.id.carinfo_item_carID, "null", car.getPlateNumber());
                 holder.replaceText(R.id.carinfo_item_carName, "null", car.getBrand() + car.getModles());
                 holder.replaceText(R.id.carinfo_item_carOil, "null", car.getOil() + "");
-
             }
         });
     }

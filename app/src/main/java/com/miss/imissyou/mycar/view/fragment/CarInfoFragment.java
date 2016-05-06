@@ -53,7 +53,6 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView {
             LogUtils.d("userId:" + userId + ">>>carId:" + carId);
             mCarInfoPresenter.loadCarInfo(userId, carId);
         }
-
     }
 
     @Override protected void addViewsListener() {

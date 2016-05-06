@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:miss="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_margin="5dp"
-    android:layout_height="80dp">
-    <ImageView
+    android:layout_marginLeft="5dp"
+    android:layout_marginBottom="8dp"
+    android:layout_height="match_parent">
+
+    <com.miss.imissyou.mycar.ui.RoundImageView
         android:id="@+id/carInfo_item_carImage"
-        android:layout_width="80dp"
+        miss:Radiustype="round"
+        miss:borderRadius="10dp"
         android:src="@mipmap/icn_1"
         android:background="@color/colorPrimaryDark"
+        android:layout_width="80dp"
         android:layout_height="80dp" />
     <TextView
         android:id="@+id/carinfo_item_carID"
@@ -28,6 +33,7 @@
         android:gravity="center_vertical"
         android:layout_marginLeft="18dp"
         android:layout_width="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_height="40dp" />
     <TextView
         android:id="@+id/carinfo_item_carOil"

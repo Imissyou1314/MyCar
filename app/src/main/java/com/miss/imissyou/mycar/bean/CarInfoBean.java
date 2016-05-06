@@ -12,8 +12,8 @@ public class CarInfoBean extends BaseBean {
     private String models;                  //品牌型号
     private String plateNumber;             //车牌号
     private String mark;                    //图片地址
-    private long vin;                       //车牌号
-    private long engineNumber;              //发动机号
+    private String vin;                       //车牌号
+    private String engineNumber;              //发动机号
     private String rank;                    //车身等级
     private long milleage;                  //里程数
     private double oilBox;
@@ -84,11 +84,11 @@ public class CarInfoBean extends BaseBean {
         this.currentCar = currentCar;
     }
 
-    public long getEngineNumber() {
+    public String getEngineNumber() {
         return engineNumber;
     }
 
-    public void setEngineNumber(long engineNumber) {
+    public void setEngineNumber(String engineNumber) {
         this.engineNumber = engineNumber;
     }
 
@@ -220,11 +220,11 @@ public class CarInfoBean extends BaseBean {
         this.userId = userId;
     }
 
-    public long getVin() {
+    public String getVin() {
         return vin;
     }
 
-    public void setVin(long vin) {
+    public void setVin(String vin) {
         this.vin = vin;
     }
 }

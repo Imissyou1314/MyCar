@@ -39,6 +39,7 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
 import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
 import yalantis.com.sidemenu.interfaces.Resourceble;
@@ -69,6 +70,10 @@ public class MainActivity extends ActionBarActivity
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        /**极光推送*/
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(getApplication());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 //            setTranslucentStatus(true);
