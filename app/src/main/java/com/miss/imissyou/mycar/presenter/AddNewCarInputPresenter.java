@@ -31,6 +31,12 @@ public interface AddNewCarInputPresenter {
      */
     ResultBean initCarDate();
 
+    /**
+     * 获取扫描的车辆信息
+     * @param url
+     */
+    void loadCar(String url);
+
     void onFailure(int errorNo, String strMsg);
     void onSuccess(String t);
 }

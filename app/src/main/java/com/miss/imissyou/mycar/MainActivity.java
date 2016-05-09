@@ -79,7 +79,6 @@ public class MainActivity extends ActionBarActivity
     private LinearLayout linearLayout;
     private MissDialog.Builder builder;
 
-
     private Intent intent;
     private HomeFragment homeFragment;
     private CarListFragment carListFragement;
@@ -100,16 +99,12 @@ public class MainActivity extends ActionBarActivity
         JPushInterface.init(getApplication());
         JpushReceiver jpushReceiver = new JpushReceiver();
 
-
         if (Constant.userBean.getUsername() == null) {
             builder = new MissDialog.Builder(this);
             doLogin();
+        } else {
             LogUtils.d("用户Id" +Constant.userBean.getId());
-            JPushInterface.setAlias(this, Constant.userBean.getId() + "", new TagAliasCallback() {
-                @Override public void gotResult(int i, String s, Set<String> set) {
-                    LogUtils.d("别名"+i);
-                }
-            });
+            setAlias(Constant.userBean.getId());
         }
 
 
@@ -196,6 +191,7 @@ public class MainActivity extends ActionBarActivity
                     LogUtils.d(">>>Cookie===" + headers.get("Set-Cookie"));
                     if (resultBean.isServiceResult()) {
                         Constant.userBean = GsonUtils.getParam(resultBean, "user", UserBean.class);
+                        setAlias(Constant.userBean.getId());
                     } else {
                         builder.setTitle("登录出错")
                                 .setMessage(resultBean.getResultInfo())
@@ -213,6 +209,19 @@ public class MainActivity extends ActionBarActivity
                 }
             });
         }
+    }
+
+    /**
+     * JPushInterface绑定别名
+     * @param id
+     */
+    private void setAlias(String id) {
+        if(id != null)
+            JPushInterface.setAlias(this, id, new TagAliasCallback() {
+                @Override public void gotResult(int i, String s, Set<String> set) {
+                    LogUtils.d("别名：" + i);
+                }
+            });
     }
 
     /**
@@ -236,7 +245,6 @@ public class MainActivity extends ActionBarActivity
         }
         win.setAttributes(winParams);
     }
-
 
     /**
      * 创建侧滑菜单项

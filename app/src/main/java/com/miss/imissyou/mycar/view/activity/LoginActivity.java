@@ -29,6 +29,10 @@ import com.miss.imissyou.mycar.util.SPUtils;
 import com.miss.imissyou.mycar.util.StringUtil;
 
 import java.util.Map;
+import java.util.Set;
+
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 
 /**
  * 登陆页面
@@ -172,6 +176,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                     savePassWord(password, account);
                     Constant.COOKIE = headers.get("Set-Cookie");
                     Constant.userBean = GsonUtils.getParam(resultBean, "user", UserBean.class);
+                    setAlias(Constant.userBean.getId());
                     toMainView();
                 } else {
                     builder.setTitle("登录出错")
@@ -194,6 +199,21 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             savePassWord(password, account);
         }
         return true;
+    }
+
+    /**
+     * JPushInterface绑定别名
+     * @param id
+     */
+    private void setAlias(String id) {
+        LogUtils.d("用户ID:" + id);
+        if (id != null) {
+            JPushInterface.setAlias(this, id, new TagAliasCallback() {
+                @Override public void gotResult(int i, String s, Set<String> set) {
+                    LogUtils.d("JPushInterface设置状态:" + i);
+                }
+            });
+        }
     }
 
     /**

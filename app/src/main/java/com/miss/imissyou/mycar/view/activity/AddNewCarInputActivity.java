@@ -8,12 +8,14 @@ import android.widget.EditText;
 
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
+import com.miss.imissyou.mycar.bean.CarInfoBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.presenter.AddNewCarInputPresenter;
 import com.miss.imissyou.mycar.presenter.impl.AddNewCarInputPresenterImpl;
 import com.miss.imissyou.mycar.ui.RoundImageView;
 import com.miss.imissyou.mycar.ui.TitleFragment;
 import com.miss.imissyou.mycar.util.FindViewById;
+import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.view.AddNewCarInputView;
 
 /**
@@ -32,14 +34,12 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
     private EditText carid;
 
     private AddNewCarInputPresenter mAddAddNewCarInputPresenter;
-    private ResultBean resultBean;
+    private CarInfoBean resultBean;
     private String carInfoJson;         //上一页传来的Json
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_add_newcar_input);
         mAddAddNewCarInputPresenter = new AddNewCarInputPresenterImpl(this);
-        resultBean = mAddAddNewCarInputPresenter.initCarDate();
-        carid.setText(resultBean.getResultInfo());
     }
 
     /**
@@ -56,7 +56,6 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
                 mAddAddNewCarInputPresenter.sentCarInfoToService(carInfoJson);
             }
         });
-
         carid.setText(carInfoJson);
     }
 
@@ -76,6 +75,7 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
     @Override
     protected void initData() {
         carInfoJson = getIntent().getStringExtra("result");
+        mAddAddNewCarInputPresenter.loadCar(carInfoJson);
     }
 
     @Override public void showResultError(int errorNo, String errorMag) {
@@ -83,6 +83,11 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
     }
 
     @Override public void showResultSuccess(ResultBean resultBean) {
-        //TODO
+
+    }
+
+    @Override public void showResultSuccess(CarInfoBean resultBean) {
+        this.resultBean = resultBean;
+        LogUtils.d("回调的信息" + GsonUtils.Instance().toJson(resultBean));
     }
 }

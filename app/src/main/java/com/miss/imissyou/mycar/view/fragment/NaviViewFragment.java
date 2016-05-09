@@ -44,12 +44,8 @@ public class NaviViewFragment extends BaseFragment implements AMapNaviListener, 
     /**导航View*/
     private AMapNaviView mAMapNaviView;
 
-
     private EditText secherEditText;          //搜索输入框
     private Button secherBtn;           //搜索提交按钮
-
-
-
 
     /**导航*/
     private AMapNavi mAMapNavi;
@@ -70,7 +66,6 @@ public class NaviViewFragment extends BaseFragment implements AMapNaviListener, 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         View view =  super.onCreateView(R.layout.fragment_navi, inflater, container, savedInstanceState);
         mAMapNaviView.onCreate(savedInstanceState);
         mAMap = mAMapNaviView.getMap();
@@ -91,13 +86,11 @@ public class NaviViewFragment extends BaseFragment implements AMapNaviListener, 
     }
 
     @Override protected void initData() {
-
         //计算路线
         mAMapNavi.calculateDriveRoute(mStartList, mEndList, mWayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
     }
 
     @Override protected void addViewsListener() {
-
         //语音
         mTtsManager = TTSController.getInstance(getActivity().getApplicationContext());
         mTtsManager.startSpeaking();
@@ -128,12 +121,10 @@ public class NaviViewFragment extends BaseFragment implements AMapNaviListener, 
 
     @Override
     public void onInitNaviFailure() {
-
     }
 
     @Override
     public void onInitNaviSuccess() {
-
     }
 
     @Override
