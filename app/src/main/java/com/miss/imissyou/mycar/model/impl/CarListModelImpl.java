@@ -30,7 +30,6 @@ public class CarListModelImpl implements CarListModel {
 
     @Override
     public void loadData(String userId) {
-        //TODO
         String url = Constant.SERVER_URL + "car/getAll";
         LinkService.Instance();
 

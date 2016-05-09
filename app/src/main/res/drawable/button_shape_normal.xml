@@ -3,5 +3,5 @@
     android:shape="rectangle">
 
     <corners android:radius="10dp"/>
-    <solid android:color="@color/button_shape_normal"/>
+    <solid android:color="@color/color_submit_button"/>
 </shape>

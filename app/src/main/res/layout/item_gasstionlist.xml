@@ -27,7 +27,7 @@
             android:textColor="@color/color_back"
             android:layout_width="match_parent"
             android:layout_weight="1"
-            android:layout_height="10dp" />
+            android:layout_height="30dp" />
 
         <TextView
             android:id="@+id/gasSattion_Item_stationType"
@@ -36,7 +36,7 @@
             android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_weight="1"
-            android:layout_height="10dp" />
+            android:layout_height="30dp" />
 
         <TextView
             android:id="@+id/gasSattion_Item_oilType"
@@ -45,7 +45,7 @@
             android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_weight="1"
-            android:layout_height="10dp" />
+            android:layout_height="30dp" />
 
 
     </LinearLayout>

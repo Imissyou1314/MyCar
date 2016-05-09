@@ -15,11 +15,16 @@ import com.kymjs.rxvolley.client.HttpParams;
 import com.lidroid.xutils.DbUtils;
 import com.lidroid.xutils.util.CharsetUtils;
 import com.lidroid.xutils.util.LogUtils;
+import com.miss.imissyou.mycar.MainActivity;
 import com.miss.imissyou.mycar.R;
+import com.miss.imissyou.mycar.bean.ResultBean;
+import com.miss.imissyou.mycar.bean.UserBean;
 import com.miss.imissyou.mycar.ui.MissDialog;
+import com.miss.imissyou.mycar.ui.RoundImageView;
 import com.miss.imissyou.mycar.ui.TitleFragment;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.FindViewById;
+import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.util.SPUtils;
 import com.miss.imissyou.mycar.util.StringUtil;
 
@@ -43,6 +48,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     private EditText accountEt;
     @FindViewById(id = R.id.login_password_Edit)
     private EditText passwordEt;
+    @FindViewById(id = R.id.login_userHead_image )
+    private RoundImageView userHeadImage;
 
     /**账号*/
     private String account;
@@ -58,7 +65,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     /**
      * 加载数据
      */
-    private void initData() {
+
+    @Override public void initData() {
         SPUtils.init(this);
         password = SPUtils.getSp_user().getString(Constant.UserPassID,"");
         account = SPUtils.getSp_user().getString(Constant.UserAccountID,"");
@@ -135,6 +143,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         }
 
         HttpParams params = new HttpParams();
+        LogUtils.d("加密后的密码" + password);
         params.put("password",password);
         params.put("loginid",account);
         if (null != Constant.COOKIE)
@@ -157,11 +166,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             }
 
             @Override public void onSuccess(Map<String, String> headers, byte[] t) {
-                //设置COOKIE
-                Constant.COOKIE = headers.get("Set-Cookie");
-
+                ResultBean resultBean = GsonUtils.Instance().fromJson(StringUtil.bytesToString(t), ResultBean.class);
                 LogUtils.d("收到的数据::" + StringUtil.bytesToString(t));
-                LogUtils.d(">>>Cookie===" + headers.get("Set-Cookie"));
+                if (resultBean.isServiceResult()) {
+                    savePassWord(password, account);
+                    Constant.COOKIE = headers.get("Set-Cookie");
+                    Constant.userBean = GsonUtils.getParam(resultBean, "user", UserBean.class);
+                    toMainView();
+                } else {
+                    builder.setTitle("登录出错")
+                            .setMessage(resultBean.getResultInfo())
+                            .setSingleButton(true)
+                            .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    builder.create().show();
+                }
 
             }
         });
@@ -171,6 +194,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             savePassWord(password, account);
         }
         return true;
+    }
+
+    /**
+     * 跳转到主页面
+     */
+    private void toMainView() {
+        Intent intent = new Intent();
+        intent.setClass(this, MainActivity.class);
+        startActivity(intent);
     }
 
     /**

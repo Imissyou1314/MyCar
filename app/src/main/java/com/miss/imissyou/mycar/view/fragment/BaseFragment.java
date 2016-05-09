@@ -9,7 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import yalantis.com.sidemenu.interfaces.ScreenShotable;
+import com.miss.imissyou.mycar.ui.sidemenu.interfaces.ScreenShotable;
+
 
 /**
  * 使用Fragment的基类

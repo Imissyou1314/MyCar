@@ -40,8 +40,10 @@ public abstract class BaseActivity extends FragmentActivity {
         byIdContentView();      //finviewbyid注解
         byIdViews();
 
+        initData();
         addListeners();         //控件监听事件接口
     }
+
 
     private void byIdContentView() {
         // TODO 自动生成的方法存根
@@ -119,6 +121,11 @@ public abstract class BaseActivity extends FragmentActivity {
         LogUtils.d("---------------------------->>>>>onDestroy");
         super.onDestroy();
     }
+
+    /**
+     * 添加初始化数据
+     */
+    protected abstract void initData();
 
     /**
      * 添加监听事件

@@ -2,7 +2,7 @@
 <!--用户个人信息页面-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:zhy="http://schemas.android.com/apk/res/com.miss.imissyou.mycar"
+    xmlns:miss="http://schemas.android.com/apk/res-auto"
     xmlns:circleprogress="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -17,13 +17,13 @@
         circleprogress:color3="@android:color/holo_blue_light"
         android:layout_height="match_parent" />
 
-    <com.miss.imissyou.mycar.ui.RadiusImageView
+    <com.miss.imissyou.mycar.ui.RoundImageView
         android:padding="5dp"
         android:layout_marginTop="10dp"
         android:id="@+id/userInfo_userHead_Image"
         android:gravity="center"
-        zhy:Radiustype="circle"
-        zhy:src="@mipmap/user_head"
+        miss:Radiustype="circle"
+        android:src="@mipmap/user_head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal" />

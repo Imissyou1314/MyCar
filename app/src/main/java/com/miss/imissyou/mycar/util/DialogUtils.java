@@ -25,6 +25,12 @@ public class DialogUtils {
      * @return
      */
     public MissDialog errorMessage(String message, String title) {
+
+        if (title.equals("") || title == null)
+            title = "提示";
+        if (message.equals("") || message == null)
+            message = "异常退出";
+
         dialog.setMessage(message)
                 .setTitle(title)
                 .setSingleButton(true)

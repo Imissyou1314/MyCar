@@ -21,6 +21,11 @@ public class AuthorActivity extends BaseActivity {
     }
 
     @Override
+    protected void initData() {
+
+    }
+
+    @Override
     public void addListeners() {
         titleView.setTitleText("关于作者");
     }

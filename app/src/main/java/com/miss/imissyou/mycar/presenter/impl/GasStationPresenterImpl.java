@@ -1,13 +1,11 @@
 package com.miss.imissyou.mycar.presenter.impl;
 
-import android.location.Location;
-
 import com.miss.imissyou.mycar.bean.BaseBean;
-import com.miss.imissyou.mycar.model.GasStationModel;
+import com.miss.imissyou.mycar.model.GasStationModle;
 import com.miss.imissyou.mycar.model.impl.GasStationModelImpl;
 import com.miss.imissyou.mycar.presenter.GasStationPresenter;
-import com.miss.imissyou.mycar.view.fragment.GasStationListFragment;
-import com.miss.imissyou.mycar.view.GasStationListView;
+import com.miss.imissyou.mycar.view.GasStationView;
+import com.miss.imissyou.mycar.view.fragment.GasStationFragment;
 
 /**
  * 加油站列表的PresenterImpl
@@ -15,11 +13,11 @@ import com.miss.imissyou.mycar.view.GasStationListView;
  */
 public class GasStationPresenterImpl implements GasStationPresenter {
 
-    private  GasStationListView mGasStationListView;
-    private GasStationModel mGasStationModelImpl;
+    private  GasStationView mGasStationListView;
+    private GasStationModle mGasStationModelImpl;
 
 
-    public GasStationPresenterImpl(GasStationListFragment gasStationList) {
+    public GasStationPresenterImpl(GasStationFragment gasStationList) {
         attachView(gasStationList);
         mGasStationModelImpl = new GasStationModelImpl(this);
 
@@ -37,7 +35,7 @@ public class GasStationPresenterImpl implements GasStationPresenter {
 
     }
 
-    @Override public void attachView(GasStationListView view) {
+    @Override public void attachView(GasStationView view) {
         this.mGasStationListView = view;
         mGasStationListView.showProgress();
     }
@@ -46,7 +44,9 @@ public class GasStationPresenterImpl implements GasStationPresenter {
         mGasStationListView = null;
     }
 
-    @Override public void loadServiceData(Location location) {
-        mGasStationModelImpl.loadData(location);
+
+    @Override
+    public void loadServiceData(double lon, double lat, int r, String key, int page, int format) {
+
     }
 }

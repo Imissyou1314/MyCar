@@ -19,6 +19,10 @@ public class AboutActivity extends BaseActivity {
         super.onCreate(savedInstanceState, R.layout.activity_about);
     }
 
+    @Override protected void initData() {
+
+    }
+
     @Override public void addListeners() {
         titleView.setTitleText("关于");
     }

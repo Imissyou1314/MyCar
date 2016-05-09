@@ -1,37 +1,51 @@
 package com.miss.imissyou.mycar.model.impl;
 
-import android.location.Location;
-
-import com.miss.imissyou.mycar.model.GasStationModel;
+import com.miss.imissyou.mycar.bean.GasStationResultBean;
+import com.miss.imissyou.mycar.model.GasStationModle;
 import com.miss.imissyou.mycar.presenter.GasStationPresenter;
 import com.miss.imissyou.mycar.presenter.impl.GasStationPresenterImpl;
+
+import com.kymjs.rxvolley.RxVolley;
+import com.kymjs.rxvolley.client.HttpCallback;
+import com.kymjs.rxvolley.client.HttpParams;
+import com.lidroid.xutils.util.LogUtils;
+import com.miss.imissyou.mycar.util.GsonUtils;
 
 /**
  * Created by Imissyou on 2016/4/24.
  */
-public class GasStationModelImpl implements GasStationModel{
+public class GasStationModelImpl implements GasStationModle {
 
     private GasStationPresenter gasStation;
 
-    public GasStationModelImpl(GasStationPresenterImpl gasStationPresenter) {
-        this.gasStation = gasStationPresenter;
+    public GasStationModelImpl(GasStationPresenterImpl mGasStationPresenter) {
     }
 
-    @Override public void loadData(Location location) {
-        //TODO  获取附近的加油站列表
-        if (location == null) {
-            gasStation.onFailure(0,"位置信息为空");
-        } else {
-            getGasStation(location);
-        }
+    @Override public void loadGasStationData(double lon, double lat, int r, int page, String key, int format) {
 
+        HttpParams param = new HttpParams();
+        param.put("lon",lon + "");
+        param.put("lat",lat + "");
+        param.put("r", + r);
+        param.put("page", page);
+        param.put("key", key);
+        param.put("format", format);
 
-    }
+        String url = "http://apis.juhe.cn/oil/local";
+        LogUtils.d("请求路径：" + url);
+        RxVolley.post(url, param, new HttpCallback() {
+            @Override
+            public void onFailure(int errorNo, String strMsg) {
+                gasStation.onFailure(errorNo, strMsg);
+            }
 
-    /**
-     * 加载附近的加油站
-     * @param location
-     */
-    private void getGasStation(Location location) {
+            @Override
+            public void onSuccess(String t) {
+                GasStationResultBean  gasStationResultBean = GsonUtils
+                        .Instance().fromJson(t, GasStationResultBean.class);
+                if (gasStationResultBean != null)
+                    gasStation.onSuccess(gasStationResultBean);
+            }
+        });
     }
 }

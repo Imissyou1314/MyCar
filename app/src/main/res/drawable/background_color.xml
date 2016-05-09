@@ -2,10 +2,8 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <gradient
-        android:startColor="@color/color_carView_mainMesage"
-        android:endColor="@color/colorMianTheme"
-        android:centerColor="@color/colorWhite"
-        android:centerY="0.5"
-        android:centerX="0.5"
-        android:angle="45"/>
+        android:endColor="@color/color_carView_background_zi1"
+        android:startColor="@color/color_carView_background_zi2"
+        android:type="linear"
+        android:angle="180"/>
 </shape>

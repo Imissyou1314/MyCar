@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@drawable/background_color"
+    android:background="@color/color_carView_mainMesage"
     android:orientation="vertical">
 
     <!--标题-->
@@ -20,8 +20,9 @@
 
     <TextView
         android:drawableLeft="@drawable/ic_call_phone_icon"
-        android:id="@+id/setting_TV"
+        android:id="@+id/help_call_TV"
         android:layout_marginBottom="80dp"
+        android:background="@color/color_carView_mainMesage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"

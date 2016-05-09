@@ -6,30 +6,56 @@ package com.miss.imissyou.mycar.bean;
  */
 public class UserBean extends BaseBean {
 
-    /**用户名*/
-    private String userName;
-
-    /**用户账号*/
-    private String account;
-    /**用户密码*/
-    private String password;
     /**用户ID*/
-    private String userID;
+    private String id;
+    /**用户名*/
+    private String username;
     /**用户真名*/
     private String realName;
+    /**用户账号*/
+    private String loginid;
+    /**用户密码*/
+    private String password;
     /**用户手机*/
-    private String phoneNumber;
+    private String phone;
     /**亲人手机号*/
-    private String dersesPhone;
-    /**车数量*/
-    private int carNumber;
+    private String relatedPhone;
+    /**安全密码*/
+    private String safePhone;
+    /**用户头像*/
+    private String userImg;
 
-    public String getAccount() {
-        return account;
+
+    public void setRelatedPhone(String relatedPhone) {
+        this.relatedPhone = relatedPhone;
     }
 
-    public void setAccount(String account) {
-        this.account = account;
+    public void setSafePhone(String safePhone) {
+        this.safePhone = safePhone;
+    }
+
+    public String getRelatedPhone() {
+        return relatedPhone;
+    }
+
+    public String getSafePhone() {
+        return safePhone;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getLoginid() {
+        return loginid;
+    }
+
+    public void setLoginid(String loginid) {
+        this.loginid = loginid;
     }
 
     public String getPassword() {
@@ -40,12 +66,12 @@ public class UserBean extends BaseBean {
         this.password = password;
     }
 
-    public String getUserID() {
-        return userID;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getRealName() {
@@ -56,36 +82,20 @@ public class UserBean extends BaseBean {
         this.realName = realName;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getUserImg() {
+        return userImg;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setUserImg(String userImg) {
+        this.userImg = userImg;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public int getCarNumber() {
-        return carNumber;
-    }
-
-    public void setCarNumber(int carNumber) {
-        this.carNumber = carNumber;
-    }
-
-    public String getDersesPhone() {
-        return dersesPhone;
-    }
-
-    public void setDersesPhone(String dersesPhone) {
-        this.dersesPhone = dersesPhone;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
 

@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import com.cheshouye.api.client.WeizhangIntentService;
 import com.cheshouye.api.client.json.CarInfo;
 import com.miss.imissyou.mycar.R;
+import com.miss.imissyou.mycar.ui.sidemenu.interfaces.ScreenShotable;
 
-import yalantis.com.sidemenu.interfaces.ScreenShotable;
 
 /**
  * Created by Imissyou on 2016/4/23.

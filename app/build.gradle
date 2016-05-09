@@ -45,7 +45,7 @@ dependencies {
     compile 'com.kymjs.rxvolley:rxvolley:1.0.9'
     compile 'com.kymjs.rxvolley:okhttp:1.0.9'
     compile 'com.kymjs.rxvolley:bitmapcore:1.0.9'
-    compile 'com.yalantis:sidemenu:1.0'
+//    compile 'com.yalantis:sidemenu:1.0'
     compile 'com.android.support:support-v4:23.2.1'
     compile files('libs/core.jar')
     //Dialog  https://github.com/afollestad/material-dialogs#proguard

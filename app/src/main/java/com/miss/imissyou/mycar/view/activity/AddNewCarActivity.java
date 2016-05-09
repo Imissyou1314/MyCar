@@ -274,6 +274,11 @@ public class AddNewCarActivity extends BaseActivity implements SurfaceHolder.Cal
         super.onDestroy();
     }
 
+    @Override
+    protected void initData() {
+
+    }
+
     /**
      * 处理扫描结果
      * @param result
@@ -302,13 +307,6 @@ public class AddNewCarActivity extends BaseActivity implements SurfaceHolder.Cal
         }
         //TODO 跳转到下一页
         toVerifyAddCarActivity(resultString);
-//        Intent resultIntent = new Intent();
-//        Bundle bundle = new Bundle();
-//        bundle.putString("result", resultString);
-//        bundle.putParcelable("bitmap", bitmap);
-//        resultIntent.putExtras(bundle);
-//        this.setResult(RESULT_OK, resultIntent);
-
     }
 
     /**

@@ -5,9 +5,9 @@
     <corners android:radius="10dp"/>
     <gradient
         android:angle="270"
-        android:startColor="@color/button_shape_normal"
-        android:endColor="@color/button_shape_pressed"
+        android:startColor="@color/color_carView_mainMesage"
+        android:endColor="@color/color_submit_button"
         android:useLevel="true"/>
-    <solid android:color="@color/button_shape_pressed"/>
+    <solid android:color="@color/color_carView_mainMesage"/>
 
 </shape>

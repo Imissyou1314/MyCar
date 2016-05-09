@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:miss="http://schemas.android.com/apk/res/com.miss.imissyou.mycar"
+    xmlns:miss="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:gravity="center_horizontal"
-    android:background="@drawable/background_color"
+    android:background="@color/color_carView_mainMesage"
     android:layout_height="match_parent">
 
 
-    <com.miss.imissyou.mycar.ui.RadiusImageView
+    <com.miss.imissyou.mycar.ui.RoundImageView
+        android:id="@+id/login_userHead_image"
         android:layout_marginTop="60dp"
         android:layout_gravity="center"
         miss:Radiustype="circle"
-        miss:src="@mipmap/user_head"
+        android:src="@mipmap/user_head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -128,10 +129,9 @@
                 android:layout_height="wrap_content"
                 android:text="注册"
                 android:layout_marginRight="20dp"
-                android:textColor="@color/color_back"
+                android:textColor="@color/colorWhite"
                 android:textSize="@dimen/FontSize"
-                style="@style/MissButton"
-                />
+                style="@style/MissButton"/>
 
             <Button
                 android:id="@+id/login_doLogin_Btn"
@@ -139,7 +139,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:text="登录"
-                android:textColor="@color/color_back"
+                android:textColor="@color/colorWhite"
                 android:textSize="@dimen/FontSize"
                 style="@style/MissButton" />
         </LinearLayout>

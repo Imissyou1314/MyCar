@@ -26,7 +26,7 @@
                 android:layout_marginTop="8dp"
                 app:cardBackgroundColor="#353543"
                 app:cardCornerRadius="10dp"
-                app:cardElevation="10dp">
+                app:cardElevation="3dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -41,9 +41,9 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
-                        zhy:borderRadius="10dp"
                         android:src="@mipmap/bz"
-                        zhy:Radiustype="round" />
+                        zhy:Radiustype="round"
+                        zhy:borderRadius="10dp" />
 
                     <!--当前车辆信息的介绍-->
                     <LinearLayout
@@ -60,13 +60,16 @@
                         <LinearLayout
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="3dp"
                             android:orientation="horizontal">
 
                             <TextView
                                 style="@style/MissTextViweStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="车名:" />
+                                android:text="车名:"
+                                android:textColor="#11CBAC"
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/fragment_home_carName"
@@ -76,22 +79,20 @@
                                 android:text="@string/fragment_home_carName" />
                         </LinearLayout>
 
-
-                        <View
-                            style="@style/MissLineView"
-                            android:layout_margin="2dp" />
-
                         <!--车牌号-->
                         <LinearLayout
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="3dp"
                             android:orientation="horizontal">
 
                             <TextView
                                 style="@style/MissTextViweStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="车牌号:" />
+                                android:text="车牌号:"
+                                android:textColor="#FEAA19"
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/fragment_home_carID"
@@ -101,21 +102,20 @@
                                 android:text="@string/fragment_home_carName" />
                         </LinearLayout>
 
-                        <View
-                            style="@style/MissLineView"
-                            android:layout_margin="2dp" />
-
                         <!--发动机号-->
                         <LinearLayout
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="3dp"
                             android:orientation="horizontal">
 
                             <TextView
                                 style="@style/MissTextViweStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="发动机号:" />
+                                android:text="发动机号:"
+                                android:textColor="#11CBAC"
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/fragment_home_carFD"
@@ -126,21 +126,20 @@
                                 android:text="@string/fragment_home_carName" />
                         </LinearLayout>
 
-                        <View
-                            style="@style/MissLineView"
-                            android:layout_margin="2dp" />
-
                         <!--车 龄-->
                         <LinearLayout
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="3dp"
                             android:orientation="horizontal">
 
                             <TextView
                                 style="@style/MissTextViweStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="车龄:" />
+                                android:text="车龄:"
+                                android:textColor="#FEAA19"
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/fragment_home_carAge"
@@ -150,10 +149,6 @@
                                 android:text="@string/fragment_home_carName" />
                         </LinearLayout>
 
-                        <View
-                            style="@style/MissLineView"
-                            android:layout_margin="2dp" />
-
                     </LinearLayout>
                 </LinearLayout>
 
@@ -162,178 +157,319 @@
             <!--Link-->
             <View
                 style="@style/MissLineView"
-                android:layout_height="4dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp" />
-            <!--Link-->
-
-            <!--车辆信息-->
-            <android.support.v7.widget.CardView
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
+                android:layout_height="2dp"
                 android:layout_marginBottom="10dp"
-                android:layout_weight="3"
-                app:cardBackgroundColor="@color/colorWhite"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="10dp">
+                android:layout_marginTop="10dp" />
+
+            <!--&lt;!&ndash;车辆信息&ndash;&gt;-->
+            <!--<android.support.v7.widget.CardView-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:layout_weight="3"-->
+            <!--android:background="@color/colorWhite"-->
+            <!--android:padding="2dp"-->
+            <!--app:cardBackgroundColor="@color/colorMianTheme"-->
+            <!--app:cardCornerRadius="10dp"-->
+            <!--app:cardElevation="4dp">-->
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/background"
+                android:orientation="vertical">
+
+                <!--车辆状态的信息-->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/colorchuWhite"
+                    android:orientation="vertical"
+                    android:paddingLeft="35dp"
+                    android:paddingRight="20dp">
 
-                    <!--车辆状态的信息-->
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
                         android:layout_marginTop="5dp"
-                        android:background="@color/colorchuWhite"
-                        android:orientation="vertical"
-                        android:paddingLeft="35dp"
-                        android:paddingRight="20dp">
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/home_fragment_breakdown_message"
                             style="@style/MissTextViweStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:layout_marginTop="5dp"
-                            android:gravity="center|left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center|right"
                             android:text="故障信息:" />
 
                         <TextView
-                            android:id="@+id/home_fragment_alarm_message"
-                            style="@style/MissTextViweStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
+                            android:id="@+id/home_fragment_breakdown_message"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
                             android:gravity="center|left"
+                            android:textSize="@dimen/FontSize"
+                            android:textColor="@color/color_boolean_true_text"
+                            android:text="MissYOut" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/MissTextViweStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center|right"
                             android:text="警报状态:" />
 
                         <TextView
-                            android:id="@+id/home_fragment_state_message"
-                            style="@style/MissTextViweStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
+                            android:id="@+id/home_fragment_alarm_message"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
                             android:gravity="center|left"
+                            android:textSize="@dimen/FontSize"
+                            android:textColor="@color/color_boolean_true_text"
+                            android:text="MissYOut" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/MissTextViweStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center|right"
                             android:text="当前状态:" />
-                    </LinearLayout>
-
-                    <!--车辆性能状态-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:background="@color/colorchuWhite"
-                        android:orientation="vertical"
-                        android:paddingLeft="35dp"
-                        android:paddingRight="20dp">
 
                         <TextView
-                            android:id="@+id/home_fragment_engine_state"
-                            style="@style/MissTextViweStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:layout_marginTop="5dp"
+                            android:id="@+id/home_fragment_state_message"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
                             android:gravity="center|left"
-                            android:text="发动机性能:" />
-
-                        <TextView
-                            android:id="@+id/home_fragment_shitf_state"
-                            style="@style/MissTextViweStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:gravity="center|left"
-                            android:text="变速器性能:" />
-
-                    </LinearLayout>
-
-                    <!--车里数据信息-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:background="@color/colorchuWhite"
-                        android:orientation="vertical"
-                        android:paddingLeft="35dp"
-                        android:paddingRight="20dp">
-
-                        <TextView
-                            android:id="@+id/home_fragment_mil_number"
-                            style="@style/MissTextViweStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:gravity="center|left"
-                            android:text="里程数:" />
-
-                        <TextView
-                            android:id="@+id/home_fragment_water_number"
-                            style="@style/MissTextViweStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:gravity="center|left"
-                            android:text="水温:" />
-
-                    </LinearLayout>
-
-                    <!--车辆动态信息-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:background="@color/colorchuWhite"
-                        android:orientation="vertical"
-                        android:paddingLeft="35dp"
-                        android:paddingRight="20dp">
-
-                        <TextView
-                            android:id="@+id/home_fragment_oil_text"
-                            style="@style/MissTextViweStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:drawableLeft="@drawable/ic_fragment_oil_24dp"
-                            android:gravity="center|left"
-                            android:text="油量:" />
-
-                        <ProgressBar
-                            android:id="@+id/home_fragment_oil_progress"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:progress="@android:integer/config_mediumAnimTime"
-                            android:progressBackgroundTint="@color/color_back" />
-
-                        <TextView
-                            android:id="@+id/home_fragment_endurance_text"
-                            style="@style/MissTextViweStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:drawableLeft="@drawable/ic_fragment_oil_24dp"
-                            android:gravity="center|left"
-                            android:text="续航能力:" />
-
-                        <ProgressBar
-                            android:id="@+id/home_fragment_endurance_progress"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:progress="@android:integer/config_mediumAnimTime"
-                            android:progressBackgroundTint="@color/color_back" />
-
+                            android:textSize="@dimen/FontSize"
+                            android:textColor="@color/color_boolean_false_text"
+                            android:text="MissYOut" />
                     </LinearLayout>
 
                 </LinearLayout>
 
-            </android.support.v7.widget.CardView>
+                <!--车辆性能状态-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/colorchuWhite"
+                    android:orientation="vertical"
+                    android:paddingLeft="35dp"
+                    android:paddingRight="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/MissTextViweStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center|right"
+                            android:text="发动机性能:" />
+
+                        <TextView
+                            android:id="@+id/home_fragment_engine_state"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:gravity="center|left"
+                            android:textSize="@dimen/FontSize"
+                            android:textColor="@color/color_boolean_false_text"
+                            android:text="MissYOut" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/MissTextViweStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center|right"
+                            android:text="变速器性能:" />
+
+                        <TextView
+                            android:id="@+id/home_fragment_shitf_state"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:gravity="center|left"
+                            android:textSize="@dimen/FontSize"
+                            android:textColor="@color/color_boolean_false_text"
+                            android:text="MissYOut" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--车里数据信息-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/colorchuWhite"
+                    android:orientation="vertical"
+                    android:paddingLeft="35dp"
+                    android:paddingRight="20dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/MissTextViweStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center|right"
+                            android:text="里程数:" />
+
+                        <TextView
+                            android:id="@+id/home_fragment_mil_number"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:gravity="center|left"
+                            android:textSize="@dimen/FontSize"
+                            android:textColor="@color/color_boolean_false_text"
+                            android:text="MissYOut" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/MissTextViweStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center|right"
+                            android:text="水温:" />
+
+                        <TextView
+                            android:id="@+id/home_fragment_water_number"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:gravity="center|left"
+                            android:textSize="@dimen/FontSize"
+                            android:textColor="@color/color_boolean_false_text"
+                            android:text="MissYOut" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--车辆动态信息-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/colorchuWhite"
+                    android:orientation="vertical"
+                    android:paddingLeft="35dp"
+                    android:paddingRight="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/MissTextViweStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:drawableLeft="@drawable/ic_fragment_oil_24dp"
+                            android:gravity="center|right"
+                            android:text="油量:" />
+
+                        <TextView
+                            android:id="@+id/home_fragment_oil_text"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:gravity="center|left"
+                            android:textSize="@dimen/FontSize"
+                            android:textColor="@color/color_boolean_false_text"
+                            android:text="MissYOut" />
+                    </LinearLayout>
+
+
+                    <ProgressBar
+                        android:id="@+id/home_fragment_oil_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:progressTint="@color/color_progress_greed"
+                        android:progress="80"
+                        style="@android:style/Widget.ProgressBar.Horizontal" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/MissTextViweStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:drawableLeft="@drawable/ic_fragment_oil_24dp"
+                            android:gravity="center|right"
+                            android:text="续航能力:" />
+
+                        <TextView
+                            android:id="@+id/home_fragment_endurance_text"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:gravity="center|left"
+                            android:textSize="@dimen/FontSize"
+                            android:textColor="@color/color_boolean_false_text"
+                            android:text="MissYOut" />
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/home_fragment_endurance_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:max="100"
+                        android:progressTint="@color/color_progress_red"
+                        android:progress="20"
+                        style="@android:style/Widget.ProgressBar.Horizontal"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!--</android.support.v7.widget.CardView>-->
         </LinearLayout>
 
     </ScrollView>

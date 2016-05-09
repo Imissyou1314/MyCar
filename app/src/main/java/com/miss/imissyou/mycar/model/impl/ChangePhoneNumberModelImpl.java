@@ -20,13 +20,11 @@ public class ChangePhoneNumberModelImpl implements ChangePhoneNumberModle {
     }
 
     @Override public void getCode(String phoneNumber) {
-        HttpParams params = new HttpParams();
-        params.put("phoneNumber", phoneNumber);
 
         //TODO
-        String url = Constant.SERVER_URL + "changePhone";
+        String url = Constant.SERVER_URL + "verifyCode/phoneNumber=" + phoneNumber;
 
-        LinkService.post(url, params, new HttpCallback() {
+        LinkService.get(url, new HttpCallback() {
             @Override public void onFailure(int errorNo, String strMsg) {
                 mChangePhoneNumberPresenter.onFailure(errorNo, strMsg);
             }

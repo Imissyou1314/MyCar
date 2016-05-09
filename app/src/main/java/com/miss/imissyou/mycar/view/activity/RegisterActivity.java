@@ -12,10 +12,12 @@ import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
+import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.ui.MissDialog;
 import com.miss.imissyou.mycar.ui.TitleFragment;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.FindViewById;
+import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.util.StringUtil;
 import com.miss.imissyou.mycar.util.ToastUtil;
 
@@ -39,6 +41,10 @@ public class RegisterActivity extends BaseActivity {
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_register);
+    }
+
+    @Override protected void initData() {
+
     }
 
     @Override public void addListeners() {
@@ -69,15 +75,14 @@ public class RegisterActivity extends BaseActivity {
             return;
         }
 
-
         /**
          * 密码相同，账号含有@
          */
-        if (passwordOne.equals(passwordTwo) && account.contains("@")) {
+        if (passwordOne.equals(passwordTwo) && account.length() > 4) {
             String password = StringUtil.strToMD5(passwordOne);
-            LogUtils.d(password);
+            LogUtils.d("加密后的密码" + password);
             HttpParams params = new HttpParams();
-            params.put("password",passwordOne);
+            params.put("password",password);
             params.put("loginid",account);
 
             String url = Constant.SERVER_URL + "users/register";
@@ -91,15 +96,26 @@ public class RegisterActivity extends BaseActivity {
                 @Override
                 public void onSuccess(String t) {
                     LogUtils.d("注册成功::" + t);
-                    if (t.isEmpty())
-                        Toast.makeText(RegisterActivity.this, t , Toast.LENGTH_SHORT).show();
-                    ToastUtil.asLong("注册成功");
+                    ResultBean resultBean = GsonUtils.Instance().fromJson(t, ResultBean.class);
+                    if (resultBean.isServiceResult()) {
+                        ToastUtil.asLong("注册成功");
+                        toLogin();
+                    } else {
+                        propmtError("注册失败" + resultBean.getResultInfo());
+                    }
                 }
             });
         } else {
             //提示密码或者账号不存在@
             propmtError("密码或者账号错误");
         }
+    }
+
+    /**
+     * 转到登录页面
+     */
+    private void toLogin() {
+        this.finish();
     }
 
     /**

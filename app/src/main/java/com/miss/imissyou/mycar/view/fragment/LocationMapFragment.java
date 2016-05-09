@@ -19,6 +19,8 @@ import com.amap.api.maps2d.LocationSource;
 import com.amap.api.maps2d.MapView;
 import com.amap.api.maps2d.model.CameraPosition;
 import com.amap.api.maps2d.model.LatLng;
+import com.amap.api.maps2d.model.Marker;
+import com.amap.api.maps2d.model.MarkerOptions;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.util.ToastUtil;
@@ -37,6 +39,8 @@ public class LocationMapFragment extends BaseFragment implements LocationSource 
     public AMapLocationClientOption mLocationClientOption = null;
     private MapView mapView;
     private AMap map;
+
+    public AMapLocation mAMapLocation;
 
     private double longitude;       //经度
     private double latitude;        //纬度
@@ -69,28 +73,19 @@ public class LocationMapFragment extends BaseFragment implements LocationSource 
         mLocationClient = new AMapLocationClient(getActivity().getApplicationContext());
         mLocationClientOption = new AMapLocationClientOption();
 
-        mLocationClientOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);        //高精度
-        mLocationClientOption.setNeedAddress(true);
-        mLocationClientOption.setOnceLocation(false);       //只定位一次
-        mLocationClientOption.setWifiActiveScan(true);
-        mLocationClientOption.setMockEnable(true);
-        mLocationClientOption.setInterval(2500);
-        mLocationClient.setLocationOption(mLocationClientOption);
-        mLocationClient.startLocation();
-
-        CameraPosition cp = map.getCameraPosition();
-        CameraPosition cpNew = CameraPosition.fromLatLngZoom(new LatLng(31.22, 121.48), cp.zoom);
-        CameraUpdate cu = CameraUpdateFactory.newCameraPosition(cpNew);
-        map.moveCamera(cu);
-
         /**
          * 定位回调
          */
         mLocationClient.setLocationListener(new AMapLocationListener() {
+
+
             @Override
             public void onLocationChanged(AMapLocation aMapLocation) {
                 if (aMapLocation != null) {
+                    mAMapLocation = aMapLocation;
+
                     if (aMapLocation.getErrorCode() != 0) {
+                        LogUtils.d("错误信息" + aMapLocation.getErrorInfo());
                         LogUtils.d("ErrorCode" + aMapLocation.getErrorCode());
                         //定位成功回调信息，设置相关的信息
                         aMapLocation.getLocationType();
@@ -130,6 +125,28 @@ public class LocationMapFragment extends BaseFragment implements LocationSource 
                 }
             }
         });
+
+        mLocationClientOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);        //高精度
+        mLocationClientOption.setNeedAddress(true);
+        mLocationClientOption.setOnceLocation(false);       //只定位一次
+        mLocationClientOption.setWifiActiveScan(true);
+        mLocationClientOption.setMockEnable(true);
+        mLocationClientOption.setInterval(2500);
+        mLocationClient.setLocationOption(mLocationClientOption);
+        LogUtils.d("启动定位");
+        mLocationClient.startLocation();
+
+        CameraPosition cp = map.getCameraPosition();
+        CameraPosition cpNew = CameraPosition.fromLatLngZoom(new LatLng(21.274898, 110.364977), cp.zoom);
+
+        CameraUpdate cu = CameraUpdateFactory.newCameraPosition(cpNew);
+        map.addMarker(new MarkerOptions().position(new LatLng(21.274898, 110.364977)));
+
+        map.moveCamera(cu);
+
+
+
+
     }
 
     @Override
@@ -177,7 +194,6 @@ public class LocationMapFragment extends BaseFragment implements LocationSource 
     @Override
     public void activate(OnLocationChangedListener listerner) {
         LogUtils.d("活动");
-
     }
 
     @Override
@@ -195,12 +211,20 @@ public class LocationMapFragment extends BaseFragment implements LocationSource 
         }
     }
 
-    Handler mHandler = new Handler(){
-        @Override
-        public void dispatchMessage(Message msg) {
-            if (msg.what == 0) {
-                ToastUtil.asLong(((AMapLocation)msg.obj).getAddress());
+    Handler mHandler;
+    {
+        mHandler = new Handler() {
+            @Override
+            public void dispatchMessage(Message msg) {
+                if (msg.what == 0) {
+                    map.addMarker(new MarkerOptions().position(new LatLng( mAMapLocation.getLatitude(), mAMapLocation.getLocationType())));
+//                    CameraPosition mcp = map.getCameraPosition();
+//                    CameraPosition cpNew = CameraPosition.fromLatLngZoom(new LatLng(mAMapLocation.getLongitude() , mAMapLocation.getLatitude()), mcp.zoom);
+//
+//                    CameraUpdate cu = CameraUpdateFactory.newCameraPosition(cpNew);
+//                    map.moveCamera(cu);
+                }
             }
-        }
-    };
+        };
+    }
 }

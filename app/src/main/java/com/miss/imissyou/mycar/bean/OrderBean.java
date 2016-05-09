@@ -1,7 +1,5 @@
 package com.miss.imissyou.mycar.bean;
 
-import com.miss.imissyou.mycar.bean.BaseBean;
-
 import java.util.Date;
 
 /**
@@ -9,124 +7,171 @@ import java.util.Date;
  * Created by Imissyou on 2016/3/28.
  */
 public class OrderBean extends BaseBean {
+
+    private String createdBy;
+    private String createdDate;
+    private String lastModifiedBy;
+    private Date lastModifiedDate;
     /** 预约单ID */
-    private String orderID;
+    private String id;
     /** 车ID */
-    private String carID;
+    private String carId;
     /** 用户ID */
-    private String userID;
+    private String userId;
     /** 加油站名 */
-    private String gasStationName;
+    private String stationName;
     /** 加油站地址 */
-    private String gasStationAddress;
+    private String address;
     /** 加油站类型*/
-    private String gasStationType;
+    private String brandName;
     /** 油类型 */
-    private String gasType;
+    private String type;
     /** 加油单位 */
-    private String gasUnit;
+    private String units;
+    /** 价格*/
+    private float price;
     /** 加油数量*/
-    private Integer gasNumber = 0;
-    /** 总价格*/
-    private float totalPrice;
+    private Integer number;
+    /**定单总价*/
+    private int  amounts;
     /** 订单状态*/
-    private int  orderState;
+    private Integer state;
     /** 下单时间*/
-    private Date orderTime;
+    private String agreementTime;
 
-    public String getOrderID() {
-        return orderID;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setOrderID(String orderID) {
-        this.orderID = orderID;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public Date getOrderTime() {
-        return orderTime;
+    public String getAddress() {
+        return address;
     }
 
-    public void setOrderTime(Date orderTime) {
-        this.orderTime = orderTime;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getCarID() {
-        return carID;
+    public String getAgreementTime() {
+        return agreementTime;
     }
 
-    public void setCarID(String carID) {
-        this.carID = carID;
+    public void setAgreementTime(String agreementTime) {
+        this.agreementTime = agreementTime;
     }
 
-    public String getUserID() {
-        return userID;
+    public int getAmounts() {
+        return amounts;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setAmounts(int amounts) {
+        this.amounts = amounts;
     }
 
-    public String getGasStationName() {
-        return gasStationName;
+    public String getBrandName() {
+        return brandName;
     }
 
-    public void setGasStationName(String gasStationName) {
-        this.gasStationName = gasStationName;
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
     }
 
-    public String getGasStationAddress() {
-        return gasStationAddress;
+    public String getCarId() {
+        return carId;
     }
 
-    public void setGasStationAddress(String gasStationAddress) {
-        this.gasStationAddress = gasStationAddress;
+    public void setCarId(String carId) {
+        this.carId = carId;
     }
 
-    public String getGasStationType() {
-        return gasStationType;
+    public String getCreatedBy() {
+        return createdBy;
     }
 
-    public void setGasStationType(String gasStationType) {
-        this.gasStationType = gasStationType;
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
-    public String getGasType() {
-        return gasType;
+    public String getCreatedDate() {
+        return createdDate;
     }
 
-    public void setGasType(String gasType) {
-        this.gasType = gasType;
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
     }
 
-    public String getGasUnit() {
-        return gasUnit;
+    public String getId() {
+        return id;
     }
 
-    public void setGasUnit(String gasUnit) {
-        this.gasUnit = gasUnit;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public Integer getGasNumber() {
-        return gasNumber;
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
     }
 
-    public void setGasNumber(Integer gasNumber) {
-        this.gasNumber = gasNumber;
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
     }
 
-    public float getTotalPrice() {
-        return totalPrice;
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
     }
 
-    public void setTotalPrice(float totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
 
-    public int getOrderState() {
-        return orderState;
+    public Integer getNumber() {
+        return number;
     }
 
-    public void setOrderState(int orderState) {
-        this.orderState = orderState;
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    public String getStationName() {
+        return stationName;
+    }
+
+    public void setStationName(String stationName) {
+        this.stationName = stationName;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getUnits() {
+        return units;
+    }
+
+    public void setUnits(String units) {
+        this.units = units;
     }
 }

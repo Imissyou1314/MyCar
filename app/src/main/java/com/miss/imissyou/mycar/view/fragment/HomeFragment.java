@@ -1,39 +1,37 @@
 package com.miss.imissyou.mycar.view.fragment;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.miss.imissyou.mycar.R;
 
-import yalantis.com.sidemenu.interfaces.ScreenShotable;
 
 /**
  * Created by Imissyou on 2016/3/26.
  */
-public class HomeFragment extends Fragment implements ScreenShotable {
+public class HomeFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-       super.onCreateView(inflater, container, savedInstanceState);
-        addViewListener();
-        return inflater.inflate(R.layout.fragment_home,container,false);
-    }
-
-    private void addViewListener() {
+       return super.onCreateView(R.layout.fragment_home,
+               inflater, container, savedInstanceState);
 
     }
 
     @Override
-    public void takeScreenShot() {
+    protected void initView(View view) {
 
     }
 
     @Override
-    public Bitmap getBitmap() {
-        return null;
+    protected void initData() {
+
+    }
+
+    @Override
+    protected void addViewsListener() {
+
     }
 }

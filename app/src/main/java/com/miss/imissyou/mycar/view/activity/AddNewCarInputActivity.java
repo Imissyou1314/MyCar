@@ -2,24 +2,19 @@ package com.miss.imissyou.mycar.view.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.presenter.AddNewCarInputPresenter;
 import com.miss.imissyou.mycar.presenter.impl.AddNewCarInputPresenterImpl;
-import com.miss.imissyou.mycar.ui.RadiusImageView;
+import com.miss.imissyou.mycar.ui.RoundImageView;
 import com.miss.imissyou.mycar.ui.TitleFragment;
 import com.miss.imissyou.mycar.util.FindViewById;
-import com.miss.imissyou.mycar.util.SPUtils;
 import com.miss.imissyou.mycar.view.AddNewCarInputView;
-import com.miss.imissyou.mycar.view.MainView;
 
 /**
  * 确认添加新车
@@ -30,7 +25,7 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
     @FindViewById( id = R.id.addCar_inputCarInfo_submit)
     private Button submitBtn;
     @FindViewById(id = R.id.addCar_inputCarInfo_UserImage)
-    private RadiusImageView userHeadImage;
+    private RoundImageView userHeadImage;
     @FindViewById(id = R.id.addnewCarInput_title)
     private TitleFragment titleView;
     @FindViewById(id = R.id.activity_add_newCar_carId_input)
@@ -38,6 +33,7 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
 
     private AddNewCarInputPresenter mAddAddNewCarInputPresenter;
     private ResultBean resultBean;
+    private String carInfoJson;         //上一页传来的Json
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_add_newcar_input);
@@ -54,12 +50,14 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 LogUtils.d("提交数据");
-                String carInfoJson = getIntent().getStringExtra("result");
+
                 if(carInfoJson.isEmpty()) return;
                 mAddAddNewCarInputPresenter.saveCarInfo(carInfoJson);
                 mAddAddNewCarInputPresenter.sentCarInfoToService(carInfoJson);
             }
         });
+
+        carid.setText(carInfoJson);
     }
 
     @Override public void showProgress() {
@@ -70,10 +68,14 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
 
     }
 
-
     @Override protected void onDestroy() {
         mAddAddNewCarInputPresenter.onDestroy();
         super.onDestroy();
+    }
+
+    @Override
+    protected void initData() {
+        carInfoJson = getIntent().getStringExtra("result");
     }
 
     @Override public void showResultError(int errorNo, String errorMag) {

@@ -61,11 +61,6 @@ public class AddNewCarInputPresenterImpl implements AddNewCarInputPresenter {
 
     @Override public void onSuccess(String t) {
 
-
-//        ResultBean resultBean = GsonUtils.Instance()
-//                .fromJson(t, ResultBean.class);
-//        if (resultBean != null)
-//            addNewCarInputActivity.showResultSuccess(resultBean);
         LogUtils.d("连接服务器返回信息>>>>"  + t);
     }
 }

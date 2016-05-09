@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:miss="http://schemas.android.com/apk/res/com.miss.imissyou.mycar"
+    xmlns:miss="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -15,28 +15,27 @@
     <RelativeLayout
         android:layout_gravity="center"
         android:gravity="center"
-        android:background="@drawable/background_color"
+        android:background="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.miss.imissyou.mycar.ui.RadiusImageView
+        <com.miss.imissyou.mycar.ui.RoundImageView
             android:id="@+id/about_Image"
             miss:Radiustype="round"
-            miss:src="@mipmap/user_head"
-            miss:borderRadius="5dp"
+            android:src="@mipmap/user_head"
+            miss:borderRadius="10dp"
             android:layout_marginTop="50dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
 
-
         <TextView
-
             android:id="@+id/about_team_Info"
             android:text="伯爵技术团队"
             android:layout_above="@+id/about_team_lianx"
             style="@style/MissTextViweStyle"
+            android:textSize="18sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <TextView
@@ -47,9 +46,6 @@
             android:layout_marginBottom="20dp"
             android:layout_alignParentBottom="true"
             android:layout_height="wrap_content" />
-
-
-
     </RelativeLayout>
 
 </LinearLayout>

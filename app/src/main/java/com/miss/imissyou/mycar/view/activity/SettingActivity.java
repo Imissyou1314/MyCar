@@ -22,6 +22,10 @@ public class SettingActivity extends BaseActivity{
     private TitleFragment titleView;
 
 
+    @Override protected void initData() {
+
+    }
+
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_setting);
 

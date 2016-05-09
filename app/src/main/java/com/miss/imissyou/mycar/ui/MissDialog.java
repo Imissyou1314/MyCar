@@ -186,7 +186,7 @@ public class MissDialog extends Dialog {
                 layout.findViewById(R.id.negativeButton).setVisibility(
                         View.GONE);
             }
-            // set the content message
+            // set the content message2857@qq.com2857
             if (message != null) {
                 ((TextView) layout.findViewById(R.id.message)).setText(message);
             } else if (contentView != null) {

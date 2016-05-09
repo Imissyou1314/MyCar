@@ -1,5 +1,6 @@
 package com.miss.imissyou.mycar.view.activity;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -35,6 +36,7 @@ public class MessageActivity extends BaseActivity implements MessageView {
 
     private MessagePresenter mMessagePresenter;
 
+    @SuppressLint("MissingSuperCall")
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_message);
         initData();
@@ -43,7 +45,7 @@ public class MessageActivity extends BaseActivity implements MessageView {
     /**
      * 加载数据
      */
-    private void initData() {
+    @Override public void initData() {
         mMessagePresenter = new MessagePresenterImpl(this);
     }
 

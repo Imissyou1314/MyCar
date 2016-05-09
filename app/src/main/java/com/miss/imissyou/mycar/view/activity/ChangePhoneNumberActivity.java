@@ -10,6 +10,7 @@ import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.presenter.ChangePhoneNumberPresenter;
 import com.miss.imissyou.mycar.presenter.impl.ChangePhoneNumberPresenterImpl;
+import com.miss.imissyou.mycar.ui.TitleFragment;
 import com.miss.imissyou.mycar.util.FindViewById;
 import com.miss.imissyou.mycar.view.ChangePhoneNumberView;
 
@@ -27,20 +28,33 @@ public class ChangePhoneNumberActivity extends BaseActivity implements ChangePho
     Button getCodeSubmit;                   //获取验证码的按钮
     @FindViewById(id = R.id.changePhoneNumber_submit)
     Button submit;                          //提交的按钮
+    @FindViewById(id = R.id.changePhone_title)
+    TitleFragment title;
+
 
     private ChangePhoneNumberPresenter mChangePhoneNumberPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_change_phonenumber);
+
+    }
+
+    @Override protected void initData() {
         mChangePhoneNumberPresenter = new ChangePhoneNumberPresenterImpl(this);
     }
 
-    @Override
-    public void addListeners() {
+    @Override public void addListeners() {
+        title.setTitleText("更改手机号");
+        getCodeSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                mChangePhoneNumberPresenter.getCode(phoneNumberInput.getText().toString());
+            }
+        });
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-
+                mChangePhoneNumberPresenter.submit(phoneNumberInput.getText().toString(), codeInput.getText().toString());
             }
         });
     }

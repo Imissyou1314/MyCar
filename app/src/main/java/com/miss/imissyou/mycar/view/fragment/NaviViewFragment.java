@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.model.LatLng;
@@ -25,6 +27,7 @@ import com.amap.api.navi.model.NaviLatLng;
 import com.amap.api.navi.model.RouteOverlayOptions;
 import com.amap.api.navi.view.RouteOverLay;
 import com.autonavi.tbt.TrafficFacilityInfo;
+import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.util.TTSController;
 
@@ -38,23 +41,24 @@ import java.util.Map;
  */
 public class NaviViewFragment extends BaseFragment implements AMapNaviListener, AMap.OnMapClickListener {
 
-    /**
-     * 导航View
-     */
+    /**导航View*/
     private AMapNaviView mAMapNaviView;
 
-    /**
-     * 导航
-     */
+
+    private EditText secherEditText;          //搜索输入框
+    private Button secherBtn;           //搜索提交按钮
+
+
+
+
+    /**导航*/
     private AMapNavi mAMapNavi;
     /**起点的坐标*/
     private List<NaviLatLng> mStartList;
     /**目标地的坐标*/
     private List<NaviLatLng> mEndList;
     private List<NaviLatLng> mWayPointList;
-    /**
-     * 导航的路数
-     */
+    /**导航的路数*/
     private int[] routeIds;
     private Map< Integer, RouteOverLay> routeOverLays = new HashMap<Integer, RouteOverLay>();
     private boolean calculateSuccess = false;
@@ -66,32 +70,37 @@ public class NaviViewFragment extends BaseFragment implements AMapNaviListener, 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = super.onCreateView(R.layout.fragment_navi, inflater, container, savedInstanceState);
+
+        View view =  super.onCreateView(R.layout.fragment_navi, inflater, container, savedInstanceState);
         mAMapNaviView.onCreate(savedInstanceState);
         mAMap = mAMapNaviView.getMap();
+        mAMapNavi.addAMapNaviListener(this);
+        mAMapNavi.addAMapNaviListener(mTtsManager);
         mAMap.setOnMapClickListener(this);
         return view;
     }
 
     @Override protected void initView(View view) {
         mAMapNaviView = (AMapNaviView) view.findViewById(R.id.navi_view);
+        secherEditText = (EditText) view.findViewById(R.id.navi_View_Input);
+        secherBtn = (Button) view.findViewById(R.id.navi_view_seacher_btn);
+        mAMapNavi = AMapNavi.getInstance(getActivity().getApplicationContext());
+        if (mAMapNavi == null) {
+            LogUtils.d("mAMapNavi 为空");
+        }
     }
 
     @Override protected void initData() {
+
         //计算路线
         mAMapNavi.calculateDriveRoute(mStartList, mEndList, mWayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
     }
 
     @Override protected void addViewsListener() {
-        mAMapNavi = AMapNavi.getInstance(getActivity().getApplicationContext());
-        mAMapNavi.addAMapNaviListener(this);
 
         //语音
         mTtsManager = TTSController.getInstance(getActivity().getApplicationContext());
         mTtsManager.startSpeaking();
-
-        mAMapNavi.addAMapNaviListener(mTtsManager);
-
     }
 
     @Override public void onPause() {

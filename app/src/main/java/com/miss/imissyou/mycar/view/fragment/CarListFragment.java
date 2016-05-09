@@ -32,7 +32,7 @@ import java.util.List;
  * 车辆信息 车库
  * Created by Imissyou on 2016/3/22.
  */
-public class CarListFragment extends BaseFragment implements CarListFragmentView {
+public class CarListFragment extends BaseFragment implements CarListFragmentView{
 
     private CarListPresenter mCarListPresenter;     //
 
@@ -101,13 +101,12 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
     }
 
     @Override public void showProgress() {
-        progress.setVisibility(View.VISIBLE);
+        progress.setRadius(0.1f);
         progress.startAnim();
     }
 
     @Override public void hideProgress() {
         progress.stopAnim();
-        progress.setVisibility(View.INVISIBLE);
     }
 
     @Override public void showResultError(int errorNo, String errorMag) {
@@ -134,7 +133,6 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
             }
         });
     }
-
 
     @Override public void onDestroy() {
         super.onDestroy();

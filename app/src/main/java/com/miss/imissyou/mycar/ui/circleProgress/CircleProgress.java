@@ -167,6 +167,10 @@ public class CircleProgress extends View {
         mDuration = duration;
     }
 
+    /**
+     * 添加默认的大小
+     * @param factor
+     */
     public void setRadius(float factor) {
         stopAnim();
         calPoints(factor);

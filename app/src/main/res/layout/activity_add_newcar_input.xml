@@ -9,7 +9,8 @@
     <com.miss.imissyou.mycar.ui.TitleFragment
         android:id="@+id/addnewCarInput_title"
         android:layout_width="match_parent"
-        android:layout_height="45dp"></com.miss.imissyou.mycar.ui.TitleFragment>
+        android:layout_height="45dp">
+    </com.miss.imissyou.mycar.ui.TitleFragment>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -21,13 +22,13 @@
             android:orientation="vertical">
 
 
-            <com.miss.imissyou.mycar.ui.RadiusImageView
+            <com.miss.imissyou.mycar.ui.RoundImageView
                 android:id="@+id/addCar_inputCarInfo_UserImage"
                 android:layout_width="match_parent"
                 android:layout_height="140dp"
                 android:layout_gravity="center"
                 miss:borderRadius="10dp"
-                miss:src="@mipmap/user_head"
+                android:src="@mipmap/user_head"
                 miss:Radiustype="round" />
 
             <TableLayout

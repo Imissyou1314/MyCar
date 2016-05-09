@@ -27,6 +27,7 @@ import com.miss.imissyou.mycar.service.impl.MusicPlayService;
 import com.miss.imissyou.mycar.bean.Music;
 import com.miss.imissyou.mycar.ui.adapterutils.CommonAdapter;
 import com.miss.imissyou.mycar.ui.adapterutils.ViewHolder;
+import com.miss.imissyou.mycar.ui.sidemenu.interfaces.ScreenShotable;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.StringUtil;
 
@@ -36,7 +37,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import yalantis.com.sidemenu.interfaces.ScreenShotable;
 
 /**
  * Created by Imissyou on 2016/3/22.

@@ -36,6 +36,11 @@ public class FindPasswordActivity extends BaseActivity {
         super.onCreate(savedInstanceState, R.layout.activity_findpassword);
     }
 
+    @Override
+    protected void initData() {
+
+    }
+
     @Override public void addListeners() {
         titleView.setTitleText("找回密码");
         sumbitBtn.setOnClickListener(new View.OnClickListener() {

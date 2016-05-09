@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.miss.imissyou.mycar.R;
+import com.miss.imissyou.mycar.ui.sidemenu.interfaces.ScreenShotable;
 
-import yalantis.com.sidemenu.interfaces.ScreenShotable;
 
 /**
  * Home fragment
