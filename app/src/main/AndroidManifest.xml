@@ -148,7 +148,7 @@
             android:value="57fff430b9c5ffd28e6161849f5c84a6"/>
 
     </application>
-    
+
     <!--地图包,搜索包需要的基本权限-->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />

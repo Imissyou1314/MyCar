@@ -1,5 +1,6 @@
 package com.miss.imissyou.mycar.presenter;
 
+import com.miss.imissyou.mycar.bean.CarInfoBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
 
 /**
@@ -9,15 +10,10 @@ import com.miss.imissyou.mycar.bean.ResultBean;
 public interface AddNewCarInputPresenter {
 
     /**
-     * 保存车辆信息到本地
-     */
-    void saveCarInfo(String jsonString);
-
-    /**
      * 发送车辆信息到服务器
-     * @param result
+     * @param resultBean
      */
-    void sentCarInfoToService(String result);
+    void sentCarInfoToService(CarInfoBean resultBean);
 
     /**
      * 销毁对象退出当前Activity

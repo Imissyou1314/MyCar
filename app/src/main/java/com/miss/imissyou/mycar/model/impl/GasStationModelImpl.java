@@ -12,6 +12,7 @@ import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.util.GsonUtils;
 
 /**
+ * 负者网络请求
  * Created by Imissyou on 2016/4/24.
  */
 public class GasStationModelImpl implements GasStationModle {
@@ -19,6 +20,7 @@ public class GasStationModelImpl implements GasStationModle {
     private GasStationPresenter gasStation;
 
     public GasStationModelImpl(GasStationPresenterImpl mGasStationPresenter) {
+        this.gasStation = mGasStationPresenter;
     }
 
     @Override public void loadGasStationData(double lon, double lat, int r, int page, String key, int format) {
@@ -33,16 +35,16 @@ public class GasStationModelImpl implements GasStationModle {
 
         String url = "http://apis.juhe.cn/oil/local";
         LogUtils.d("请求路径：" + url);
+
         RxVolley.post(url, param, new HttpCallback() {
-            @Override
-            public void onFailure(int errorNo, String strMsg) {
+            @Override public void onFailure(int errorNo, String strMsg) {
                 gasStation.onFailure(errorNo, strMsg);
             }
 
-            @Override
-            public void onSuccess(String t) {
+            @Override public void onSuccess(String t) {
                 GasStationResultBean  gasStationResultBean = GsonUtils
                         .Instance().fromJson(t, GasStationResultBean.class);
+                LogUtils.d("获取加油站的信息:" + t);
                 if (gasStationResultBean != null)
                     gasStation.onSuccess(gasStationResultBean);
             }

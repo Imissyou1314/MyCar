@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_gravity="center"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <!--消息的Item-->
@@ -11,7 +12,7 @@
         app:cardBackgroundColor="#353543"
         app:cardCornerRadius="10dp"
         android:layout_gravity="center"
-        app:cardElevation="4dp"
+        app:cardElevation="1dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginBottom="5dp"
@@ -20,6 +21,8 @@
 
         <LinearLayout
             android:orientation="vertical"
+            android:id="@+id/message_item_background_color"
+            android:background="@color/color_activty_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

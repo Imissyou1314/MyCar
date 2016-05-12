@@ -1,9 +1,11 @@
 package com.miss.imissyou.mycar.presenter.impl;
 
+import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.bean.BaseBean;
 import com.miss.imissyou.mycar.model.GasStationModle;
 import com.miss.imissyou.mycar.model.impl.GasStationModelImpl;
 import com.miss.imissyou.mycar.presenter.GasStationPresenter;
+import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.view.GasStationView;
 import com.miss.imissyou.mycar.view.fragment.GasStationFragment;
 
@@ -15,7 +17,6 @@ public class GasStationPresenterImpl implements GasStationPresenter {
 
     private  GasStationView mGasStationListView;
     private GasStationModle mGasStationModelImpl;
-
 
     public GasStationPresenterImpl(GasStationFragment gasStationList) {
         attachView(gasStationList);
@@ -47,6 +48,15 @@ public class GasStationPresenterImpl implements GasStationPresenter {
 
     @Override
     public void loadServiceData(double lon, double lat, int r, String key, int page, int format) {
+        //获取经纬度
+        if (r == 0 ) {
+            r = Constant.GET_GASSTATION_R;
+        } else if (key.equals("") || key == null) {
+            key = Constant.GET_GASSTATION_KEY;
+        }
+        //请求网络获取加油站的信息
+        LogUtils.d("获取加油站信息");
+        mGasStationModelImpl.loadGasStationData(lon, lat, r, page, key, format);
 
     }
 }

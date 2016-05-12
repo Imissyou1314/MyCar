@@ -8,7 +8,7 @@ import com.miss.imissyou.mycar.bean.BaseBean;
  *
  * Created by Imissyou on 2016/4/2.
  */
-public interface MainPresenter<V> {
+public interface  MainPresenter<V> {
 
     /**
      * 加载失败

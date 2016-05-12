@@ -9,8 +9,7 @@
     <com.miss.imissyou.mycar.ui.TitleFragment
         android:id="@+id/addnewCarInput_title"
         android:layout_width="match_parent"
-        android:layout_height="45dp">
-    </com.miss.imissyou.mycar.ui.TitleFragment>
+        android:layout_height="45dp"></com.miss.imissyou.mycar.ui.TitleFragment>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -19,6 +18,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/color_carView_mainMesage"
             android:orientation="vertical">
 
 
@@ -27,34 +27,297 @@
                 android:layout_width="match_parent"
                 android:layout_height="140dp"
                 android:layout_gravity="center"
-                miss:borderRadius="10dp"
                 android:src="@mipmap/user_head"
-                miss:Radiustype="round" />
+                miss:Radiustype="round"
+                miss:borderRadius="10dp" />
 
             <TableLayout
                 android:layout_width="match_parent"
-                android:layout_marginTop="5dp"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:paddingLeft="35dp"
-                android:paddingRight="20dp"
-                android:background="@color/colorPrimary">
+                android:background="@color/colorPrimary"
+                android:collapseColumns="2"
+                android:paddingTop="10dp">
 
                 <TableRow>
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="车牌号:"
-                        android:textColor="@color/colorFont"
-                        android:textSize="@dimen/FontSize" />
+                        style="@style/addCarInput_text"
+                        android:text="车品牌:" />
 
                     <EditText
-                        android:id="@+id/activity_add_newCar_carId_input"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
+                        android:id="@+id/activity_add_newCar_brand_input"
+                        style="@style/addCarInput_noline" />
                 </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="@style/addCarInput_text"
+                        android:text="品牌型号:" />
+
+                    <EditText
+                        android:id="@+id/activity_add_newCar_models_input"
+                        style="@style/addCarInput_noline" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="@style/addCarInput_text"
+                        android:text="车牌号:" />
+
+                    <EditText
+                        android:id="@+id/activity_add_newCar_plateNumber_input"
+                        style="@style/addCarInput_noline" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="@style/addCarInput_text"
+                        android:text="发动机号:" />
+
+                    <EditText
+                        android:id="@+id/activity_add_newCar_engineNumber_input"
+                        style="@style/addCarInput_noline" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="@style/addCarInput_text"
+                        android:text="车架号:" />
+
+                    <EditText
+                        android:id="@+id/activity_add_newCar_vin_input"
+                        style="@style/addCarInput_noline" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="@style/addCarInput_text"
+                        android:text="车身等级:" />
+
+                    <EditText
+                        android:id="@+id/activity_add_newCar_rank_input"
+                        style="@style/addCarInput_noline" />
+                </TableRow>
+
+                <!--View -->
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/colorWhite" />
+
+                <TableRow>
+
+                    <TextView
+                        style="@style/addCarInput_text"
+                        android:text="里程数:" />
+
+                    <EditText
+                        android:id="@+id/activity_add_newCar_milleage_input"
+                        style="@style/addCarInput_noline" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="@style/addCarInput_text"
+                        android:text="油箱容量:" />
+
+                    <EditText
+                        android:id="@+id/activity_add_newCar_oilBox_input"
+                        style="@style/addCarInput_noline" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="@style/addCarInput_text"
+                        android:text="油箱:" />
+
+                    <EditText
+                        android:id="@+id/activity_add_newCar_oil_input"
+                        style="@style/addCarInput_noline" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="@style/addCarInput_text"
+                        android:text="温度:" />
+
+                    <EditText
+                        android:id="@+id/activity_add_newCar_temperature_input"
+                        style="@style/addCarInput_noline" />
+                </TableRow>
+
+                <!--View Link-->
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/colorWhite" />
+
+
+                <!--车的性能-->
+                <TableRow>
+
+                    <TextView
+                        style="@style/addCarInput_text"
+                        android:text="发动机性能:" />
+
+                    <EditText
+                        android:id="@+id/activity_add_newCar_enginProperty_input"
+                        style="@style/addCarInput_noline" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="@style/addCarInput_text"
+                        android:text="变速器性能:" />
+
+                    <EditText
+                        android:id="@+id/activity_add_newCar_transmission_input"
+                        style="@style/addCarInput_noline" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="@style/addCarInput_text"
+                        android:text="车灯性能:" />
+
+                    <EditText
+                        android:id="@+id/activity_add_newCar_carLight_input"
+                        style="@style/addCarInput_noline" />
+                </TableRow>
+
+                <!--View Link-->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/colorWhite" />
+                <!--车的状态-->
+                <TableRow>
+
+                    <TextView
+                        style="@style/addCarInput_text"
+                        android:text="车状态:" />
+
+                    <EditText
+                        android:id="@+id/activity_add_newCar_carState_input"
+                        style="@style/addCarInput_noline" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="@style/addCarInput_text"
+                        android:text="车警报:" />
+
+                    <EditText
+                        android:id="@+id/activity_add_newCar_carAlarm_input"
+                        style="@style/addCarInput_noline" />
+                </TableRow>
+
+                <!--View Link-->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/colorWhite" />
+
+                <!--车的警报状态-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <TextView
+                        style="@style/addCarInput_text"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="是否接收警报信息:" />
+
+                    <com.miss.imissyou.mycar.ui.ToggleButton
+                        android:id="@+id/activity_add_newCar_alarmMessage_button"
+                        android:layout_width="55dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.03"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="12dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <TextView
+                        style="@style/addCarInput_text"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="是否接收车性能信息:" />
+
+                    <com.miss.imissyou.mycar.ui.ToggleButton
+                        android:id="@+id/activity_add_newCar_propertyMessage_button"
+                        android:layout_width="55dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.03"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="12dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <TextView
+                        style="@style/addCarInput_text"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="是否接收车状态信息:" />
+
+                    <com.miss.imissyou.mycar.ui.ToggleButton
+                        android:id="@+id/activity_add_newCar_stateMessage_button"
+                        android:layout_width="55dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.03"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="12dp" />
+
+                </LinearLayout>
 
             </TableLayout>
 
@@ -64,6 +327,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="22dp"
+                android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:text="提交"
                 android:textColor="@color/colorFont"
@@ -71,5 +336,4 @@
 
         </LinearLayout>
     </ScrollView>
-
 </LinearLayout>

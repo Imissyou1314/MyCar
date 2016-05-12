@@ -5,4 +5,5 @@ package com.miss.imissyou.mycar.view;
  * Created by Imissyou on 2016/4/25.
  */
 public interface SumbitIndentView extends MainView{
+
 }

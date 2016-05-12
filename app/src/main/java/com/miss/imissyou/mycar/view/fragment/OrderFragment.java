@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 订单列表
  * Created by Imissyou on 2016/4/20.
  */
 public class OrderFragment extends ListFragment implements OrderListView ,ScreenShotable {

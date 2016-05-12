@@ -44,7 +44,11 @@ public class CarListPresenterImpl implements CarListPresenter<CarListFragmentVie
         if (((ResultBean) resultBean).isServiceResult()) {
             List<CarInfoBean> cars = GsonUtils.getParams((ResultBean)
                     resultBean, "car", CarInfoBean[].class);
-            mCarListFragmentView.showResultSuccess(cars);
+            if (cars != null) {
+                mCarListFragmentView.showResultSuccess(cars);
+            } else {
+                mCarListFragmentView.showResultError(0, "用户没有车辆");
+            }
         } else {
             LogUtils.d("解析数据出错");
         }

@@ -12,7 +12,7 @@ public class CarInfoBean extends BaseBean {
     private String models;                  //品牌型号
     private String plateNumber;             //车牌号
     private String mark;                    //图片地址
-    private String vin;                       //车牌号
+    private String vin;                       //车架号
     private String engineNumber;              //发动机号
     private String rank;                    //车身等级
     private long milleage;                  //里程数

@@ -54,5 +54,9 @@ public class Constant {
     public static DPoint MDPONIT = new DPoint();   //我的位置经纬度
 
 
-
+    /**
+     * 设置获取加油站的默认选项
+     */
+    public static int GET_GASSTATION_R = 10000;         //设置半径为10公里
+    public static final String GET_GASSTATION_KEY = "key";
 }

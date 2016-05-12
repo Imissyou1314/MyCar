@@ -1,6 +1,5 @@
 package com.miss.imissyou.mycar.presenter.impl;
 
-import com.google.gson.Gson;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.bean.CarInfoBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
@@ -28,18 +27,12 @@ public class AddNewCarInputPresenterImpl implements AddNewCarInputPresenter {
     }
 
 
-    @Override public void saveCarInfo(String jsonString) {
-
-    }
-
-    @Override public void sentCarInfoToService(String jsonString) {
-        CarInfoBean carInfoBean = GsonUtils.Instance()
-                .fromJson(jsonString, CarInfoBean.class);
-        if (carInfoBean == null) {
+    @Override public void sentCarInfoToService(CarInfoBean resultBean) {
+        if (resultBean == null) {
             addNewCarInputActivity.showResultError(0, "Json解析出错");
             return;
         } else {
-            addNewCarInputModel.sentToService(carInfoBean);
+            addNewCarInputModel.sentToService(resultBean);
         }
     }
 

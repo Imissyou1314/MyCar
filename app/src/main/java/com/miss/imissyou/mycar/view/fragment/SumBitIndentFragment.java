@@ -11,12 +11,18 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.gson.reflect.TypeToken;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.OilBean;
+import com.miss.imissyou.mycar.bean.OrderBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.presenter.SumbitIndentPresenter;
 import com.miss.imissyou.mycar.presenter.impl.SumbitIndentPresenterImpl;
+import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.view.SumbitIndentView;
+
+import java.lang.reflect.Type;
+import java.util.List;
 
 /**
  * 加油订单提交的Fragment
@@ -36,12 +42,15 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     private OilBean oil;        //油的Bean
 
     private SumbitIndentPresenter mSumbitIndentPresenter;
+    private double lat;            //经度
+    private double lot;            //纬度
+    private String address;        //地址
+    private List<OilBean> oilBean;
 
     @Nullable
     @Override
     public View onCreateView(int viewId, LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mSumbitIndentPresenter = new SumbitIndentPresenterImpl(this);
         return super.onCreateView(R.layout.fragment_sumbit_indent, inflater,
                 container, savedInstanceState);
     }
@@ -56,7 +65,12 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     }
 
     @Override protected void initData() {
-
+        mSumbitIndentPresenter = new SumbitIndentPresenterImpl(this);
+        lat = getArguments().getDouble("lat");
+        lot = getArguments().getDouble("lot");
+        address = getArguments().getString("address");
+        oilBean = GsonUtils.Instance().fromJson(getArguments().getString("oil"),
+                new TypeToken<List<OilBean>>() {}.getType());
     }
 
     @Override protected void addViewsListener() {
@@ -103,6 +117,8 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
             @Override public void onFocusChange(View v, boolean hasFocus) {
                 //TODO提交订单
                 sumBitOrder.setFocusable(false);
+                //TODO提交数据类型
+                mSumbitIndentPresenter.loadServiceData(null);
             }
         });
 
@@ -142,8 +158,8 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
 
     }
 
-    @Override
-    public void onDestroy() {
+    @Override public void onDestroy() {
         super.onDestroy();
     }
+
 }

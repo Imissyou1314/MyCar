@@ -1,6 +1,7 @@
 package com.miss.imissyou.mycar.view.fragment;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 
+import com.kymjs.rxvolley.RxVolley;
+import com.kymjs.rxvolley.client.HttpCallback;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.CarInfoBean;
@@ -20,12 +23,14 @@ import com.miss.imissyou.mycar.ui.adapterutils.ViewHolder;
 import com.miss.imissyou.mycar.ui.circleProgress.CircleProgress;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.DialogUtils;
+import com.miss.imissyou.mycar.util.LinkService;
 import com.miss.imissyou.mycar.view.CarListFragmentView;
 import com.miss.imissyou.mycar.view.activity.AddNewCarActivity;
 import com.software.shell.fab.ActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -66,8 +71,8 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
 
     @Override protected void initData() {
         mCarListPresenter = new CarListPresenterImpl(this);
-        LogUtils.d("加载车库信息");
-        mCarListPresenter.loadServiceData("1");   //获取用户车辆
+        LogUtils.d("加载车库信息:UserId == " + Constant.userBean.getId());
+        mCarListPresenter.loadServiceData(Constant.userBean.getId());   //获取用户车辆
     }
 
     @Override protected void addViewsListener() {
@@ -122,14 +127,26 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
 
     @Override public void showResultSuccess(List<CarInfoBean> resultBean) {
         this.cars = resultBean;
+        LinkService.Instance();
         carInfoList.setAdapter(new CommonAdapter<CarInfoBean>(getActivity(), resultBean,
                 R.layout.carinfo_listview_item) {
-            @Override public void convert(ViewHolder holder, CarInfoBean car) {
-                //TODO
+            @Override public void convert(final ViewHolder holder, CarInfoBean car) {
                 holder.replaceText(R.id.carinfo_item_carState, "null", car.getCarState());
-                holder.replaceText(R.id.carinfo_item_carID, "null", car.getPlateNumber());
-                holder.replaceText(R.id.carinfo_item_carName, "null", car.getBrand() + car.getModles());
+                LogUtils.d("车牌号" + car.getPlateNumber());
+                holder.replaceText(R.id.carinfo_item_carId, "null", car.getPlateNumber());
+                holder.replaceText(R.id.carinfo_item_carName, "null",car.getBrand() + car.getModles());
                 holder.replaceText(R.id.carinfo_item_carOil, "null", car.getOil() + "");
+                if (!car.getMark().equals(""))
+                    RxVolley.get(Constant.SERVER_URL + car.getMark(), new HttpCallback() {
+                        @Override public void onSuccess(Map<String, String> headers, Bitmap bitmap) {
+                            if (bitmap != null )
+                            holder.setImage(R.id.carInfo_item_carImage, bitmap);
+                        }
+
+                        @Override public void onFailure(int errorNo, String strMsg) {
+                            LogUtils.d("连接服务器异常:" + strMsg);
+                        }
+                    });
             }
         });
     }

@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.amap.api.maps.AMap;
-import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps2d.AMap;
+import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.navi.AMapNavi;
 import com.amap.api.navi.AMapNaviListener;
 import com.amap.api.navi.AMapNaviView;
@@ -24,7 +24,6 @@ import com.amap.api.navi.model.AimLessModeCongestionInfo;
 import com.amap.api.navi.model.AimLessModeStat;
 import com.amap.api.navi.model.NaviInfo;
 import com.amap.api.navi.model.NaviLatLng;
-import com.amap.api.navi.model.RouteOverlayOptions;
 import com.amap.api.navi.view.RouteOverLay;
 import com.autonavi.tbt.TrafficFacilityInfo;
 import com.lidroid.xutils.util.LogUtils;
@@ -39,7 +38,7 @@ import java.util.Map;
  * 导航
  * Created by Imissyou on 2016/5/2.
  */
-public class NaviViewFragment extends BaseFragment implements AMapNaviListener, AMap.OnMapClickListener {
+public class NaviViewFragment extends BaseFragment implements AMapNaviListener, AMap.OnMapClickListener, com.amap.api.maps.AMap.OnMapClickListener {
 
     /**导航View*/
     private AMapNaviView mAMapNaviView;
@@ -61,7 +60,8 @@ public class NaviViewFragment extends BaseFragment implements AMapNaviListener, 
 
     /**语音功能*/
     private TTSController mTtsManager;
-    private AMap mAMap;
+    private com.amap.api.maps.AMap mAMap;
+
 
     @Nullable
     @Override
@@ -69,9 +69,10 @@ public class NaviViewFragment extends BaseFragment implements AMapNaviListener, 
         View view =  super.onCreateView(R.layout.fragment_navi, inflater, container, savedInstanceState);
         mAMapNaviView.onCreate(savedInstanceState);
         mAMap = mAMapNaviView.getMap();
-        mAMapNavi.addAMapNaviListener(this);
-        mAMapNavi.addAMapNaviListener(mTtsManager);
-        mAMap.setOnMapClickListener(this);
+
+            mAMapNavi.addAMapNaviListener(this);
+            mAMapNavi.addAMapNaviListener(mTtsManager);
+            mAMap.setOnMapClickListener(this);
         return view;
     }
 
@@ -268,9 +269,15 @@ public class NaviViewFragment extends BaseFragment implements AMapNaviListener, 
 
     }
 
+
     @Override
     public void onMapClick(LatLng latLng) {
         NaviLatLng endLatLng = new NaviLatLng(latLng.latitude, latLng.longitude);
         mEndList.add(0, endLatLng);
+    }
+
+    @Override
+    public void onMapClick(com.amap.api.maps.model.LatLng latLng) {
+
     }
 }

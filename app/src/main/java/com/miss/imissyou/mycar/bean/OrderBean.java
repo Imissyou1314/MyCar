@@ -8,10 +8,7 @@ import java.util.Date;
  */
 public class OrderBean extends BaseBean {
 
-    private String createdBy;
-    private String createdDate;
-    private String lastModifiedBy;
-    private Date lastModifiedDate;
+
     /** 预约单ID */
     private String id;
     /** 车ID */
@@ -85,46 +82,6 @@ public class OrderBean extends BaseBean {
 
     public void setCarId(String carId) {
         this.carId = carId;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public String getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(String createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    public Date getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Date lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
     }
 
     public Integer getNumber() {

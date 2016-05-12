@@ -80,8 +80,10 @@ public class GsonUtils {
 
         String tempStr = GsonUtils.Instance().toJson(resultBean.getResultParm().get(key));
         LogUtils.d("List Json" + tempStr);
-        if (clazz != null) {
+        if (clazz != null && tempStr != null) {
             T[] resultList = GsonUtils.Instance().fromJson(tempStr, clazz);
+            if (resultList == null)
+                return null;
             return Arrays.asList(resultList);
         } else {
             return null;
