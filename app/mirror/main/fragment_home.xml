@@ -1,0 +1,26 @@
+<!-- [ Mirror metadata ] generatedAt: 1463139635781 -->
+<!-- Generated screen file. Fill the id tags below with content with
+which to populate your previewed layout. For a complete specification
+of sample data, please see http://jimulabs.com/sample-data-specifications/ 
+
+Valid attributes on <screen> tag: theme="@style/someTheme" inEditMode="false" overlay="@drawable/mockup" -->
+<screen>
+    <_content layout="@layout/fragment_home">
+        <!-- TextView Examples:
+        <fragment_home_carName text="@string/string_resource" />
+        <fragment_home_carName text="Text literal" textSize="14sp" /> -->
+        <fragment_home_carName />
+        <fragment_home_carID />
+        <fragment_home_carFD />
+        <fragment_home_carAge />
+        <home_fragment_breakdown_message />
+        <home_fragment_alarm_message />
+        <home_fragment_state_message />
+        <home_fragment_engine_state />
+        <home_fragment_shitf_state />
+        <home_fragment_mil_number />
+        <home_fragment_water_number />
+        <home_fragment_oil_text />
+        <home_fragment_endurance_text />
+    </_content>
+</screen>

@@ -5,31 +5,28 @@
     android:layout_height="match_parent">
     <!--导航-->
 
-    <com.amap.api.navi.AMapNaviView
-        android:id="@+id/navi_view"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent" />
+    <Button
+        android:id="@+id/wgsNaviBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="国际经纬度坐标" />
 
-        <LinearLayout
-            android:background="@color/color_carView_background_tran"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="45dp">
+    <Button
+        android:id="@+id/gcjNaviBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="国测局坐标" />
 
-            <EditText
-                android:id="@+id/navi_View_Input"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:textSize="20sp"
-                android:text="搜索"
-                android:layout_height="match_parent" />
-            <Button
-                android:id="@+id/navi_view_seacher_btn"
-                android:background="@drawable/ic_secher"
-                android:layout_width="55dp"
-                android:layout_height="match_parent" />
+    <Button
+        android:id="@+id/bdmcNaviBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="百度墨卡托坐标" />
 
-        </LinearLayout>
+    <Button
+        android:id="@+id/mDb06llNaviBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="百度经纬度坐标" />
+
 </LinearLayout>

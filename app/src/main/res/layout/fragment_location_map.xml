@@ -3,9 +3,11 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.amap.api.maps2d.MapView
-        android:id="@+id/loction_map"
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/baidu_map"
         android:layout_height="match_parent"
-        android:layout_width="match_parent" />
+        android:layout_width="match_parent"
+        android:clickable="true"/>
+
 
 </LinearLayout>

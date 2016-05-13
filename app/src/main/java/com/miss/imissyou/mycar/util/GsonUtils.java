@@ -103,4 +103,16 @@ public class GsonUtils {
         T result = GsonUtils.Instance().fromJson(tempStr, clazz);
         return result;
     }
+
+    /**
+     * 获取ResultBean
+     * @param t
+     * @return
+     */
+    public static ResultBean getResultBean(String t) {
+        if (null == t || t.equals(""))
+            return null;
+        ResultBean resultBean = GsonUtils.Instance().fromJson(t, ResultBean.class);
+        return resultBean;
+    }
 }

@@ -57,6 +57,5 @@ public class GasStationPresenterImpl implements GasStationPresenter {
         //请求网络获取加油站的信息
         LogUtils.d("获取加油站信息");
         mGasStationModelImpl.loadGasStationData(lon, lat, r, page, key, format);
-
     }
 }

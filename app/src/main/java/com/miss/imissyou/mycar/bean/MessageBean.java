@@ -8,11 +8,20 @@ import java.util.Date;
  */
 public class MessageBean extends BaseBean{
 
+    private String id;
     private int messageTag;     //消息类型
     private boolean isRead;     //消息是否阅读
     private String messageTitle;//消息标题
     private String messageMsg;  //消息的主消息
     private Date  messageTime;  //消息的时间
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public boolean isRead() {
         return isRead;

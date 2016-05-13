@@ -9,7 +9,7 @@
     <style name="MissTextViweStyle">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/FontSize</item>
-        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textColor">@color/color_back_gui</item>
         <item name="android:gravity">center_horizontal</item>
     </style>
 

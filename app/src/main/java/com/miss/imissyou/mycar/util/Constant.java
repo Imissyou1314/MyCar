@@ -1,8 +1,5 @@
 package com.miss.imissyou.mycar.util;
 
-import android.graphics.Point;
-
-import com.autonavi.amap.mapcore.DPoint;
 import com.miss.imissyou.mycar.bean.UserBean;
 
 /**
@@ -50,8 +47,6 @@ public class Constant {
     public static final int NETWORK_STATE = -1;
     public static final String NOTNETWORK = "网络连接异常";
 
-    /**地图*/
-    public static DPoint MDPONIT = new DPoint();   //我的位置经纬度
 
 
     /**

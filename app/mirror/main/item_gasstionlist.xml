@@ -1,0 +1,21 @@
+<!-- [ Mirror metadata ] generatedAt: 1463139635819 -->
+<!-- Generated screen file. Fill the id tags below with content with
+which to populate your previewed layout. For a complete specification
+of sample data, please see http://jimulabs.com/sample-data-specifications/ 
+
+Valid attributes on <screen> tag: theme="@style/someTheme" inEditMode="false" overlay="@drawable/mockup" -->
+<screen>
+    <_content layout="@layout/item_gasstionlist">
+        <!-- ImageView Examples:
+        <gasSattion_Item_Icon src="@drawable/image_resource" />
+        <gasSattion_Item_Icon src="relative_path/image.jpg" /> -->
+        <gasSattion_Item_Icon />
+        <!-- TextView Examples:
+        <gasSattion_Item_stationName text="@string/string_resource" />
+        <gasSattion_Item_stationName text="Text literal" textSize="14sp" /> -->
+        <gasSattion_Item_stationName />
+        <gasSattion_Item_stationType />
+        <gasSattion_Item_oilType />
+        <gasSattion_Item_diatance />
+    </_content>
+</screen>

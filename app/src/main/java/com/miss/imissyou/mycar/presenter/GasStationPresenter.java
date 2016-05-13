@@ -6,7 +6,7 @@ import com.miss.imissyou.mycar.view.GasStationView;
  * 加油站的Presenter
  * Created by Imissyou on 2016/4/24.
  */
-public interface GasStationPresenter extends MainPresenter<GasStationView<L>> {
+public interface GasStationPresenter extends MainPresenter<GasStationView> {
 
     /**
      * 加载服务器数据或者缓存数据

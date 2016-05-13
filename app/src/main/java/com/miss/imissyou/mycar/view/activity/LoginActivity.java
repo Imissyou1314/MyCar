@@ -208,6 +208,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     private void setAlias(String id) {
         LogUtils.d("用户ID:" + id);
         if (id != null) {
+            if (id.contains(".")) {
+                id = id.substring(0, id.indexOf("."));
+            }
             JPushInterface.setAlias(this, id, new TagAliasCallback() {
                 @Override public void gotResult(int i, String s, Set<String> set) {
                     LogUtils.d("JPushInterface设置状态:" + i);

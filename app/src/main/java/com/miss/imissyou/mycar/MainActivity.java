@@ -217,6 +217,11 @@ public class MainActivity extends ActionBarActivity
      */
     private void setAlias(String id) {
         if(id != null)
+            LogUtils.d("设置的别名:"  + id);
+        if (id.contains(".")) {
+            id = id.substring(0, id.indexOf("."));
+            LogUtils.d("设置的别名:"  + id);
+        }
             JPushInterface.setAlias(this, id, new TagAliasCallback() {
                 @Override public void gotResult(int i, String s, Set<String> set) {
                     LogUtils.d("别名：" + i);

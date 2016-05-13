@@ -401,6 +401,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
+                        android:layout_marginBottom="3dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -421,12 +422,11 @@
                             android:textColor="@color/color_boolean_false_text"
                             android:text="MissYOut" />
                     </LinearLayout>
-
-
                     <ProgressBar
                         android:id="@+id/home_fragment_oil_progress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
                         android:progressTint="@color/color_progress_greed"
                         android:progress="80"
                         style="@android:style/Widget.ProgressBar.Horizontal" />
@@ -434,7 +434,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginBottom="3dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -462,6 +462,7 @@
                         android:layout_height="wrap_content"
                         android:max="100"
                         android:progressTint="@color/color_progress_red"
+                        android:layout_marginBottom="10dp"
                         android:progress="20"
                         style="@android:style/Widget.ProgressBar.Horizontal"/>
 
