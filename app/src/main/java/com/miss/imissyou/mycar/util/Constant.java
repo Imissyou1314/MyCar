@@ -54,4 +54,12 @@ public class Constant {
      */
     public static int GET_GASSTATION_R = 10000;         //设置半径为10公里
     public static final String GET_GASSTATION_KEY = "key";
+
+    /**
+     * 定位的起点坐标和终点坐标
+     */
+    public static final String startLatitude = "startLatitude";
+    public static final String startLongitude = "startLongitude";
+    public static final String endLatitude = "endLatitude";
+    public static final String endLongitude = "endLongitude";
 }

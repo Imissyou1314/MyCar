@@ -3,6 +3,7 @@ package com.miss.imissyou.mycar.model.impl;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.miss.imissyou.mycar.bean.ResultBean;
+import com.miss.imissyou.mycar.bean.UserBean;
 import com.miss.imissyou.mycar.model.ChangePhoneNumberModle;
 import com.miss.imissyou.mycar.presenter.ChangePhoneNumberPresenter;
 import com.miss.imissyou.mycar.util.Constant;
@@ -39,11 +40,12 @@ public class ChangePhoneNumberModelImpl implements ChangePhoneNumberModle {
 
     @Override public void submit(String phoneNumber, String code) {
         HttpParams params = new HttpParams();
+        params.putHeaders("cookie", Constant.COOKIE);
+        params.put("id", Constant.userBean.getId());
         params.put("phoneNumber", phoneNumber);
         params.put("code", code);
 
-        //TODO
-        String url = Constant.SERVER_URL + "changePhone";
+        String url = Constant.SERVER_URL + "users/changeRelatedPhone";
 
         LinkService.post(url, params, new HttpCallback() {
             @Override public void onFailure(int errorNo, String strMsg) {

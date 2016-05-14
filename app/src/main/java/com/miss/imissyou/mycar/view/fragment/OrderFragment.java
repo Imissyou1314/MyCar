@@ -87,6 +87,9 @@ public class OrderFragment extends ListFragment implements OrderListView, Screen
                 BaseFragment NaviFragment = new NaviViewFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("address", order.getAddress());
+                bundle.putString("statioName",order.getStationName());
+                bundle.putString("brandName",order.getBrandName());
+
                 NaviFragment.getArguments().putBundle(OrderAddrress, bundle);
             }
         });

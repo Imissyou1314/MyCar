@@ -18,6 +18,7 @@ import com.miss.imissyou.mycar.bean.OrderBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.presenter.SumbitIndentPresenter;
 import com.miss.imissyou.mycar.presenter.impl.SumbitIndentPresenterImpl;
+import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.view.SumbitIndentView;
 
@@ -42,6 +43,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     private OilBean oil;        //油的Bean
 
     private SumbitIndentPresenter mSumbitIndentPresenter;
+    private OrderBean orderBean;
     private double lat;            //经度
     private double lot;            //纬度
     private String address;        //地址
@@ -66,6 +68,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
 
     @Override protected void initData() {
         mSumbitIndentPresenter = new SumbitIndentPresenterImpl(this);
+        orderBean = new OrderBean();
         lat = getArguments().getDouble("lat");
         lot = getArguments().getDouble("lot");
         address = getArguments().getString("address");
@@ -118,7 +121,11 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
                 //TODO提交订单
                 sumBitOrder.setFocusable(false);
                 //TODO提交数据类型
-                mSumbitIndentPresenter.loadServiceData(null);
+//                orderBean.setCarId(carId);
+                orderBean.setUserId(Constant.userBean.getId());
+                orderBean.setAddress(address);
+//                orderBean.setStationName();
+                mSumbitIndentPresenter.loadServiceData(orderBean);
             }
         });
 

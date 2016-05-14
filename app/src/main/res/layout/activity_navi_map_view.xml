@@ -3,10 +3,9 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.amap.api.maps.MapView
+    <com.amap.api.navi.AMapNaviView
+        android:id="@+id/navi_map_View_activity"
         android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:id="@+id/location_mapView"/>
-
+        android:layout_width="match_parent" />
 
 </LinearLayout>

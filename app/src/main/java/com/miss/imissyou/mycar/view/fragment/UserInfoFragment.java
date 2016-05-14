@@ -89,9 +89,7 @@ public class UserInfoFragment extends BaseFragment implements UserInfoView {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override public void hideProgress() {
-
         progress.stopAnim();
-
     }
 
     @Override public void onDestroy() {
