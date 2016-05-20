@@ -89,9 +89,9 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 LogUtils.d("提交数据");
-                resultBean.setAlarmMessage(alarmMessage.getKeepScreenOn());
-                resultBean.setPropertyMessage(propertyMessage.getKeepScreenOn());
-                resultBean.setStateMessage(stateMessage.getKeepScreenOn());
+                resultBean.setAlarmMessage(alarmMessage.getToggleOn());
+                resultBean.setPropertyMessage(propertyMessage.getToggleOn());
+                resultBean.setStateMessage(stateMessage.getToggleOn());
                 if(resultBean == null ) {
                     return;
                 } else if(Constant.userBean == null) {
@@ -148,9 +148,12 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
         builder =new  MissDialog.Builder(this);
         if (resultBean == null) {
             String ping = this.getIntent().getStringExtra("result");
-            String url = Constant.SERVER_URL + ping;
-            LogUtils.d("请求路径:" + url);
-            mAddAddNewCarInputPresenter.loadCar(url);
+            //如果扫描的路径为空就不去请求
+            if (ping == null) {
+                String url = Constant.SERVER_URL + ping;
+                LogUtils.d("请求路径:" + url);
+                mAddAddNewCarInputPresenter.loadCar(url);
+            }
         } else {
             showResultSuccess(resultBean);
         }

@@ -4,9 +4,15 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 
+
+import com.facebook.rebound.SimpleSpringListener;
+import com.facebook.rebound.Spring;
+import com.facebook.rebound.SpringConfig;
+import com.facebook.rebound.SpringSystem;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.MessageBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
@@ -22,6 +28,7 @@ import com.miss.imissyou.mycar.util.FindViewById;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.view.MessageView;
+import com.nineoldandroids.view.ViewHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +62,7 @@ public class MessageActivity extends BaseActivity implements MessageView {
     }
 
     @Override public void addListeners() {
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //TODO
@@ -69,6 +77,7 @@ public class MessageActivity extends BaseActivity implements MessageView {
                 mMessagePresenter.deteleMessage(messages.get(dismissPosition).getId());
 
                 setListData(messages);
+
             }
         });
     }

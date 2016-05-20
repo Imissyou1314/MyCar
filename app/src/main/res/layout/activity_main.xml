@@ -32,7 +32,6 @@
                 android:background="@color/colorMianTheme"
                 android:orientation="vertical"/>
 
-
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_height="wrap_content"

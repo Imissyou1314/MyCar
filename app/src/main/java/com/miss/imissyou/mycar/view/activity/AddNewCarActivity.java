@@ -1,7 +1,6 @@
 package com.miss.imissyou.mycar.view.activity;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
@@ -32,7 +31,6 @@ import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
-import com.miss.imissyou.mycar.ui.MissDialog;
 import com.miss.imissyou.mycar.ui.TitleFragment;
 import com.miss.imissyou.mycar.util.FindViewById;
 import com.miss.imissyou.mycar.util.ToastUtil;
@@ -130,7 +128,6 @@ public class AddNewCarActivity extends BaseActivity implements SurfaceHolder.Cal
     private Handler mHandler = new Handler(){
         @Override public void handleMessage(Message msg) {
             super.handleMessage(msg);
-
             mProgress.dismiss();
             switch (msg.what) {
                 case PARSE_BARCODE_SUC:

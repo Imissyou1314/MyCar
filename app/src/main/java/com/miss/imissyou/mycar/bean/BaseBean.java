@@ -10,6 +10,14 @@ import java.util.UUID;
  */
 public abstract class BaseBean implements Serializable{
 
-    private UUID uuid;;
+    public UUID uuid;
+
+    /**
+     * 唯一的识别标
+     * @return
+     */
+    public UUID getUuid() {
+        return UUID.randomUUID();
+    }
 
 }

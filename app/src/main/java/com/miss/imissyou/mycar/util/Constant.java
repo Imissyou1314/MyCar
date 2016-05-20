@@ -10,6 +10,7 @@ public class Constant {
 
     /**服务器URL*/
     public static final String SERVER_URL = "http://192.168.1.101:8080/";
+    public static final int HTTP_OK = 200;
 
     public static final String GASSTION_BRAND_ZHONGSHIYOU ="中石油";
     public static final String GASSTION_BRAND_ZHONGSHIHUAN = "中石化";
@@ -53,7 +54,7 @@ public class Constant {
      * 设置获取加油站的默认选项
      */
     public static int GET_GASSTATION_R = 10000;         //设置半径为10公里
-    public static final String GET_GASSTATION_KEY = "key";
+    public static final String GET_GASSTATION_KEY = "b752fa0f5e45383bb66b8b8758040c72";
 
     /**
      * 定位的起点坐标和终点坐标

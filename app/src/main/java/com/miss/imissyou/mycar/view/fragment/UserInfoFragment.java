@@ -5,10 +5,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.facebook.rebound.SimpleSpringListener;
+import com.facebook.rebound.Spring;
+import com.facebook.rebound.SpringConfig;
+import com.facebook.rebound.SpringSystem;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.presenter.UserInfoPresenter;
@@ -16,6 +21,7 @@ import com.miss.imissyou.mycar.presenter.impl.UserInfoPresenterImpl;
 import com.miss.imissyou.mycar.ui.AnimatorView;
 import com.miss.imissyou.mycar.ui.circleProgress.CircleProgress;
 import com.miss.imissyou.mycar.view.UserInfoView;
+import com.nineoldandroids.view.ViewHelper;
 
 /**
  * Created by Imissyou on 2016/4/26.
@@ -66,9 +72,47 @@ public class UserInfoFragment extends BaseFragment implements UserInfoView {
         mUserInfoPresenter = new UserInfoPresenterImpl(this);
     }
 
-    @Override
-    protected void addViewsListener() {
+    @Override protected void addViewsListener() {
+        //添加动画效果
+        final Spring spring = SpringSystem.create().createSpring();
+        SpringConfig config = new SpringConfig(40, 3);
+        spring.setSpringConfig(config);
+        final float maxScale = 0.1f;
+        spring.addListener(new SimpleSpringListener(){
+            @Override
+            public void onSpringUpdate(Spring spring) {
+                super.onSpringUpdate(spring);
+                float value = (float) spring.getCurrentValue();
+                float scale = 1f - (value * maxScale);
 
+                ViewHelper.setScaleX(userheadView, scale);
+                ViewHelper.setScaleY(userheadView, scale);
+                //或者这样
+//                userheadView.setScaleX(scale);
+//                userheadView.setScaleY(scale);
+            }
+        });
+
+        userheadView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                int key = event.getAction();
+                switch (key) {
+                    case MotionEvent.ACTION_DOWN:
+                        spring.setEndValue(1.0);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                        spring.setEndValue(0.0);
+                        break;
+                    default:
+                        break;
+                }
+
+                return false;
+            }
+        });
     }
 
     @Override

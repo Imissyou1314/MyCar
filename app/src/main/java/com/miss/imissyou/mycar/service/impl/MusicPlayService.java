@@ -34,8 +34,7 @@ public class MusicPlayService extends Service{
         return null;
     }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    @Override public int onStartCommand(Intent intent, int flags, int startId) {
         int type = intent.getIntExtra("Type", Constant.MUSIC_CLICK_START);
         switch (type) {
             case Constant.MUSIC_BUTTON_START :

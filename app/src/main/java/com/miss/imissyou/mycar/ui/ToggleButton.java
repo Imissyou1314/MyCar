@@ -303,6 +303,15 @@ public class ToggleButton extends View {
     }
 
     /**
+     * 获取按钮的状态
+     * 默认为false
+     * @return toggleOn
+     */
+    public boolean getToggleOn() {
+        return toggleOn;
+    }
+
+    /**
      * @author ThinkPad
      *
      */

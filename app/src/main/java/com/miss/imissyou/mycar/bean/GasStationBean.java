@@ -1,6 +1,7 @@
 package com.miss.imissyou.mycar.bean;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 加油站的信息
@@ -18,10 +19,10 @@ public class GasStationBean extends BaseBean{
     private double lat;         //百度地图纬度
     private double lon;         //百度地图经度
 
-    private String gastprice;   //加油站油价（仅供参考，实际以加油站公布价为准）
     private String fwlsmc;      //加油卡信息
     private String distance;    //与坐标的距离，单位M
-    private List<OilBean> price;   //省控基准油价
+    private Map<String, String> price;   //省控基准油价
+    private Map<String, String> gastprice;  //加油站油价（仅供参考，实际以加油站公布价为准）
 
     public String getAddress() {
         return address;
@@ -79,14 +80,6 @@ public class GasStationBean extends BaseBean{
         this.fwlsmc = fwlsmc;
     }
 
-    public String getGastprice() {
-        return gastprice;
-    }
-
-    public void setGastprice(String gastprice) {
-        this.gastprice = gastprice;
-    }
-
     public double getLat() {
         return lat;
     }
@@ -111,19 +104,27 @@ public class GasStationBean extends BaseBean{
         this.name = name;
     }
 
-    public List<OilBean> getPrice() {
-        return price;
-    }
-
-    public void setPrice(List<OilBean> price) {
-        this.price = price;
-    }
-
     public String getType() {
         return type;
     }
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Map<String, String> getGastprice() {
+        return gastprice;
+    }
+
+    public void setGastprice(Map<String, String> gastprice) {
+        this.gastprice = gastprice;
+    }
+
+    public Map<String, String> getPrice() {
+        return price;
+    }
+
+    public void setPrice(Map<String, String> price) {
+        this.price = price;
     }
 }

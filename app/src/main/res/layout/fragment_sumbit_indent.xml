@@ -2,20 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:miss="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@color/color_carView_mainMesage"
     android:padding="10dp">
 
     <!--提交加油信息-->
-    <ImageView
+    <com.miss.imissyou.mycar.ui.RoundImageView
         android:id="@+id/sumbitIndent_gasStation_ImageView"
         android:layout_width="match_parent"
+        android:src="@mipmap/user_head"
+        miss:Radiustype="round"
         android:layout_height="0dp"
         android:layout_weight="3" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="@color/colorWhite" />
+        android:background="@color/color_carView_mainMesage" />
 
     <LinearLayout
         android:layout_width="match_parent"

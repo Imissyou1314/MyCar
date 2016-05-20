@@ -7,7 +7,7 @@ package com.miss.imissyou.mycar.bean;
 public class OilBean extends BaseBean {
 
     private String oilType;     //有类型
-    private int price;          //油价格
+    private String price;          //油价格
 
     public String getOilType() {
         return oilType;
@@ -17,11 +17,11 @@ public class OilBean extends BaseBean {
         this.oilType = oilType;
     }
 
-    public int getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 }

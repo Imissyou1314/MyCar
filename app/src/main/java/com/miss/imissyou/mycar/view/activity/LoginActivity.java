@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
@@ -27,6 +28,7 @@ import com.miss.imissyou.mycar.util.FindViewById;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.util.SPUtils;
 import com.miss.imissyou.mycar.util.StringUtil;
+import com.miss.imissyou.mycar.util.zxing.camera.LoadImageView;
 
 import java.util.Map;
 import java.util.Set;
@@ -75,11 +77,24 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         password = SPUtils.getSp_user().getString(Constant.UserPassID,"");
         account = SPUtils.getSp_user().getString(Constant.UserAccountID,"");
         length = SPUtils.getSp_user().getInt(Constant.UserPassLength, 0);
+
+
         if (!account.equals("") && !password.equals("")) {
             accountEt.setText(account);
             //构造加密码
             passwordEt.setText("11111111");
         }
+        if (null == Constant.userBean && null == Constant.userBean.getUserImg()) {
+            return ;
+        } else {
+            //加载用户图片
+            Glide.with(this)
+                    .load(Constant.SERVER_URL + Constant.userBean.getUserImg())
+                    .centerCrop()
+                    .into(userHeadImage);
+        }
+
+
     }
 
     @Override public void addListeners() {
@@ -262,5 +277,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         if (length < 16 && length > 4) {
             SPUtils.putCacheData(this, Constant.UserPassLength, length);
         }
+    }
+
+    @Override protected void onDestroy() {
+        LoadImageView.releaseImageViewResouce(userHeadImage);
+        super.onDestroy();
     }
 }
