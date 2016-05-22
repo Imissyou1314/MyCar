@@ -1,5 +1,6 @@
 package com.miss.imissyou.mycar.util;
 
+import com.miss.imissyou.mycar.bean.CarInfoBean;
 import com.miss.imissyou.mycar.bean.UserBean;
 
 /**
@@ -9,13 +10,14 @@ import com.miss.imissyou.mycar.bean.UserBean;
 public class Constant {
 
     /**服务器URL*/
-    public static final String SERVER_URL = "http://192.168.1.101:8080/";
+    public static final String SERVER_URL = "http://192.168.1.100:8080/";
     public static final int HTTP_OK = 200;
 
     public static final String GASSTION_BRAND_ZHONGSHIYOU ="中石油";
     public static final String GASSTION_BRAND_ZHONGSHIHUAN = "中石化";
 
     public static UserBean userBean = new UserBean();        //用户实体类对象
+    public static CarInfoBean carBean = new CarInfoBean();   //用户的车辆实体
 
     /**
      * Music Seriver
@@ -35,6 +37,7 @@ public class Constant {
     public static final String UserPassID = "MissYourPass";
     public static final String UserAccountID = "MissYourAccountID";
     public static final String UserPassLength = "passLength";
+    public static final String UserBeanID = "userBeanId";
 
     public static final String CAR_ID = "car_Id";
     public static final String USER_ID = "user_Id";

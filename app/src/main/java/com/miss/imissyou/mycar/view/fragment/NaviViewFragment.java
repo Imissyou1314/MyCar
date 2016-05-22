@@ -8,7 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.navi.AMapNavi;
 import com.amap.api.navi.AMapNaviListener;
 import com.amap.api.navi.model.AMapLaneInfo;
@@ -49,15 +53,19 @@ public class NaviViewFragment extends BaseFragment implements AMapNaviListener {
     // 地图和导航资源
     private MapView mMapView;
     private AMap mAMap;
+    private LatLng locLatlng;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        aMapNavi = AMapNavi.getInstance(getActivity());
-        aMapNavi.addAMapNaviListener(this);
-//        aMapNavi.addAMapNaviListener(ttsManager);
-        aMapNavi.setEmulatorNaviSpeed(150);
         View  view = super.onCreateView(R.layout.fragment_navi, inflater, container,
                savedInstanceState);
+        aMapNavi = AMapNavi.getInstance(getActivity());
+        aMapNavi.addAMapNaviListener(this);
+        aMapNavi.setEmulatorNaviSpeed(150);
+
+        //     aMapNavi.addAMapNaviListener(ttsManager);
+
         mMapView.onCreate(savedInstanceState);
         return view;
     }
@@ -72,6 +80,13 @@ public class NaviViewFragment extends BaseFragment implements AMapNaviListener {
 
     @Override protected void addViewsListener() {
         mAMap = mMapView.getMap();
+
+        locLatlng = new LatLng(110.364977,21.274898);
+        mAMap.addMarker(new MarkerOptions().position(locLatlng).icon(
+                BitmapDescriptorFactory
+                        .fromResource(R.mipmap.user_icon)));
+
+        mAMap.moveCamera(CameraUpdateFactory.newLatLng(locLatlng));
     }
 
     @Override public void onDestroy() {
@@ -206,17 +221,21 @@ public class NaviViewFragment extends BaseFragment implements AMapNaviListener {
 
     }
 
-    @Override public void OnUpdateTrafficFacility(AMapNaviTrafficFacilityInfo[] aMapNaviTrafficFacilityInfos) {
+    @Override
+    public void OnUpdateTrafficFacility(AMapNaviTrafficFacilityInfo[] aMapNaviTrafficFacilityInfos) {
 
     }
 
-    @Override public void updateAimlessModeStatistics(AimLessModeStat aimLessModeStat) {
+    @Override
+    public void updateAimlessModeStatistics(AimLessModeStat aimLessModeStat) {
 
     }
 
-    @Override public void updateAimlessModeCongestionInfo(AimLessModeCongestionInfo aimLessModeCongestionInfo) {
+    @Override
+    public void updateAimlessModeCongestionInfo(AimLessModeCongestionInfo aimLessModeCongestionInfo) {
 
     }
+
 }
 
 

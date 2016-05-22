@@ -20,6 +20,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
@@ -38,10 +39,12 @@ import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.util.SPUtils;
 import com.miss.imissyou.mycar.util.StringUtil;
+import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.view.activity.AboutActivity;
 import com.miss.imissyou.mycar.view.activity.AddNewCarActivity;
 import com.miss.imissyou.mycar.view.activity.AuthorActivity;
 
+import com.miss.imissyou.mycar.view.activity.HelpActivity;
 import com.miss.imissyou.mycar.view.activity.LoginActivity;
 import com.miss.imissyou.mycar.view.activity.SettingActivity;
 import com.miss.imissyou.mycar.view.fragment.CarListFragment;
@@ -60,6 +63,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
@@ -89,6 +94,10 @@ public class MainActivity extends ActionBarActivity
     private OrderFragment orderFragment;
     private GasStationFragment gasStationFragment;
     private NaviViewFragment naviViewFragment;
+
+    /**双击退出程序*/
+    private boolean isQuit;
+    private Timer timer = new Timer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -448,6 +457,7 @@ public class MainActivity extends ActionBarActivity
 
     @Override public boolean onCreateOptionsMenu(final Menu menu) {
         //设置OptionsMenu 菜单的选项
+
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
@@ -479,11 +489,16 @@ public class MainActivity extends ActionBarActivity
                 startActivity(intent);
                 return true;
             case R.id.action_help:
-//                intent.setClass(this, HelpActivity.class);
-                intent.setClass(this, AddNewCarActivity.class);
+                intent.setClass(this, HelpActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.action_login:
+                intent.setClass(this, LoginActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_unregister:
+                SPUtils.init(this);
+                SPUtils.ClearAllData();
                 intent.setClass(this, LoginActivity.class);
                 startActivity(intent);
                 return true;
@@ -502,5 +517,25 @@ public class MainActivity extends ActionBarActivity
     protected void onResume() {
         JPushInterface.onResume(this);
         super.onResume();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (isQuit == false) {
+            isQuit = true;
+            Toast.makeText(getBaseContext(), "再按一次返回键退出程序", Toast.LENGTH_SHORT).show();
+            TimerTask task = null;
+            task = new TimerTask() {
+                @Override
+                public void run() {
+                    isQuit = false;
+                }
+            };
+            timer.schedule(task, 2000);
+        } else {
+            finish();
+            System.exit(0);
+            android.os.Process.killProcess(android.os.Process.myPid());
+        }
     }
 }

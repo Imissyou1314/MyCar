@@ -29,8 +29,9 @@ import com.miss.imissyou.mycar.ui.adapterutils.CommonAdapter;
 import com.miss.imissyou.mycar.ui.adapterutils.ViewHolder;
 import com.miss.imissyou.mycar.ui.sidemenu.interfaces.ScreenShotable;
 import com.miss.imissyou.mycar.util.Constant;
+import com.miss.imissyou.mycar.util.FindSongs;
 import com.miss.imissyou.mycar.util.StringUtil;
-
+import com.miss.imissyou.mycar.util.ToastUtil;
 
 
 import java.io.File;
@@ -39,6 +40,7 @@ import java.util.List;
 
 
 /**
+ * 音乐列表播放界面
  * Created by Imissyou on 2016/3/22.
  */
 public class MusicFragment extends Fragment implements ScreenShotable {
@@ -53,7 +55,6 @@ public class MusicFragment extends Fragment implements ScreenShotable {
     private TextView mTextViewMusicName;
     private MyBroadCastService myBroad;
     private int mPosition;
-    private File[] musics;
     private boolean flag;
 
     private View upView;
@@ -82,75 +83,14 @@ public class MusicFragment extends Fragment implements ScreenShotable {
          */
         mListView.setAdapter(new CommonAdapter<Music>(getActivity(), mMusics, R.layout.item_music) {
             @Override public void convert(ViewHolder holder, Music music) {
-                holder.setText(R.id.textview_music_name,music.getMusicName());
                 holder.setText(R.id.tv_music_auther,music.getMusicArtist());
-//                holder.setImage(R.id.menu_item_image,music.getMusicImage());
+                if (music.getMusicName() == null || music.getMusicName().equals("")) {
+                    holder.setText(R.id.textview_music_name,music.getMusicName());
+                } else {
+                    holder.setText(R.id.textview_music_name, music.getMusicTitle());
+                }
             }
         });
-    }
-
-
-    /**
-     * 获取本地音乐列表
-     * @return
-     */
-    private void getLocalMusicList() {
-
-        String[] proj = { MediaStore.Audio.Media._ID,
-                MediaStore.Audio.Media.DATA, MediaStore.Audio.Media.TITLE, };
-        Cursor cursor = getActivity().getContentResolver().query(
-                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, proj, null, null,
-                MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
-
-        if (cursor == null || cursor.getCount() == 0) {
-            LogUtils.d("扫描不到音乐文件");
-            return;
-        }
-
-        for (int i = 0; i < cursor.getCount() ; i ++ ) {
-            Music tmpMusic = new Music();
-            cursor.moveToNext();
-
-            long id = cursor.getLong(cursor
-                    .getColumnIndex(MediaStore.Audio.Media._ID));   //音乐id
-
-            String title = cursor.getString((cursor
-                    .getColumnIndex(MediaStore.Audio.Media.TITLE)));//音乐标题
-
-            String artist = cursor.getString(cursor
-                    .getColumnIndex(MediaStore.Audio.Media.ARTIST));//艺术家
-
-            long duration = cursor.getLong(cursor
-                    .getColumnIndex(MediaStore.Audio.Media.DURATION));//时长
-
-            long size = cursor.getLong(cursor
-                    .getColumnIndex(MediaStore.Audio.Media.SIZE));  //文件大小
-
-            String url = cursor.getString(cursor
-                    .getColumnIndex(MediaStore.Audio.Media.DATA));  //文件路径
-
-            String album = cursor.getString(cursor
-                    .getColumnIndex(MediaStore.Audio.Media.ALBUM)); //唱片图片
-
-            long album_id = cursor.getLong(cursor
-                    .getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)); //唱片图片ID
-
-            int isMusic = cursor.getInt(cursor
-                    .getColumnIndex(MediaStore.Audio.Media.IS_MUSIC));//是否为音乐
-
-            if (isMusic != 0 && duration/(1000 * 60) >= 1) {        //只把1分钟以上的音乐添加到集合当中
-
-                tmpMusic.setMusicID(id);
-                tmpMusic.setMusicTitle(title);
-                tmpMusic.setMusicArtist(artist);
-                tmpMusic.setMusicTime(duration);
-                tmpMusic.setMusicName(title);
-                tmpMusic.setMusicPath(url);
-                tmpMusic.setAlbum(album);
-                tmpMusic.setAlbum_id(album_id);
-                mMusics.add(tmpMusic);
-            }
-        }
     }
 
     /**
@@ -175,48 +115,15 @@ public class MusicFragment extends Fragment implements ScreenShotable {
      * 加载sdcard下的Music文件
      */
     private void intitData() {
-        final File music = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
-        musics = music.listFiles();
-
-        /**
-         * 打印信息
-         */
-        MediaMetadataRetriever mmr = new MediaMetadataRetriever();
-        String artName = null;
-        Bitmap userImage = null;
-
-        if (musics == null) {
-            LogUtils.d("sd卡无歌曲");
+        FindSongs songs = new FindSongs();
+        //TODO 获取本地音乐
+        if (null != getActivity().getContentResolver()) {
+            mMusics = songs.getSongInfo(getActivity().getContentResolver());
+            LogUtils.d("获取到的音乐数量" + mMusics.size());
+            ToastUtil.asLong("获取到的音乐数量" + mMusics.size());
         } else {
-            for (File item : musics) {
-                Music tempMusic = new Music();
-                tempMusic.setMusicPath(item.getAbsolutePath());
-                tempMusic.setMusicName(item.getName());
-                mmr.setDataSource(item.getAbsolutePath());
-                /**
-                 * 获取歌手名
-                 */
-                if (null != mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)) {
-                    artName = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
-                } else {
-                    artName = "<未知>";
-                }
-                tempMusic.setMusicArtist(artName);
-
-                userImage = android.graphics.BitmapFactory.decodeByteArray(
-                        mmr.getEmbeddedPicture(), 0, mmr.getEmbeddedPicture().length);
-                tempMusic.setMusicImage(userImage);
-                mMusics.add(tempMusic);
-                LogUtils.d("歌曲位置::-->" + item);
-            }
-        }
-
-        /**
-         * 通过扫描全局获取音乐文件
-         */
-        if (mMusics.size() == 0) {
-            getLocalMusicList();
-            LogUtils.d("歌曲数量:::" + mMusics.size());
+            LogUtils.d("获取getActivity().getContentResolver()失败");
+            ToastUtil.asLong("获取getActivity().getContentResolver()失败");
         }
 
         //注册广播
@@ -234,7 +141,7 @@ public class MusicFragment extends Fragment implements ScreenShotable {
         mBtnNextMusic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 //不是最后一首音乐
-                if (mPosition != (musics.length - 1)) {
+                if (mPosition != (mMusics.size() - 1)) {
                     mPosition ++;
                 }
                 /**
@@ -273,6 +180,7 @@ public class MusicFragment extends Fragment implements ScreenShotable {
             @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 palyMusic(Constant.MUSIC_CLICK_START, position);
                 mPosition = position;
+                view.setBackgroundResource(R.color.color_progress_yello);
             }
         });
 
@@ -299,9 +207,10 @@ public class MusicFragment extends Fragment implements ScreenShotable {
     }
 
     private void palyMusic(int type, int mPosition) {
+        Music music = mMusics.get(mPosition);
         Intent intent = new Intent(getActivity().getApplicationContext() ,MusicPlayService.class);
-        intent.putExtra("musicPath",musics[mPosition].getAbsolutePath());
-        intent.putExtra("musicName",musics[mPosition].getName());
+        intent.putExtra("musicPath",music.getMusicPath());
+        intent.putExtra("musicName",music.getMusicName());
         intent.putExtra("type",type);
         getActivity().startService(intent);
     }

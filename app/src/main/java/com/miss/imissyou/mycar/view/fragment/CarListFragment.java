@@ -152,7 +152,8 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
     }
 
     @Override public void onDestroy() {
-        super.onDestroy();
         mCarListPresenter.detchView();
+        super.onDestroy();
+
     }
 }

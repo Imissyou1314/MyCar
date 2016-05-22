@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.BundleCompat;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
@@ -112,7 +113,7 @@ public class OrderFragment extends ListFragment implements OrderListView, Screen
                 orders,
                 R.layout.fragment_order_list) {
             @Override
-            public void convert(ViewHolder holder, OrderBean orderBean) {
+            public void convert(ViewHolder holder, final OrderBean orderBean) {
                 holder.setText(R.id.order_list_gasNumber, null);
                 holder.setText(R.id.order_list_stationName, null);
                 holder.setText(R.id.order_list_gasType, null);
@@ -122,6 +123,13 @@ public class OrderFragment extends ListFragment implements OrderListView, Screen
                     @Override
                     public void onClick(View v) {
                         //定位加油站并导航
+                        String address = orderBean.getAddress();        //地址
+                        NaviViewFragment naviViewFragment = new NaviViewFragment();
+                        FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("address", address);
+                        naviViewFragment.setArguments(bundle);
+                        fm.replace(R.id.container_frame, naviViewFragment).commit();
                     }
                 });
 

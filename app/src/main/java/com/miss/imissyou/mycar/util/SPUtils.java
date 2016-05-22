@@ -195,6 +195,15 @@ public class SPUtils {
         sp_cache.edit().clear().apply();
     }
 
+
+    /**
+     * 删除所有的数据
+     */
+    public static void ClearAllData() {
+        ClearCacheData();
+        ClearSetData();
+        ClearUserData();
+    }
     /**
      *  获取缓存 SharePreferences
      * @return  sp_cache SharedPreferences

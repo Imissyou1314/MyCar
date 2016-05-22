@@ -84,14 +84,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             //构造加密码
             passwordEt.setText("11111111");
         }
-        if (null == Constant.userBean && null == Constant.userBean.getUserImg()) {
-            return ;
+        if (!SPUtils.getSp_user().getString(Constant.UserBeanID,"").equals("")){
+            Constant.userBean = GsonUtils.Instance()
+                    .fromJson(SPUtils.getSp_user().getString(Constant.UserBeanID,""), UserBean.class);
+            if (null == Constant.userBean && null == Constant.userBean.getUserImg()) {
+                return ;
+            } else {
+                //加载用户图片
+                LogUtils.d("登录加载用户图片");
+                String url = Constant.SERVER_URL + Constant.userBean.getUserImg();
+                LogUtils.d("加载图片的地址" + url);
+                Glide.with(this)
+                        .load(Constant.SERVER_URL + Constant.userBean.getUserImg())
+                        .centerCrop()
+                        .into(userHeadImage);
+            }
         } else {
-            //加载用户图片
-            Glide.with(this)
-                    .load(Constant.SERVER_URL + Constant.userBean.getUserImg())
-                    .centerCrop()
-                    .into(userHeadImage);
+            LogUtils.d("用户为新用户");
         }
 
 
@@ -133,7 +142,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
          */
         String tmpaccount = getInput(accountEt);
         String tmpPassword = getInput(passwordEt);
-        //TODO
+
         LogUtils.d("账号:" + tmpaccount + ">>>>密码:" + tmpPassword);
         if(!tmpaccount.equals(account) || tmpPassword.length() != length)  {
             account = tmpaccount;
@@ -188,9 +197,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 ResultBean resultBean = GsonUtils.Instance().fromJson(StringUtil.bytesToString(t), ResultBean.class);
                 LogUtils.d("收到的数据::" + StringUtil.bytesToString(t));
                 if (resultBean.isServiceResult()) {
-                    savePassWord(password, account);
                     Constant.COOKIE = headers.get("Set-Cookie");
                     Constant.userBean = GsonUtils.getParam(resultBean, "user", UserBean.class);
+                    savePassWord(password, account, GsonUtils.Instance().toJson(Constant.userBean));
                     setAlias(Constant.userBean.getId());
                     toMainView();
                 } else {
@@ -209,9 +218,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             }
         });
 
-        //TODO  登录处理 完成后保存秘密
         if (savePasswordCk.isChecked() && length < 16 ) {
-            savePassWord(password, account);
+            savePassWord(password, account, GsonUtils.Instance().toJson(Constant.userBean));
         }
         return true;
     }
@@ -271,9 +279,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
      * @param password
      * @param account
      */
-    private void savePassWord(String password, String account) {
+    private void savePassWord(String password, String account, String userBeanJson) {
         SPUtils.putUserData(this, Constant.UserPassID, password);
         SPUtils.putUserData(this, Constant.UserAccountID, account);
+        SPUtils.putUserData(this, Constant.UserBeanID, userBeanJson);
+
         if (length < 16 && length > 4) {
             SPUtils.putCacheData(this, Constant.UserPassLength, length);
         }

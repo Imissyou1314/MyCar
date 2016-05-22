@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 
+import com.bumptech.glide.load.DecodeFormat;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.ResultPointCallback;
@@ -43,6 +44,7 @@ final class DecodeThread extends Thread {
             decodeFormats.addAll(DecodeFormatManager.ONE_D_FORMATS);
             decodeFormats.addAll(DecodeFormatManager.QR_CODE_FORMATS);
             decodeFormats.addAll(DecodeFormatManager.DATA_MATRIX_FORMATS);
+            decodeFormats.addAll(DecodeFormatManager.PRODUCT_FORMATS);
         }
 
         hints.put(DecodeHintType.POSSIBLE_FORMATS, decodeFormats);

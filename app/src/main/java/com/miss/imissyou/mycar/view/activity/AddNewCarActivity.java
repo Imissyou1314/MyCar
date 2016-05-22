@@ -247,7 +247,6 @@ public class AddNewCarActivity extends BaseActivity implements SurfaceHolder.Cal
         }
         initBeepSound();
         vibrate = true;
-
     }
 
     @Override protected void onPause() {

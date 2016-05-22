@@ -89,6 +89,9 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 LogUtils.d("提交数据");
+                if (resultBean.getId() == null) {
+                    doInput();
+                }
                 resultBean.setAlarmMessage(alarmMessage.getToggleOn());
                 resultBean.setPropertyMessage(propertyMessage.getToggleOn());
                 resultBean.setStateMessage(stateMessage.getToggleOn());
@@ -102,6 +105,25 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
                 mAddAddNewCarInputPresenter.sentCarInfoToService(resultBean);
             }
         });
+    }
+
+    /**
+     * 获取输入
+     */
+    private void doInput() {
+        resultBean.setBrand(brandEdit.getText().toString());
+        resultBean.setModles(modelsEdit.getText().toString());
+        resultBean.setUserId(Integer.parseInt(Constant.userBean.getId()));
+        resultBean.setCarState(carStateEdit.getText().toString());
+        resultBean.setPlateNumber(plateNumberEdit.getText().toString());
+        resultBean.setVin(vinEdit.getText().toString());
+        resultBean.setEngineNumber(engineNumberEdit.getText().toString());
+        resultBean.setEnginProperty(enginPropertyEdit.getText().toString());
+        resultBean.setCarAlarm(carAlarmEdit.getText().toString());
+        resultBean.setCarState(carStateEdit.getText().toString());
+        resultBean.setCarLight(carStateEdit.getText().toString());
+        resultBean.setRank(rankEdit.getText().toString());
+        resultBean.setTransmission(transmissionEdit.getText().toString());
     }
 
     @Override

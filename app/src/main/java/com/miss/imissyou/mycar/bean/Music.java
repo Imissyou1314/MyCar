@@ -7,27 +7,27 @@ import android.graphics.Bitmap;
  *
  * 音乐实体类
  */
-public class Music {
+public class Music extends BaseBean{
 
-    /*音乐存放的地址*/
+    /**音乐存放的地址*/
     private String musicPath;
-    /*音乐名*/
+    /**音乐名*/
     private String musicName;
-    /*音乐艺术家*/
+    /**音乐艺术家*/
     private String musicArtist;
-    /*音乐存放的标题*/
+    /**音乐存放的标题*/
     private String musicTitle;
-    /*音乐ID*/
+    /**音乐ID*/
     private Long musicID;
-    /*音乐播放时长*/
+    /**音乐播放时长*/
     private Long musicTime;
-    /*音乐文件大小*/
+    /**音乐文件大小*/
     private Long musicSize;
     /**音乐图片*/
     private Bitmap musicImage;
-    /*唱片图片*/
+    /**唱片图片*/
     private String album;
-    /*唱片图片ID*/
+    /**唱片图片ID*/
     private Long album_id;
 
     public Long getMusicID() {

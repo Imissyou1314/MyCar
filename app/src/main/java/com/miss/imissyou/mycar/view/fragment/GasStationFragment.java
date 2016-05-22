@@ -62,7 +62,8 @@ public class GasStationFragment extends BaseFragment implements GasStationView {
                 GasStationBean gasStationBean = gasStationBeens.get(position);
 
                 Bundle bundle = new Bundle();
-                bundle.putString("gasStion", GsonUtils.Instance().toJson(gasStationBean));
+                LogUtils.d("加油站的信息" + GsonUtils.Instance().toJson(gasStationBean));
+                bundle.putString("gasStation", GsonUtils.Instance().toJson(gasStationBean));
                 gasFragment.setArguments(bundle);
 
                 fm.beginTransaction()
