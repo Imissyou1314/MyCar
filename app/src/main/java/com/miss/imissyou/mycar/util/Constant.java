@@ -86,6 +86,6 @@ public class Constant {
     public static final String endLongitude = "endLongitude";
     public static final int HAVESTART_Navi = 1;               //设置了起点和目地的导航方式
     public static final int DONTHAVESTART_Navi = 0;         //没有起点的导航方式
-
-
+    //搜索范围20公里
+    public static int SEARCH_RADIO = 20000;
 }

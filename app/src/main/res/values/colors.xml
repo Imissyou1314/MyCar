@@ -39,6 +39,7 @@
     <color name="color_back">#0e0e0e</color>
     <color name="color_miniBack">#5f0e0e0e</color>
     <color name="color_search_blue">#025391</color>
+    <color name="color_select_route_title">#D2025391</color>
 
     <color name="color_distance">#f1de5a5a</color>
 

@@ -91,15 +91,11 @@ public class NaviViewActivity extends BaseActivity implements AMapNaviViewListen
         /**构造导航的起点和终点*/
         startLon = getIntent().getDoubleExtra(Constant.startLongitude, 0);
         startLat = getIntent().getDoubleExtra(Constant.startLatitude, 0);
-        if (startLat == startLat) {
-            getLocationLatLng();
-        }
         endLon = getIntent().getDoubleExtra(Constant.endLongitude, 0);
         endLat = getIntent().getDoubleExtra(Constant.endLatitude, 0);
         getLocationLatLng();
-        if (startLat != startLon && startLat != endLat && endLat != endLon) {
-            mStartLatlng = new NaviLatLng(startLat, startLon);
-            mEndLatlng = new NaviLatLng(endLon, endLat);
+        if (mEndLatlng != null) {
+            LogUtils.w("可以导航了");
         } else {
             LogUtils.d("传进的经纬度有问题都相同，或者为空");
         }
@@ -109,18 +105,19 @@ public class NaviViewActivity extends BaseActivity implements AMapNaviViewListen
      * 获取本地导航
      */
     private void getLocationLatLng() {
-        startLon = 110.306202;
-        startLat = 21.150468;
-        mStartLatlng = new NaviLatLng(startLat, startLon);
+        if (startLat != 0L && startLon != 0L && startLat != startLon) {
+            mStartLatlng = new NaviLatLng(startLat, startLon);
+            mStartList.add(mStartLatlng);
+        } else {
+            AMapNavi.getInstance(this).startGPS();
+        }
 
-        AMapNavi.getInstance(this).startGPS();
-        endLat = 21.130477;
-        endLon = 110.406201;
-
+        LogUtils.w("开始经度：" + startLat + "开始纬度:" + startLon);
+        LogUtils.w("结束经度：" + endLat + "结束纬度:" + endLon);
         mEndLatlng = new NaviLatLng(endLat, endLon);
         mEndList.add(mEndLatlng);
-        LogUtils.d("测试导航功能:");
-        Log.d("miss", "getLocationLatLng:测试导航功能: ");
+        LogUtils.w("测试导航功能:");
+        Log.w("miss", "getLocationLatLng:测试导航功能: ");
     }
 
     @Override

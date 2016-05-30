@@ -1,6 +1,7 @@
 package com.miss.imissyou.mycar.view.fragment;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,10 +11,10 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
@@ -21,20 +22,18 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.AMapOptions;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
-import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
-import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.overlay.PoiOverlay;
 import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.core.SuggestionCity;
 import com.amap.api.services.help.Inputtips;
-import com.amap.api.services.help.InputtipsQuery;
 import com.amap.api.services.help.Tip;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
@@ -87,6 +86,7 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
 
     private final String searchService = "交通设施服务|汽车维修|道路附属设施|地名地址信息|公共设施|汽车服务|汽车销售|生活服务";
     private String cityName;            //城市名称
+    private String cityCode;            //城市编码
 
     @Nullable
     @Override
@@ -118,21 +118,26 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
     protected void addViewsListener() {
         mAMap = mMapView.getMap();
         mAMap.setLocationSource(this);
-        mAMap.getUiSettings().setMyLocationButtonEnabled(false);// 设置默认定位按钮是否显示
+        mAMap.getUiSettings().setZoomPosition(1);
+        mAMap.getUiSettings().setZoomPosition(AMapOptions.ZOOM_POSITION_RIGHT_CENTER );// 设置默认定位按钮是否显示
         mAMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         // 设置定位的类型为定位模式，参见类AMap。
         //跟随模式
         mAMap.setMyLocationType(AMap.LOCATION_TYPE_MAP_FOLLOW);
+        mAMap.setOnMarkerClickListener(this);
 
         searchInput.addTextChangedListener(this);
         searchBtn.setOnClickListener(this);
         goHere.setOnClickListener(this);
         formHere.setOnClickListener(this);
 
-        mAMap.moveCamera(CameraUpdateFactory.zoomTo(18));
         mAMap.setMyLocationType(AMap.LOCATION_TYPE_MAP_ROTATE);
     }
 
+    /**
+     * 点击事件
+     * @param v
+     */
     @Override
     public void onClick(View v) {
 
@@ -178,6 +183,9 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
     private void searchMap() {
         //TODO
         keyWord = searchInput.getText().toString();
+        //隐藏键盘
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
         if ("".equals(keyWord)) {
             ToastUtil.asShort("请输入搜索关键字");
             return;
@@ -187,14 +195,18 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
 //            query = new PoiSearch.Query(keyWord, "", searchCityInput.getText().toString());
 //                               搜索
             LogUtils.w("搜索关键词:" + keyWord);
-            query = new PoiSearch.Query(keyWord, searchService, cityName);
+            query = new PoiSearch.Query(keyWord, searchService, cityCode);
+
             query.setPageSize(12);
             query.setPageNum(currentPage);
 
-            poiSearch = new PoiSearch(getActivity().getApplicationContext(), query);
+            query.setCityLimit(true);
+            LogUtils.w("搜索的城市名:" + query.getCity());
+
+            poiSearch = new PoiSearch(getActivity().getApplication(), query);
             poiSearch.setOnPoiSearchListener(this);
             LogUtils.w("经度" + mStartLat + "纬度:" + mStartLon);
-            poiSearch.setBound(new PoiSearch.SearchBound(new LatLonPoint(mStartLat, mStartLon), 10000, true));//设置周边搜索的中心点以及区域
+            poiSearch.setBound(new PoiSearch.SearchBound(new LatLonPoint(mStartLat, mStartLon), Constant.SEARCH_RADIO, true));//设置周边搜索的中心点以及区域
             poiSearch.searchPOIAsyn();
         }
     }
@@ -217,7 +229,9 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
                 addressCode = aMapLocation.getAdCode();
                 cityName = aMapLocation.getCity();
                 LogUtils.w("城市名称" + cityName);
-
+                cityCode = aMapLocation.getCityCode();
+                LogUtils.w("城市名称" + cityCode);
+                mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude()), 17));
                 mLocation.onLocationChanged(aMapLocation);      //显示系统小蓝点
             } else {
                 LogUtils.w("定位失败" + aMapLocation.getErrorCode() + ":" + aMapLocation.getErrorCode());
@@ -241,6 +255,7 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
             mlocationClient.setLocationListener(this);
             //设置为高精度定位模式
             mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+           mLocationOption.setInterval(5000);
             //设置定位参数
             mlocationClient.setLocationOption(mLocationOption);
             mlocationClient.startLocation();
@@ -261,30 +276,6 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
         mlocationClient = null;
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mMapView.onDestroy();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mMapView.onPause();
-        deactivate();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mMapView.onResume();
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mMapView.onSaveInstanceState(outState);
-    }
 
     /**
      * POI 信息查询回调
@@ -294,14 +285,17 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
      */
     @Override
     public void onPoiSearched(PoiResult result, int rCode) {
-        LogUtils.w("搜索返回信息" + result.getSearchSuggestionCitys().size() + "搜索返回状态吗:" + rCode);
+        LogUtils.w("搜索返回信息" + result.getPageCount() + "搜索返回状态吗:" + rCode);
 
-        if (rCode == 0) {
+        if (rCode == 1000) {
             if (result != null && result.getQuery() != null) {// 搜索poi的结果
+
+                mAMap.moveCamera(CameraUpdateFactory.zoomTo(16));
                 if (result.getQuery().equals(query)) {// 是否是同一条
                     poiResult = result;
                     // 取得搜索到的poiitems有多少页
                     List<PoiItem> poiItems = poiResult.getPois();// 取得第一页的poiitem数据，页数从数字0开始
+                    LogUtils.w("搜索的大小：" + poiItems.size());
                     List<SuggestionCity> suggestionCities = poiResult
                             .getSearchSuggestionCitys();// 当搜索不到poiitem数据时，会返回含有搜索关键字的城市信息
 
@@ -387,11 +381,12 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
                         }
                     }
                 });
-        inputTips.setQuery(new InputtipsQuery(keyWord, addressCode));
+
         try {
             // 第一个参数表示提示关键字，第二个参数默认代表全国，也可以为城市区号
 //            inputTips.requestInputtips(newText, searchCityInput.getText().toString());
-            inputTips.requestInputtips(newText, null);
+//            inputTips.setQuery(new InputtipsQuery(keyWord, cityName));
+            inputTips.requestInputtips(newText, cityName);
         } catch (AMapException e) {
             LogUtils.d("错误" + e.toString());
             e.printStackTrace();
@@ -420,8 +415,12 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
         RoundImageView Image = (RoundImageView) view.findViewById(R.id.navi_mapView_marker_image);
         Button goHere = (Button) view.findViewById(R.id.navi_mapView_marker_goBtn);
         //设置点击弹出的信息
+
+        LogUtils.w("Marker 标题: " + marker.getTitle());
         title.setText(marker.getTitle());
+
         snippet.setText(marker.getSnippet());
+        LogUtils.w("Marker 标题: " + marker.getSnippet());
         Image.setImageBitmap(marker.getIcons().get(0).getBitmap());
         //到导航的页面
         goHere.setOnClickListener(new View.OnClickListener() {
@@ -445,10 +444,39 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
     @Override
     public boolean onMarkerClick(Marker marker) {
         marker.showInfoWindow();
+
+        LogUtils.w("你点击的是哪个:" + marker.getTitle());
         mEndLon = marker.getPosition().longitude;
-        mEndLat = marker.getPosition().longitude;
+        mEndLat = marker.getPosition().latitude;
+        LogUtils.w("传过去的经度:" + mEndLat + "传过去的纬度：" + mEndLon);
         return false;
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMapView.onPause();
+        deactivate();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mMapView.onSaveInstanceState(outState);
+    }
+
 }
 
 
