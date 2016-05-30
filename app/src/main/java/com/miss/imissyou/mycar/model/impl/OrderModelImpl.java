@@ -21,7 +21,7 @@ public class OrderModelImpl implements OrderModel {
         this.mOrderPresenter = orderPresenter;
     }
 
-    @Override public void loadData(BaseBean useBean) {
+    @Override public void loadOrderData(BaseBean useBean) {
 
         String url = Constant.SERVER_URL + "order/getAll";
         LogUtils.d("请求路径:" + url);
@@ -36,6 +36,5 @@ public class OrderModelImpl implements OrderModel {
                 mOrderPresenter.onSuccess(resultBean);
             }
         });
-
     }
 }

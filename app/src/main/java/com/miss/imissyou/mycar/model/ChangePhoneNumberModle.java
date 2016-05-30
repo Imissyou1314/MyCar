@@ -17,5 +17,12 @@ public interface ChangePhoneNumberModle {
      * @param phoneNumber
      * @param code
      */
-    void submit(String phoneNumber,String code);
+    void changeUserPhone(String phoneNumber,String code);
+
+    /**
+     * 更改用户亲人手机
+     * @param phoneNumber
+     * @param code
+     */
+    void changeUserdersaPhone(String phoneNumber, String code);
 }

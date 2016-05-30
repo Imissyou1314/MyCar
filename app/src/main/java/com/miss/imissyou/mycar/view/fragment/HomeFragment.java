@@ -4,20 +4,25 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.facebook.rebound.SimpleSpringListener;
+import com.bumptech.glide.Glide;
 import com.facebook.rebound.Spring;
-import com.facebook.rebound.SpringConfig;
 import com.facebook.rebound.SpringSystem;
+import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
+import com.miss.imissyou.mycar.bean.BaseBean;
 import com.miss.imissyou.mycar.bean.CarInfoBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
+import com.miss.imissyou.mycar.bean.UserBean;
 import com.miss.imissyou.mycar.presenter.HomePresenter;
 import com.miss.imissyou.mycar.presenter.impl.HomePresenterImpl;
 import com.miss.imissyou.mycar.ui.RoundImageView;
+import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
+import com.miss.imissyou.mycar.util.MissApplication;
 import com.miss.imissyou.mycar.view.HomeView;
 import com.tumblr.backboard.performer.Performer;
 
@@ -104,12 +109,17 @@ public class HomeFragment extends BaseFragment implements HomeView {
      * 加载页面数据
      */
     private void loadPageData(CarInfoBean myCar) {
+        if (null != Constant.userBean && null != Constant.userBean.getUserImg()) {
+            LogUtils.d("请求图片的地址:" + Constant.SERVER_URL + Constant.userBean.getUserImg());
+            Glide.with(this).load(Constant.SERVER_URL + Constant.userBean.getUserImg());
+        }
+
         carNameTV.setText(myCar.getBrand() + " " + myCar.getModles());
         carIdTv.setText(myCar.getPlateNumber());
         carFDTv.setText(myCar.getEngineNumber());
 
         breakdownTv.setText("无");
-        alarmTv.setText(myCar.getCarAlarm());
+        alarmTv.setText(isGood(myCar.isAlarmMessage()));
         int progress = (int) ((myCar.getOil()/myCar.getOilBox()) * 100);
         oilProgress.setProgress(progress);
         progressSetBackGround(oilProgress);
@@ -135,5 +145,9 @@ public class HomeFragment extends BaseFragment implements HomeView {
         } else {
             progressBar.setBackgroundResource(R.color.color_progress_red);
         }
+    }
+
+    private String isGood(boolean check) {
+        return check ? "好": "坏";
     }
 }

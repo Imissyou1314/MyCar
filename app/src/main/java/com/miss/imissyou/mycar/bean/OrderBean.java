@@ -10,11 +10,11 @@ public class OrderBean extends BaseBean {
 
 
     /** 预约单ID */
-    private String id;
+    private Long id;
     /** 车ID */
-    private String carId;
+    private Long carId;
     /** 用户ID */
-    private String userId;
+    private Long userId;
     /** 加油站名 */
     private String stationName;
     /** 加油站地址 */
@@ -36,12 +36,28 @@ public class OrderBean extends BaseBean {
     /** 下单时间*/
     private String agreementTime;
 
-    public String getUserId() {
+    public Long getId() {
+        return id;
+    }
+
+    public Long getCarId() {
+        return carId;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public void setCarId(Long carId) {
+        this.carId = carId;
     }
 
     public String getAddress() {
@@ -74,14 +90,6 @@ public class OrderBean extends BaseBean {
 
     public void setBrandName(String brandName) {
         this.brandName = brandName;
-    }
-
-    public String getCarId() {
-        return carId;
-    }
-
-    public void setCarId(String carId) {
-        this.carId = carId;
     }
 
     public Integer getNumber() {

@@ -34,7 +34,7 @@
         android:layout_weight="0.51"
         app:cardElevation="4dp"
         app:cardCornerRadius="10dp"
-        app:cardBackgroundColor="@color/color_background"
+        app:cardBackgroundColor="@color/login_cardView_background"
         android:layout_width="match_parent">
 
     <LinearLayout
@@ -64,7 +64,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="5dp"
-            android:hint="请输入秘密"
+            android:hint="请输入密码"
             android:inputType="textPassword"
             android:textColorHint="@color/colorWhite" />
 
@@ -75,7 +75,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="5dp"
-            android:hint="请确认秘密"
+            android:hint="请确认密码"
             android:inputType="textPassword"
             android:textColorHint="@color/colorWhite" />
 

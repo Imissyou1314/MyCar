@@ -9,6 +9,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.lidroid.xutils.util.LogUtils;
+import com.miss.imissyou.mycar.R;
 
 /**
  * Created by Imissyou on 2016/4/10.
@@ -29,8 +30,8 @@ public class ShowNotificationReceiver extends BroadcastReceiver {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setContentTitle("这就是通知的头")
                 .setTicker("这是通知的ticker")
-                .setContentIntent(pendingIntent)
-                .setSmallIcon(android.R.drawable.ic_lock_idle_charging);
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentIntent(pendingIntent);
 
         Log.i("repeat", "showNotification");
         NotificationManager manager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);

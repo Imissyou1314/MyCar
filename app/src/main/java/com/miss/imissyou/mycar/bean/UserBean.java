@@ -7,7 +7,7 @@ package com.miss.imissyou.mycar.bean;
 public class UserBean extends BaseBean {
 
     /**用户ID*/
-    private String id;
+    private Long id;
     /**用户名*/
     private String username;
     /**用户真名*/
@@ -21,32 +21,32 @@ public class UserBean extends BaseBean {
     /**亲人手机号*/
     private String relatedPhone;
     /**安全密码*/
-    private String safePhone;
+    private String safePassword;
     /**用户头像*/
     private String userImg;
 
+    public String getSafePassword() {
+        return safePassword;
+    }
+
+    public void setSafePassword(String safePassword) {
+        this.safePassword = safePassword;
+    }
 
     public void setRelatedPhone(String relatedPhone) {
         this.relatedPhone = relatedPhone;
     }
 
-    public void setSafePhone(String safePhone) {
-        this.safePhone = safePhone;
-    }
 
     public String getRelatedPhone() {
         return relatedPhone;
     }
 
-    public String getSafePhone() {
-        return safePhone;
-    }
-
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -18,17 +18,28 @@ public class Music extends BaseBean{
     /**音乐存放的标题*/
     private String musicTitle;
     /**音乐ID*/
-    private Long musicID;
+    private long musicID;
     /**音乐播放时长*/
-    private Long musicTime;
+    private long musicTime;
     /**音乐文件大小*/
-    private Long musicSize;
+    private long musicSize;
     /**音乐图片*/
     private Bitmap musicImage;
     /**唱片图片*/
     private String album;
     /**唱片图片ID*/
-    private Long album_id;
+    private long album_id;
+
+    public long getMusicDuration() {
+        return musicDuration;
+    }
+
+    public void setMusicDuration(long musicDuration) {
+        this.musicDuration = musicDuration;
+    }
+
+    /**音乐大小*/
+    private long musicDuration;
 
     public Long getMusicID() {
         return musicID;

@@ -1,6 +1,8 @@
 package com.miss.imissyou.mycar.presenter.impl;
 
 
+import android.widget.Toast;
+
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.bean.BaseBean;
 import com.miss.imissyou.mycar.bean.CarInfoBean;
@@ -8,6 +10,7 @@ import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.model.CarListModel;
 import com.miss.imissyou.mycar.model.impl.CarListModelImpl;
 import com.miss.imissyou.mycar.presenter.CarListPresenter;
+import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.view.CarListFragmentView;
 
@@ -43,11 +46,11 @@ public class CarListPresenterImpl implements CarListPresenter<CarListFragmentVie
 
         if (((ResultBean) resultBean).isServiceResult()) {
             List<CarInfoBean> cars = GsonUtils.getParams((ResultBean)
-                    resultBean, "car", CarInfoBean[].class);
+                    resultBean, "car", CarInfoBean.class);
             if (cars != null) {
                 mCarListFragmentView.showResultSuccess(cars);
             } else {
-                mCarListFragmentView.showResultError(0, "用户没有车辆");
+                                                           mCarListFragmentView.showResultError(Constant.SHOW_ERROR_TOAST, "用户没有车辆");
             }
         } else {
             LogUtils.d("解析数据出错");
@@ -55,7 +58,7 @@ public class CarListPresenterImpl implements CarListPresenter<CarListFragmentVie
     }
 
     @Override public void loadServiceData(String userId) {
-        mCarListModel.loadData(userId);
+        mCarListModel.loadAllCarInfoData(userId);
     }
 
     @Override public void detchView() {

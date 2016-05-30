@@ -26,7 +26,6 @@ import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.lidroid.xutils.util.LogUtils;
-import com.miss.imissyou.mycar.bean.OrderBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.bean.UserBean;
 import com.miss.imissyou.mycar.broadcastReceiver.JpushReceiver;
@@ -39,14 +38,14 @@ import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.util.SPUtils;
 import com.miss.imissyou.mycar.util.StringUtil;
-import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.view.activity.AboutActivity;
-import com.miss.imissyou.mycar.view.activity.AddNewCarActivity;
 import com.miss.imissyou.mycar.view.activity.AuthorActivity;
 
 import com.miss.imissyou.mycar.view.activity.HelpActivity;
 import com.miss.imissyou.mycar.view.activity.LoginActivity;
+import com.miss.imissyou.mycar.view.activity.MessageActivity;
 import com.miss.imissyou.mycar.view.activity.SettingActivity;
+import com.miss.imissyou.mycar.view.fragment.SettingFragment;
 import com.miss.imissyou.mycar.view.fragment.CarListFragment;
 import com.miss.imissyou.mycar.view.fragment.ContentFragment;
 import com.miss.imissyou.mycar.view.fragment.GasStationFragment;
@@ -95,7 +94,9 @@ public class MainActivity extends ActionBarActivity
     private GasStationFragment gasStationFragment;
     private NaviViewFragment naviViewFragment;
 
-    /**双击退出程序*/
+    /**
+     * 双击退出程序
+     */
     private boolean isQuit;
     private Timer timer = new Timer();
 
@@ -112,7 +113,7 @@ public class MainActivity extends ActionBarActivity
             builder = new MissDialog.Builder(this);
             doLogin();
         } else {
-            LogUtils.d("用户Id" +Constant.userBean.getId());
+            LogUtils.d("用户Id" + Constant.userBean.getId());
             setAlias(Constant.userBean.getId());
         }
 
@@ -195,7 +196,7 @@ public class MainActivity extends ActionBarActivity
                 public void onSuccess(Map<String, String> headers, byte[] t) {
                     //设置COOKIE
                     Constant.COOKIE = headers.get("Set-Cookie");
-                    ResultBean resultBean = GsonUtils.Instance().fromJson(StringUtil.bytesToString(t),ResultBean.class);
+                    ResultBean resultBean = GsonUtils.Instance().fromJson(StringUtil.bytesToString(t), ResultBean.class);
                     LogUtils.d("收到的数据::" + StringUtil.bytesToString(t));
                     LogUtils.d(">>>Cookie===" + headers.get("Set-Cookie"));
                     if (resultBean.isServiceResult()) {
@@ -222,20 +223,23 @@ public class MainActivity extends ActionBarActivity
 
     /**
      * JPushInterface绑定别名
+     *
      * @param id
      */
-    private void setAlias(String id) {
-        if(id != null)
-            LogUtils.d("设置的别名:"  + id);
-        if (id.contains(".")) {
-            id = id.substring(0, id.indexOf("."));
-            LogUtils.d("设置的别名:"  + id);
+    private void setAlias(Long id) {
+        String userId = null;
+        if (id != null)
+            LogUtils.w("设置的别名:" + id);
+        if (id.toString().contains(".")) {
+            userId = id.toString().substring(0, id.toString().indexOf("."));
+            LogUtils.w("设置的别名:" + id);
         }
-            JPushInterface.setAlias(this, id, new TagAliasCallback() {
-                @Override public void gotResult(int i, String s, Set<String> set) {
-                    LogUtils.d("别名：" + i);
-                }
-            });
+        JPushInterface.setAlias(this, id + "", new TagAliasCallback() {
+            @Override
+            public void gotResult(int i, String s, Set<String> set) {
+                LogUtils.w("别名：" + i);
+            }
+        });
     }
 
     /**
@@ -282,15 +286,14 @@ public class MainActivity extends ActionBarActivity
         list.add(menuItem6);
         SlideMenuItem menuItem7 = new SlideMenuItem(ContentFragment.MOVIE, R.mipmap.icn_7);
         list.add(menuItem7);
-        SlideMenuItem menuItem8 = new SlideMenuItem(ContentFragment.USER, R.mipmap.user);
+        SlideMenuItem menuItem8 = new SlideMenuItem(ContentFragment.USER, R.mipmap.ic_userinfo);
         list.add(menuItem8);
-        SlideMenuItem menuItem9 = new SlideMenuItem(ContentFragment.MUSIC, R.drawable.music);
+        SlideMenuItem menuItem9 = new SlideMenuItem(ContentFragment.MUSIC, R.mipmap.ic_music_icon);
         list.add(menuItem9);
         SlideMenuItem menuItem10 = new SlideMenuItem(ContentFragment.MAP, R.drawable.ic_action_name);
         list.add(menuItem10);
         SlideMenuItem menuItem11 = new SlideMenuItem(ContentFragment.NAVIGATION, R.drawable.ic_navigation_image);
         list.add(menuItem11);
-
     }
 
     /**
@@ -407,16 +410,19 @@ public class MainActivity extends ActionBarActivity
     /**
      * ViewAnimator接口的实现类
      */
-    @Override public void disableHomeButton() {
+    @Override
+    public void disableHomeButton() {
         getSupportActionBar().setHomeButtonEnabled(false);
     }
 
-    @Override public void enableHomeButton() {
+    @Override
+    public void enableHomeButton() {
         getSupportActionBar().setHomeButtonEnabled(true);
         drawerLayout.closeDrawers();
     }
 
-    @Override public void addViewToContainer(View view) {
+    @Override
+    public void addViewToContainer(View view) {
         linearLayout.addView(view);
     }
 
@@ -445,17 +451,20 @@ public class MainActivity extends ActionBarActivity
      *
      * @param savedInstanceState
      */
-    @Override protected void onPostCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         drawerToggle.syncState();
     }
 
-    @Override public void onConfigurationChanged(Configuration newConfig) {
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
     }
 
-    @Override public boolean onCreateOptionsMenu(final Menu menu) {
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
         //设置OptionsMenu 菜单的选项
 
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -500,6 +509,10 @@ public class MainActivity extends ActionBarActivity
                 SPUtils.init(this);
                 SPUtils.ClearAllData();
                 intent.setClass(this, LoginActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_meaasge:
+                intent.setClass(this, MessageActivity.class);
                 startActivity(intent);
                 return true;
             default:

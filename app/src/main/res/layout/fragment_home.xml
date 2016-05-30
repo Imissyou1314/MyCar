@@ -47,14 +47,15 @@
 
                     <!--当前车辆信息的介绍-->
                     <LinearLayout
-                        android:layout_width="0dp"
                         android:layout_height="fill_parent"
                         android:layout_margin="5dp"
                         android:layout_marginLeft="10dp"
+                        android:gravity="center"
                         android:layout_weight="1"
                         android:orientation="vertical"
                         android:paddingLeft="10dp"
-                        android:paddingRight="10dp">
+                        android:paddingRight="10dp"
+                        android:layout_width="wrap_content">
 
                         <!--车名-->
                         <LinearLayout
@@ -364,6 +365,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:layout_marginBottom="5dp"
                         android:orientation="horizontal">
 
@@ -384,7 +386,6 @@
                             android:textColor="@color/color_boolean_false_text"
                             android:text="MissYOut" />
                     </LinearLayout>
-
                 </LinearLayout>
 
                 <!--车辆动态信息-->

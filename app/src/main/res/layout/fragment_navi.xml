@@ -15,23 +15,51 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="5dp"
         android:background="@color/color_carView_background_tran"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:layout_width="match_parent"
         android:layout_height="50dp">
-        <EditText
-            android:id="@+id/navi_mapView_search_edit"
-            android:hint="请输入终点地址"
-            android:paddingLeft="10dp"
-            android:drawableRight="@drawable/ic_detele"
-            android:paddingRight="10dp"
-            android:layout_weight="1"
-            android:background="@null"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
 
-        <Button
+        <AutoCompleteTextView
+            android:id="@+id/navi_mapView_keyWord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5.0dip"
+            android:background="@drawable/text_search"
+            android:completionThreshold="1"
+            android:dropDownVerticalOffset="1.0dip"
+            android:hint="请输入关键字"
+            android:imeOptions="actionDone"
+            android:inputType="text|textAutoComplete"
+            android:maxLength="20"
+            android:paddingRight="37.0dip"
+            android:drawableLeft="@drawable/ic_secher"
+            android:layout_weight="2"
+            android:singleLine="true"
+            android:textColor="#000000"
+            android:layout_marginTop="1dp"
+            android:textSize="16.0sp" />
+        <!--<EditText-->
+            <!--android:id="@+id/navi_mapView_search_edit"-->
+            <!--android:hint="请输入终点地址"-->
+            <!--android:paddingLeft="10dp"-->
+            <!--android:paddingRight="10dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@null"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent" />-->
+
+
+
+        <TextView
             android:id="@+id/navi_mapView_search_btn"
-            android:background="@drawable/ic_secher"
+            android:text="搜索"
+            android:textColor="@color/colorWhite"
+            android:background="@color/color_search_blue"
             android:layout_width="50dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="2dp"
+            android:gravity="center"
             android:layout_height="match_parent" />
 
     </LinearLayout>

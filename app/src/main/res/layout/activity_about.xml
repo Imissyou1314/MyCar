@@ -30,6 +30,21 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
 
+        <EditText
+            android:id="@+id/service_ip"
+            android:layout_marginTop="100dp"
+            android:hint="输入服务器地址"
+            android:textSize="22sp"
+            android:layout_below="@+id/about_Image"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+        <Button
+            android:id="@+id/sumbit_service"
+            android:text="更改"
+            android:layout_below="@+id/service_ip"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
         <TextView
             android:id="@+id/about_team_Info"
             android:text="伯爵技术团队"
@@ -47,5 +62,7 @@
             android:layout_alignParentBottom="true"
             android:layout_height="wrap_content" />
     </RelativeLayout>
+
+
 
 </LinearLayout>

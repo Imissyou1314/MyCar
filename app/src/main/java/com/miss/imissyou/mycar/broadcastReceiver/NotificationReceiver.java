@@ -40,7 +40,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         }else {
             //如果app进程已经被杀死，先重新启动app，将MessageActivity的启动参数传入Intent中，参数经过
             //MainActivity传入MessageActivity，此时app的初始化已经完成，在MainActivity中就可以根据传入             //参数跳转到DetailActivity中去了
-            LogUtils.i("NotificationReceiver the app process is dead");
+            LogUtils.i("NotificationReceiver the app process is dead重新启动App");
             Intent launchIntent = context.getPackageManager().
                     getLaunchIntentForPackage("com.miss.imissyou.mycar");
             launchIntent.setFlags(

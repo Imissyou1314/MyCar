@@ -23,14 +23,11 @@ import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.OilBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.bean.ServiceStation;
-import com.miss.imissyou.mycar.bean.Station;
 import com.miss.imissyou.mycar.bean.StopStation;
-import com.miss.imissyou.mycar.presenter.LoactionMapPresenter;
-import com.miss.imissyou.mycar.presenter.impl.LocationMapPresenterImpl;
+import com.miss.imissyou.mycar.bean.UserBean;
 import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.view.LocationView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -63,11 +60,11 @@ public class LocationMapFragment extends BaseFragment implements LocationView, A
         locationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
         // 设置定位监听
         locationClient.setLocationListener(this);
+        locationClient.startLocation();
     }
 
     @Override protected void initView(View view) {
         mapView = (MapView) view.findViewById(R.id.location_mapView);
-
     }
 
     @Override protected void initData() {
@@ -81,6 +78,8 @@ public class LocationMapFragment extends BaseFragment implements LocationView, A
         // 设置定位的类型为定位模式：定位（AMap.LOCATION_TYPE_LOCATE）、跟随（AMap.LOCATION_TYPE_MAP_FOLLOW）
         // 地图根据面向方向旋转（AMap.LOCATION_TYPE_MAP_ROTATE）三种模式
         aMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);
+        aMap.setMyLocationType(AMap.LOCATION_TYPE_MAP_FOLLOW);
+        aMap.moveCamera(CameraUpdateFactory.zoomTo(17));
     }
 
     /**
@@ -131,12 +130,11 @@ public class LocationMapFragment extends BaseFragment implements LocationView, A
                 desc = locBundle.getString("desc");
                 Log.d("Miss", "desc = " + desc);
             }
-            mListener.onLocationChanged(aMapLocation);// 显示系统小蓝点
+//            mListener.onLocationChanged(aMapLocation);// 显示系统小蓝点
 
             // 如果定位成功，记录下位置
             locLatlng = new LatLng(aMapLocation.getLatitude(),
                     aMapLocation.getLongitude());
-
             // 如果地图没问题，添加到地图上
             if (aMap != null) {
                 addLocationMarker();
@@ -161,6 +159,7 @@ public class LocationMapFragment extends BaseFragment implements LocationView, A
                     BitmapDescriptorFactory
                             .fromResource(R.mipmap.user_icon)));
             aMap.moveCamera(CameraUpdateFactory.newLatLng(locLatlng));
+            aMap.moveCamera(CameraUpdateFactory.zoomTo(16));
     }
 
     @Override

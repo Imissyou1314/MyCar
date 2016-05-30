@@ -1,7 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:background="@color/color_carView_background_tran"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/color_carView_mainMesage"
+    android:layout_gravity="center"
+    android:gravity="center"
     android:layout_height="match_parent">
 
-</LinearLayout>
+
+   <android.support.v7.widget.CardView
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="60dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginTop="30dp"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp"
+    app:cardBackgroundColor="@color/login_cardView_background"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="1dp"
+    app:cardMaxElevation="10dp">
+
+    <!--登录页面-->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:paddingBottom="10dp">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:background="@mipmap/password_icon"
+                    android:layout_gravity="center"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"/>
+                <EditText
+                    android:id="@+id/safepassword_password_Edit"
+                    android:layout_width="match_parent"
+                    android:hint="请输入密码"
+                    android:textColorHint="@color/colorWhite"
+                    android:inputType="text"
+                    android:layout_marginRight="20dp"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:background="@mipmap/password_icon"
+                    android:layout_gravity="center"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"/>
+                <EditText
+                    android:id="@+id/safepassword_safepasswordOne_Edit"
+                    android:hint="请输入安全码"
+                    android:textColorHint="@color/colorWhite"
+                    android:inputType="textPassword"
+                    android:layout_marginRight="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+
+            <View
+                android:background="@mipmap/password_icon"
+                android:layout_gravity="center"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+            <EditText
+                android:id="@+id/safepassword_safepasswordTwo_Edit"
+                android:hint="请再次输入安全码"
+                android:textColorHint="@color/colorWhite"
+                android:inputType="textPassword"
+                android:layout_marginRight="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/safePassword_sumbit"
+            android:background="@color/color_carView_background_tran"
+            android:text="绑定安全码"
+            android:layout_marginTop="20dp"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:layout_marginBottom="20dp"
+            style="@style/MissButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+
+
+</RelativeLayout>

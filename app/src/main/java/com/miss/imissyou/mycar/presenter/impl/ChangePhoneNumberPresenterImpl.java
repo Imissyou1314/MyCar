@@ -29,7 +29,9 @@ public class ChangePhoneNumberPresenterImpl implements ChangePhoneNumberPresente
 
     @Override
     public void onSuccess(BaseBean resultBean) {
-        mChangePhoneNumberView.showResultSuccess((ResultBean) resultBean);
+        if (null != resultBean) {
+            mChangePhoneNumberView.showResultSuccess((ResultBean) resultBean);
+        }
     }
 
     @Override
@@ -53,8 +55,13 @@ public class ChangePhoneNumberPresenterImpl implements ChangePhoneNumberPresente
         }
     }
 
-    @Override public void submit(String phoneNumber, String code) {
+    @Override public void submit(String phoneNumber, String code, int TAG) {
         if (!phoneNumber.equals("") || !code.equals(""))
-            mChangePhoneNumberModle.submit(phoneNumber, code);
+            if (TAG == 0) {
+                mChangePhoneNumberModle.changeUserPhone(phoneNumber, code);
+            } else {
+                mChangePhoneNumberModle.changeUserdersaPhone(phoneNumber,code);
+            }
+
     }
 }

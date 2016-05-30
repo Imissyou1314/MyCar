@@ -54,13 +54,11 @@ public class MusicFragment extends Fragment implements ScreenShotable {
     private TextView mTextViewCurrentTime;
     private TextView mTextViewMusicName;
     private MyBroadCastService myBroad;
-    private int mPosition;
+    private int mPosition = 0;
     private boolean flag;
 
     private View upView;
-    /**
-     * 我的音乐
-     */
+    /** 我的音乐*/
     private List<Music> mMusics = new ArrayList<>();
 
     @Override
@@ -107,7 +105,7 @@ public class MusicFragment extends Fragment implements ScreenShotable {
         mListView = (ListView) view.findViewById(R.id.listview);
         mSeekBar = (SeekBar) view.findViewById(R.id.seekbar);
         mTextViewAllTime = (TextView) view.findViewById(R.id.textview_all_time);
-        mTextViewMusicName = (TextView) view.findViewById(R.id.textview_music_name);
+        mTextViewMusicName = (TextView) view.findViewById(R.id.music_title_text);
         mTextViewCurrentTime = (TextView) view.findViewById(R.id.textview_current_time);
     }
 
@@ -116,9 +114,10 @@ public class MusicFragment extends Fragment implements ScreenShotable {
      */
     private void intitData() {
         FindSongs songs = new FindSongs();
-        //TODO 获取本地音乐
+
         if (null != getActivity().getContentResolver()) {
             mMusics = songs.getSongInfo(getActivity().getContentResolver());
+
             LogUtils.d("获取到的音乐数量" + mMusics.size());
             ToastUtil.asLong("获取到的音乐数量" + mMusics.size());
         } else {
@@ -140,13 +139,11 @@ public class MusicFragment extends Fragment implements ScreenShotable {
     public void addViewListener() {
         mBtnNextMusic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //不是最后一首音乐
+                /**不是最后一首音乐*/
                 if (mPosition != (mMusics.size() - 1)) {
                     mPosition ++;
                 }
-                /**
-                 * 播放下一首哥
-                 */
+                /**播放下一首哥*/
                 palyMusic(Constant.MUSIC_NEXT, mPosition);
 
             }
@@ -156,9 +153,7 @@ public class MusicFragment extends Fragment implements ScreenShotable {
             @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (mPosition != 0)
                     mPosition--;
-                /**
-                 * 播放上一首歌
-                 */
+                /**播放上一首歌*/
                 palyMusic(Constant.MUSIC_PREVIOUS, mPosition);
             }
         });
@@ -169,18 +164,21 @@ public class MusicFragment extends Fragment implements ScreenShotable {
                 intent.putExtra("flag",flag);
                 intent.putExtra("type",Constant.MUSIC_BUTTON_PAUSE);
                 getActivity().startService(intent);
+
+                if (flag) {
+                    mBtnPauseMusic.setBackgroundResource(R.mipmap.start_play_press);
+                } else {
+                    mBtnPauseMusic.setBackgroundResource(R.mipmap.start_pause_press);
+                }
                 flag = !flag;
             }
         });
 
-        /**
-         * 点击Item 播放
-         */
+        /** 点击Item 播放*/
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 palyMusic(Constant.MUSIC_CLICK_START, position);
                 mPosition = position;
-                view.setBackgroundResource(R.color.color_progress_yello);
             }
         });
 
@@ -228,31 +226,36 @@ public class MusicFragment extends Fragment implements ScreenShotable {
      * 广播在活动中设置UI参数
      */
     class MyBroadCastService extends BroadcastReceiver {
+         int EndTime = 0;
 
         @Override
         public void onReceive(Context context, Intent intent) {
             int type = intent.getIntExtra("type", 0);
             switch (type) {
-                case 0:
-                    int time = intent.getIntExtra("time", 0);
-                    mSeekBar.setMax(time);
-                    String strTime = StringUtil.timeToString(time,"mm:ss");
+                case 0:             //开始播放
+                    int endTime = intent.getIntExtra("time", 0);
+                    EndTime = endTime;
+                    mSeekBar.setMax(endTime);
+                    String strTime = StringUtil.timeToString(endTime,"mm:ss");
                     mTextViewAllTime.setText(strTime);
-                    String name = intent.getStringExtra("name");
-                    mTextViewMusicName.setText(name);
+                    String musicName1 = intent.getStringExtra("name");
+                    mTextViewMusicName.setText(getMusicName(musicName1));
                     break;
-                case 1:
+                case 1:            //实时更新时间 bo
+                    LogUtils.d("播放音乐，更新音乐世界");
                     int playTime = intent.getIntExtra("time", 0);
-                    mSeekBar.setProgress(playTime);
-                    String timeStr = StringUtil.timeToString(playTime,"mm:ss");
-                    mTextViewCurrentTime.setText(timeStr);
-                    String musicName = intent.getStringExtra("name");
-                    mTextViewMusicName.setText(musicName);
+                    if (playTime >= EndTime -1 ) {
+                        LogUtils.d("自动播放下一首");
+                        palyMusic(Constant.MUSIC_NEXT, mPosition);
+                    } else {
+                        mSeekBar.setProgress(playTime);
+                        String timeStr = StringUtil.timeToString(playTime,"mm:ss");
+                        mTextViewCurrentTime.setText(timeStr);
+                    }
                     break;
                 default:
                     LogUtils.d("MusicFragment 并无该项操作");
                     break;
-
             }
         }
     }
@@ -265,4 +268,12 @@ public class MusicFragment extends Fragment implements ScreenShotable {
         return null;
     }
 
+    private String getMusicName(String musicName) {
+        if (null != musicName && !"".equals(musicName)) {                                       //去掉音乐播放器后面的.mp3
+            if (musicName.contains(".")) {
+                musicName = musicName.substring(0, musicName.indexOf("."));
+            }
+        }
+        return musicName;
+    }
 }

@@ -34,5 +34,12 @@ public interface AddNewCarInputPresenter {
     void loadCar(String url);
 
     void onFailure(int errorNo, String strMsg);
+
     void onSuccess(String t);
+
+    /**
+     * 添加成功车辆    t
+     * @param t
+     */
+    void onAddCarSuccess(String t);
 }

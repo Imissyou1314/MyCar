@@ -1,18 +1,12 @@
 package com.miss.imissyou.mycar.view.activity;
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
 
 
-import com.facebook.rebound.SimpleSpringListener;
-import com.facebook.rebound.Spring;
-import com.facebook.rebound.SpringConfig;
-import com.facebook.rebound.SpringSystem;
+import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.MessageBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
@@ -24,11 +18,12 @@ import com.miss.imissyou.mycar.ui.MissSwipDismissListView;
 import com.miss.imissyou.mycar.ui.adapterutils.CommonAdapter;
 import com.miss.imissyou.mycar.ui.adapterutils.ViewHolder;
 import com.miss.imissyou.mycar.ui.circleProgress.CircleProgress;
+import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.FindViewById;
 import com.miss.imissyou.mycar.util.GsonUtils;
+import com.miss.imissyou.mycar.util.SPUtils;
 import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.view.MessageView;
-import com.nineoldandroids.view.ViewHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +42,6 @@ public class MessageActivity extends BaseActivity implements MessageView {
     private MessagePresenter mMessagePresenter;
     List<MessageBean> messages = new ArrayList<MessageBean>();
 
-    @SuppressLint("MissingSuperCall")
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_message);
         initData();
@@ -58,36 +52,45 @@ public class MessageActivity extends BaseActivity implements MessageView {
      */
     @Override public void initData() {
         mMessagePresenter = new MessagePresenterImpl(this);
-        mMessagePresenter.loadServiceData(null);
+        SPUtils.init(this);
+
+        if (SPUtils.getSp_set().getBoolean(Constant.MESSAGEALL, false)) {
+            mMessagePresenter.getUserAllMessage();
+        } else {
+            mMessagePresenter.getUserUnReadMessage();
+        }
+
+        changeStateToService();
     }
 
     @Override public void addListeners() {
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //TODO
-            }
-        });
-
         listView.setOnDismissCallback(new MissSwipDismissListView.OnDismissCallback() {
             @Override
             public void onDismiss(int dismissPosition) {
-                messages.remove(dismissPosition);
-
+                LogUtils.d("删除第几项:" + dismissPosition);
                 mMessagePresenter.deteleMessage(messages.get(dismissPosition).getId());
-
-                setListData(messages);
-
+                removeMessage(dismissPosition);
             }
         });
     }
 
+    private void removeMessage(int dismissPosition) {
+        this.messages.remove(dismissPosition);
+    }
+
     @Override
     public void showResultError(int errorNo, String errorMag) {
+        String title ="警告";
+        if (errorNo == 0) {
+            title = "程序异常";
+        } else if (errorNo == Constant.NETWORK_STATE){
+            title = "网络异常";
+        }
         /**弹框提示用户*/
         MissDialog.Builder dialog = new MissDialog.Builder(this);
         dialog.setSingleButton(true)
-                .setTitle("获取消息出错")
+                .setTitle(title)
                 .setMessage(errorMag)
                 .setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
@@ -96,11 +99,12 @@ public class MessageActivity extends BaseActivity implements MessageView {
                     }
                 });
         dialog.create().show();
+
     }
 
     @Override public void showResultSuccess(ResultBean resultBean) {
 
-        this.messages = GsonUtils.getParams(resultBean, "message", MessageBean[].class);
+        this.messages.addAll(GsonUtils.getParams(resultBean, "message", MessageBean.class));
         if (messages.size() > 0) {
            setListData(messages);
         } else {
@@ -116,19 +120,21 @@ public class MessageActivity extends BaseActivity implements MessageView {
         CommonAdapter adapter = new CommonAdapter<MessageBean>(this, messages,
                 R.layout.item_message) {
             @Override public void convert(ViewHolder holder, final MessageBean messageBean) {
-                holder.setText(R.id.message_item_msg_text, messageBean.getMessageMsg());
-                holder.setText(R.id.message_item_time_text, messageBean.getMessageTime().toString());
+                if (messageBean.isState()) {
+                    /**设置没点击过的背景色*/
+                    holder.setBackGround(R.color.color_blue);
+                }
+                holder.setText(R.id.message_item_msg_text, messageBean.getContent());
+                holder.setText(R.id.message_item_time_text, messageBean.getSystemData());
                 holder.setText(R.id.message_item_title_text, messageBean.getMessageTitle());
-
-                holder.setOnClickListener(holder.getmPosition(), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        messageBean.setRead(true);
-                    }
-                });
             }
         };
         listView.setAdapter(adapter);
+    }
+
+    private void changeStateToService() {
+        if (null != Constant.userBean && 0 !=  Constant.userBean.getId())
+        mMessagePresenter.changeStateToService(Constant.userBean.getId());
     }
 
     @Override public void showProgress() {

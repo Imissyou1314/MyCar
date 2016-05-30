@@ -2,6 +2,7 @@ package com.miss.imissyou.mycar.view.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +11,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
@@ -40,7 +44,7 @@ import cn.jpush.android.api.TagAliasCallback;
  * 登陆页面
  * Created by Imissyou on 2016/3/26.
  */
-public class LoginActivity extends BaseActivity implements View.OnClickListener{
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
     @FindViewById(id = R.id.login_doLogin_Btn)
     private Button loginBtn;
@@ -54,17 +58,24 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     private EditText accountEt;
     @FindViewById(id = R.id.login_password_Edit)
     private EditText passwordEt;
-    @FindViewById(id = R.id.login_userHead_image )
+    @FindViewById(id = R.id.login_userHead_image)
     private RoundImageView userHeadImage;
 
-    /**账号*/
+    /**
+     * 账号
+     */
     private String account;
-    /**密码*/
+    /**
+     * 密码
+     */
     private String password;
-    /**密码长度*/
+    /**
+     * 密码长度
+     */
     private int length = 0;
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_login);
     }
 
@@ -72,10 +83,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
      * 加载数据
      */
 
-    @Override public void initData() {
+    @Override
+    public void initData() {
         SPUtils.init(this);
-        password = SPUtils.getSp_user().getString(Constant.UserPassID,"");
-        account = SPUtils.getSp_user().getString(Constant.UserAccountID,"");
+        password = SPUtils.getSp_user().getString(Constant.UserPassID, "");
+        account = SPUtils.getSp_user().getString(Constant.UserAccountID, "");
         length = SPUtils.getSp_user().getInt(Constant.UserPassLength, 0);
 
 
@@ -84,21 +96,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             //构造加密码
             passwordEt.setText("11111111");
         }
-        if (!SPUtils.getSp_user().getString(Constant.UserBeanID,"").equals("")){
+        if (!SPUtils.getSp_user().getString(Constant.UserBeanID, "").equals("")) {
             Constant.userBean = GsonUtils.Instance()
-                    .fromJson(SPUtils.getSp_user().getString(Constant.UserBeanID,""), UserBean.class);
-            if (null == Constant.userBean && null == Constant.userBean.getUserImg()) {
-                return ;
-            } else {
+                    .fromJson(SPUtils.getSp_user().getString(Constant.UserBeanID, ""), UserBean.class);
+            if (null != Constant.userBean && null != Constant.userBean.getUserImg()) {
                 //加载用户图片
                 LogUtils.d("登录加载用户图片");
                 String url = Constant.SERVER_URL + Constant.userBean.getUserImg();
                 LogUtils.d("加载图片的地址" + url);
-                Glide.with(this)
-                        .load(Constant.SERVER_URL + Constant.userBean.getUserImg())
-                        .centerCrop()
-                        .into(userHeadImage);
+//                Glide.with(this)
+//                        .load(Constant.SERVER_URL + Constant.userBean.getUserImg())
+//                        .centerCrop()
+//                        .into(userHeadImage);
             }
+
         } else {
             LogUtils.d("用户为新用户");
         }
@@ -106,7 +117,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
     }
 
-    @Override public void addListeners() {
+    @Override
+    public void addListeners() {
         loginBtn.setOnClickListener(this);
         registerBtn.setOnClickListener(this);
         findPasswordTv.setOnClickListener(this);
@@ -114,7 +126,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         initData();
     }
 
-    @Override public void onClick(View v) {
+    @Override
+    public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_doLogin_Btn:
                 doLogin();
@@ -144,7 +157,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         String tmpPassword = getInput(passwordEt);
 
         LogUtils.d("账号:" + tmpaccount + ">>>>密码:" + tmpPassword);
-        if(!tmpaccount.equals(account) || tmpPassword.length() != length)  {
+        if (!tmpaccount.equals(account) || tmpPassword.length() != length) {
             account = tmpaccount;
             password = tmpPassword;
             length = password.length();
@@ -155,12 +168,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
          * 验证密码
          */
         if (account.equals("") || password.equals("")
-                && (length >4 && length < 16)) {
+                && (length > 4 && length < 16)) {
             builder.setTitle("请正确输入")
                     .setMessage("密码和账号不能为空，而且密码不能少于4位数，大于16位数")
                     .setSingleButton(true)
                     .setNegativeButton("确认", new DialogInterface.OnClickListener() {
-                        @Override public void onClick(DialogInterface dialog, int which) {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                             passwordEt.setText("");
                             accountEt.setText("");
@@ -172,28 +186,30 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
         HttpParams params = new HttpParams();
         LogUtils.d("加密后的密码" + password);
-        params.put("password",password);
-        params.put("loginid",account);
+        params.put("password", password);
+        params.put("loginid", account);
         if (null != Constant.COOKIE)
-            params.put("cookie",Constant.COOKIE);
+            params.put("cookie", Constant.COOKIE);
         //服务器URL
         String url = Constant.SERVER_URL + "users/doLogin";
         RxVolley.post(url, params, new HttpCallback() {
-            @Override public void onFailure(int errorNo, String strMsg) {
+            @Override
+            public void onFailure(int errorNo, String strMsg) {
                 super.onFailure(errorNo, strMsg);
-               builder.setTitle("登录出错")
-                       .setMessage(strMsg)
-                       .setSingleButton(true)
-                       .setNegativeButton("确定", new DialogInterface.OnClickListener() {
-                           @Override
-                           public void onClick(DialogInterface dialog, int which) {
-                               dialog.dismiss();
-                           }
-                       });
-                       builder.create().show();
+                builder.setTitle("登录出错")
+                        .setMessage(strMsg)
+                        .setSingleButton(true)
+                        .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                builder.create().show();
             }
 
-            @Override public void onSuccess(Map<String, String> headers, byte[] t) {
+            @Override
+            public void onSuccess(Map<String, String> headers, byte[] t) {
                 ResultBean resultBean = GsonUtils.Instance().fromJson(StringUtil.bytesToString(t), ResultBean.class);
                 LogUtils.d("收到的数据::" + StringUtil.bytesToString(t));
                 if (resultBean.isServiceResult()) {
@@ -218,7 +234,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             }
         });
 
-        if (savePasswordCk.isChecked() && length < 16 ) {
+        if (savePasswordCk.isChecked() && length < 16) {
             savePassWord(password, account, GsonUtils.Instance().toJson(Constant.userBean));
         }
         return true;
@@ -226,17 +242,21 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
     /**
      * JPushInterface绑定别名
+     *
      * @param id
      */
-    private void setAlias(String id) {
-        LogUtils.d("用户ID:" + id);
-        if (id != null) {
-            if (id.contains(".")) {
-                id = id.substring(0, id.indexOf("."));
+    private void setAlias(Long id) {
+        LogUtils.w("用户ID:" + id);
+
+        if (id != null && !id.toString().equals("")) {
+            String usesrId = id.toString();
+            if (usesrId.contains(".")) {
+                usesrId = usesrId.substring(0, usesrId.indexOf("."));
             }
-            JPushInterface.setAlias(this, id, new TagAliasCallback() {
-                @Override public void gotResult(int i, String s, Set<String> set) {
-                    LogUtils.d("JPushInterface设置状态:" + i);
+            JPushInterface.setAlias(this, usesrId, new TagAliasCallback() {
+                @Override
+                public void gotResult(int i, String s, Set<String> set) {
+                    LogUtils.w("JPushInterface设置状态:" + i);
                 }
             });
         }
@@ -261,12 +281,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     /**
      * 转到找回秘密页面
      */
-    private void  doFindPassword() {
+    private void doFindPassword() {
         startActivity(new Intent(this, FindPasswordActivity.class));
     }
 
     /**
      * 获取控件的输入
+     *
      * @param inputView EditText
      * @return
      */
@@ -276,6 +297,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
     /**
      * 保存用户密码账号
+     *
      * @param password
      * @param account
      */
@@ -288,8 +310,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             SPUtils.putCacheData(this, Constant.UserPassLength, length);
         }
     }
-
-    @Override protected void onDestroy() {
+    @Override
+    protected void onDestroy() {
         LoadImageView.releaseImageViewResouce(userHeadImage);
         super.onDestroy();
     }

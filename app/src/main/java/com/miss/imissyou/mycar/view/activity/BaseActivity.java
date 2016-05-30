@@ -131,5 +131,5 @@ public abstract class BaseActivity extends FragmentActivity {
      * 添加监听事件
      */
     public abstract void  addListeners();
-    
+
 }

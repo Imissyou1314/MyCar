@@ -10,8 +10,9 @@ public interface UserInfoModel {
 
     /**
      * 获取服务器用户数据
+     * @param userId 用户Id
      */
-    void loadUserInfo();
+    void loadUserInfo(String userId);
 
     /**
      * 更新服务器用户数据

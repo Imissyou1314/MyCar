@@ -4,7 +4,7 @@ import com.miss.imissyou.mycar.bean.BaseBean;
 import com.miss.imissyou.mycar.bean.CarInfoBean;
 
 /**
- * 操作数据模型
+ * 添加车辆操作数据模型
  * Created by Imissyou on 2016/4/18.
  */
 public interface AddNewCarInputModel {

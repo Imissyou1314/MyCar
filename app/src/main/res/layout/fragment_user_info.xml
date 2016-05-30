@@ -132,39 +132,41 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
-            <!--车辆数-->
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:layout_marginBottom="5dp"
-                android:gravity="center"
-                android:paddingRight="20dp"
-                android:background="@color/color_miniblue"
-                android:layout_width="match_parent"
-                android:layout_height="0dp">
-                <TextView
-                    android:id="@+id/userInfo_usercarNumber"
-                    android:text="用户车数:"
-                    style="@style/MissTextViweStyle"
-                    android:gravity="center|right"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content" />
-                <EditText
-                    android:id="@+id/userInfo_usercarNumber_Input"
-                    style="@style/MissTextViweStyle"
-                    android:background="@null"
-                    android:gravity="center|left"
-                    android:inputType="number"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2" />
+            <!--&lt;!&ndash;车辆数&ndash;&gt;-->
+            <!--<LinearLayout-->
+                <!--android:orientation="horizontal"-->
+                <!--android:layout_weight="1"-->
+                <!--android:layout_marginBottom="5dp"-->
+                <!--android:gravity="center"-->
+                <!--android:paddingRight="20dp"-->
+                <!--android:background="@color/color_miniblue"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="0dp">-->
+                <!--<TextView-->
+                    <!--android:id="@+id/userInfo_usercarNumber"-->
+                    <!--android:text="用户车数:"-->
+                    <!--style="@style/MissTextViweStyle"-->
+                    <!--android:gravity="center|right"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:layout_height="wrap_content" />-->
+                <!--<EditText-->
+                    <!--android:id="@+id/userInfo_usercarNumber_Input"-->
+                    <!--style="@style/MissTextViweStyle"-->
+                    <!--android:background="@null"-->
+                    <!--android:gravity="center|left"-->
+                    <!--android:enabled="false"-->
+                    <!--android:inputType="number"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="2" />-->
 
 
-            </LinearLayout>
+            <!--</LinearLayout>-->
 
             <!--用户手机号-->
             <LinearLayout
+                android:id="@+id/userInfo_userdPhone_goChagne"
                 android:orientation="horizontal"
                 android:layout_weight="1"
                 android:layout_marginBottom="5dp"
@@ -187,6 +189,8 @@
                     style="@style/MissTextViweStyle"
                     android:background="@null"
                     android:gravity="center|left"
+                    android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
+                    android:enabled="false"
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:layout_height="wrap_content" />
@@ -194,6 +198,7 @@
 
             <!--亲人电话-->
             <LinearLayout
+                android:id="@+id/userInfo_userdersaPhone_goChagen"
                 android:orientation="horizontal"
                 android:layout_weight="1"
                 android:paddingRight="20dp"
@@ -214,7 +219,9 @@
                     android:id="@+id/userInfo_userdersaPhone_Input"
                     style="@style/MissTextViweStyle"
                     android:background="@null"
+                    android:enabled="false"
                     android:gravity="left|center"
+                    android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
                     android:inputType="phone"
                     android:layout_width="0dp"
                     android:layout_weight="2"
@@ -227,6 +234,18 @@
             android:layout_weight="2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/userInfo_submit"
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:text="更新"
+                android:background="@color/color_carView_background_tran"
+                style="@style/MissButton"
+                android:gravity="center"
+                android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>
 

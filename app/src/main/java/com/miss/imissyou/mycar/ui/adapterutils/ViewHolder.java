@@ -155,6 +155,12 @@ public class ViewHolder {
         return this;
     }
 
+    /**
+     * 设置触发监听
+     * @param viewId
+     * @param listener
+     * @return
+     */
     public ViewHolder setOnTouchListener(int viewId,
                                          View.OnTouchListener listener)
     {
@@ -163,11 +169,27 @@ public class ViewHolder {
         return this;
     }
 
+    /**
+     * 设置长按触发
+     * @param viewId
+     * @param listener
+     * @return
+     */
     public ViewHolder setOnLongClickListener(int viewId,
                                              View.OnLongClickListener listener)
     {
         View view = getView(viewId);
         view.setOnLongClickListener(listener);
+        return this;
+    }
+
+    /**
+     * 设置Item的背景色
+     * @param colorSrc
+     * @return
+     */
+    public ViewHolder setBackGround(int colorSrc) {
+        getmConverView().setBackgroundColor(colorSrc);
         return this;
     }
 }
