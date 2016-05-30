@@ -58,6 +58,7 @@ public class CarListPresenterImpl implements CarListPresenter<CarListFragmentVie
     }
 
     @Override public void loadServiceData(String userId) {
+
         mCarListModel.loadAllCarInfoData(userId);
     }
 

@@ -10,9 +10,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.amap.api.maps.model.Text;
+import com.lidroid.xutils.http.client.multipart.content.StringBody;
 import com.miss.imissyou.mycar.R;
 
 /**
+ *   选择导航路线
  * Created by 青玉 on 2016/5/30.
  */
 public class RouteSelectFragment extends BaseFragment implements View.OnClickListener {
@@ -22,8 +24,12 @@ public class RouteSelectFragment extends BaseFragment implements View.OnClickLis
     private TextView endRouteInput;             //输入终点路径
     private ImageButton changeBtn;                    //改变起点和终点路径
     private TextView goBack;                      //返回上一页
-    private int StartTag = 1;                       //起点的标志
-    private int EndTag = 0;                       //终点标志
+
+    private final int StartTag = 1;                       //起点的标志
+    private final int EndTag = 0;                       //终点标志
+
+    private String startPlace;
+    private String endPlace;
 
     @Nullable
     @Override
@@ -75,18 +81,25 @@ public class RouteSelectFragment extends BaseFragment implements View.OnClickLis
      * 放回上一个页面
      */
     private void backToFragment() {
+        getActivity().getSupportFragmentManager()
+                .beginTransaction().remove(this);
     }
 
     /**
-     * 去地址输入Fragment
+     * 跳转到地址输入Fragment
      * @param tag
      */
     private void toInputFragment(int tag) {
+        InputRouteFragment inputRouteFragment = new InputRouteFragment();
+
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container_frame, new InputRouteFragment());
     }
 
     /**
      *      装换起点和终点
      */
     private void changeInput() {
+
+
     }
 }

@@ -12,7 +12,7 @@ public class Constant {
     /**
      * 服务器URL
      */
-    public static String SERVER_URL = "http://192.168.1.100:8080/";
+    public static String SERVER_URL = "http://192.168.1.106:8080/";
     public static final int HTTP_OK = 200;
 
     public static final String GASSTION_BRAND_ZHONGSHIYOU = "中石油";
