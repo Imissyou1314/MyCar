@@ -3,11 +3,14 @@ package com.miss.imissyou.mycar.view.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.CarInfoBean;
@@ -39,45 +42,57 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
     private TitleFragment titleView;
 
     @FindViewById(id = R.id.activity_add_newCar_brand_input)
-    private EditText brandEdit;
+    private EditText brandEdit;             //品牌
     @FindViewById(id = R.id.activity_add_newCar_brand_input)
-    private EditText modelsEdit;
-    @FindViewById(id = R.id.activity_add_newCar_plateNumber_input)
-    private EditText plateNumberEdit;
+    private EditText modelsEdit;            //品牌型号
     @FindViewById(id = R.id.activity_add_newCar_vin_input)
-    private EditText vinEdit;
+    private EditText vinEdit;               //车架号
     @FindViewById(id = R.id.activity_add_newCar_engineNumber_input)
-    private EditText engineNumberEdit;
+    private EditText engineNumberEdit;      //发动机号
     @FindViewById(id = R.id.activity_add_newCar_rank_input)
-    private EditText rankEdit;
+    private EditText rankEdit;              //车身等级
+    @FindViewById(id = R.id.activity_add_newCar_plateNumber_input)
+    private EditText plateNumber;           //车牌
 
     @FindViewById(id = R.id.activity_add_newCar_enginProperty_input)
-    private EditText enginPropertyEdit;
+    private EditText enginPropertyEdit;         //发动机性能
     @FindViewById(id = R.id.activity_add_newCar_transmission_input)
-    private EditText transmissionEdit;
+    private EditText transmissionEdit;          //变速器性能
     @FindViewById(id = R.id.activity_add_newCar_carLight_input)
-    private EditText carLightEdit;
+    private EditText carLightEdit;              //车灯
 
     @FindViewById(id = R.id.activity_add_newCar_carState_input)
-    private EditText carStateEdit;
+    private EditText carStateEdit;           //车状态
     @FindViewById(id = R.id.activity_add_newCar_carAlarm_input)
-    private EditText carAlarmEdit;
+    private EditText carAlarmEdit;          //车警报状态
+    @FindViewById(id = R.id.activity_add_newCar_carLight_input)
+    private EditText carLightEidt;          //车灯状态
 
     @FindViewById(id = R.id.activity_add_newCar_alarmMessage_button)
-    private ToggleButton alarmMessage;
+    private ToggleButton alarmMessage;      //获取警报信息
     @FindViewById(id = R.id.activity_add_newCar_propertyMessage_button)
     private ToggleButton propertyMessage;
     @FindViewById(id = R.id.activity_add_newCar_stateMessage_button)
     private ToggleButton stateMessage;
+
+    @FindViewById(id = R.id.activity_add_newCar_milleage_input)
+    private EditText mileageInput;
+    @FindViewById(id = R.id.activity_add_newCar_oilBox_input)
+    private EditText oilMaxInputInput;
+    @FindViewById(id = R.id.activity_add_newCar_oil_input)
+    private EditText oilInput;
+    @FindViewById(id = R.id.activity_add_newCar_temperature_input)
+    private EditText temperatureInput;
 
 
     private static final String resultJson = "missKey";
     MissDialog.Builder builder;
 
     private AddNewCarInputPresenter mAddAddNewCarInputPresenter;
-    private CarInfoBean resultBean;
+    private CarInfoBean resultBean = new CarInfoBean();
 
-    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_add_newcar_input);
     }
 
@@ -86,23 +101,27 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
      */
     @Override public void addListeners() {
         titleView.setTitleText("确认车辆信息");
+
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 LogUtils.d("提交数据");
-                if (resultBean.getId() == null) {
-                    doInput();
-                }
+                doInput();
                 resultBean.setAlarmMessage(alarmMessage.getToggleOn());
                 resultBean.setPropertyMessage(propertyMessage.getToggleOn());
                 resultBean.setStateMessage(stateMessage.getToggleOn());
+
                 if(resultBean == null ) {
                     return;
                 } else if(Constant.userBean == null) {
                     toDoLogin();
                 }
-
-                resultBean.setUserId(Long.parseLong(Constant.userBean.getId()));
-                mAddAddNewCarInputPresenter.sentCarInfoToService(resultBean);
+                if (null != Constant.userBean && null != Constant.userBean.getId()) {
+                    String userId = Constant.userBean.getId();
+                    userId = userId.substring(0, userId.indexOf("."));
+                    LogUtils.d(userId);
+                    resultBean.setUserId(Long.parseLong(userId));
+                    mAddAddNewCarInputPresenter.sentCarInfoToService(resultBean);
+                }
             }
         });
     }
@@ -111,34 +130,28 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
      * 获取输入
      */
     private void doInput() {
+        if (null == resultBean) {
+            resultBean = new CarInfoBean();
+        }
+        resultBean.setPlateNumber(plateNumber.getText().toString() + "");
         resultBean.setBrand(brandEdit.getText().toString());
         resultBean.setModles(modelsEdit.getText().toString());
-        resultBean.setUserId(Integer.parseInt(Constant.userBean.getId()));
-        resultBean.setCarState(carStateEdit.getText().toString());
-        resultBean.setPlateNumber(plateNumberEdit.getText().toString());
         resultBean.setVin(vinEdit.getText().toString());
         resultBean.setEngineNumber(engineNumberEdit.getText().toString());
-        resultBean.setEnginProperty(enginPropertyEdit.getText().toString());
-        resultBean.setCarAlarm(carAlarmEdit.getText().toString());
-        resultBean.setCarState(carStateEdit.getText().toString());
-        resultBean.setCarLight(carStateEdit.getText().toString());
         resultBean.setRank(rankEdit.getText().toString());
-        resultBean.setTransmission(transmissionEdit.getText().toString());
     }
 
-    @Override
-    protected void onResume() {
+    @Override protected void onResume() {
         super.onResume();
         SPUtils.init(this);
         String jsonBean = SPUtils.getSp_cache().getString(resultJson,"");
         if (jsonBean.equals("")) {
             resultBean = GsonUtils.Instance().fromJson(jsonBean, CarInfoBean.class);
         }
-
     }
 
     /**
-     * 登陆页面
+     * 跳转登陆页面
      */
     private void toDoLogin() {
         LogUtils.d("用户要登陆");
@@ -164,26 +177,29 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
         super.onDestroy();
     }
 
-    @Override
-    protected void initData() {
+    @Override protected void initData() {
         mAddAddNewCarInputPresenter = new AddNewCarInputPresenterImpl(this);
         builder =new  MissDialog.Builder(this);
-        if (resultBean == null) {
-            String ping = this.getIntent().getStringExtra("result");
-            //如果扫描的路径为空就不去请求
-            if (ping == null) {
-                String url = Constant.SERVER_URL + ping;
-                LogUtils.d("请求路径:" + url);
-                mAddAddNewCarInputPresenter.loadCar(url);
-            }
-        } else {
+
+
+        String resultUrl = this.getIntent().getStringExtra("result");
+        //如果扫描的路径为空就不去请求
+        if (resultUrl != null) {
+            String url = Constant.SERVER_URL + resultUrl;
+            LogUtils.d("请求路径:" + url);
+            Toast.makeText(getApplicationContext(), "url" ,Toast.LENGTH_LONG).show();
+            mAddAddNewCarInputPresenter.loadCar(url);
+        } else if (null != resultBean && null != resultBean.getId()) {
             showResultSuccess(resultBean);
         }
-
     }
 
     @Override public void showResultError(int errorNo, String errorMag) {
-        builder.setTitle("信息")
+        String title = "连接错误";
+        if (errorNo == 0)
+            title="程序错误";
+
+        builder.setTitle(title)
                 .setMessage(errorMag)
                 .setSingleButton(true)
                 .setNegativeButton("确定", new DialogInterface.OnClickListener(){
@@ -201,7 +217,6 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
     @Override public void showResultSuccess(CarInfoBean resultBean) {
 
         if (resultBean == null) {
-
             builder.setTitle("连接失败")
                     .setMessage("获取服务器数据失败")
                     .setSingleButton(true)
@@ -210,25 +225,42 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
                             dialog.dismiss();
                         }
                     });
-
             builder.create().show();
             return;
         }
 
         this.resultBean = resultBean;
+
+        if (null != resultBean.getMark()) {
+            String url = Constant.SERVER_URL + resultBean.getMark();
+            LogUtils.d("加载图片的URL:" + url);
+            Glide.with(this).load(url).into(userHeadImage);
+        }
+
         brandEdit.setText(resultBean.getBrand());
         modelsEdit.setText(resultBean.getModles());
-        plateNumberEdit.setText(resultBean.getPlateNumber());
         vinEdit.setText(resultBean.getVin());
         engineNumberEdit.setText(resultBean.getEngineNumber() + "");
-        enginPropertyEdit.setText(resultBean.getEnginProperty());
         rankEdit.setText(resultBean.getRank());
-        transmissionEdit.setText(resultBean.getTransmission());
-        carLightEdit.setText(resultBean.getCarLight());
 
-        carStateEdit.setText(resultBean.getCarState());
-        carAlarmEdit.setText(resultBean.getCarAlarm());
+
+        enginPropertyEdit.setText(isGood(resultBean.isEnginProperty()));
+        transmissionEdit.setText(isGood(resultBean.isTransmission()));
+        carLightEdit.setText(isGood(resultBean.isCarLight()));
+
+        mileageInput.setText(resultBean.getMilleage() + "");
+        oilInput.setText(resultBean.getOil() +"");
+        oilMaxInputInput.setText(resultBean.getOilBox() + "");
+        temperatureInput.setText(resultBean.getTemperature() + "");
+
+        carStateEdit.setText(isGood(resultBean.isCarState()));
+        carAlarmEdit.setText(isGood(resultBean.isCarAlarm()));
+        carLightEdit.setText(isGood(resultBean.isCarLight()));
 
         LogUtils.d("回调的信息" + GsonUtils.Instance().toJson(resultBean));
+    }
+
+    private String isGood(boolean check) {
+        return check ? "好": "坏";
     }
 }

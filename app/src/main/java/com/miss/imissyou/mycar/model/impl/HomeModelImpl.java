@@ -23,14 +23,10 @@ public class HomeModelImpl implements HomeModel {
     }
 
     @Override public void loadDataFormService(String carId) {
-        HttpParams params = new HttpParams();
-        params.putHeaders("cookie", Constant.COOKIE);
 
-        //TODO
-
-        String url = Constant.SERVER_URL + "url";
+        String url = Constant.SERVER_URL + "car/car=" + carId;
         LogUtils.d("请求的路径" + url);
-        RxVolley.post(url, params, new HttpCallback() {
+        HttpCallback callback = new HttpCallback() {
             @Override public void onSuccess(String t) {
                 LogUtils.d("接受的数据:" + t);
                 ResultBean resultBean = GsonUtils.getResultBean(t);
@@ -42,7 +38,15 @@ public class HomeModelImpl implements HomeModel {
                     strMsg = Constant.NOTNETWORK;
                 homePresenter.onFailure(errorNo, strMsg);
             }
-        });
+        };
+
+        new RxVolley.Builder()
+                .url(url)
+                .shouldCache(false)
+                .callback(callback)
+                .timeout(3000)
+                .httpMethod(RxVolley.Method.GET)
+                .doTask();
     }
 
 }

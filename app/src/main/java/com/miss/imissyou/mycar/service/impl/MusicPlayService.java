@@ -2,6 +2,7 @@ package com.miss.imissyou.mycar.service.impl;
 
 import android.app.Service;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.IBinder;
@@ -22,11 +23,10 @@ public class MusicPlayService extends Service{
     /**声明媒体播放器*/
     private MediaPlayer musicPlay;
     /**声明播放进度*/
-    private int pot = 0;
     private boolean flag;           //标志位
     private String musicName;       //音乐名
 
-    private Uri uri;
+    private String musicPath;
 
     @Nullable
     @Override
@@ -35,9 +35,10 @@ public class MusicPlayService extends Service{
     }
 
     @Override public int onStartCommand(Intent intent, int flags, int startId) {
-        int type = intent.getIntExtra("Type", Constant.MUSIC_CLICK_START);
+        LogUtils.d("进入音乐播放");
+        int type = intent.getIntExtra("type", Constant.MUSIC_CLICK_START);
         switch (type) {
-            case Constant.MUSIC_BUTTON_START :
+            case Constant.MUSIC_CLICK_START :
                 startMusic(intent);
                 break;
             case Constant.MUSIC_SEEK:
@@ -46,6 +47,9 @@ public class MusicPlayService extends Service{
             case Constant.MUSIC_BUTTON_PAUSE :
                 pauseMusic(intent);
                 break;
+            case Constant.MUSIC_BUTTON_START:
+                startMusic(intent);
+                break;
             case Constant.MUSIC_NEXT :
                 startMusic(intent);
                 break;
@@ -53,6 +57,7 @@ public class MusicPlayService extends Service{
                 startMusic(intent);
                 break;
             default:
+                startMusic(intent);
                 break;
         }
         return super.onStartCommand(intent, flags, startId);
@@ -72,8 +77,8 @@ public class MusicPlayService extends Service{
      * @param intent
      */
     private void pauseMusic(Intent intent) {
-
-        boolean flag = intent.getBooleanExtra("flag",true);
+        LogUtils.d("停止音乐播放");
+        flag = intent.getBooleanExtra("flag",true);
 
         if (!flag) {
             //涨停音乐播放    线程关闭
@@ -94,15 +99,18 @@ public class MusicPlayService extends Service{
      * @param intent
      */
     private void startMusic(Intent intent) {
-        String musicPath = intent.getStringExtra("musicPath");      //获取音乐播放地址
+        LogUtils.d("开始音乐播放");
+        musicPath = intent.getStringExtra("musicPath");      //获取音乐播放地址
         musicName = intent.getStringExtra("musicName");
 
+        LogUtils.d("播放地址:" + musicPath + "播放名:" + musicName);
+        
         if (null == musicPlay) {
             musicPlay = new MediaPlayer();
         }
         musicPlay.reset();
-
         try {
+            musicPlay.setAudioStreamType(AudioManager.STREAM_MUSIC);
             musicPlay.setDataSource(musicPath);
             musicPlay.prepare();
             musicPlay.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -123,6 +131,7 @@ public class MusicPlayService extends Service{
             });
         } catch (IOException e) {
             LogUtils.e("MusicPlayService 音乐播放：：：：出错", e);
+            return ;
         }
     }
 
@@ -131,13 +140,10 @@ public class MusicPlayService extends Service{
      */
     class MusicSeekBar extends Thread{
 
-        private MediaPlayer mMusicPlay;
-
-        @Override
-        public void run() {
+        @Override public void run() {
             super.run();
-            while (mMusicPlay.isPlaying()) {
-                int now = mMusicPlay.getCurrentPosition();
+            while (musicPlay.isPlaying()) {
+                int now = musicPlay.getCurrentPosition();
                 Intent intent = new Intent(Constant.MUSIC_TIME);
                 intent.putExtra("type",1);
                 intent.putExtra("time",now);

@@ -18,6 +18,8 @@ import java.util.Date;
 public class StringUtil {
 
 
+
+
     private StringUtil(){}
 
     /**
@@ -115,5 +117,13 @@ public class StringUtil {
             e.printStackTrace();
         }
         return str;
+    }
+
+    /**
+     * 检查用户是否登录
+     * @return
+     */
+    public static boolean checkUserIsLogin() {
+        return null != Constant.userBean.getId() ? true : false;
     }
 }

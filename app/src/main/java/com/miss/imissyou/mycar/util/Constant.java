@@ -39,6 +39,12 @@ public class Constant {
     public static final String UserPassLength = "passLength";
     public static final String UserBeanID = "userBeanId";
 
+    /**用户设置进行储存的key*/
+    public static final String MESSAGEERROR = "ERRORMESSAGE";
+    public static final String MESSAGEWARE = "WAREMESSAGE";
+    public static final String MESSAGENOREAD = "NOREADMESSAGE";
+    public static final String MESSAGEALL = "ALLMESSAGE";
+
     public static final String CAR_ID = "car_Id";
     public static final String USER_ID = "user_Id";
 
@@ -50,6 +56,11 @@ public class Constant {
      */
     public static final int NETWORK_STATE = -1;
     public static final String NOTNETWORK = "网络连接异常";
+    public static final int WARE_USERDO_ERROR  = 1;
+    public static final String USER_UBLOGIN = "用户没登录";
+    public static final int WARE_ERROR = 0;
+    public static final String WARE_USER_UNDO ="存在不合法存在";
+    public static final String WARE_ERROR_COSTANT = "操作异常警告";
 
 
 

@@ -26,7 +26,6 @@ import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.lidroid.xutils.util.LogUtils;
-import com.miss.imissyou.mycar.bean.OrderBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.bean.UserBean;
 import com.miss.imissyou.mycar.broadcastReceiver.JpushReceiver;
@@ -39,14 +38,14 @@ import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.util.SPUtils;
 import com.miss.imissyou.mycar.util.StringUtil;
-import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.view.activity.AboutActivity;
-import com.miss.imissyou.mycar.view.activity.AddNewCarActivity;
 import com.miss.imissyou.mycar.view.activity.AuthorActivity;
 
 import com.miss.imissyou.mycar.view.activity.HelpActivity;
 import com.miss.imissyou.mycar.view.activity.LoginActivity;
+import com.miss.imissyou.mycar.view.activity.MessageActivity;
 import com.miss.imissyou.mycar.view.activity.SettingActivity;
+import com.miss.imissyou.mycar.view.fragment.SettingFragment;
 import com.miss.imissyou.mycar.view.fragment.CarListFragment;
 import com.miss.imissyou.mycar.view.fragment.ContentFragment;
 import com.miss.imissyou.mycar.view.fragment.GasStationFragment;
@@ -500,6 +499,10 @@ public class MainActivity extends ActionBarActivity
                 SPUtils.init(this);
                 SPUtils.ClearAllData();
                 intent.setClass(this, LoginActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_meaasge:
+                intent.setClass(this, MessageActivity.class);
                 startActivity(intent);
                 return true;
             default:

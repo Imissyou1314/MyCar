@@ -29,7 +29,6 @@ public class AddNewCarInputPresenterImpl implements AddNewCarInputPresenter {
 
     @Override public void sentCarInfoToService(CarInfoBean resultBean) {
         if (resultBean == null) {
-            addNewCarInputActivity.showResultError(0, "Json解析出错");
             return;
         } else {
             addNewCarInputModel.sentToService(resultBean);

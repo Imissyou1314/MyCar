@@ -11,6 +11,7 @@ import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.presenter.ChangePhoneNumberPresenter;
 import com.miss.imissyou.mycar.presenter.impl.ChangePhoneNumberPresenterImpl;
 import com.miss.imissyou.mycar.ui.TitleFragment;
+import com.miss.imissyou.mycar.util.DialogUtils;
 import com.miss.imissyou.mycar.util.FindViewById;
 import com.miss.imissyou.mycar.view.ChangePhoneNumberView;
 
@@ -33,6 +34,8 @@ public class ChangePhoneNumberActivity extends BaseActivity implements ChangePho
 
 
     private ChangePhoneNumberPresenter mChangePhoneNumberPresenter;
+    private int TAG;
+    private String titlePage = "更改手机号";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,7 +48,11 @@ public class ChangePhoneNumberActivity extends BaseActivity implements ChangePho
     }
 
     @Override public void addListeners() {
-        title.setTitleText("更改手机号");
+        titlePage = getIntent().getStringExtra("title");
+        TAG = getIntent().getIntExtra("TAG", 0);
+
+        title.setTitleText(titlePage);
+
         getCodeSubmit.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 mChangePhoneNumberPresenter.getCode(phoneNumberInput.getText().toString());
@@ -54,19 +61,29 @@ public class ChangePhoneNumberActivity extends BaseActivity implements ChangePho
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                mChangePhoneNumberPresenter.submit(phoneNumberInput.getText().toString(), codeInput.getText().toString());
+                mChangePhoneNumberPresenter.submit(phoneNumberInput.getText().toString(), codeInput.getText().toString(), TAG);
             }
         });
     }
 
     @Override
     public void showResultError(int errorNo, String errorMag) {
-
+        String title = "";
+        if (0 == errorNo) {
+            title = "操作异常";
+        } else {
+            title = "系统异常";
+        }
+        showMessage(title,errorMag);
     }
 
     @Override
     public void showResultSuccess(ResultBean resultBean) {
-
+            if (resultBean.isServiceResult()) {
+                showMessage("操作成功",resultBean.getResultInfo());
+            } else {
+                showMessage("操作失败",resultBean.getResultInfo());
+            }
     }
 
     @Override
@@ -77,5 +94,16 @@ public class ChangePhoneNumberActivity extends BaseActivity implements ChangePho
     @Override
     public void hideProgress() {
 
+    }
+
+    /**
+     * 显示信息
+     * @param title
+     * @param message
+     */
+    private void showMessage(String title, String message) {
+        new DialogUtils(this)
+                .errorMessage(title, message)
+                .show();
     }
 }

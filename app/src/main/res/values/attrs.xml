@@ -53,4 +53,12 @@
         <attr name="color2" format="reference|color"/>
         <attr name="color3" format="reference|color"/>
     </declare-styleable>
+
+    <!--Spinner-->
+    <declare-styleable name="NiceSpinner">
+        <attr name="arrowTint" format="color" />
+        <attr name="hideArrow" format="boolean" />
+        <attr name="backgroundSelector" format="integer"/>
+        <attr name="textTint" format="color"/>
+    </declare-styleable>
 </resources>

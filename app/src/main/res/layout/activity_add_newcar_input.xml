@@ -9,7 +9,7 @@
     <com.miss.imissyou.mycar.ui.TitleFragment
         android:id="@+id/addnewCarInput_title"
         android:layout_width="match_parent"
-        android:layout_height="45dp"></com.miss.imissyou.mycar.ui.TitleFragment>
+        android:layout_height="45dp"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="@color/colorPrimary"
+                android:background="@color/color_carView_mainMesage"
                 android:collapseColumns="2"
                 android:paddingTop="10dp">
 

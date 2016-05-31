@@ -1,5 +1,6 @@
 package com.miss.imissyou.mycar.view.activity;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import com.amap.api.navi.AMapNavi;
 import com.amap.api.navi.AMapNaviListener;
 import com.amap.api.navi.AMapNaviView;
 import com.amap.api.navi.AMapNaviViewListener;
+import com.amap.api.navi.AMapNaviViewOptions;
 import com.amap.api.navi.enums.PathPlanningStrategy;
 import com.amap.api.navi.model.AMapLaneInfo;
 import com.amap.api.navi.model.AMapNaviCross;
@@ -70,8 +72,12 @@ public class NaviViewActivity extends BaseActivity implements AMapNaviViewListen
          */
         Double startLon = getIntent().getDoubleExtra(Constant.startLongitude, 0);
         Double startLat = getIntent().getDoubleExtra(Constant.startLatitude, 0);
+        if (startLat == startLat) {
+            getLocationLatLng();
+        }
         Double endLon = getIntent().getDoubleExtra(Constant.endLongitude, 0);
         Double endLat = getIntent().getDoubleExtra(Constant.endLatitude, 0);
+
         if (startLat != startLon && startLat != endLat && endLat != endLon) {
             mStartLatlng = new NaviLatLng(startLat, startLon);
             mEndLatlng = new NaviLatLng(endLon, endLat);
@@ -79,6 +85,12 @@ public class NaviViewActivity extends BaseActivity implements AMapNaviViewListen
             LogUtils.d("传进的经纬度有问题都相同，或者为空");
         }
 
+    }
+
+    /**
+     * 获取本地导航
+     */
+    private void getLocationLatLng() {
     }
 
     @Override public void addListeners() {
@@ -184,15 +196,31 @@ public class NaviViewActivity extends BaseActivity implements AMapNaviViewListen
     }
 
     @Override public void onInitNaviFailure() {
+        LogUtils.d("启动导航失败");
         ToastUtil.asLong("init navi Failed");
     }
 
     @Override public void onInitNaviSuccess() {
         /**
          * 启动导航
+         * 模式设置为默认驾车
          */
+        if (null == mapNaviView) {
+            return ;
+        }
+        AMapNaviViewOptions viewOptions = new AMapNaviViewOptions();
+        viewOptions.setReCalculateRouteForYaw(true);//设置偏航时是否重新计算路径
+        viewOptions.setReCalculateRouteForTrafficJam(true);//前方拥堵时是否重新计算路径
+        viewOptions.setTrafficInfoUpdateEnabled(true);//设置交通播报是否打开
+        viewOptions.setCameraInfoUpdateEnabled(true);//设置摄像头播报是否打开
+        viewOptions.setScreenAlwaysBright(true);//设置导航状态下屏幕是否一直开启。
+        mapNaviView.setViewOptions(viewOptions);
+
+        //种驾车算路calculateDriveRoute的重载函数，算路方法中，起点坐标和终点坐标可以以列表形式存放，
+        // 按车行方向排列，带有方向信息，可有效避免算路到马路的另一侧，也可以只传入一个坐标。
+        /**选择省钱的算路方法*/
         mAMapNavi.calculateDriveRoute(mStartList, mEndList, mWayPointList,
-                PathPlanningStrategy.DRIVING_DEFAULT);
+                PathPlanningStrategy.DRIVING_SAVE_MONEY);
     }
 
     @Override
@@ -228,6 +256,7 @@ public class NaviViewActivity extends BaseActivity implements AMapNaviViewListen
     @Override
     public void onCalculateRouteSuccess() {
         LogUtils.d("计算路径成功");
+        //naviFlag为AMapNavi.GPSNaviMode表示真实导航，naviFlag为AMapNavi.EmulatorNaviMode表示模拟导航
         mAMapNavi.startNavi(AMapNavi.EmulatorNaviMode);
     }
 

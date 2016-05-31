@@ -9,6 +9,8 @@
     <dimen name="BigFontSize">22sp</dimen>
     <dimen name="FontSize">16sp</dimen>
     <dimen name="TitleFontSize">25sp</dimen>
+    <dimen name="three_grid_unit">24dp</dimen>
+    <dimen name="one_and_a_half_grid_unit">12dp</dimen>
 
     <dimen name="default_circle_view_size">200dp</dimen>
 </resources>

@@ -165,6 +165,18 @@ public class ToggleButton extends View {
     }
 
     /**
+     * 设置开关状态
+     * @param state
+     */
+    public void setToggleSate(Boolean state) {
+        if (state) {
+            setToggleOn(true);
+        } else {
+            setToggleOff(true);
+        }
+    }
+
+    /**
      * 设置显示成关闭样式，不会触发toggle事件
      */
     public void setToggleOff() {

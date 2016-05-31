@@ -16,6 +16,7 @@ import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.CarInfoBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
+import com.miss.imissyou.mycar.bean.UserBean;
 import com.miss.imissyou.mycar.presenter.CarListPresenter;
 import com.miss.imissyou.mycar.presenter.impl.CarListPresenterImpl;
 import com.miss.imissyou.mycar.ui.adapterutils.CommonAdapter;
@@ -23,7 +24,6 @@ import com.miss.imissyou.mycar.ui.adapterutils.ViewHolder;
 import com.miss.imissyou.mycar.ui.circleProgress.CircleProgress;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.DialogUtils;
-import com.miss.imissyou.mycar.util.LinkService;
 import com.miss.imissyou.mycar.view.CarListFragmentView;
 import com.miss.imissyou.mycar.view.activity.AddNewCarActivity;
 import com.software.shell.fab.ActionButton;
@@ -46,6 +46,7 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
     private ActionButton addCarButton;              //悬浮按钮
 
     private List<CarInfoBean> cars = new ArrayList<CarInfoBean>();                //所有车辆
+    private DialogUtils dialog;
 
     @Override public View onCreateView(LayoutInflater inflater,
                                        ViewGroup container, Bundle savedInstanceState) {
@@ -72,7 +73,9 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
     @Override protected void initData() {
         mCarListPresenter = new CarListPresenterImpl(this);
         LogUtils.d("加载车库信息:UserId == " + Constant.userBean.getId());
-        mCarListPresenter.loadServiceData(Constant.userBean.getId());   //获取用户车辆
+        if (null != Constant.userBean) {
+            mCarListPresenter.loadServiceData(Constant.userBean.getId());   //获取用户车辆
+        }
     }
 
     @Override protected void addViewsListener() {
@@ -115,8 +118,9 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
     }
 
     @Override public void showResultError(int errorNo, String errorMag) {
-        new DialogUtils(getActivity())
-                .errorMessage(errorMag, "获取车辆信息出错")
+        dialog = new DialogUtils(getActivity());
+
+                dialog.errorMessage(errorMag, "获取车辆信息出错")
                 .show();
     }
 
@@ -127,33 +131,38 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
 
     @Override public void showResultSuccess(List<CarInfoBean> resultBean) {
         this.cars = resultBean;
-        LinkService.Instance();
+
         carInfoList.setAdapter(new CommonAdapter<CarInfoBean>(getActivity(), resultBean,
                 R.layout.carinfo_listview_item) {
             @Override public void convert(final ViewHolder holder, CarInfoBean car) {
-                holder.replaceText(R.id.carinfo_item_carState, "null", car.getCarState());
+                holder.replaceText(R.id.carinfo_item_carState, "null", isGood(car.isCarState()));
                 LogUtils.d("车牌号" + car.getPlateNumber());
                 holder.replaceText(R.id.carinfo_item_carId, "null", car.getPlateNumber());
                 holder.replaceText(R.id.carinfo_item_carName, "null",car.getBrand() + car.getModles());
                 holder.replaceText(R.id.carinfo_item_carOil, "null", car.getOil() + "");
-                if (!car.getMark().equals(""))
+                if (!car.getMark().equals("")) {
+                    LogUtils.d("请求图片的地址:" + Constant.SERVER_URL + car.getMark());
                     RxVolley.get(Constant.SERVER_URL + car.getMark(), new HttpCallback() {
                         @Override public void onSuccess(Map<String, String> headers, Bitmap bitmap) {
-                            if (bitmap != null )
-                            holder.setImage(R.id.carInfo_item_carImage, bitmap);
+                            if (bitmap != null)
+                                holder.setImage(R.id.carInfo_item_carImage, bitmap);
                         }
 
                         @Override public void onFailure(int errorNo, String strMsg) {
                             LogUtils.d("连接服务器异常:" + strMsg);
                         }
                     });
+                }
             }
         });
     }
 
     @Override public void onDestroy() {
-        mCarListPresenter.detchView();
+        dialog.onDestroy();
         super.onDestroy();
+    }
 
+    private String isGood(boolean check) {
+        return check ? "好": "坏";
     }
 }

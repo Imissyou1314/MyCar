@@ -34,5 +34,6 @@ public interface AddNewCarInputPresenter {
     void loadCar(String url);
 
     void onFailure(int errorNo, String strMsg);
+
     void onSuccess(String t);
 }

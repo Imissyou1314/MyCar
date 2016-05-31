@@ -23,14 +23,11 @@ import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.OilBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.bean.ServiceStation;
-import com.miss.imissyou.mycar.bean.Station;
 import com.miss.imissyou.mycar.bean.StopStation;
-import com.miss.imissyou.mycar.presenter.LoactionMapPresenter;
-import com.miss.imissyou.mycar.presenter.impl.LocationMapPresenterImpl;
+import com.miss.imissyou.mycar.bean.UserBean;
 import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.view.LocationView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 

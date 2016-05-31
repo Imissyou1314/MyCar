@@ -10,6 +10,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.lidroid.xutils.util.LogUtils;
+import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.view.activity.MessageActivity;
 
 import cn.jpush.android.api.JPushInterface;
@@ -40,7 +41,7 @@ public class JpushReceiver extends BroadcastReceiver{
             builder.setContentTitle(bundle.getString(JPushInterface.EXTRA_TITLE))
                     .setTicker(JPushInterface.EXTRA_MESSAGE)
                     .setContentIntent(pendingIntent)
-                    .setSmallIcon(android.R.drawable.ic_lock_idle_charging);
+                    .setSmallIcon(R.mipmap.ic_launcher);
 
             //获取通知管理器对象
             NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -57,7 +58,7 @@ public class JpushReceiver extends BroadcastReceiver{
             builder.setContentTitle(bundle.getString(JPushInterface.EXTRA_TITLE))
                     .setTicker(JPushInterface.EXTRA_MESSAGE)
                     .setContentIntent(pendingIntent)
-                    .setSmallIcon(android.R.drawable.ic_lock_idle_charging);
+                    .setSmallIcon(R.mipmap.ic_launcher);
 
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
             System.out.println("用户点击打开了通知");

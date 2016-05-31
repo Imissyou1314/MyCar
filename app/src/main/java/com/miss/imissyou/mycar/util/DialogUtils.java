@@ -26,7 +26,7 @@ public class DialogUtils {
      */
     public MissDialog errorMessage(String message, String title) {
 
-        if (title.equals("") || title == null)
+        if (title == null  || title.equals("") )
             title = "提示";
         if (message.equals("") || message == null)
             message = "异常退出";
@@ -40,5 +40,11 @@ public class DialogUtils {
                     }
                 });
         return dialog.create();
+    }
+
+    public void onDestroy() {
+        if (null != dialog) {
+            dialog =null;
+        }
     }
 }

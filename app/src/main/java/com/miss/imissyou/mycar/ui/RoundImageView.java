@@ -18,6 +18,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.widget.ImageView;
 
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.miss.imissyou.mycar.R;
 
 /**

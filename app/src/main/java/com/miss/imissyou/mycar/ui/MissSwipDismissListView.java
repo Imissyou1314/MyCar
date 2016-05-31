@@ -1,6 +1,7 @@
 package com.miss.imissyou.mycar.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.lidroid.xutils.util.LogUtils;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.ValueAnimator;
@@ -280,7 +282,11 @@ public class MissSwipDismissListView extends ListView {
 
             @Override public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 //这段代码的效果是ListView删除某item之后，其他的item向上滑动的效果
-                lp.height = (Integer) valueAnimator.getAnimatedValue();
+                String number = valueAnimator.getAnimatedValue() + "";
+                number = number.substring(0, number.indexOf("."));
+                LogUtils.d(number);
+                lp.height = Integer.parseInt(number);
+
                 dismissView.setLayoutParams(lp);
             }
         });

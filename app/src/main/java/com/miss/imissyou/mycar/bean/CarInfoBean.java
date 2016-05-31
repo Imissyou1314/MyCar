@@ -19,11 +19,11 @@ public class CarInfoBean extends BaseBean {
     private double oilBox;
     private double oil;
     private double temperature;             //温度
-    private String enginProperty;           //发动机性能
-    private String transmission;            //变速器性能
-    private String carLight;                //车灯性能
-    private String carState;                //车状态
-    private String carAlarm;                //车警报
+    private boolean enginProperty;           //发动机性能
+    private boolean transmission;            //变速器性能
+    private boolean carLight;                //车灯性能
+    private boolean carState;                //车状态
+    private boolean carAlarm;                //车警报
 
     /**
      * 警告信息
@@ -52,30 +52,6 @@ public class CarInfoBean extends BaseBean {
         this.brand = brand;
     }
 
-    public String getCarAlarm() {
-        return carAlarm;
-    }
-
-    public void setCarAlarm(String carAlarm) {
-        this.carAlarm = carAlarm;
-    }
-
-    public String getCarLight() {
-        return carLight;
-    }
-
-    public void setCarLight(String carLight) {
-        this.carLight = carLight;
-    }
-
-    public String getCarState() {
-        return carState;
-    }
-
-    public void setCarState(String carState) {
-        this.carState = carState;
-    }
-
     public boolean isCurrentCar() {
         return currentCar;
     }
@@ -90,14 +66,6 @@ public class CarInfoBean extends BaseBean {
 
     public void setEngineNumber(String engineNumber) {
         this.engineNumber = engineNumber;
-    }
-
-    public String getEnginProperty() {
-        return enginProperty;
-    }
-
-    public void setEnginProperty(String enginProperty) {
-        this.enginProperty = enginProperty;
     }
 
     public String getId() {
@@ -204,14 +172,6 @@ public class CarInfoBean extends BaseBean {
         this.temperature = temperature;
     }
 
-    public String getTransmission() {
-        return transmission;
-    }
-
-    public void setTransmission(String transmission) {
-        this.transmission = transmission;
-    }
-
     public long getUserId() {
         return userId;
     }
@@ -226,5 +186,57 @@ public class CarInfoBean extends BaseBean {
 
     public void setVin(String vin) {
         this.vin = vin;
+    }
+
+    public void setOilBox(double oilBox) {
+        this.oilBox = oilBox;
+    }
+
+    public boolean isTransmission() {
+        return transmission;
+    }
+
+    public void setTransmission(boolean transmission) {
+        this.transmission = transmission;
+    }
+
+    public boolean isCarAlarm() {
+        return carAlarm;
+    }
+
+    public void setCarAlarm(boolean carAlarm) {
+        this.carAlarm = carAlarm;
+    }
+
+    public boolean isCarLight() {
+        return carLight;
+    }
+
+    public void setCarLight(boolean carLight) {
+        this.carLight = carLight;
+    }
+
+    public boolean isCarState() {
+        return carState;
+    }
+
+    public void setCarState(boolean carState) {
+        this.carState = carState;
+    }
+
+    public boolean isEnginProperty() {
+        return enginProperty;
+    }
+
+    public void setEnginProperty(boolean enginProperty) {
+        this.enginProperty = enginProperty;
+    }
+
+    public String getModels() {
+        return models;
+    }
+
+    public void setModels(String models) {
+        this.models = models;
     }
 }

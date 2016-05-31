@@ -18,6 +18,8 @@ public class MessagePresenterImpl implements MessagePresenter {
     private MessageView mMessageView;
     private MessageModle mMessageModle;
 
+
+
     public MessagePresenterImpl(MessageActivity messageActivity) {
         attachView(messageActivity);
         mMessageModle = new MessageModelImpl(this);
@@ -36,11 +38,6 @@ public class MessagePresenterImpl implements MessagePresenter {
 
     @Override public void loadServiceData(BaseBean useBean) {
 
-        if (Constant.userBean == null) {
-            this.onFailure(0, "用户没有登录");
-            return;
-        }
-        mMessageModle.loadMessageForService();
     }
 
     @Override public void attachView(MessageView view) {
@@ -52,10 +49,8 @@ public class MessagePresenterImpl implements MessagePresenter {
         mMessageView = null;
     }
 
-    @Override public void deteleMessage(String id) {
-        if (null == id || id.equals("")) {
-            onFailure(0, "删除数据不存在");
-        }
+    @Override public void deteleMessage(int id) {
+
         mMessageModle.deleteMessage(id);
 
     }
@@ -65,6 +60,27 @@ public class MessagePresenterImpl implements MessagePresenter {
             mMessageView.deleteSucces("删除成功");
         } else {
             mMessageView.deleteSucces("删除失败");
+        }
+    }
+
+    @Override public void changeStateToService(String id) {
+        if (null != Constant.userBean.getId()){
+            mMessageModle.changeStateToService(Constant.userBean.getId() ,id);
+        }
+    }
+
+    @Override public void getUserUnReadMessage() {
+        if (null != Constant.userBean && null != Constant.userBean.getId()) {
+            mMessageModle.getUserUnReadMessage(Constant.userBean.getId());
+        } else {
+            mMessageView.showResultError(1, "用户没登录");
+        }
+    }
+    @Override public void getUserAllMessage() {
+        if (null != Constant.userBean && null != Constant.userBean.getId()) {
+            mMessageModle.getUserAllMessage(Constant.userBean.getId());
+        } else {
+            mMessageView.showResultError(1, "用户没登录");
         }
     }
 }

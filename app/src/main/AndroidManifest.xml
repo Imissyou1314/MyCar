@@ -25,6 +25,7 @@
         <activity android:name=".view.activity.AuthorActivity"/>
         <activity android:name=".view.activity.HelpActivity"/>
         <activity android:name=".view.activity.MessageActivity"/>
+        <activity android:name=".view.activity.ChangePhoneNumberActivity"/>
 
         <!--用户登录-->
         <activity android:name=".view.activity.FindPasswordActivity"/>
@@ -50,6 +51,7 @@
             android:enabled="true"
             android:exported="false" >
         </service>
+
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
         <service
             android:name="cn.jpush.android.service.PushService"
@@ -142,6 +144,11 @@
         <!--高德地图API-->
         <meta-data android:name="com.amap.api.v2.apikey" android:value="57fff430b9c5ffd28e6161849f5c84a6"/>
         <service android:name="com.amap.api.location.APSService"></service>
+
+        <!--Glide-->
+        <meta-data
+            android:name="com.bumptech.glide.integration.volley.VolleyGlideModule"
+            android:value="GlideModule" />
 
     </application>
 

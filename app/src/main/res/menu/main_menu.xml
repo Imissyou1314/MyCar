@@ -7,11 +7,13 @@
     <item
         android:id="@+id/action_settings"
         android:title="设置"
+        android:background="@color/color_carView_mainMesage"
         android:orderInCategory="100"
         app:showAsAction="never"/>
     <item
         android:id="@+id/action_meaasge"
         android:numericShortcut="1"
+        android:background="@color/color_carView_mainMesage"
         android:title="系统消息"
         android:orderInCategory="100"
         app:showAsAction="never"/>
@@ -19,21 +21,31 @@
     <item
         android:id="@+id/action_login"
         android:title="@string/action_login"
+        android:background="@color/color_carView_mainMesage"
         android:orderInCategory="100"
         app:showAsAction="never"/>
     <item
         android:id="@+id/action_about"
         android:title="@string/action_setAbout"
+        android:background="@color/color_carView_mainMesage"
         android:orderInCategory="100"
         app:showAsAction="never"/>
     <item
         android:id="@+id/action_help"
         android:title="@string/action_setHelp"
+        android:background="@color/color_carView_mainMesage"
         android:orderInCategory="100"
         app:showAsAction="never"/>
     <item
         android:id="@+id/action_author"
         android:title="@string/action_setAuthor"
+        android:background="@color/color_carView_mainMesage"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_unregister"
+        android:title="注销"
+        android:background="@color/color_carView_mainMesage"
         android:orderInCategory="100"
         app:showAsAction="never"/>
 

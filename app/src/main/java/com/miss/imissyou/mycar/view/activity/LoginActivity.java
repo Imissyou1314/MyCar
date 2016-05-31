@@ -2,6 +2,7 @@ package com.miss.imissyou.mycar.view.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +11,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
@@ -87,9 +91,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         if (!SPUtils.getSp_user().getString(Constant.UserBeanID,"").equals("")){
             Constant.userBean = GsonUtils.Instance()
                     .fromJson(SPUtils.getSp_user().getString(Constant.UserBeanID,""), UserBean.class);
-            if (null == Constant.userBean && null == Constant.userBean.getUserImg()) {
-                return ;
-            } else {
+            if (null != Constant.userBean && null != Constant.userBean.getUserImg()) {
                 //加载用户图片
                 LogUtils.d("登录加载用户图片");
                 String url = Constant.SERVER_URL + Constant.userBean.getUserImg();
@@ -99,6 +101,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                         .centerCrop()
                         .into(userHeadImage);
             }
+
         } else {
             LogUtils.d("用户为新用户");
         }

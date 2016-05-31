@@ -18,6 +18,7 @@ public interface ChangePhoneNumberPresenter extends MainPresenter<ChangePhoneNum
      * 提交更改
      * @param phoneNumber
      * @param code
+     * @param TAG 0 用户自己改手机 1 更改亲人手机
      */
-    void submit(String phoneNumber, String code);
+    void submit(String phoneNumber, String code, int TAG);
 }
