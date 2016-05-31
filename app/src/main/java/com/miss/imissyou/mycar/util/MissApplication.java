@@ -6,6 +6,9 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
+import android.widget.Toast;
+
+import com.lidroid.xutils.util.LogUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,9 +18,12 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Field;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -128,6 +134,9 @@ public class MissApplication extends Application implements Thread.UncaughtExcep
         long timetamp = System.currentTimeMillis();
         String time = format.format(new Date());
         String fileName = "crash-" + time + "-" + timetamp + ".log";
+
+        LogUtils.w("异常文件路径fileName  ： " + fileName);
+        Toast.makeText(this, "异常文件路径:" + fileName,Toast.LENGTH_LONG).show();
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             try {
                 File dir = new File(Environment.getExternalStorageDirectory(), "crash");

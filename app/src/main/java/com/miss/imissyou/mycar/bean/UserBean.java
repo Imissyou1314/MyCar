@@ -7,7 +7,7 @@ package com.miss.imissyou.mycar.bean;
 public class UserBean extends BaseBean {
 
     /**用户ID*/
-    private String id;
+    private Long id;
     /**用户名*/
     private String username;
     /**用户真名*/
@@ -43,11 +43,11 @@ public class UserBean extends BaseBean {
     }
 
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

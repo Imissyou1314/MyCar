@@ -2,14 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="fill_parent"
+    android:gravity="center"
+    android:paddingLeft="10dp"
     android:background="@color/color_carView_mainMesage"
     android:layout_height="45dp">
     <TextView
         android:id="@+id/activity_title_back"
         android:onClick="onFinish"
-        android:background="@drawable/ic_arrow_back_black_title"
-        android:layout_width="60dp"
-        android:layout_height="fill_parent" />
+        android:padding="5dp"
+        android:layout_margin="5dp"
+        android:background="@mipmap/ic_go_left_white"
+        android:layout_width="26dp"
+        android:layout_marginLeft="10dp"
+        android:layout_height="23dp" />
 
     <TextView
         android:id="@+id/activity_title"

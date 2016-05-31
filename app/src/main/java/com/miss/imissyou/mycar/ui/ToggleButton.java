@@ -332,6 +332,7 @@ public class ToggleButton extends View {
          * @param on
          */
         public void onToggle(boolean on);
+
     }
 
 

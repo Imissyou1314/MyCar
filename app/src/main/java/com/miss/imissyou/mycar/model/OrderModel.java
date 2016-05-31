@@ -9,8 +9,8 @@ import com.miss.imissyou.mycar.bean.BaseBean;
 public interface OrderModel {
 
     /**
-     * 加载数据
+     * 根据用户信息加载用户订单数据
      * @param useBean
      */
-    void loadData(BaseBean useBean);
+    void loadOrderData(BaseBean useBean);
 }

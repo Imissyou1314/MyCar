@@ -9,11 +9,13 @@ import com.miss.imissyou.mycar.bean.UserBean;
  */
 public class Constant {
 
-    /**服务器URL*/
-    public static final String SERVER_URL = "http://192.168.1.100:8080/";
+    /**
+     * 服务器URL
+     */
+    public static String SERVER_URL = "http://192.168.1.106:8080/";
     public static final int HTTP_OK = 200;
 
-    public static final String GASSTION_BRAND_ZHONGSHIYOU ="中石油";
+    public static final String GASSTION_BRAND_ZHONGSHIYOU = "中石油";
     public static final String GASSTION_BRAND_ZHONGSHIHUAN = "中石化";
 
     public static UserBean userBean = new UserBean();        //用户实体类对象
@@ -22,12 +24,12 @@ public class Constant {
     /**
      * Music Seriver
      */
-    public static final int MUSIC_CLICK_START =1;
-    public static final int MUSIC_SEEK=0;
-    public static final int MUSIC_BUTTON_PAUSE =2;
-    public static final int MUSIC_BUTTON_START=3;
-    public static final int MUSIC_NEXT=5;
-    public static final int MUSIC_PREVIOUS =4;
+    public static final int MUSIC_CLICK_START = 1;
+    public static final int MUSIC_SEEK = 0;
+    public static final int MUSIC_BUTTON_PAUSE = 2;
+    public static final int MUSIC_BUTTON_START = 3;
+    public static final int MUSIC_NEXT = 5;
+    public static final int MUSIC_PREVIOUS = 4;
     public static final String MUSIC_TIME = "com.missyou.music";
 
     /**
@@ -39,6 +41,7 @@ public class Constant {
     public static final String UserPassLength = "passLength";
     public static final String UserBeanID = "userBeanId";
 
+
     /**用户设置进行储存的key*/
     public static final String MESSAGEERROR = "ERRORMESSAGE";
     public static final String MESSAGEWARE = "WAREMESSAGE";
@@ -48,21 +51,25 @@ public class Constant {
     public static final String CAR_ID = "car_Id";
     public static final String USER_ID = "user_Id";
 
-    /**启动应用*/
+    /**
+     * 启动应用
+     */
     public static final String EXTRA_BUNDLE = "launchBundle";
 
     /**
      * 提示网络错误信息
      */
+    public static int SHOW_ERROR_TOAST = 0xf3;          //提示弹Toast
+    public static final int SUCCESS_NO = 0xff;          //提示谈Daolog
+    public static final String SUCCESS_TITLE = "操作成功";
     public static final int NETWORK_STATE = -1;
     public static final String NOTNETWORK = "网络连接异常";
-    public static final int WARE_USERDO_ERROR  = 1;
+
+    public static final int WARE_USERDO_ERROR = 1;
     public static final String USER_UBLOGIN = "用户没登录";
     public static final int WARE_ERROR = 0;
-    public static final String WARE_USER_UNDO ="存在不合法存在";
+    public static final String WARE_USER_UNDO = "存在不合法存在";
     public static final String WARE_ERROR_COSTANT = "操作异常警告";
-
-
 
     /**
      * 设置获取加油站的默认选项
@@ -77,4 +84,8 @@ public class Constant {
     public static final String startLongitude = "startLongitude";
     public static final String endLatitude = "endLatitude";
     public static final String endLongitude = "endLongitude";
+    public static final int HAVESTART_Navi = 1;               //设置了起点和目地的导航方式
+    public static final int DONTHAVESTART_Navi = 0;         //没有起点的导航方式
+    //搜索范围20公里
+    public static int SEARCH_RADIO = 20000;
 }

@@ -58,9 +58,7 @@ public class MusicFragment extends Fragment implements ScreenShotable {
     private boolean flag;
 
     private View upView;
-    /**
-     * 我的音乐
-     */
+    /** 我的音乐*/
     private List<Music> mMusics = new ArrayList<>();
 
     @Override
@@ -119,8 +117,6 @@ public class MusicFragment extends Fragment implements ScreenShotable {
 
         if (null != getActivity().getContentResolver()) {
             mMusics = songs.getSongInfo(getActivity().getContentResolver());
-//            mMusics.addAll(FindSongs.getMp3Infos(getActivity()));
-
             LogUtils.d("获取到的音乐数量" + mMusics.size());
             ToastUtil.asLong("获取到的音乐数量" + mMusics.size());
         } else {
@@ -142,7 +138,7 @@ public class MusicFragment extends Fragment implements ScreenShotable {
     public void addViewListener() {
         mBtnNextMusic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //不是最后一首音乐
+                /**不是最后一首音乐*/
                 if (mPosition != (mMusics.size() - 1)) {
                     mPosition ++;
                 }
@@ -183,7 +179,6 @@ public class MusicFragment extends Fragment implements ScreenShotable {
                 palyMusic(Constant.MUSIC_CLICK_START, position);
                 parent.getChildAt(mPosition).setBackgroundColor(R.color.colorWhite);
                 mPosition = position;
-                view.setBackgroundColor(R.color.color_activty_title);
             }
         });
 
@@ -243,32 +238,25 @@ public class MusicFragment extends Fragment implements ScreenShotable {
                     mSeekBar.setMax(endTime);
                     String strTime = StringUtil.timeToString(endTime,"mm:ss");
                     mTextViewAllTime.setText(strTime);
-                    String name = intent.getStringExtra("name");
-                    if (null != name && !"".equals(name)) {
-                        mTextViewMusicName.setText(name);
-                    }
 
+                    String musicName1 = intent.getStringExtra("name");
+                    mTextViewMusicName.setText(getMusicName(musicName1));
                     break;
-                case 1:            //实时更新时间
+                case 1:            //实时更新时间 bo
+                    LogUtils.d("播放音乐，更新音乐世界");
                     int playTime = intent.getIntExtra("time", 0);
-                    if (playTime >= EndTime) {
+                    if (playTime >= EndTime -1 ) {
+                        LogUtils.d("自动播放下一首");
                         palyMusic(Constant.MUSIC_NEXT, mPosition);
-                    }
-                    mSeekBar.setProgress(playTime);
-                    String timeStr = StringUtil.timeToString(playTime,"mm:ss");
-                    mTextViewCurrentTime.setText(timeStr);
-                    String musicName = intent.getStringExtra("name");
-                    if (null != musicName && !"".equals(musicName)) {       //去掉音乐播放器后面的.mp3
-                        if (musicName.contains(".")) {
-                            musicName = musicName.substring(0, musicName.indexOf("."));
-                        }
-                        mTextViewMusicName.setText(musicName);
+                    } else {
+                        mSeekBar.setProgress(playTime);
+                        String timeStr = StringUtil.timeToString(playTime,"mm:ss");
+                        mTextViewCurrentTime.setText(timeStr);
                     }
                     break;
                 default:
                     LogUtils.d("MusicFragment 并无该项操作");
                     break;
-
             }
         }
     }
@@ -281,4 +269,12 @@ public class MusicFragment extends Fragment implements ScreenShotable {
         return null;
     }
 
+    private String getMusicName(String musicName) {
+        if (null != musicName && !"".equals(musicName)) {                                       //去掉音乐播放器后面的.mp3
+            if (musicName.contains(".")) {
+                musicName = musicName.substring(0, musicName.indexOf("."));
+            }
+        }
+        return musicName;
+    }
 }

@@ -43,7 +43,8 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
 
     @FindViewById(id = R.id.activity_add_newCar_brand_input)
     private EditText brandEdit;             //品牌
-    @FindViewById(id = R.id.activity_add_newCar_brand_input)
+
+    @FindViewById(id = R.id.activity_add_newCar_models_input)
     private EditText modelsEdit;            //品牌型号
     @FindViewById(id = R.id.activity_add_newCar_vin_input)
     private EditText vinEdit;               //车架号
@@ -104,7 +105,8 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
 
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                LogUtils.d("提交数据");
+
+                LogUtils.w("提交数据");
                 doInput();
                 resultBean.setAlarmMessage(alarmMessage.getToggleOn());
                 resultBean.setPropertyMessage(propertyMessage.getToggleOn());
@@ -116,9 +118,10 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
                     toDoLogin();
                 }
                 if (null != Constant.userBean && null != Constant.userBean.getId()) {
-                    String userId = Constant.userBean.getId();
-                    userId = userId.substring(0, userId.indexOf("."));
-                    LogUtils.d(userId);
+
+                    String userId = Constant.userBean.getId() +"";
+//                    userId = userId.substring(0, userId.indexOf("."));
+                    LogUtils.w(userId);
                     resultBean.setUserId(Long.parseLong(userId));
                     mAddAddNewCarInputPresenter.sentCarInfoToService(resultBean);
                 }
@@ -211,7 +214,9 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
     }
 
     @Override public void showResultSuccess(ResultBean resultBean) {
-
+        if (resultBean.isServiceResult()){
+            this.finish();
+        }
     }
 
     @Override public void showResultSuccess(CarInfoBean resultBean) {
@@ -225,7 +230,7 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
                             dialog.dismiss();
                         }
                     });
-            builder.create().show();
+
             return;
         }
 
@@ -234,7 +239,9 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
         if (null != resultBean.getMark()) {
             String url = Constant.SERVER_URL + resultBean.getMark();
             LogUtils.d("加载图片的URL:" + url);
-            Glide.with(this).load(url).into(userHeadImage);
+
+            //// TODO: 2016/5/29
+//            Glide.with(this).load(url).into(userHeadImage);
         }
 
         brandEdit.setText(resultBean.getBrand());
@@ -248,7 +255,8 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
         transmissionEdit.setText(isGood(resultBean.isTransmission()));
         carLightEdit.setText(isGood(resultBean.isCarLight()));
 
-        mileageInput.setText(resultBean.getMilleage() + "");
+
+        mileageInput.setText(resultBean.getMileage() + "");
         oilInput.setText(resultBean.getOil() +"");
         oilMaxInputInput.setText(resultBean.getOilBox() + "");
         temperatureInput.setText(resultBean.getTemperature() + "");

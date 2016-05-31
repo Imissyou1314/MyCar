@@ -51,16 +51,17 @@ public class AddNewCarInputModelImpl implements AddNewCarInputModel {
 //        params.put("lat", carInfoBean.getLat() + "");
 //        params.put("lon", carInfoBean.getLon() + "");
         params.putJsonParams(GsonUtils.Instance().toJson(carInfoBean));
-        LogUtils.d("newCar:" + GsonUtils.Instance().toJson(carInfoBean));
+
+        LogUtils.w("newCar:" + GsonUtils.Instance().toJson(carInfoBean));
         String url = Constant.SERVER_URL + "car/saveCar";
-        LogUtils.d("请求路径：" + url);
+        LogUtils.w("请求路径：" + url);
 
         HttpCallback callback =  new HttpCallback() {
             @Override public void onFailure(int errorNo, String strMsg) {
                 addNewCarInputPresenter.onFailure(errorNo,strMsg);
             }
             @Override public void onSuccess(String t) {
-                addNewCarInputPresenter.onSuccess(t);
+                addNewCarInputPresenter.onAddCarSuccess(t);
             }
         };
 
@@ -80,9 +81,10 @@ public class AddNewCarInputModelImpl implements AddNewCarInputModel {
     }
 
     @Override public void loadCar(String url) {
-        LogUtils.d("请求路径：" + url);
-        String missurl = Constant.SERVER_URL + "car/vin=123456";
-        LogUtils.d("请求路径：" + missurl);
+
+        LogUtils.w("请求路径：" + url);
+//        String missurl = Constant.SERVER_URL + "car/vin=123456";
+//        LogUtils.d("请求路径：" + missurl);
 
 
         HttpCallback httpCallback = new HttpCallback() {
@@ -93,13 +95,15 @@ public class AddNewCarInputModelImpl implements AddNewCarInputModel {
 
             @Override
             public void onSuccess(String t) {
+
+                            LogUtils.w("返回结果："+t);
                 addNewCarInputPresenter.onSuccess(t);
             }
         };
 
         new RxVolley.Builder()
                 .shouldCache(false)
-                .url(missurl)
+                .url(url)
                 .callback(httpCallback)
                 .timeout(6000)
                 .httpMethod(RxVolley.Method.GET)

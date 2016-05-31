@@ -12,6 +12,8 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
+import com.lidroid.xutils.util.LogUtils;
+
 /**
  * Created by Imissyou on 2016/4/13.
  */
@@ -19,10 +21,10 @@ public final class CameraManager {
 
     private static final String TAG = CameraManager.class.getSimpleName();
 
-    private static final int MIN_FRAME_WIDTH = 240;
-    private static final int MIN_FRAME_HEIGHT = 240;
-    private static final int MAX_FRAME_WIDTH = 720;
-    private static final int MAX_FRAME_HEIGHT = 720;
+    private static final int MIN_FRAME_WIDTH = 120;
+    private static final int MIN_FRAME_HEIGHT = 120;
+    private static final int MAX_FRAME_WIDTH = 480;
+    private static final int MAX_FRAME_HEIGHT = 480;
 
     private static CameraManager cameraManager;
 
@@ -208,14 +210,15 @@ public final class CameraManager {
             } else if (width > MAX_FRAME_WIDTH) {
                 width = MAX_FRAME_WIDTH;
             }
-            int height = screenResolution.y * 3 / 4;
+            int height = screenResolution.y * 3/ 4;
             if (height < MIN_FRAME_HEIGHT) {
                 height = MIN_FRAME_HEIGHT;
             } else if (height > MAX_FRAME_HEIGHT) {
                 height = MAX_FRAME_HEIGHT;
             }
             int leftOffset = (screenResolution.x - width) / 2;
-            int topOffset = (screenResolution.y - height) / 2;
+            int topOffset = ((screenResolution.y - height) / 2) - height/3;
+            LogUtils.w("最高高度：" + topOffset);
             framingRect = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
             Log.d(TAG, "Calculated framing rect: " + framingRect);
         }

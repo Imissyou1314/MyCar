@@ -31,6 +31,7 @@ public class ContentFragment extends Fragment implements ScreenShotable {
     public static final String MUSIC = "music";
     public static final String MAP = "map";
     public static final String NAVIGATION = "navigation";
+    public static final String SETTING = "setting";
 
     private View containerView;
     protected ImageView mImageView;

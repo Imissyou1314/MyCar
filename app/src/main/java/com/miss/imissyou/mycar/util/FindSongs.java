@@ -49,7 +49,6 @@ public class FindSongs {
                 MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
         List<Music> mMusics = new ArrayList<Music>();
         for (int i = 0; i < cursor.getCount(); i++) {
-
             cursor.moveToNext();
             if (cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media.IS_MUSIC)) != 0) {
                 Music music = new Music();
@@ -136,9 +135,6 @@ public class FindSongs {
                 title = displayName;
             }
 
-
-
-
             music.setMusicID((long) 0);
             music.setMusicTitle(title);
             music.setMusicArtist(artist);
@@ -155,7 +151,6 @@ public class FindSongs {
         }
 
         return music;
-
     }
 
     /**
@@ -469,6 +464,4 @@ public class FindSongs {
         }
         return candidate;
     }
-
-
 }

@@ -33,7 +33,7 @@ public class OrderPresenterImpl implements OrderPresenter<MainView> {
     @Override public void onSuccess(BaseBean resultBean) {
         mOrderFragment.hideProgress();
         if (resultBean != null) {
-            List<OrderBean> orders = GsonUtils.getParams((ResultBean) resultBean, "order", OrderBean[].class);
+            List<OrderBean> orders = GsonUtils.getParams((ResultBean) resultBean, "order", OrderBean.class);
             mOrderFragment.showResultSuccess(orders);
         } else {
             mOrderFragment.showResultError(0, "json异常");
@@ -42,7 +42,7 @@ public class OrderPresenterImpl implements OrderPresenter<MainView> {
 
     @Override public void loadServiceData(BaseBean useBean) {
         if (useBean != null)
-            mOrderModel.loadData(useBean);
+            mOrderModel.loadOrderData(useBean);
 
     }
 

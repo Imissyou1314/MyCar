@@ -13,6 +13,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.google.zxing.ResultPoint;
+import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.util.zxing.camera.CameraManager;
 
@@ -128,7 +129,6 @@ public final class ViewfinderView extends View {
         //获取屏幕的宽和高
         int width = canvas.getWidth();
         int height = canvas.getHeight();
-
         paint.setColor(resultBitmap != null ? resultColor : maskColor);
 
         //画出扫描框外面的阴影部分，共四个部分，扫描框的上面到屏幕上面，扫描框的下面到屏幕下面
@@ -138,8 +138,6 @@ public final class ViewfinderView extends View {
         canvas.drawRect(frame.right + 1, frame.top, width, frame.bottom + 1,
                 paint);
         canvas.drawRect(0, frame.bottom + 1, width, height, paint);
-
-
 
         if (resultBitmap != null) {
             // Draw the opaque result bitmap over the scanning rectangle

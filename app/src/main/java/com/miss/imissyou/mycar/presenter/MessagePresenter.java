@@ -25,7 +25,7 @@ public interface MessagePresenter extends MainPresenter<MessageView>{
      * 该变信息的状态
      * @param id
      */
-    void changeStateToService(String id);
+    void changeStateToService(Long id);
 
     /**
      * 获取用户所有未读的信息

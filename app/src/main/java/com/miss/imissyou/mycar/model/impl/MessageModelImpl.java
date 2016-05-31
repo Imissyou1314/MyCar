@@ -22,7 +22,8 @@ import com.miss.imissyou.mycar.util.GsonUtils;
 public class MessageModelImpl implements MessageModle {
     private MessagePresenter mMessagePresenter;
 
-    @Override public void getUserAllMessage(@Nullable String userId) {
+
+    @Override public void getUserAllMessage(@Nullable Long userId) {
 
         String url = Constant.SERVER_URL + "message/getAll/userId=" + userId;
 
@@ -80,10 +81,11 @@ public class MessageModelImpl implements MessageModle {
      * @param userId
      * @param messageId
      */
-    @Override public void changeStateToService(@NonNull String userId,@NonNull String messageId) {
+
+    @Override public void changeStateToService(@NonNull Long userId,@NonNull Long messageId) {
         HttpParams params = new HttpParams();
         params.putHeaders("cookie",Constant.COOKIE);
-        params.put("id",userId);
+        params.put("id",userId + "");
 
         String url = Constant.SERVER_URL + "message/update";
 
@@ -103,7 +105,7 @@ public class MessageModelImpl implements MessageModle {
      * 获取用户未读信息
      * @param userId 用户Id
      */
-    @Override public void getUserUnReadMessage(String userId) {
+    @Override public void getUserUnReadMessage(Long userId) {
         String url = Constant.SERVER_URL + "message/getUnread/userId=" + userId;
         LogUtils.d("请求路径:" + url);
         RxVolley.get(url, new HttpCallback() {

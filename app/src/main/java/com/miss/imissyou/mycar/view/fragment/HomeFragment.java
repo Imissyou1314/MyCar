@@ -22,6 +22,7 @@ import com.miss.imissyou.mycar.presenter.impl.HomePresenterImpl;
 import com.miss.imissyou.mycar.ui.RoundImageView;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
+import com.miss.imissyou.mycar.util.MissApplication;
 import com.miss.imissyou.mycar.view.HomeView;
 import com.tumblr.backboard.performer.Performer;
 

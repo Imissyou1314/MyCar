@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:circleprogress="http://schemas.android.com/apk/res-auto"
-    xmlns:miss="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -17,12 +17,30 @@
         circleprogress:color3="@android:color/holo_blue_light"
         android:layout_height="fill_parent" />
 
-    <com.miss.imissyou.mycar.ui.RoundImageView
+    <ImageView
         android:id="@+id/carInfo_carImage"
         android:src="@mipmap/user_head"
-        miss:Radiustype="round"
-        miss:borderRadius="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="220dp" />
+
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="120dp" />
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <com.miss.imissyou.mycar.ui.ToggleButton
+            android:id="@+id/carinfo_alarm_button"
+            android:layout_width="40dp"
+            android:layout_height="20dp" />
+        <com.miss.imissyou.mycar.ui.ToggleButton
+            android:layout_marginTop="5dp"
+            android:id="@+id/carinfo_state_button"
+            android:layout_width="40dp"
+            android:layout_height="20dp" />
+    </LinearLayout>
+
+
+
 
 </LinearLayout>

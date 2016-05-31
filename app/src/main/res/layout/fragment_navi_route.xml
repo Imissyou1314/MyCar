@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <!--选择导航起点和目标地的页面-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_select_route_title"
+        android:paddingLeft="10dp">
+
+        <TextView
+            android:id="@+id/select_route_go_back"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:background="@mipmap/ic_go_left_white_icon"
+            android:padding="10dp"
+            android:paddingLeft="50dp"
+            android:paddingRight="25dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/select_route_linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_select_route_title"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <!--显示输入框要输入的信息-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingTop="20dp">
+            <!--从XXX到XXXX-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="right|center|top"
+                    android:text="从"
+                    android:textColor="@color/colorWhite" />
+
+                <TextView
+                    android:id="@+id/select_route_start_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="left|top"
+                    android:hint="输入起点"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <!--中间的线-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center_horizontal|center"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp">
+
+                <View
+                    android:layout_width="30dp"
+                    android:layout_gravity="center|left"
+                    android:layout_height="match_parent"
+                    android:background="@mipmap/ic_select_show_sanjiaoxing_icon" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:paddingLeft="4dp"
+                    android:background="@color/colorWhite" />
+            </LinearLayout>
+            <!--到哪里去-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="right|center|bottom"
+                    android:text="到"
+                    android:textColor="@color/colorWhite" />
+
+                <TextView
+                    android:id="@+id/select_route_end_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="left|bottom"
+                    android:hint="输入终点"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingTop="20dp">
+
+            <ImageButton
+                android:id="@+id/select_route_changeSeclet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/ic_select_route_change" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_select_route_title" />
+
+</LinearLayout>

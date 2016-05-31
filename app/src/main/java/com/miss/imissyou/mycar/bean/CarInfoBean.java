@@ -6,8 +6,8 @@ package com.miss.imissyou.mycar.bean;
  */
 public class CarInfoBean extends BaseBean {
 
-    private String id;                      //车ID
-    private long userId;
+    private Long id;                      //车ID
+    private Long userId;
     private String brand;                   //车品牌
     private String models;                  //品牌型号
     private String plateNumber;             //车牌号
@@ -15,7 +15,7 @@ public class CarInfoBean extends BaseBean {
     private String vin;                       //车架号
     private String engineNumber;              //发动机号
     private String rank;                    //车身等级
-    private long milleage;                  //里程数
+    private Double mileage;                  //里程数
     private double oilBox;
     private double oil;
     private double temperature;             //温度
@@ -24,6 +24,9 @@ public class CarInfoBean extends BaseBean {
     private boolean carLight;                //车灯性能
     private boolean carState;                //车状态
     private boolean carAlarm;                //车警报
+
+
+    private boolean SRS;                    //安全气囊
 
     /**
      * 警告信息
@@ -68,12 +71,17 @@ public class CarInfoBean extends BaseBean {
         this.engineNumber = engineNumber;
     }
 
-    public String getId() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public double getLat() {
@@ -100,12 +108,12 @@ public class CarInfoBean extends BaseBean {
         this.mark = mark;
     }
 
-    public long getMilleage() {
-        return milleage;
+    public Double getMileage() {
+        return mileage;
     }
 
-    public void setMilleage(long milleage) {
-        this.milleage = milleage;
+    public void setMileage(Double mileage) {
+        this.mileage = mileage;
     }
 
     public String getModles() {
@@ -238,5 +246,13 @@ public class CarInfoBean extends BaseBean {
 
     public void setModels(String models) {
         this.models = models;
+    }
+
+    public boolean isSRS() {
+        return SRS;
+    }
+
+    public void setSRS(boolean SRS) {
+        this.SRS = SRS;
     }
 }

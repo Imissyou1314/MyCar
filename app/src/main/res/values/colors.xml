@@ -28,6 +28,7 @@
     <!--Button-->
     <color name="color_Light_White">#FFFFFF</color>
     <color name="color_back_gui">#cfbebe</color>
+    <color name="color_backgroud_gui">#eeeeee</color>
     <color name="color_zi">#9e6dfc</color>
     <color name="button_shape_normal">#727272</color>
     <color name="button_shape_pressed">#0df505</color>
@@ -37,6 +38,8 @@
     <color name="color_Theme">#FF3A536C</color>
     <color name="color_back">#0e0e0e</color>
     <color name="color_miniBack">#5f0e0e0e</color>
+    <color name="color_search_blue">#025391</color>
+    <color name="color_select_route_title">#D2025391</color>
 
     <color name="color_distance">#f1de5a5a</color>
 

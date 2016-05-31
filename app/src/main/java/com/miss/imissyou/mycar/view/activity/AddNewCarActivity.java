@@ -6,6 +6,7 @@ import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PointF;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.ChecksumException;
@@ -48,14 +50,12 @@ import java.util.Vector;
  * 添加新车页面
  * Created by Imissyou on 2016/3/23.
  */
-public class AddNewCarActivity extends BaseActivity implements SurfaceHolder.Callback, View.OnClickListener {
+public class AddNewCarActivity extends BaseActivity implements SurfaceHolder.Callback, View.OnClickListener, QRCodeReaderView.OnQRCodeReadListener {
 
-    @FindViewById(id = R.id.viewfinder_view)
-    private ViewfinderView viewfinderView;   //扫描框
-    @FindViewById( id = R.id.addCar_sercheCarInfo_photoBtn)
+//    @FindViewById(id = R.id.viewfinder_view)
+//    private ViewfinderView viewfinderView;   //扫描框
+    @FindViewById(id = R.id.addCar_sercheCarInfo_photoBtn)
     private Button photoBtn;      //扫描相册图片
-    @FindViewById( id = R.id.addCar_inputCarInfo_inputBtn)
-    private Button inputBtn;       //手动输入
     @FindViewById(id = R.id.addnewCar_title)
     private TitleFragment titleView;
 
@@ -76,31 +76,32 @@ public class AddNewCarActivity extends BaseActivity implements SurfaceHolder.Cal
     private ProgressDialog mProgress;
     private String photo_path;
     private Bitmap scanBitmap;
+    @FindViewById(id = R.id.qrdecoderview)
+    private QRCodeReaderView mydecoderview;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_add_newcar);
-        CameraManager.init(getApplication());
-        hasSurface = false;
-        inactivityTimer = new InactivityTimer(this);
+//        CameraManager.init(getApplication());
+//        hasSurface = false;
+//        inactivityTimer = new InactivityTimer(this);
     }
 
-    @Override public void addListeners() {
+    @Override
+    public void addListeners() {
+        mydecoderview.setOnQRCodeReadListener(this);
         titleView.setTitleText("添加新车");
         photoBtn.setOnClickListener(this);
-        inputBtn.setOnClickListener(this);
     }
 
     /**
      * 点击事件处理
+     *
      * @param view
      */
-    @Override public void onClick(View view) {
+    @Override
+    public void onClick(View view) {
 
         switch (view.getId()) {
-            case R.id.addCar_inputCarInfo_inputBtn:
-                //进行手动输入
-                toVerifyAddCarActivity(null);
-                break;
             case R.id.addCar_sercheCarInfo_photoBtn:
                 //直接调用相册的图片
                 Intent innerIntent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -114,6 +115,7 @@ public class AddNewCarActivity extends BaseActivity implements SurfaceHolder.Cal
 
     /**
      * 跳转到确认添加车辆的页面
+     *
      * @param carInfoJson
      */
     private void toVerifyAddCarActivity(String carInfoJson) {
@@ -125,16 +127,17 @@ public class AddNewCarActivity extends BaseActivity implements SurfaceHolder.Cal
         AddNewCarActivity.this.finish();
     }
 
-    private Handler mHandler = new Handler(){
-        @Override public void handleMessage(Message msg) {
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
             super.handleMessage(msg);
             mProgress.dismiss();
             switch (msg.what) {
                 case PARSE_BARCODE_SUC:
-                    onResultHandler((String)msg.obj, scanBitmap);
+                    onResultHandler((String) msg.obj, scanBitmap);
                     break;
                 case PARSE_BARCODE_FAIL:
-                    Toast.makeText(AddNewCarActivity.this, (String)msg.obj, Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddNewCarActivity.this, (String) msg.obj, Toast.LENGTH_LONG).show();
                     break;
             }
         }
@@ -143,14 +146,16 @@ public class AddNewCarActivity extends BaseActivity implements SurfaceHolder.Cal
 
     /**
      * 获取相册调取图片
+     *
      * @param requestCode
      * @param resultCode
      * @param data
      */
-    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK){
-            switch(requestCode){
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
                 case REQUEST_CODE:
                     //获取选中图片的路径
                     Cursor cursor = getContentResolver().query(data.getData(), null, null, null, null);
@@ -189,11 +194,12 @@ public class AddNewCarActivity extends BaseActivity implements SurfaceHolder.Cal
 
     /**
      * 扫描二维码图片的方法
+     *
      * @param path
      * @return
      */
     public Result scanningImage(String path) {
-        if(TextUtils.isEmpty(path)){
+        if (TextUtils.isEmpty(path)) {
             return null;
         }
         Hashtable<DecodeHintType, String> hints = new Hashtable<DecodeHintType, String>();
@@ -227,46 +233,51 @@ public class AddNewCarActivity extends BaseActivity implements SurfaceHolder.Cal
     }
 
 
-    @Override protected void onResume() {
+    @Override
+    protected void onResume() {
         super.onResume();
-        SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
-        SurfaceHolder surfaceHolder = surfaceView.getHolder();
-        if (hasSurface) {
-            initCamera(surfaceHolder);
-        } else {
-            surfaceHolder.addCallback(this);
-            surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-        }
-        decodeFormats = null;
-        characterSet = null;
-
-        playBeep = true;
-        AudioManager audioService = (AudioManager) getSystemService(AUDIO_SERVICE);
-        if (audioService.getRingerMode() != AudioManager.RINGER_MODE_NORMAL) {
-            playBeep = false;
-        }
-        initBeepSound();
-        vibrate = true;
+        mydecoderview.getCameraManager().startPreview();
+//        SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
+//        SurfaceHolder surfaceHolder = surfaceView.getHolder();
+//        if (hasSurface) {
+//            initCamera(surfaceHolder);
+//        } else {
+//            surfaceHolder.addCallback(this);
+//            surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+//        }
+//        decodeFormats = null;
+//        characterSet = null;
+//
+//        playBeep = true;
+//        AudioManager audioService = (AudioManager) getSystemService(AUDIO_SERVICE);
+//        if (audioService.getRingerMode() != AudioManager.RINGER_MODE_NORMAL) {
+//            playBeep = false;
+//        }
+//        initBeepSound();
+//        vibrate = true;
     }
 
-    @Override protected void onPause() {
+    @Override
+    protected void onPause() {
+        mydecoderview.getCameraManager().stopPreview();
         super.onPause();
-        if (handler != null) {
-            handler.quitSynchronously();
-            handler = null;
-        }
-        CameraManager.get().closeDriver();
+//        if (handler != null) {
+//            handler.quitSynchronously();
+//            handler = null;
+//        }
+//        CameraManager.get().closeDriver();
     }
 
-    @Override protected void onDestroy() {
-        inactivityTimer.shutdown();
-        //TODOT 控制OOM问题
-        if (handler !=null) {
-            handler.removeCallbacksAndMessages(null);
-            handler = null;
-        }
-        CameraManager.get().stopPreview();
-        CameraManager.get().closeDriver();
+    @Override
+    protected void onDestroy() {
+//        inactivityTimer.shutdown();
+//        //TODOT 控制OOM问题
+//        if (handler != null) {
+//            handler.removeCallbacksAndMessages(null);
+//            handler = null;
+//        }
+//        CameraManager.get().stopPreview();
+//        CameraManager.get().closeDriver();
         super.onDestroy();
     }
 
@@ -277,6 +288,7 @@ public class AddNewCarActivity extends BaseActivity implements SurfaceHolder.Cal
 
     /**
      * 处理扫描结果
+     *
      * @param result
      * @param barcode
      */
@@ -285,7 +297,7 @@ public class AddNewCarActivity extends BaseActivity implements SurfaceHolder.Cal
         playBeepSoundAndVibrate();
         final String resultString = result.getText();
         //TODO  Miss
-        LogUtils.d(resultString);
+        LogUtils.w(resultString);
         onResultHandler(resultString, barcode);
 
 
@@ -293,30 +305,33 @@ public class AddNewCarActivity extends BaseActivity implements SurfaceHolder.Cal
 
     /**
      * 跳转到下一个页面
+     *
      * @param resultString
      * @param bitmap
      */
-    private void onResultHandler(String resultString, Bitmap bitmap){
-        if(TextUtils.isEmpty(resultString)){
+    private void onResultHandler(String resultString, Bitmap bitmap) {
+        if (TextUtils.isEmpty(resultString)) {
             Toast.makeText(AddNewCarActivity.this, "Scan failed!", Toast.LENGTH_SHORT).show();
             return;
         }
         //TODO 跳转到下一页
         toVerifyAddCarActivity(resultString);
+
     }
 
     /**
      * 初始化相机
+     *
      * @param surfaceHolder
      */
     private void initCamera(SurfaceHolder surfaceHolder) {
         try {
             CameraManager.get().openDriver(surfaceHolder);
         } catch (IOException ioe) {
-            LogUtils.d("初始化相机失败", ioe);
+            LogUtils.w("初始化相机失败", ioe);
             return;
         } catch (RuntimeException e) {
-            LogUtils.d("初始化相机失败", e);
+            LogUtils.w("初始化相机失败", e);
             return;
         }
         if (handler == null) {
@@ -325,12 +340,14 @@ public class AddNewCarActivity extends BaseActivity implements SurfaceHolder.Cal
         }
     }
 
-    @Override public void surfaceChanged(SurfaceHolder holder,
-                int format, int width, int height) {
+    @Override
+    public void surfaceChanged(SurfaceHolder holder,
+                               int format, int width, int height) {
 
     }
 
-    @Override public void surfaceCreated(SurfaceHolder holder) {
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
         if (!hasSurface) {
             hasSurface = true;
             initCamera(holder);
@@ -338,13 +355,15 @@ public class AddNewCarActivity extends BaseActivity implements SurfaceHolder.Cal
 
     }
 
-    @Override public void surfaceDestroyed(SurfaceHolder holder) {
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
         hasSurface = false;
 
     }
 
     public ViewfinderView getViewfinderView() {
-        return viewfinderView;
+//        return viewfinderView;
+        return null;
     }
 
     public Handler getHandler() {
@@ -352,7 +371,7 @@ public class AddNewCarActivity extends BaseActivity implements SurfaceHolder.Cal
     }
 
     public void drawViewfinder() {
-        viewfinderView.drawViewfinder();
+//        viewfinderView.drawViewfinder();
 
     }
 
@@ -393,13 +412,31 @@ public class AddNewCarActivity extends BaseActivity implements SurfaceHolder.Cal
         }
     }
 
+    //// TODO: 2016/5/29
     /**
      * When the beep has finished playing, rewind to queue up another one.
      */
     private final MediaPlayer.OnCompletionListener beepListener =
             new MediaPlayer.OnCompletionListener() {
-        public void onCompletion(MediaPlayer mediaPlayer) {
-            mediaPlayer.seekTo(0);
-        }
-    };
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    mediaPlayer.seekTo(0);
+                }
+            };
+
+    @Override
+    public void onQRCodeRead(String text, PointF[] points) {
+        LogUtils.w("扫描结果:" + text);
+        toVerifyAddCarActivity(text);
+        this.finish();
+    }
+
+    @Override
+    public void cameraNotFound() {
+
+    }
+
+    @Override
+    public void QRCodeNotFoundOnCamImage() {
+
+    }
 }

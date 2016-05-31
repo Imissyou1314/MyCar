@@ -13,4 +13,11 @@ public interface SumbitIndentModel  {
      * @param orderBean
      */
     void sentIndentToService(OrderBean orderBean);
+
+    /**
+     * 根据订单Id删除订单
+     * @param userId
+     * @param orderId
+     */
+    void deleteOrder(int userId, int orderId);
 }

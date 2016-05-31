@@ -7,10 +7,11 @@ package com.miss.imissyou.mycar.model;
  */
 public interface MessageModle {
     /**
-     * 从服务器加载消息
+     * 从服务器加载用户的所有消息
      * 用户信息
      */
-    void getUserAllMessage(String userId);
+
+    void getUserAllMessage(Long userId);
 
 
     /**
@@ -19,15 +20,15 @@ public interface MessageModle {
     void deleteMessage(int id);
 
     /**
-     * 更改服务器信息的状态
+     * 根据用户Id更改服务器信息的状态
      * @param userId
      * @param messageId
      */
-    void changeStateToService(String userId, String messageId);
+    void changeStateToService(Long userId, Long messageId);
 
     /**
      * 获取用户未读信息
      * @param userId 用户Id
      */
-    void getUserUnReadMessage(String userId);
+    void getUserUnReadMessage(Long userId);
 }

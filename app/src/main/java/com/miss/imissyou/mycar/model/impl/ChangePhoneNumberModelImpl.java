@@ -57,7 +57,7 @@ public class ChangePhoneNumberModelImpl implements ChangePhoneNumberModle {
        LogUtils.d("验证码:" + code + "手机号：" + phoneNumber);
         HttpParams params = new HttpParams();
         params.putHeaders("cookie", Constant.COOKIE);
-        params.put("id", Constant.userBean.getId());
+        params.put("id", Constant.userBean.getId() + "");
         params.put("newPhone", phoneNumber);
         params.put("verifyCode", code);
 

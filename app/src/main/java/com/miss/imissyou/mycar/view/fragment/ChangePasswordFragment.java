@@ -76,7 +76,7 @@ public class ChangePasswordFragment extends BaseFragment {
 
         HttpParams params = new HttpParams();
         params.putHeaders("cookie", Constant.COOKIE);
-        params.put("id",Constant.userBean.getId());
+        params.put("id",Constant.userBean.getId() + "");
         params.put("oldPassword", md5oldPassword);
         params.put("newPassword", md5newPassword);
 

@@ -2,64 +2,62 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical">
 
     <!--标题-->
     <com.miss.imissyou.mycar.ui.TitleFragment
         android:id="@+id/addnewCar_title"
         android:layout_width="match_parent"
-        android:layout_height="45dp">
-    </com.miss.imissyou.mycar.ui.TitleFragment>
+        android:layout_height="45dp"></com.miss.imissyou.mycar.ui.TitleFragment>
 
     <!--扫描框-->
-    <RelativeLayout
+    <!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_weight="4"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_height="0dp" >-->
+
+    <!--<SurfaceView-->
+    <!--android:id="@+id/preview_view"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="fill_parent"-->
+    <!--android:layout_gravity="center" />-->
+
+    <!--<com.miss.imissyou.mycar.util.zxing.camera.view.ViewfinderView-->
+    <!--android:id="@+id/viewfinder_view"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_alignParentBottom="true" />-->
+
+    <!--</RelativeLayout>-->
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="4dp"-->
+    <!--android:layout_marginTop="2dp"-->
+    <!--android:background="@color/color_back" />-->
+
+    <!--&lt;!&ndash;显示扫描的信息&ndash;&gt;-->
+
+    <!--<LinearLayout-->
+    <!--android:orientation="horizontal"-->
+    <!--android:gravity="center"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="60dp">-->
+    <com.dlazaro66.qrcodereaderview.QRCodeReaderView
+        android:id="@+id/qrdecoderview"
         android:layout_width="match_parent"
-        android:layout_weight="4"
-        android:layout_gravity="center"
-        android:layout_height="0dp" >
-
-        <SurfaceView
-            android:id="@+id/preview_view"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center" />
-
-        <com.miss.imissyou.mycar.util.zxing.camera.view.ViewfinderView
-            android:id="@+id/viewfinder_view"
-            android:layout_marginBottom="60dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:layout_marginTop="2dp"
-        android:background="@color/color_back" />
-
-    <!--显示扫描的信息-->
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="60dp">
-        <Button
-            android:id="@+id/addCar_sercheCarInfo_photoBtn"
-            style="@style/MissButton"
-            android:text="相册"
-            android:layout_marginRight="15dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/addCar_inputCarInfo_inputBtn"
-            android:text="手动输入"
-            android:layout_marginLeft="15dp"
-            style="@style/MissButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-
+        android:layout_weight="1"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/addCar_sercheCarInfo_photoBtn"
+        style="@style/MissButton"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="相册"
+        android:textStyle="bold" />
 </LinearLayout>
+
+
+    <!--</LinearLayout>-->

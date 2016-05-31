@@ -93,7 +93,7 @@ public class SafePasswordFragment extends BaseFragment implements SafePasswordVi
         HttpParams params = new HttpParams();
         params.putHeaders("cookie", Constant.COOKIE);
 
-        params.put("id", Constant.userBean.getId());
+        params.put("id", Constant.userBean.getId() + "");
         params.put("newSafePassword", safePassword);
 
         String url = Constant.SERVER_URL + "users/confirmSafePassword";     //添加安全码

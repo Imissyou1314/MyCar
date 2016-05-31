@@ -94,7 +94,9 @@ public class MainActivity extends ActionBarActivity
     private GasStationFragment gasStationFragment;
     private NaviViewFragment naviViewFragment;
 
-    /**双击退出程序*/
+    /**
+     * 双击退出程序
+     */
     private boolean isQuit;
     private Timer timer = new Timer();
 
@@ -111,7 +113,7 @@ public class MainActivity extends ActionBarActivity
             builder = new MissDialog.Builder(this);
             doLogin();
         } else {
-            LogUtils.d("用户Id" +Constant.userBean.getId());
+            LogUtils.d("用户Id" + Constant.userBean.getId());
             setAlias(Constant.userBean.getId());
         }
 
@@ -194,7 +196,7 @@ public class MainActivity extends ActionBarActivity
                 public void onSuccess(Map<String, String> headers, byte[] t) {
                     //设置COOKIE
                     Constant.COOKIE = headers.get("Set-Cookie");
-                    ResultBean resultBean = GsonUtils.Instance().fromJson(StringUtil.bytesToString(t),ResultBean.class);
+                    ResultBean resultBean = GsonUtils.Instance().fromJson(StringUtil.bytesToString(t), ResultBean.class);
                     LogUtils.d("收到的数据::" + StringUtil.bytesToString(t));
                     LogUtils.d(">>>Cookie===" + headers.get("Set-Cookie"));
                     if (resultBean.isServiceResult()) {
@@ -221,20 +223,23 @@ public class MainActivity extends ActionBarActivity
 
     /**
      * JPushInterface绑定别名
+     *
      * @param id
      */
-    private void setAlias(String id) {
-        if(id != null)
-            LogUtils.d("设置的别名:"  + id);
-        if (id.contains(".")) {
-            id = id.substring(0, id.indexOf("."));
-            LogUtils.d("设置的别名:"  + id);
+    private void setAlias(Long id) {
+        String userId = null;
+        if (id != null)
+            LogUtils.w("设置的别名:" + id);
+        if (id.toString().contains(".")) {
+            userId = id.toString().substring(0, id.toString().indexOf("."));
+            LogUtils.w("设置的别名:" + id);
         }
-            JPushInterface.setAlias(this, id, new TagAliasCallback() {
-                @Override public void gotResult(int i, String s, Set<String> set) {
-                    LogUtils.d("别名：" + i);
-                }
-            });
+        JPushInterface.setAlias(this, id + "", new TagAliasCallback() {
+            @Override
+            public void gotResult(int i, String s, Set<String> set) {
+                LogUtils.w("别名：" + i);
+            }
+        });
     }
 
     /**
@@ -267,29 +272,30 @@ public class MainActivity extends ActionBarActivity
         SlideMenuItem menuItem0 = new SlideMenuItem(ContentFragment.CLOSE, R.mipmap.icn_close);
 
         list.add(menuItem0);
-        SlideMenuItem menuItem = new SlideMenuItem(ContentFragment.BUILDING, R.mipmap.icn_1);
+        SlideMenuItem menuItem = new SlideMenuItem(ContentFragment.BUILDING, R.mipmap.ic_home_icon);
         list.add(menuItem);
-        SlideMenuItem menuItem2 = new SlideMenuItem(ContentFragment.BOOK, R.mipmap.icn_2);
+        SlideMenuItem menuItem2 = new SlideMenuItem(ContentFragment.BOOK, R.mipmap.ic_car_icon);
         list.add(menuItem2);
-        SlideMenuItem menuItem3 = new SlideMenuItem(ContentFragment.PAINT, R.mipmap.icn_3);
+        SlideMenuItem menuItem3 = new SlideMenuItem(ContentFragment.PAINT, R.mipmap.ic_order_icon);
         list.add(menuItem3);
         SlideMenuItem menuItem4 = new SlideMenuItem(ContentFragment.CASE, R.mipmap.icn_4);
         list.add(menuItem4);
-        SlideMenuItem menuItem5 = new SlideMenuItem(ContentFragment.SHOP, R.mipmap.icn_5);
+        SlideMenuItem menuItem5 = new SlideMenuItem(ContentFragment.SHOP, R.mipmap.ic_break_icon);
         list.add(menuItem5);
         SlideMenuItem menuItem6 = new SlideMenuItem(ContentFragment.PARTY, R.mipmap.icn_6);
         list.add(menuItem6);
         SlideMenuItem menuItem7 = new SlideMenuItem(ContentFragment.MOVIE, R.mipmap.icn_7);
         list.add(menuItem7);
-        SlideMenuItem menuItem8 = new SlideMenuItem(ContentFragment.USER, R.mipmap.user);
+        SlideMenuItem menuItem8 = new SlideMenuItem(ContentFragment.USER, R.mipmap.ic_me_icon);
         list.add(menuItem8);
-        SlideMenuItem menuItem9 = new SlideMenuItem(ContentFragment.MUSIC, R.drawable.music);
+        SlideMenuItem menuItem9 = new SlideMenuItem(ContentFragment.MUSIC, R.mipmap.ic_music_icon);
         list.add(menuItem9);
         SlideMenuItem menuItem10 = new SlideMenuItem(ContentFragment.MAP, R.drawable.ic_action_name);
         list.add(menuItem10);
-        SlideMenuItem menuItem11 = new SlideMenuItem(ContentFragment.NAVIGATION, R.drawable.ic_navigation_image);
+        SlideMenuItem menuItem11 = new SlideMenuItem(ContentFragment.NAVIGATION, R.mipmap.ic_guide_icon);
         list.add(menuItem11);
-
+        SlideMenuItem menuItem12 = new SlideMenuItem(ContentFragment.SETTING, R.mipmap.ic_setting_icon);
+        list.add(menuItem12);
     }
 
     /**
@@ -406,16 +412,19 @@ public class MainActivity extends ActionBarActivity
     /**
      * ViewAnimator接口的实现类
      */
-    @Override public void disableHomeButton() {
+    @Override
+    public void disableHomeButton() {
         getSupportActionBar().setHomeButtonEnabled(false);
     }
 
-    @Override public void enableHomeButton() {
+    @Override
+    public void enableHomeButton() {
         getSupportActionBar().setHomeButtonEnabled(true);
         drawerLayout.closeDrawers();
     }
 
-    @Override public void addViewToContainer(View view) {
+    @Override
+    public void addViewToContainer(View view) {
         linearLayout.addView(view);
     }
 
@@ -444,17 +453,20 @@ public class MainActivity extends ActionBarActivity
      *
      * @param savedInstanceState
      */
-    @Override protected void onPostCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         drawerToggle.syncState();
     }
 
-    @Override public void onConfigurationChanged(Configuration newConfig) {
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
     }
 
-    @Override public boolean onCreateOptionsMenu(final Menu menu) {
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
         //设置OptionsMenu 菜单的选项
 
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -524,7 +536,7 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onBackPressed() {
-        if (isQuit == false) {
+        if (!isQuit) {
             isQuit = true;
             Toast.makeText(getBaseContext(), "再按一次返回键退出程序", Toast.LENGTH_SHORT).show();
             TimerTask task = null;

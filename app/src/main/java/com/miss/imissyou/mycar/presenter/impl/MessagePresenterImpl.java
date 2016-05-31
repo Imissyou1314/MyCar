@@ -2,7 +2,6 @@ package com.miss.imissyou.mycar.presenter.impl;
 
 import com.miss.imissyou.mycar.bean.BaseBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
-import com.miss.imissyou.mycar.bean.UserBean;
 import com.miss.imissyou.mycar.model.MessageModle;
 import com.miss.imissyou.mycar.model.impl.MessageModelImpl;
 import com.miss.imissyou.mycar.presenter.MessagePresenter;
@@ -63,21 +62,24 @@ public class MessagePresenterImpl implements MessagePresenter {
         }
     }
 
-    @Override public void changeStateToService(String id) {
-        if (null != Constant.userBean.getId()){
+
+    @Override public void changeStateToService(Long id) {
+        if (0 != Constant.userBean.getId()){
             mMessageModle.changeStateToService(Constant.userBean.getId() ,id);
         }
     }
 
     @Override public void getUserUnReadMessage() {
-        if (null != Constant.userBean && null != Constant.userBean.getId()) {
+
+        if (null != Constant.class && null != Constant.userBean && 0L != Constant.userBean.getId()) {
             mMessageModle.getUserUnReadMessage(Constant.userBean.getId());
         } else {
             mMessageView.showResultError(1, "用户没登录");
         }
     }
     @Override public void getUserAllMessage() {
-        if (null != Constant.userBean && null != Constant.userBean.getId()) {
+
+        if (null != Constant.userBean && 0 != Constant.userBean.getId()) {
             mMessageModle.getUserAllMessage(Constant.userBean.getId());
         } else {
             mMessageView.showResultError(1, "用户没登录");

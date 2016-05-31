@@ -156,6 +156,4 @@ public class MusicPlayService extends Service{
             }
         }
     }
-
-
 }

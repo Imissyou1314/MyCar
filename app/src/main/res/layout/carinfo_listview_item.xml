@@ -1,62 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:miss="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_marginLeft="5dp"
-    android:background="@color/color_carView_mainMesage"
-    android:layout_marginBottom="8dp"
-    android:layout_height="match_parent">
+    android:layout_marginLeft="4dp"
+    android:gravity="center"
+    android:background="@color/colorWhite"
+    android:layout_marginBottom="13dp"
+    android:layout_height="80dp">
 
-    <com.miss.imissyou.mycar.ui.RoundImageView
+    <ImageView
         android:id="@+id/carInfo_item_carImage"
-        miss:Radiustype="round"
-        miss:borderRadius="10dp"
-        android:src="@mipmap/icn_1"
-        android:background="@color/colorPrimaryDark"
-        android:layout_width="80dp"
-        android:layout_height="80dp" />
+        android:layout_width="wrap_content"
+        android:gravity="center|left"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:src="@mipmap/user_head"
+        />
     <TextView
         android:id="@+id/carinfo_item_carId"
-        android:layout_toRightOf="@+id/carInfo_item_carImage"
         android:text="车牌 : null"
         android:textSize="20sp"
-        android:gravity="center_vertical"
+        android:layout_weight="1"
+        android:textColor="@color/color_back"
+        android:gravity="center_vertical|left"
         android:layout_marginLeft="18dp"
         android:layout_width="wrap_content"
         android:layout_height="40dp" />
-    <TextView
-        android:id="@+id/carinfo_item_carName"
-        android:layout_toRightOf="@+id/carInfo_item_carImage"
-        android:layout_below="@+id/carinfo_item_carId"
-        android:text="车名 : null"
-        android:textSize="20sp"
-        android:gravity="center_vertical"
-        android:layout_marginLeft="18dp"
-        android:layout_width="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_height="40dp" />
-    <TextView
-        android:id="@+id/carinfo_item_carOil"
-        android:text="油量 : null"
-        android:textSize="20sp"
-        android:gravity="center_vertical"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="18dp"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
-    <TextView
-        android:id="@+id/carinfo_item_carState"
-        android:text="状态 : null"
-        android:textSize="20sp"
-        android:gravity="center_vertical"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="18dp"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/carinfo_item_carText"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:layout_weight="1"
+        android:layout_height="match_parent" />
+    <View
+        android:id="@+id/carinfo_item_goIcon"
+        android:layout_width="50dp"
+        android:visibility="visible"
+        android:layout_marginRight="30dp"
+        android:background="@mipmap/ic_go_right_gree_icon"
+        android:layout_height="wrap_content"  />
+
+</LinearLayout>

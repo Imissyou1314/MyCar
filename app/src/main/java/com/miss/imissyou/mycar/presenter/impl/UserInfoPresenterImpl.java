@@ -41,7 +41,7 @@ public class UserInfoPresenterImpl implements UserInfoPresenter{
     @Override
     public void loadServiceData(BaseBean useBean) {
         if (null != Constant.userBean && null != Constant.userBean.getId()) {
-            mUserInfoModel.loadUserInfo(Constant.userBean.getId());
+            mUserInfoModel.loadUserInfo(Constant.userBean.getId() + "");
         } else {
             onFailure(Constant.WARE_USERDO_ERROR,Constant.USER_UBLOGIN);
         }

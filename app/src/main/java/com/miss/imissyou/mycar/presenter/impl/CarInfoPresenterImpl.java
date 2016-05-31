@@ -6,6 +6,7 @@ import com.miss.imissyou.mycar.bean.CarInfoBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.model.CarInfoModle;
 import com.miss.imissyou.mycar.model.impl.CarInfoModleImpl;
+import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.view.CarInfoView;
 import com.miss.imissyou.mycar.view.MainView;
@@ -29,6 +30,9 @@ public class CarInfoPresenterImpl implements CarInfoPresenter {
     @Override
     public void onFailure(int errorNo, String strMsg) {
         mCarInfoView.hideProgress();
+        if (errorNo == Constant.NETWORK_STATE) {
+            strMsg = Constant.NOTNETWORK;
+        }
         mCarInfoView.showResultError(errorNo, strMsg);
     }
 
@@ -57,11 +61,29 @@ public class CarInfoPresenterImpl implements CarInfoPresenter {
         mCarInfoView = null;
     }
 
-    @Override public void loadCarInfo(String userId, String carId) {
+    @Override public void loadCarInfo(Long userId, Long carId) {
         if (userId.equals("") || carId.equals("")){
             LogUtils.d("请求车辆信息不能为空");
             return;
         }
         mCarInfoModle.loadCarInfoFormService(userId, carId);
+    }
+
+    @Override
+    public void changeCarAlarmState(Long carId) {
+        if (carId >= 0) {
+                mCarInfoModle.changeCarAlarmState(0, carId);
+        }         else {
+            mCarInfoView.showResultError(0,"传入的车辆Id不符合要求");
+        }
+    }
+
+    @Override
+    public void changeCarState(Long carId) {
+        if (carId >= 0) {
+            mCarInfoModle.changeCarState(0, carId);
+        }         else {
+            mCarInfoView.showResultError(0,"传入的车辆Id不符合要求");
+        }
     }
 }

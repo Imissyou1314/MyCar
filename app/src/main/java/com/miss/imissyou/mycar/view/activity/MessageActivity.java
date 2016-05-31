@@ -104,7 +104,7 @@ public class MessageActivity extends BaseActivity implements MessageView {
 
     @Override public void showResultSuccess(ResultBean resultBean) {
 
-        this.messages.addAll(GsonUtils.getParams(resultBean, "message", MessageBean[].class));
+        this.messages.addAll(GsonUtils.getParams(resultBean, "message", MessageBean.class));
         if (messages.size() > 0) {
            setListData(messages);
         } else {
@@ -133,7 +133,8 @@ public class MessageActivity extends BaseActivity implements MessageView {
     }
 
     private void changeStateToService() {
-        if (null != Constant.userBean && null !=  Constant.userBean.getId())
+
+        if (null != Constant.userBean && 0 !=  Constant.userBean.getId())
         mMessagePresenter.changeStateToService(Constant.userBean.getId());
     }
 
