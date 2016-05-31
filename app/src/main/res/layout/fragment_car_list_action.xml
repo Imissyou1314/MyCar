@@ -20,6 +20,7 @@
     <ListView
         android:id="@+id/carlist_myCar_ListView"
         android:layout_below="@+id/carInfo_carImage"
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

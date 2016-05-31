@@ -149,11 +149,23 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
                 toNaviMap(mStartLat, mStartLon, mEndLat, mEndLon);
                 break;
             case R.id.navi_View_BackButton:
-                toNaviMap(mEndLat, mEndLon, mStartLat, mStartLon);
+                toInputView();
+//                toNaviMap(mEndLat, mEndLon, mStartLat, mStartLon);
                 break;
             default:
                 break;
         }
+    }
+
+    /**
+     * 跳转到输入界面
+     */
+    private void toInputView() {
+        RouteSelectFragment route = new  RouteSelectFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("cityName",cityName);
+        route.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_frame,route).commit();
     }
 
     /**

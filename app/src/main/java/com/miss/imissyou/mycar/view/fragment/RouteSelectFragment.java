@@ -14,7 +14,7 @@ import com.lidroid.xutils.http.client.multipart.content.StringBody;
 import com.miss.imissyou.mycar.R;
 
 /**
- *   选择导航路线
+ * 选择导航路线
  * Created by 青玉 on 2016/5/30.
  */
 public class RouteSelectFragment extends BaseFragment implements View.OnClickListener {
@@ -61,20 +61,20 @@ public class RouteSelectFragment extends BaseFragment implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-           switch (v.getId()) {
-               case R.id.select_route_changeSeclet:
-                   changeInput();
-                   break;
-               case R.id.select_route_end_input:
-                   toInputFragment(EndTag);
-                   break;
-               case R.id.select_route_start_input:
-                   toInputFragment(StartTag);
-                   break;
-               case R.id.select_route_go_back:
-                   backToFragment();
-                   break;
-           }
+        switch (v.getId()) {
+            case R.id.select_route_changeSeclet:
+                changeInput();
+                break;
+            case R.id.select_route_end_input:
+                toInputFragment(EndTag);
+                break;
+            case R.id.select_route_start_input:
+                toInputFragment(StartTag);
+                break;
+            case R.id.select_route_go_back:
+                backToFragment();
+                break;
+        }
     }
 
     /**
@@ -82,24 +82,36 @@ public class RouteSelectFragment extends BaseFragment implements View.OnClickLis
      */
     private void backToFragment() {
         getActivity().getSupportFragmentManager()
-                .beginTransaction().remove(this);
+                .beginTransaction().remove(this).commit();
     }
 
     /**
      * 跳转到地址输入Fragment
+     *
      * @param tag
      */
     private void toInputFragment(int tag) {
         InputRouteFragment inputRouteFragment = new InputRouteFragment();
-
-        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container_frame, new InputRouteFragment());
+        Bundle bundle = new Bundle();
+        String title = "";
+        if (tag == 0) {
+            title = "终点";
+        } else {
+            title = "起点";
+        }
+        bundle.putString("title", title);
+        inputRouteFragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container_frame, inputRouteFragment).commit();
     }
 
     /**
-     *      装换起点和终点
+     * 装换起点和终点
      */
     private void changeInput() {
 
-
+        //TODO
+        String tmpStr = startPlace;
+        startPlace = endPlace;
+        endPlace = tmpStr;
     }
 }

@@ -38,6 +38,7 @@
     <color name="color_Theme">#FF3A536C</color>
     <color name="color_back">#0e0e0e</color>
     <color name="color_miniBack">#5f0e0e0e</color>
+    <color name="color_gui">#eeeeee</color>
     <color name="color_search_blue">#025391</color>
     <color name="color_select_route_title">#D2025391</color>
 
@@ -62,5 +63,11 @@
     <color name="color_progress_greed">#039d06</color>
     <color name="color_progress_red">#ff0000</color>
     <color name="color_progress_yello">#d2b520</color>
+
+    <!--车列表颜色-->
+    <color name="color_blue_background">#32BCB6</color>
+    <color name="color_red_background">#EE4256</color>
+    <color name="color_yellow_background">#FCB64B</color>
+    <color name="color_gree_background">#83EDB8</color>
 
 </resources>

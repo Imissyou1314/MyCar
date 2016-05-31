@@ -1,7 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:background="@color/colorWhite"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:background="@color/color_blue"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/input_route_goBack"
+            android:background="@mipmap/ic_go_left_white_icon"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <AutoCompleteTextView
+            android:id="@+id/input_route_autoText"
+            android:hint="亲输入起点"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="10dp"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:textColorHint="@color/color_back_gui"
+            android:imeOptions="actionDone"
+            android:inputType="text|textAutoComplete"
+            android:background="@drawable/text_search"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <View
+          android:background="@color/color_back"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <View
+        android:background="@color/color_blue"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"/>
+
+    <ListView
+        android:id="@+id/input_route_listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

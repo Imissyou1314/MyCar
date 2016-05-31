@@ -142,6 +142,18 @@ public class ViewHolder {
     }
 
     /**
+     * 通过ViewId设置图片背景
+     * @param viewId
+     * @param resId
+     * @return
+     */
+    public ViewHolder setViewBackGround(int viewId, int resId){
+        View view = getView(viewId);
+        view.setBackgroundResource(resId);
+        return this;
+    }
+
+    /**
      * 关于事件的
      */
     public ViewHolder setOnClickListener(int viewId, View.OnClickListener listener)

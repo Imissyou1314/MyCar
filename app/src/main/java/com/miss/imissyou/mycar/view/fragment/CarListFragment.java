@@ -149,14 +149,12 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
         carInfoList.setAdapter(new CommonAdapter<CarInfoBean>(getActivity(), resultBean, R.layout.carinfo_listview_item) {
             @Override
             public void convert(final ViewHolder holder, CarInfoBean car) {
-                                if (car.isCurrentCar()) {
-                                    holder.getmConverView().setBackgroundColor(R.color.color_carView_background_White1);
-                                }
+
                 LogUtils.d("车牌号" + car.getPlateNumber());
-                holder.replaceText(R.id.carinfo_item_carId, "null", car.getPlateNumber());
+                holder.addText(R.id.carinfo_item_car_Brand_Text, car.getPlateNumber());
 
                 if (!car.getMark().equals("")) {
-                    LogUtils.d("请求图片的地址:" + Constant.SERVER_URL + car.getMark());
+                    LogUtils.w("请求图片的地址:" + Constant.SERVER_URL + car.getMark());
                     RxVolley.get(Constant.SERVER_URL + car.getMark(), new HttpCallback() {
                         @Override
                         public void onSuccess(Map<String, String> headers, Bitmap bitmap) {
