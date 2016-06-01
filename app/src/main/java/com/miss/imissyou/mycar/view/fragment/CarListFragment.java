@@ -149,13 +149,24 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
         carInfoList.setAdapter(new CommonAdapter<CarInfoBean>(getActivity(), resultBean, R.layout.carinfo_listview_item) {
             @Override
             public void convert(final ViewHolder holder, CarInfoBean car) {
-
+                      int viewId = holder.getmPosition();
                 LogUtils.d("车牌号" + car.getPlateNumber());
                 holder.addText(R.id.carinfo_item_car_Brand_Text, car.getPlateNumber());
-
+                
+                //// TODO: 2016/6/1 等待测试 
+                 if (holder.getmPosition() % 4 == 0) {
+                    holder.setViewBackGround(R.id.carinfo_listview_background, R.drawable.corners_gree_background);
+                } else if (holder.getmPosition() % 3 == 0)  {
+                       holder.setViewBackGround(R.id.carinfo_listview_background,R.drawable.corners_red_background);
+                   }     else if (holder.getmPosition() % 2 == 0) {
+                       holder.setViewBackGround(R.id.carinfo_listview_background, R.drawable.corners_yellow_background);
+                   } else        {
+                       holder.setViewBackGround(R.id.carinfo_listview_background, R.drawable.corners_blue_background);
+                   }
+                
                 if (!car.getMark().equals("")) {
                     LogUtils.w("请求图片的地址:" + Constant.SERVER_URL + car.getMark());
-                    RxVolley.get(Constant.SERVER_URL + car.getMark(), new HttpCallback() {
+                    RxVolley.get(Constant.SERVER_URL + car.getMark(), new HttpCallback() {                
                         @Override
                         public void onSuccess(Map<String, String> headers, Bitmap bitmap) {
                             if (bitmap != null)
@@ -172,9 +183,14 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
         });
     }
 
+   
+
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+    private void setBackGround(int carinfo_listview_background) {
+        
     }
 
     private String isGood(boolean check) {

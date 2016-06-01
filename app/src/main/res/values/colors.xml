@@ -51,6 +51,7 @@
     <color name="weizhanchaxun">#108cd5d9</color>
 
     <color name="login_cardView_background">#22211741</color>
+    <color name="navi_cardView_gree_background">#22010a26</color>
 
     <!--透明的颜色-->
     <color name="color_carView_background_tran">#0FFFFFFF</color>
@@ -65,9 +66,9 @@
     <color name="color_progress_yello">#d2b520</color>
 
     <!--车列表颜色-->
-    <color name="color_blue_background">#32BCB6</color>
-    <color name="color_red_background">#EE4256</color>
-    <color name="color_yellow_background">#FCB64B</color>
-    <color name="color_gree_background">#83EDB8</color>
+    <color name="color_blue_background">#8C32BCB6</color>
+    <color name="color_red_background">#8BEE4256</color>
+    <color name="color_yellow_background">#8CFCB64B</color>
+    <color name="color_gree_background">#8C83EDB8</color>
 
 </resources>

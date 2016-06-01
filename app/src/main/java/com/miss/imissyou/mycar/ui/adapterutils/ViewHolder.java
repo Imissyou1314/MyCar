@@ -1,6 +1,7 @@
 package com.miss.imissyou.mycar.ui.adapterutils;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.util.SparseArray;
@@ -8,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.util.StringUtil;
 
 /**
@@ -182,6 +185,18 @@ public class ViewHolder {
     }
 
     /**
+     * 设置背景图片        s
+     * @param viewId
+     * @param colorId
+     * @return
+     */
+    public ViewHolder setBackGroundTint(int viewId, int colorId) {
+        LinearLayout view = getView(viewId);
+//        view.setBackgroundTintList();
+        return this;
+    }
+
+    /**
      * 设置长按触发
      * @param viewId
      * @param listener
@@ -204,4 +219,6 @@ public class ViewHolder {
         getmConverView().setBackgroundColor(colorSrc);
         return this;
     }
+
+
 }

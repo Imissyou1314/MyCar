@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
@@ -59,6 +60,7 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
     //    private EditText searchCityInput;  //搜索输入
     private Button goHere;        //到这里去
     private Button formHere;       //从这里来
+    private ImageButton locationBtn;        //定位按钮
 
     private String keyWord = "";
     private String cityWord = "";
@@ -102,6 +104,7 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
     protected void initView(View view) {
         mMapView = (MapView) view.findViewById(R.id.navi_mapView);
 
+        locationBtn = (ImageButton) view.findViewById(R.id.navi_mapView_location_btn);
         searchInput = (AutoCompleteTextView) view.findViewById(R.id.navi_mapView_keyWord);
 //        searchCityInput = (EditText) view.findViewById(R.id.navi_mapView_search_edit);
 
@@ -119,7 +122,8 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
         mAMap = mMapView.getMap();
         mAMap.setLocationSource(this);
         mAMap.getUiSettings().setZoomPosition(1);
-        mAMap.getUiSettings().setZoomPosition(AMapOptions.ZOOM_POSITION_RIGHT_CENTER );// 设置默认定位按钮是否显示
+        mAMap.getUiSettings().setLogoPosition(AMapOptions.LOGO_POSITION_BOTTOM_CENTER);
+        mAMap.getUiSettings().setZoomPosition(AMapOptions.ZOOM_POSITION_RIGHT_CENTER);// 设置默认定位按钮是否显示
         mAMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         // 设置定位的类型为定位模式，参见类AMap。
         //跟随模式
@@ -130,12 +134,14 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
         searchBtn.setOnClickListener(this);
         goHere.setOnClickListener(this);
         formHere.setOnClickListener(this);
+        locationBtn.setOnClickListener(this);
 
         mAMap.setMyLocationType(AMap.LOCATION_TYPE_MAP_ROTATE);
     }
 
     /**
      * 点击事件
+     *
      * @param v
      */
     @Override
@@ -149,8 +155,13 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
                 toNaviMap(mStartLat, mStartLon, mEndLat, mEndLon);
                 break;
             case R.id.navi_View_BackButton:
-                toInputView();
-//                toNaviMap(mEndLat, mEndLon, mStartLat, mStartLon);
+                toNaviMap(mEndLat, mEndLon, mStartLat, mStartLon);
+                break;
+            case R.id.navi_view_startButton:
+                setStartMap();          //设置起点地址
+                break;
+            case R.id.navi_mapView_location_btn:
+                mlocationClient.startLocation();       // 定位一次
                 break;
             default:
                 break;
@@ -158,14 +169,24 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
     }
 
     /**
+     * 设置起点经纬度
+     */
+    private void setStartMap() {
+        //设置地图的Logo在底部居中
+        mStartLon = mEndLon;
+        mStartLat = mEndLat;
+        mAMap.getUiSettings().setMyLocationButtonEnabled(true);
+    }
+
+    /**
      * 跳转到输入界面
      */
     private void toInputView() {
-        RouteSelectFragment route = new  RouteSelectFragment();
+        RouteSelectFragment route = new RouteSelectFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("cityName",cityName);
+        bundle.putString("cityName", cityName);
         route.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_frame,route).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_frame, route).commit();
     }
 
     /**
@@ -233,6 +254,7 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
 
         if (null != aMapLocation && null != mLocation) {
             if (null != aMapLocation && 0 == aMapLocation.getErrorCode()) {
+                mlocationClient.stopLocation();             //定位成功后停止定位
                 //获取开始的经纬度
                 mStartLon = aMapLocation.getLongitude();
                 mStartLat = aMapLocation.getLatitude();
@@ -243,7 +265,7 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
                 LogUtils.w("城市名称" + cityName);
                 cityCode = aMapLocation.getCityCode();
                 LogUtils.w("城市名称" + cityCode);
-                mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude()), 17));
+                mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()), 17));
                 mLocation.onLocationChanged(aMapLocation);      //显示系统小蓝点
             } else {
                 LogUtils.w("定位失败" + aMapLocation.getErrorCode() + ":" + aMapLocation.getErrorCode());
@@ -267,7 +289,7 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
             mlocationClient.setLocationListener(this);
             //设置为高精度定位模式
             mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-           mLocationOption.setInterval(5000);
+            mLocationOption.setInterval(5000);
             //设置定位参数
             mlocationClient.setLocationOption(mLocationOption);
             mlocationClient.startLocation();
