@@ -161,7 +161,9 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
                 setStartMap();          //设置起点地址
                 break;
             case R.id.navi_mapView_location_btn:
-                mlocationClient.startLocation();       // 定位一次
+                LogUtils.w("你点击了定位");
+                initLoactionClicent();
+                mlocationClient.startLocation();            //定位一次
                 break;
             default:
                 break;
@@ -173,6 +175,7 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
      */
     private void setStartMap() {
         //设置地图的Logo在底部居中
+        LogUtils.w("设置的经纬度" + mEndLon + ":::" + mEndLat);
         mStartLon = mEndLon;
         mStartLat = mEndLat;
         mAMap.getUiSettings().setMyLocationButtonEnabled(true);
@@ -254,7 +257,9 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
 
         if (null != aMapLocation && null != mLocation) {
             if (null != aMapLocation && 0 == aMapLocation.getErrorCode()) {
-                mlocationClient.stopLocation();             //定位成功后停止定位
+                mlocationClient.stopLocation();
+                LogUtils.w("停止定位");
+                        //定位成功后停止定位
                 //获取开始的经纬度
                 mStartLon = aMapLocation.getLongitude();
                 mStartLat = aMapLocation.getLatitude();
@@ -281,6 +286,11 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void activate(OnLocationChangedListener onLocationChangedListener) {
         mLocation = onLocationChangedListener;
+        initLoactionClicent();
+    }
+
+
+    private void initLoactionClicent() {
         if (null == mlocationClient) {
             mlocationClient = new AMapLocationClient(getActivity());
             mLocationOption = new AMapLocationClientOption();
@@ -292,16 +302,16 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
             mLocationOption.setInterval(5000);
             //设置定位参数
             mlocationClient.setLocationOption(mLocationOption);
-            mlocationClient.startLocation();
-        }
-
+            mlocationClient.startLocation();  }
     }
+
 
     /**
      * 停止定位
      */
     @Override
     public void deactivate() {
+        LogUtils.w("定位终止：");
         mLocation = null;
         if (mlocationClient != null) {
             mlocationClient.stopLocation();
