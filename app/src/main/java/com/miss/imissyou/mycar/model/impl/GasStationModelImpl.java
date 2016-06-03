@@ -34,7 +34,7 @@ public class GasStationModelImpl implements GasStationModle {
         param.put("format", format);
 
         String url = "http://apis.juhe.cn/oil/local";
-        LogUtils.d("请求路径：" + url);
+        LogUtils.w("请求路径：" + url);
 
         RxVolley.post(url, param, new HttpCallback() {
             @Override public void onFailure(int errorNo, String strMsg) {
@@ -44,7 +44,7 @@ public class GasStationModelImpl implements GasStationModle {
             @Override public void onSuccess(String t) {
                 GasStationResultBean  gasStationResultBean = GsonUtils
                         .Instance().fromJson(t, GasStationResultBean.class);
-                LogUtils.d("获取加油站的信息:" + t);
+                LogUtils.w("获取加油站的信息:" + t);
                 if (gasStationResultBean != null)
                     gasStation.onSuccess(gasStationResultBean);
             }

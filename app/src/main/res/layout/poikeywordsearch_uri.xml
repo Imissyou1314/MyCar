@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
+    android:layout_width="160dp"
+    android:layout_height="100dp"
+    android:gravity="center|right"
     xmlns:miss="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
@@ -31,9 +31,10 @@
 
     <com.miss.imissyou.mycar.ui.RoundImageView
         android:id="@+id/navi_mapView_marker_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         miss:Radiustype="round"
+        android:visibility="gone"
         miss:borderRadius="10dp"
         android:layout_below="@+id/navi_mapView_marker_snippet"
         android:background="@drawable/start_uri" />
@@ -46,6 +47,8 @@
         android:background="@color/color_carView_background_tran"
         android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+
         android:text="到这里去"
         android:textColor="@color/color_back"
         android:layout_width="match_parent"

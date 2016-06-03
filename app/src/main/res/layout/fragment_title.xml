@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:gravity="center"
     android:paddingLeft="10dp"
-    android:background="@color/color_carView_mainMesage"
+    android:background="@color/color_toolbar_background"
     android:layout_height="45dp">
     <TextView
         android:id="@+id/activity_title_back"

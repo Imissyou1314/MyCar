@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.lidroid.xutils.util.LogUtils;
 
 import java.io.File;
@@ -46,7 +47,6 @@ public class MissApplication extends Application implements Thread.UncaughtExcep
         super.onCreate();
         this.mContext = getApplicationContext();
         Thread.setDefaultUncaughtExceptionHandler(this);
-
     }
 
     /**

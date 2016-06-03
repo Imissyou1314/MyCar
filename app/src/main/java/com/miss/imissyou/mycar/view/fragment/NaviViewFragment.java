@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.test.mock.MockCursor;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -27,8 +26,10 @@ import com.amap.api.maps.AMapOptions;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.overlay.PoiOverlay;
 import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.LatLonPoint;
@@ -45,6 +46,7 @@ import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.view.activity.NaviViewActivity;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +55,7 @@ import java.util.List;
  * Created by Imissyou on 2016/5/2.
  */
 public class NaviViewFragment extends BaseFragment implements View.OnClickListener,
-        LocationSource, AMapLocationListener, PoiSearch.OnPoiSearchListener, TextWatcher, AMap.OnMarkerClickListener, AMap.InfoWindowAdapter {
+        LocationSource, AMapLocationListener, PoiSearch.OnPoiSearchListener, TextWatcher, AMap.OnMarkerClickListener, AMap.InfoWindowAdapter, AMap.OnMapClickListener {
 
     private TextView searchBtn;       //搜索按钮
     private AutoCompleteTextView searchInput;// 输入搜索关键字
@@ -62,14 +64,14 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
     private Button formHere;       //从这里来
     private ImageButton locationBtn;        //定位按钮
 
-    private String keyWord = "";
+    private String keyWord = "";               //搜索关键字
     private String cityWord = "";
 
     // 起点终点的经纬度
-    private double mStartLat;
-    private double mStartLon;
-    private double mEndLat;
-    private double mEndLon;
+    private double mStartLat;                  //起点的经度
+    private double mStartLon;                 //起点的纬度
+    private double mEndLat;                   //终点的经度
+    private double mEndLon;                  //终点的纬度
 
     //搜索模块
     private PoiResult poiResult; // poi返回的结果
@@ -129,6 +131,9 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
         //跟随模式
         mAMap.setMyLocationType(AMap.LOCATION_TYPE_MAP_FOLLOW);
         mAMap.setOnMarkerClickListener(this);
+        mAMap.setOnMapClickListener(this);
+        mAMap.setInfoWindowAdapter(this);     // 添加显示infowindow监听事件
+
 
         searchInput.addTextChangedListener(this);
         searchBtn.setOnClickListener(this);
@@ -257,9 +262,9 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
 
         if (null != aMapLocation && null != mLocation) {
             if (null != aMapLocation && 0 == aMapLocation.getErrorCode()) {
-                mlocationClient.stopLocation();
+                mlocationClient.stopLocation();       //定位成功后停止定位
                 LogUtils.w("停止定位");
-                        //定位成功后停止定位
+
                 //获取开始的经纬度
                 mStartLon = aMapLocation.getLongitude();
                 mStartLat = aMapLocation.getLatitude();
@@ -290,6 +295,9 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
     }
 
 
+    /**
+     * 初始化定位功能
+     */
     private void initLoactionClicent() {
         if (null == mlocationClient) {
             mlocationClient = new AMapLocationClient(getActivity());
@@ -299,12 +307,13 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
             mlocationClient.setLocationListener(this);
             //设置为高精度定位模式
             mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+            //设置定位间隔的时间
             mLocationOption.setInterval(5000);
             //设置定位参数
             mlocationClient.setLocationOption(mLocationOption);
-            mlocationClient.startLocation();  }
+            mlocationClient.startLocation();
+        }
     }
-
 
     /**
      * 停止定位
@@ -450,6 +459,8 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
      */
     @Override
     public View getInfoWindow(final Marker marker) {
+
+        LogUtils.w("获取定位Marker的信息");
         View view = getActivity()
                 .getLayoutInflater()
                 .inflate(R.layout.poikeywordsearch_uri, null);
@@ -464,7 +475,7 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
         title.setText(marker.getTitle());
 
         snippet.setText(marker.getSnippet());
-        LogUtils.w("Marker 标题: " + marker.getSnippet());
+        LogUtils.w("Marker 内容: " + marker.getSnippet());
         Image.setImageBitmap(marker.getIcons().get(0).getBitmap());
         //到导航的页面
         goHere.setOnClickListener(new View.OnClickListener() {
@@ -476,19 +487,20 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
 
             }
         });
-
         return view;
     }
 
     @Override
     public View getInfoContents(Marker marker) {
+        LogUtils.d("");
+        marker.getPosition();
         return null;
     }
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        marker.showInfoWindow();
-
+//        marker.showInfoWindow();
+        getInfoWindow(marker);
         LogUtils.w("你点击的是哪个:" + marker.getTitle());
         mEndLon = marker.getPosition().longitude;
         mEndLat = marker.getPosition().latitude;
@@ -521,6 +533,19 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
         mMapView.onSaveInstanceState(outState);
     }
 
+    /**
+     * 地图的点击事件
+     *
+     * @param latLng
+     */
+    @Override
+    public void onMapClick(LatLng latLng) {
+        LogUtils.w("你点击了地图上的：" + latLng.latitude + "::::" + latLng.longitude);
+//        mAMap.clear();
+        mAMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_navi_start)));
+        mStartLat = latLng.latitude;
+        mStartLon = latLng.longitude;
+    }
 }
 
 

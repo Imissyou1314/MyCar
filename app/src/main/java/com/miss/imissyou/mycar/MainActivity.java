@@ -84,6 +84,8 @@ public class MainActivity extends ActionBarActivity
     private MissDialog.Builder builder;
 
     private Intent intent;
+
+    /** 导航栏的Item fragment*/
     private HomeFragment homeFragment;
     private CarListFragment carListFragement;
     private MusicFragment musicFragment;
@@ -272,18 +274,14 @@ public class MainActivity extends ActionBarActivity
         SlideMenuItem menuItem0 = new SlideMenuItem(ContentFragment.CLOSE, R.mipmap.icn_close);
 
         list.add(menuItem0);
-        SlideMenuItem menuItem = new SlideMenuItem(ContentFragment.BUILDING, R.mipmap.ic_home_icon);
+        SlideMenuItem menuItem = new SlideMenuItem(ContentFragment.HOME, R.mipmap.ic_home_icon);
         list.add(menuItem);
-        SlideMenuItem menuItem2 = new SlideMenuItem(ContentFragment.BOOK, R.mipmap.ic_car_icon);
+        SlideMenuItem menuItem2 = new SlideMenuItem(ContentFragment.CAR, R.mipmap.ic_car_icon);
         list.add(menuItem2);
-        SlideMenuItem menuItem3 = new SlideMenuItem(ContentFragment.PAINT, R.mipmap.ic_order_icon);
+        SlideMenuItem menuItem3 = new SlideMenuItem(ContentFragment.ORDER, R.mipmap.ic_order_icon);
         list.add(menuItem3);
-        SlideMenuItem menuItem4 = new SlideMenuItem(ContentFragment.CASE, R.mipmap.icn_4);
-        list.add(menuItem4);
-        SlideMenuItem menuItem5 = new SlideMenuItem(ContentFragment.SHOP, R.mipmap.ic_break_icon);
+        SlideMenuItem menuItem5 = new SlideMenuItem(ContentFragment.BREAK, R.mipmap.ic_break_icon);
         list.add(menuItem5);
-        SlideMenuItem menuItem6 = new SlideMenuItem(ContentFragment.PARTY, R.mipmap.icn_6);
-        list.add(menuItem6);
         SlideMenuItem menuItem7 = new SlideMenuItem(ContentFragment.MOVIE, R.mipmap.icn_7);
         list.add(menuItem7);
         SlideMenuItem menuItem8 = new SlideMenuItem(ContentFragment.USER, R.mipmap.ic_me_icon);
@@ -350,8 +348,8 @@ public class MainActivity extends ActionBarActivity
         locationMapFragment = new LocationMapFragment();
         orderFragment = new OrderFragment();
         naviViewFragment = new NaviViewFragment();
-
         gasStationFragment = new GasStationFragment();
+
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, homeFragment)
@@ -380,7 +378,7 @@ public class MainActivity extends ActionBarActivity
             case ContentFragment.CLOSE:
                 //关掉菜单项
                 return screenShotable;
-            case ContentFragment.BOOK:
+            case ContentFragment.CAR:
                 //关掉菜单项
                 LogUtils.d("position :" + position);
                 return replaceFragment(carListFragement, position);
@@ -388,12 +386,12 @@ public class MainActivity extends ActionBarActivity
                 //电源菜单项
                 LogUtils.d("position :" + position);
                 return replaceFragment(gasStationFragment, position);
-            case ContentFragment.PAINT:
+            case ContentFragment.ORDER:
                 return replaceFragment(orderFragment, position);
-            case ContentFragment.SHOP:
+            case ContentFragment.BREAK:
                 return replaceFragment(weiZhanChaXunFragment, position);
-            case ContentFragment.BUILDING:
-                return replaceFragment(naviViewFragment, position);
+            case ContentFragment.HOME:
+                return replaceFragment(homeFragment, position);
             case ContentFragment.USER:
                 return replaceFragment(userInfoFragment, position);
             case ContentFragment.MUSIC:
@@ -401,7 +399,7 @@ public class MainActivity extends ActionBarActivity
             case ContentFragment.MAP:
                 return replaceFragment(locationMapFragment, position);
             case ContentFragment.NAVIGATION:
-                return screenShotable;
+               return replaceFragment(naviViewFragment, position);
             default:
                 //更换菜单项
                 LogUtils.d("position :" + position);

@@ -1,46 +1,454 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:circleprogress="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:gravity="center"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
 
     <!--具体车辆信息-->
     <!--加载-->
     <com.miss.imissyou.mycar.ui.circleProgress.CircleProgress
         android:id="@+id/load_carInfo_progress"
         android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:visibility="gone"
         circleprogress:color1="@android:color/holo_red_light"
         circleprogress:color2="@android:color/holo_green_light"
-        circleprogress:color3="@android:color/holo_blue_light"
-        android:layout_height="fill_parent" />
+        circleprogress:color3="@android:color/holo_blue_light" />
 
-    <ImageView
-        android:id="@+id/carInfo_carImage"
-        android:src="@mipmap/user_head"
+    <!--车辆详细信息-->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="220dp" />
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
-        <com.miss.imissyou.mycar.ui.ToggleButton
-            android:id="@+id/carinfo_alarm_button"
-            android:layout_width="40dp"
-            android:layout_height="20dp" />
-        <com.miss.imissyou.mycar.ui.ToggleButton
-            android:layout_marginTop="5dp"
-            android:id="@+id/carinfo_state_button"
-            android:layout_width="40dp"
-            android:layout_height="20dp" />
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!--车辆描述-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="183dp"
+                android:orientation="horizontal"
+                android:background="@color/color_gui"
+                android:padding="10dp"
+                android:paddingBottom="15dp">
+
+                <ImageView
+                    android:id="@+id/car_info_carBrand_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/bz" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
+
+                    <!--型号-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/car_info_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="型号:  " />
+
+                        <TextView
+                            android:id="@+id/carInfo_carBrand_input"
+                            style="@style/car_info_input_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="未知" />
+                    </LinearLayout>
+                    <!--发动机号-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/car_info_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="发动机号:  " />
+
+                        <TextView
+                            android:id="@+id/carInfo_carEngineNumber_input"
+                            style="@style/car_info_input_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="未知" />
+                    </LinearLayout>
+                    <!--车架号-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/car_info_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="车架号:  " />
+
+                        <TextView
+                            android:id="@+id/carInfo_carVin_input"
+                            style="@style/car_info_input_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="未知" />
+                    </LinearLayout>
+                    <!--车身等级-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/car_info_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="车身等级:  " />
+
+                        <TextView
+                            android:id="@+id/carInfo_carRank_input"
+                            style="@style/car_info_input_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="未知" />
+                    </LinearLayout>
+
+                </LinearLayout>
 
 
+            </LinearLayout>
+
+            <!--车辆信息-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:orientation="vertical"
+                android:padding="20dp">
+                <!--车辆信息-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/car_info_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="车辆信息"
+                        android:textSize="22sp" />
+
+                </LinearLayout>
+
+                <!--油量-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp">
+
+                    <TextView
+                        style="@style/car_info_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="油量:  " />
+
+                    <TextView
+                        android:id="@+id/carInfo_carOil_input"
+                        style="@style/car_info_input_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="未知" />
+                </LinearLayout>
+                <!--油量进度条-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp">
+
+                    <ProgressBar
+                        android:id="@+id/carInfo_carOil_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:max="100"
+                        android:background="@color/colorWhite"
+                        android:layout_marginBottom="10dp"
+                        android:progress="30"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:indeterminate="false" />
+                </LinearLayout>
+                <!--里程数-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp">
+
+                    <TextView
+                        style="@style/car_info_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="里程数:  " />
+
+                    <TextView
+                        android:id="@+id/carInfo_carMileage_input"
+                        style="@style/car_info_input_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="未知" />
+                </LinearLayout>
+                <!--温度-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp">
+
+                    <TextView
+                        style="@style/car_info_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="温度:  " />
+
+                    <TextView
+                        android:id="@+id/carInfo_carTemperature_input"
+                        style="@style/car_info_input_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="未知" />
+                </LinearLayout>
+                <!--油量容积-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp">
+
+                    <TextView
+                        style="@style/car_info_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="油量容积:  " />
+
+                    <TextView
+                        android:id="@+id/carInfo_carOilBox_input"
+                        style="@style/car_info_input_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="未知" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:background="@color/color_gui" />
+
+            <!--车辆性能-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="20dp"
+                android:background="@color/colorWhite"
+                android:orientation="horizontal">
+                <!--车辆性能-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/car_info_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="车辆性能"
+                        android:textSize="22sp" />
+
+                    <!--车状态-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp">
+
+                        <!--车灯-->
+                        <TextView
+                            style="@style/car_info_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="车灯:  " />
+
+                        <TextView
+                            android:id="@+id/carInfo_carLight_input"
+                            style="@style/car_info_input_text"
+                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="未知" />
+
+                        <!--车警报-->
+                        <TextView
+                            style="@style/car_info_text"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="警报:  " />
+
+                        <TextView
+                            android:id="@+id/carInfo_carAlarm_input"
+                            style="@style/car_info_input_text"
+                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="未知" />
+                    </LinearLayout>
+
+                    <!--当前状态-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp">
+
+                        <TextView
+                            style="@style/car_info_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="当前状态:  " />
+
+                        <TextView
+                            android:id="@+id/carInfo_carState_input"
+                            style="@style/car_info_input_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="未知" />
+                    </LinearLayout>
+                    <!--安全气囊系统-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp">
+
+                        <TextView
+                            style="@style/car_info_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="安全气囊系统:  " />
+
+                        <TextView
+                            android:id="@+id/carInfo_carSRS_input"
+                            style="@style/car_info_input_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="未知" />
+                    </LinearLayout>
+                    <!--发动机性能-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp">
+
+                        <TextView
+                            style="@style/car_info_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="发动机性能:  " />
+
+                        <TextView
+                            android:id="@+id/carInfo_carEnginProperty_input"
+                            style="@style/car_info_input_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="未知" />
+                    </LinearLayout>
+                    <!--变速箱性能-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp">
+
+                        <TextView
+                            style="@style/car_info_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="变速箱性能:  " />
+
+                        <TextView
+                            android:id="@+id/carInfo_carTransmission_input"
+                            style="@style/car_info_input_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="未知" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
 
 
 </LinearLayout>

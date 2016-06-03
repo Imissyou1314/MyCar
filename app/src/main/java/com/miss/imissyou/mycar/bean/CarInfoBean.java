@@ -16,8 +16,8 @@ public class CarInfoBean extends BaseBean {
     private String engineNumber;              //发动机号
     private String rank;                    //车身等级
     private Double mileage;                  //里程数
-    private double oilBox;
-    private double oil;
+    private double oilBox;                  //油量容积
+    private double oil;                      //油量
     private double temperature;             //温度
     private boolean enginProperty;           //发动机性能
     private boolean transmission;            //变速器性能
