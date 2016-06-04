@@ -124,4 +124,17 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!--车辆详细页面-->
+    <style name="car_info_text">
+        <item name="android:textColor">@color/color_back</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center|left</item>
+    </style>
+    <!--加载数据的颜色不一样-->
+    <style name="car_info_input_text" >
+        <item name="android:textColor">@color/color_gui</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center|left</item>
+    </style>
+
 </resources>

@@ -88,4 +88,6 @@ public class Constant {
     public static final int DONTHAVESTART_Navi = 0;         //没有起点的导航方式
     //搜索范围20公里
     public static int SEARCH_RADIO = 20000;
+    public static double MyLatitude= 0d;                      //默认起点位置
+    public static double MyLongitude = 0d;
 }

@@ -14,6 +14,9 @@
     <color name="color_carView_background">#828B23</color>
     <color name="color_blue_dark">#31bff7</color>
 
+    <!--上导航栏的背景色-->
+    <color name="color_toolbar_background">#38393D</color>
+
     <!--Button-->
     <color name="color_submit_button">#10a68c</color>
 
@@ -38,6 +41,7 @@
     <color name="color_Theme">#FF3A536C</color>
     <color name="color_back">#0e0e0e</color>
     <color name="color_miniBack">#5f0e0e0e</color>
+    <color name="color_gui">#eeeeee</color>
     <color name="color_search_blue">#025391</color>
     <color name="color_select_route_title">#D2025391</color>
 
@@ -50,6 +54,7 @@
     <color name="weizhanchaxun">#108cd5d9</color>
 
     <color name="login_cardView_background">#22211741</color>
+    <color name="navi_cardView_gree_background">#22010a26</color>
 
     <!--透明的颜色-->
     <color name="color_carView_background_tran">#0FFFFFFF</color>
@@ -62,5 +67,11 @@
     <color name="color_progress_greed">#039d06</color>
     <color name="color_progress_red">#ff0000</color>
     <color name="color_progress_yello">#d2b520</color>
+
+    <!--车列表颜色-->
+    <color name="color_blue_background">#8C32BCB6</color>
+    <color name="color_red_background">#8BEE4256</color>
+    <color name="color_yellow_background">#8CFCB64B</color>
+    <color name="color_gree_background">#8C83EDB8</color>
 
 </resources>

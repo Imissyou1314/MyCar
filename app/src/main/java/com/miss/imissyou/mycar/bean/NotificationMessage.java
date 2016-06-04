@@ -9,6 +9,7 @@ public class NotificationMessage {
     private int messagetype;            //消息类型
     private String message;             //消息
 
+
     public String getMessage() {
         return message;
     }

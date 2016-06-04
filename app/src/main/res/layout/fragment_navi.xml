@@ -62,7 +62,35 @@
 
     </LinearLayout>
 
+    <ImageButton
+        android:id="@+id/navi_mapView_location_btn"
+        android:background="#00FFFFFF"
+        android:src="@mipmap/ic_location_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout"
+        android:layout_alignParentEnd="true" />
+
     <!--导航-->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout">
+
+        <Button
+            android:id="@+id/navi_view_startButton"
+            android:text="设为起点"
+            android:background="@color/navi_cardView_gree_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/color_carView_mainMesage"
+            android:layout_height="1dp" />
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -83,6 +111,7 @@
             android:background="@color/login_cardView_background"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

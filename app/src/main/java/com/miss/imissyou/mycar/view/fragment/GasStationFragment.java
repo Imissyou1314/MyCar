@@ -10,6 +10,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
+import com.amap.api.maps.CameraUpdateFactory;
+import com.amap.api.maps.model.LatLng;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.GasStationBean;
@@ -21,6 +27,7 @@ import com.miss.imissyou.mycar.ui.adapterutils.ViewHolder;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.DialogUtils;
 import com.miss.imissyou.mycar.util.GsonUtils;
+import com.miss.imissyou.mycar.util.MapChangeUtils;
 import com.miss.imissyou.mycar.view.GasStationView;
 
 import com.miss.imissyou.mycar.presenter.GasStationPresenter;
@@ -31,12 +38,15 @@ import java.util.List;
  * 加油站的信息列表
  * Created by Imissyou on 2016/5/9.
  */
-public class GasStationFragment extends BaseFragment implements GasStationView {
+public class GasStationFragment extends BaseFragment implements GasStationView, AMapLocationListener {
 
     private static final String TAG = "GASSTATIONFRAGMENT" ;
     private ListView gasListView;       //加油站的列表
     private GasStationPresenter mGasStationPresenter;
     private List<GasStationBean> gasStationBeens;       //加油站的列表
+
+    private AMapLocationClient mlocationClient;
+    private AMapLocationClientOption mLocationOption;
 
     @Nullable
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,11 +55,15 @@ public class GasStationFragment extends BaseFragment implements GasStationView {
 
     @Override protected void initView(View view) {
         gasListView = (ListView) view.findViewById(R.id.gasStation_ListView);
+        initLoactionClicent();
+        mlocationClient.startLocation();
     }
 
     @Override protected void initData() {
         mGasStationPresenter = new GasStationPresenterImpl(this);
-        mGasStationPresenter.loadServiceData(110.3560, 21.2100, 10000, Constant.GET_GASSTATION_KEY ,1, 1 );
+                double lat = MapChangeUtils.Convert_GCJ02_To_BD09_Lat(Constant.MyLatitude,Constant.MyLongitude);
+                double lng = MapChangeUtils.Convert_GCJ02_To_BD09_Lng(Constant.MyLatitude,Constant.MyLongitude);
+        mGasStationPresenter.loadServiceData(lat, lng, 10000, Constant.GET_GASSTATION_KEY ,1, 1 );
     }
 
     @Override protected void addViewsListener() {
@@ -119,5 +133,69 @@ public class GasStationFragment extends BaseFragment implements GasStationView {
 
     @Override public void hideProgress() {
 
+    }
+
+    /**
+     * 初始化定位功能
+     */
+    private void initLoactionClicent() {
+        if (null == mlocationClient) {
+            mlocationClient = new AMapLocationClient(getActivity());
+            mLocationOption = new AMapLocationClientOption();
+
+            //设置定位监听
+            mlocationClient.setLocationListener(this);
+            //设置为高精度定位模式
+            mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+            //设置只定位一次
+            mLocationOption.setOnceLocation(true);
+            //设置定位间隔的时间
+//            mLocationOption.setInterval(5000);
+            //设置定位参数
+            mlocationClient.setLocationOption(mLocationOption);
+            mlocationClient.startLocation();
+        }
+    }
+
+    /**
+     * 定位成功后回调函数
+     *
+     * @param aMapLocation
+     */
+    @Override
+    public void onLocationChanged(AMapLocation aMapLocation) {
+
+            if (null != aMapLocation && 0 == aMapLocation.getErrorCode()) {
+                LogUtils.w("停止定位");
+
+                //获取开始的经纬度
+                Constant.MyLongitude = aMapLocation.getLongitude();
+                Constant.MyLatitude = aMapLocation.getLatitude();
+                LogUtils.w("定位的经纬度:" +Constant.MyLongitude + "::::" + Constant.MyLatitude );
+                LogUtils.w("定位成功：" + aMapLocation.getAddress());
+                LogUtils.w("获取城市编码：" + aMapLocation.getAdCode());
+            } else {
+                LogUtils.w("定位失败" + aMapLocation.getErrorCode() + ":" + aMapLocation.getErrorCode());
+            }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mlocationClient.onDestroy();
+    }
+
+    @Override
+    public void onStart() {
+        if (null != mlocationClient)
+        mlocationClient.startLocation();
+        super.onStart();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (null != mlocationClient)
+            mlocationClient.stopLocation();
     }
 }

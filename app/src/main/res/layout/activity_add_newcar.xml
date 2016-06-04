@@ -9,7 +9,7 @@
     <com.miss.imissyou.mycar.ui.TitleFragment
         android:id="@+id/addnewCar_title"
         android:layout_width="match_parent"
-        android:layout_height="45dp"></com.miss.imissyou.mycar.ui.TitleFragment>
+        android:layout_height="45dp"/>
 
     <!--扫描框-->
     <!--<RelativeLayout-->
@@ -50,6 +50,8 @@
         android:layout_width="match_parent"
         android:layout_weight="1"
         android:layout_height="wrap_content" />
+
+
     <Button
         android:id="@+id/addCar_sercheCarInfo_photoBtn"
         style="@style/MissButton"
