@@ -58,10 +58,10 @@
     <!--距离-->
     <TextView
         android:id="@+id/gasSattion_Item_diatance"
-        android:text="KM"
+        android:text="公里"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
-        android:textColor="@color/color_distance"
+        android:textColor="@color/color_back_gui"
         android:textSize="@dimen/FontSize"
         android:textStyle="bold"
         android:layout_width="0dp"

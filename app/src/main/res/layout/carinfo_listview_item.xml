@@ -2,38 +2,47 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_marginLeft="4dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="4dp"
     android:gravity="center"
-    android:background="@color/colorWhite"
+    android:padding="10dp"
+    android:id="@+id/car_list_item_carBackground"
+    android:background="@drawable/car_list_item"
+    android:backgroundTint="@color/color_blue_background"
     android:layout_marginBottom="13dp"
-    android:layout_height="80dp">
+    android:layout_height="150dp">
 
-    <ImageView
-        android:id="@+id/carInfo_item_carImage"
-        android:layout_width="wrap_content"
-        android:gravity="center|left"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:src="@mipmap/user_head"
-        />
-    <TextView
-        android:id="@+id/carinfo_item_carId"
-        android:text="车牌 : null"
-        android:textSize="20sp"
-        android:layout_weight="1"
-        android:textColor="@color/color_back"
-        android:gravity="center_vertical|left"
-        android:layout_marginLeft="18dp"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp" />
+        <ImageView
+            android:id="@+id/carInfo_item_carImage"
+            android:layout_width="wrap_content"
+            android:gravity="center|left"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:src="@mipmap/user_head" />
+        <TextView
+            android:text="车牌"
+            android:textSize="20sp"
+            android:gravity="center|left|top"
+            android:layout_marginLeft="4dp"
+            android:paddingTop="35dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/car_list_item_carbrand_text"
+            android:text="B134805"
+            android:gravity="center|left"
+            android:textSize="18sp"
+            android:layout_weight="3"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
 
-    <TextView
-        android:id="@+id/carinfo_item_carText"
-        android:layout_width="wrap_content"
-        android:visibility="gone"
-        android:layout_weight="1"
-        android:layout_height="match_parent" />
-
+        <TextView
+            android:id="@+id/carinfo_item_carText"
+            android:layout_width="20dp"
+            android:visibility="visible"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
 
 </LinearLayout>

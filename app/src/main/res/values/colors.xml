@@ -74,4 +74,7 @@
     <color name="color_yellow_background">#8CFCB64B</color>
     <color name="color_gree_background">#8C83EDB8</color>
 
+    <!--加油站的主题颜色-->
+    <color name="color_blue_main">#2673d2</color>
+
 </resources>

@@ -155,10 +155,25 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
                                     holder.getmConverView().setBackgroundColor(R.color.color_carView_background_White1);
                                 }
                 LogUtils.d("车牌号" + car.getPlateNumber());
-                holder.replaceText(R.id.carinfo_item_carId, "null", car.getPlateNumber());
+                holder.replaceText(R.id.car_list_item_carbrand_text, "null", car.getPlateNumber());
+
+                // TODO: 2016/6/4  待测试的页面
+                /**设置背景色*/
+                int nowList = holder.getmPosition();
+                if (nowList % 4 == 0) {
+                    holder.setBackGroundTint(R.id.car_list_item_carBackground,R.color.color_gree_background);
+                } else if (nowList % 3 == 0) {
+                    holder.setBackGroundTint(R.id.car_list_item_carBackground,R.color.color_yellow_background);
+                } else if(nowList % 2 == 0 ) {
+                    holder.setBackGroundTint(R.id.car_list_item_carBackground,R.color.color_red_background);
+                } else {
+                    holder.setBackGroundTint(R.id.car_list_item_carBackground, R.color.color_blue_background);
+                }
 
                 if (!car.getMark().equals("")) {
                     LogUtils.d("请求图片的地址:" + Constant.SERVER_URL + car.getMark());
+
+
                     RxVolley.get(Constant.SERVER_URL + car.getMark(), new HttpCallback() {
                         @Override
                         public void onSuccess(Map<String, String> headers, Bitmap bitmap) {

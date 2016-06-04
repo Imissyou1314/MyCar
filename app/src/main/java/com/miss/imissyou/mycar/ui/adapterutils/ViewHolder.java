@@ -192,7 +192,7 @@ public class ViewHolder {
      */
     public ViewHolder setBackGroundTint(int viewId, int colorId) {
         LinearLayout view = getView(viewId);
-//        view.setBackgroundTintList();
+        view.setBackgroundColor(colorId);
         return this;
     }
 

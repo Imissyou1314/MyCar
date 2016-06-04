@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--输入车牌号的页面-->
+
+    <com.rey.material.app.ContactEditText
+        android:id="@+id/input_add_brand_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:hint="车牌号"
+        android:imeOptions="actionNext|flagNoEnterAction|flagNoExtractUi"
+        android:dropDownSelector="@drawable/abc_list_selector_background_transition_holo_light"
+        app:et_inputId="@+id/textfield_et_contact_input"
+        app:et_autoCompleteMode="multi"
+        app:et_supportMode="none"
+        app:cet_spanFontFamily="asset:FreeSans.ttf"
+        android:completionThreshold="2"
+        app:v_styleId="@array/edittext_contact"/>
+
+
+    <com.rey.material.widget.Button
+        android:id="@+id/input_add_brand_sumbit"
+        android:layout_width="0dp"
+        android:layout_height="36dp"
+        android:text="下一步"
+        android:background="@null"
+        app:v_styleId="@array/button_flat"/>
+
+</RelativeLayout>

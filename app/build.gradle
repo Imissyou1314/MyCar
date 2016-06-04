@@ -45,7 +45,7 @@ dependencies {
     compile 'com.kymjs.rxvolley:bitmapcore:1.0.9'
     //    compile 'com.yalantis:sidemenu:1.0'
     compile 'com.android.support:support-v4:23.2.1'
-    compile files('libs/core.jar')
+//    compile files('libs/core.jar')
     //Dialog  https://github.com/afollestad/material-dialogs#proguard
     compile('com.github.afollestad.material-dialogs:core:0.8.5.8@aar') {
         transitive = true
@@ -68,4 +68,7 @@ dependencies {
     compile files('libs/AMap3DMap_3.3.2_AMapNavi_1.8.0_AMapSearch_3.2.1_AMapLocation_2.4.1_20160524.jar')
     //二维码扫描
     compile 'com.dlazaro66.qrcodereaderview:qrcodereaderview:1.0.0'
+   //compile files('libs/zxing.jar')
+    //Material Design
+    compile 'com.github.rey5137:material:1.2.3.1-SNAPSHOT'
 }
