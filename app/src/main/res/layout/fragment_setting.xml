@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/color_carView_mainMesage"
+    android:layout_height="match_parent">
+
+    <!--设置页面-->
+    <LinearLayout
+        android:layout_marginTop="6dp"
+        android:orientation="horizontal"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:textSize="@dimen/FontSize"
+            android:textStyle="bold"
+            android:textColor="@color/color_back"
+            android:text="接收所有信息"
+            android:layout_gravity="center"
+            android:gravity="center|left"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+        <com.miss.imissyou.mycar.ui.ToggleButton
+            android:id="@+id/setting_allMessage_button"
+            android:layout_gravity="center"
+            android:paddingTop="12dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:layout_width="55dp"
+            android:layout_height="35dp"
+            android:layout_weight="0.03" />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_height="1dp"
+        android:background="@color/color_miniBack"/>
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:textSize="@dimen/FontSize"
+            android:textStyle="bold"
+            android:textColor="@color/color_back"
+            android:text="接收故障信息"
+            android:layout_gravity="center"
+            android:gravity="center|left"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+        <com.miss.imissyou.mycar.ui.ToggleButton
+            android:id="@+id/setting_errorMessage_button"
+            android:layout_gravity="center"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:layout_width="55dp"
+            android:layout_height="35dp"
+            android:layout_weight="0.03" />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_height="1dp"
+        android:background="@color/color_miniBack"/>
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:textSize="@dimen/FontSize"
+            android:textStyle="bold"
+            android:textColor="@color/color_back"
+            android:text="接收警报信息"
+            android:layout_gravity="center"
+            android:gravity="center|left"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+        <com.miss.imissyou.mycar.ui.ToggleButton
+            android:id="@+id/setting_wareMessage_button"
+            android:layout_gravity="center"
+            android:paddingTop="12dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:layout_width="55dp"
+            android:layout_height="35dp"
+            android:layout_weight="0.03" />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_height="1dp"
+        android:background="@color/color_miniBack"/>
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:textSize="@dimen/FontSize"
+            android:textStyle="bold"
+            android:textColor="@color/color_back"
+            android:text="只接收未读信息"
+            android:layout_gravity="center"
+            android:gravity="center|left"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+        <com.miss.imissyou.mycar.ui.ToggleButton
+            android:id="@+id/setting_noReadMessage_button"
+            android:layout_gravity="center"
+            android:paddingTop="12dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:layout_width="55dp"
+            android:layout_height="35dp"
+            android:layout_weight="0.03" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_height="1dp"
+        android:background="@color/color_miniBack"/>
+
+    <View
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="10dp"
+        android:background="@color/color_carView_background_White2"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"/>
+
+    <LinearLayout
+        android:id="@+id/setting_goMyHome"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:textSize="@dimen/FontSize"
+            android:textStyle="bold"
+            android:textColor="@color/color_back"
+            android:text="我的主页"
+            android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
+            android:layout_gravity="center"
+            android:gravity="center|left"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_height="1dp"
+        android:background="@color/color_miniBack"/>
+    <LinearLayout
+        android:id="@+id/setting_setSavePassword"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:textSize="@dimen/FontSize"
+            android:textStyle="bold"
+            android:textColor="@color/color_back"
+            android:text="设置安全码"
+            android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
+            android:layout_gravity="center"
+            android:gravity="center|left"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_height="1dp"
+        android:background="@color/color_miniBack"/>
+
+</LinearLayout>

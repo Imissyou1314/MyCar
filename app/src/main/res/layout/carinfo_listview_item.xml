@@ -34,12 +34,6 @@
         android:visibility="gone"
         android:layout_weight="1"
         android:layout_height="match_parent" />
-    <View
-        android:id="@+id/carinfo_item_goIcon"
-        android:layout_width="50dp"
-        android:visibility="visible"
-        android:layout_marginRight="30dp"
-        android:background="@mipmap/ic_go_right_gree_icon"
-        android:layout_height="wrap_content"  />
+
 
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.miss.imissyou.mycar.model;
 
-/**车辆信息l
+/**
+ * 车辆信息
  * 用户获取用户所有
  * Created by Imissyou on 2016/4/20.
  */

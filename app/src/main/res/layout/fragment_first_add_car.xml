@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:gravity="center"
+    android:background="@color/colorWhite"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/first_add_image_btn"
+        android:layout_width="match_parent"
+        android:src="@mipmap/ic_add_car_btn"
+        android:layout_height="120dp" />
+    <TextView
+        android:text="添加车辆"
+        android:textColor="@color/color_back"
+        android:layout_marginTop="40dp"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_below="@+id/first_add_image_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
