@@ -2,6 +2,7 @@ package com.miss.imissyou.mycar.model.impl;
 
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
+import com.kymjs.rxvolley.client.HttpParams;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.model.CarInfoModle;

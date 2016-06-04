@@ -25,7 +25,9 @@ import android.widget.Toast;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
+import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.util.LogUtils;
+import com.miss.imissyou.mycar.bean.CarInfoBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.bean.UserBean;
 import com.miss.imissyou.mycar.broadcastReceiver.JpushReceiver;
@@ -102,6 +104,7 @@ public class MainActivity extends ActionBarActivity
      */
     private boolean isQuit;
     private Timer timer = new Timer();
+    private boolean resultTag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +122,7 @@ public class MainActivity extends ActionBarActivity
             if(!checkUserHasCar(Constant.userBean.getId())) {
                getSupportFragmentManager()
                        .beginTransaction()
-                       .replace(new FirstAddCarFragment())
+                       .replace(R.id.container_frame,new FirstAddCarFragment())
                        .commit();
             }
         } else {
@@ -161,7 +164,37 @@ public class MainActivity extends ActionBarActivity
      * @return
      */
     private boolean checkUserHasCar(Long id) {
-        return false;
+//       boolean resultTag = false;
+        String url = Constant.SERVER_URL + "car/currentCar=" + id;
+        HttpCallback callback = new HttpCallback() {
+            @Override
+            public void onFailure(int errorNo, String strMsg) {
+                super.onFailure(errorNo, strMsg);
+            }
+
+            @Override
+            public void onSuccess(String t) {
+                LogUtils.w(t);
+                ResultBean resultBean = GsonUtils.getResultBean(t);
+                CarInfoBean carInfoBean = GsonUtils.getParam(resultBean,"car",CarInfoBean.class);
+                if (null != carInfoBean && null != carInfoBean.getId()) {
+                    resultTag = true;
+                } else {
+                    resultTag = false;
+                }
+            }
+        };
+
+        new RxVolley.Builder()
+                .url(url)
+                .shouldCache(false)
+                .cacheTime(0)
+                .httpMethod(RxVolley.Method.GET)
+                .callback(callback)
+                .doTask();
+
+
+        return resultTag;
     }
 
     /**
