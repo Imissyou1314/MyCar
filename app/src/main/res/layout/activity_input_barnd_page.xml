@@ -27,7 +27,6 @@
         android:layout_width="0dp"
         android:layout_height="36dp"
         android:text="下一步"
-        android:background="@null"
-        app:v_styleId="@array/button_flat"/>
+        android:background="@null" />
 
 </RelativeLayout>

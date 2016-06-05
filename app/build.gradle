@@ -70,5 +70,7 @@ dependencies {
     compile 'com.dlazaro66.qrcodereaderview:qrcodereaderview:1.0.0'
    //compile files('libs/zxing.jar')
     //Material Design
-    compile 'com.github.rey5137:material:1.2.3.1-SNAPSHOT'
+    compile 'com.github.rey5137:material:1.2.4'
+
+    compile 'org.jetbrains:annotations-java5:15.0'
 }

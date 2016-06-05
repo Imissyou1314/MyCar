@@ -161,13 +161,13 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
                 /**设置背景色*/
                 int nowList = holder.getmPosition();
                 if (nowList % 4 == 0) {
-                    holder.setBackGroundTint(R.id.car_list_item_carBackground,R.color.color_gree_background);
+                    holder.setViewBackGround(R.id.car_list_item_carBackground,R.color.color_gree_background);
                 } else if (nowList % 3 == 0) {
-                    holder.setBackGroundTint(R.id.car_list_item_carBackground,R.color.color_yellow_background);
+                    holder.setViewBackGround(R.id.car_list_item_carBackground,R.color.color_yellow_background);
                 } else if(nowList % 2 == 0 ) {
-                    holder.setBackGroundTint(R.id.car_list_item_carBackground,R.color.color_red_background);
+                    holder.setViewBackGround(R.id.car_list_item_carBackground,R.color.color_red_background);
                 } else {
-                    holder.setBackGroundTint(R.id.car_list_item_carBackground, R.color.color_blue_background);
+                    holder.setViewBackGround(R.id.car_list_item_carBackground, R.color.color_blue_background);
                 }
 
                 if (!car.getMark().equals("")) {
@@ -178,7 +178,7 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
                         @Override
                         public void onSuccess(Map<String, String> headers, Bitmap bitmap) {
                             if (bitmap != null)
-                                holder.setImage(R.id.carInfo_item_carImage, bitmap);
+                                holder.setImage(R.id.car_list_item_carImage, bitmap);
                         }
 
                         @Override
