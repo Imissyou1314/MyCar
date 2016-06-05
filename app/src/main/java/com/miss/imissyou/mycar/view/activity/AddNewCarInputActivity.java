@@ -132,6 +132,11 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
      */
     private void gotoInputBrandPage(CarInfoBean resultBean) {
         Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("carInfo",resultBean);
+        intent.putExtra("carInfoBean",bundle);
+        intent.setClass(this, InputBrandPageActivity.class);
+        startActivity(intent);
 
     }
 

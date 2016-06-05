@@ -90,4 +90,6 @@ public class Constant {
     public static int SEARCH_RADIO = 20000;
     public static double MyLatitude= 0d;                      //默认起点位置
     public static double MyLongitude = 0d;
+    public static String NO_START_NAVI = "NO_START_NAVI";
+    public static String GASSTION_PHONE = "13763012723";
 }

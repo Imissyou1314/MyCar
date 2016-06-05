@@ -25,9 +25,7 @@
         <activity android:name=".view.activity.AuthorActivity"/>
         <activity android:name=".view.activity.HelpActivity"/>
         <activity android:name=".view.activity.MessageActivity"/>
-
         <activity android:name=".view.activity.NaviViewActivity"/>
-
         <activity android:name=".view.activity.ChangePhoneNumberActivity"/>
 
         <!--用户登录-->
@@ -38,6 +36,7 @@
         <!--扫描二维码添加车辆-->
         <activity android:name=".view.activity.AddNewCarActivity"/>
         <activity android:name=".view.activity.AddNewCarInputActivity"/>
+        <activity android:name=".view.activity.InputBrandPageActivity"/>
 
         <!--注册服务-->
         <service android:name=".service.impl.MusicPlayService"/>

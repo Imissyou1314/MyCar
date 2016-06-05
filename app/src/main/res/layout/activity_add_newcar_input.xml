@@ -8,6 +8,11 @@
     android:orientation="vertical">
 
     <!--具体车辆信息-->
+
+    <com.miss.imissyou.mycar.ui.TitleFragment
+        android:id="@+id/addnewCarInput_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
     <!--加载-->
     <com.miss.imissyou.mycar.ui.circleProgress.CircleProgress
         android:id="@+id/load_carInfo_progress"

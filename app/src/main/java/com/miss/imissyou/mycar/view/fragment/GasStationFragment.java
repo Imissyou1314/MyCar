@@ -1,6 +1,8 @@
 package com.miss.imissyou.mycar.view.fragment;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -14,7 +16,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.amap.api.maps.CameraUpdateFactory;
+
 import com.amap.api.maps.model.LatLng;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
@@ -27,10 +29,12 @@ import com.miss.imissyou.mycar.ui.adapterutils.ViewHolder;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.DialogUtils;
 import com.miss.imissyou.mycar.util.GsonUtils;
+import com.miss.imissyou.mycar.util.JZLocationConverter;
 import com.miss.imissyou.mycar.util.MapChangeUtils;
 import com.miss.imissyou.mycar.view.GasStationView;
 
 import com.miss.imissyou.mycar.presenter.GasStationPresenter;
+import com.miss.imissyou.mycar.view.activity.NaviViewActivity;
 
 import java.util.List;
 
@@ -61,9 +65,14 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
 
     @Override protected void initData() {
         mGasStationPresenter = new GasStationPresenterImpl(this);
-                double lat = MapChangeUtils.Convert_GCJ02_To_BD09_Lat(Constant.MyLatitude,Constant.MyLongitude);
-                double lng = MapChangeUtils.Convert_GCJ02_To_BD09_Lng(Constant.MyLatitude,Constant.MyLongitude);
-        mGasStationPresenter.loadServiceData(lat, lng, 10000, Constant.GET_GASSTATION_KEY ,1, 1 );
+//                double lat = MapChangeUtils.Convert_GCJ02_To_BD09_Lat(Constant.MyLatitude,Constant.MyLongitude);
+//                double lng = MapChangeUtils.Convert_GCJ02_To_BD09_Lng(Constant.MyLatitude,Constant.MyLongitude);
+        //高德经纬度转百度经纬度
+        JZLocationConverter.LatLng latLng = new JZLocationConverter.LatLng(Constant.MyLatitude,Constant.MyLongitude);
+
+        latLng = JZLocationConverter.gcj02ToBd09(latLng);
+
+        mGasStationPresenter.loadServiceData(latLng.getLatitude(), latLng.getLongitude(), 10000, Constant.GET_GASSTATION_KEY ,1, 1 );
     }
 
     @Override protected void addViewsListener() {
@@ -77,6 +86,7 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
 
                 Bundle bundle = new Bundle();
                 LogUtils.d("加油站的信息" + GsonUtils.Instance().toJson(gasStationBean));
+
                 bundle.putString("gasStation", GsonUtils.Instance().toJson(gasStationBean));
                 gasFragment.setArguments(bundle);
 
@@ -91,27 +101,47 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
         this.gasStationBeens = resultBeans;
         gasListView.setAdapter(new CommonAdapter<GasStationBean>(getActivity(), resultBeans, R.layout.item_gasstionlist) {
 
-            @Override public void convert(ViewHolder holder, GasStationBean gasStationBean) {
+            @Override public void convert(ViewHolder holder, final GasStationBean gasStationBean) {
                 StringBuffer oilTypeStr = new StringBuffer();
                 if (gasStationBean.getGastprice() != null) {
                     for (String key : gasStationBean.getGastprice().keySet()) {
                         oilTypeStr.append(key + ":" + gasStationBean.getGastprice().get(key) + ",");
                     }
                 }
-                holder.setText(R.id.gasSattion_Item_stationName, gasStationBean.getName());
+                holder.setText(R.id.gasSattion_Item_gasName, gasStationBean.getName());
+                holder.setText(R.id.gasSattion_Item_stationAddress, gasStationBean.getAddress());
                 holder.addText(R.id.gasSattion_Item_diatance, (Double.parseDouble(gasStationBean.getDistance()) / 1000) + "");
-                holder.setText(R.id.gasSattion_Item_stationType, gasStationBean.getBrandname());
-                if (oilTypeStr.length() > 3) {
-                    holder.setText(R.id.gasSattion_Item_oilType, oilTypeStr.substring(0, oilTypeStr.length() - 1).toString());
-                } else {
-                    holder.setText(R.id.gasSattion_Item_oilType,"未知");
-                }
 
-                if (gasStationBean.getBrandname().equals(Constant.GASSTION_BRAND_ZHONGSHIYOU)) {
-                    holder.setImage(R.id.gasSattion_Item_Icon, R.mipmap.ic_petrochina_station_icon);
-                } else {
-                    holder.setImage(R.id.gasSattion_Item_Icon, R.mipmap.ic_sinopec_station_icon);
-                }
+                // TODO: 2016/6/5 等待测试 
+                //跳转到导航哪里
+                holder.setOnClickListener(R.id.gasSattion_Item_toNavi, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent();
+
+                        /**将百度经纬度装高德经纬度*/
+                        LatLng latLng = MapChangeUtils
+                                .Convert_BD0911_TO_GCJ02(gasStationBean.getLat(),
+                                        gasStationBean.getLon(), getActivity());
+
+                        intent.putExtra(Constant.NO_START_NAVI,true);
+
+                        intent.putExtra(Constant.endLatitude,latLng.latitude);
+                        intent.putExtra(Constant.endLongitude, latLng.longitude);
+
+                        intent.setClass(getActivity(), NaviViewActivity.class);
+                        getActivity().startActivity(intent);
+                    }
+                });
+
+                //打电话
+                holder.setOnClickListener(R.id.gasSattion_Item_callPhone, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + Constant.GASSTION_PHONE));
+                        getActivity().startActivity(intent);
+                    }
+                });
             }
         });
 

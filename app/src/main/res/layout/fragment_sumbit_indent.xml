@@ -3,176 +3,348 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/color_blue_main">
+    android:background="#eeeeee">
 
-    <!--TODO-->
-    <!--提交加油信息-->
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="200dp">
+        android:background="#eeeeee"
+        android:layout_height="match_parent">
 
-        <!--加油站的标题信息-->
         <LinearLayout
-            android:layout_weight="4"
             android:orientation="vertical"
-            android:layout_width="wrap_content"
+            android:background="#eeeeee"
+            android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        </LinearLayout>
-
-        <!--线-->
-        <View
-            android:layout_marginBottom="50dp"
-            android:layout_marginTop="50dp"
-            android:background="@color/color_back_gui"
-            android:layout_width="1dp"
-            android:layout_height="match_parent"/>
-
-        <!--导航的标题-->
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_weight="2"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">\
-
-            <ImageView
-                android:id="@+id/sumbit_navi_toGastion_image"
+            <!--加油站信息-->
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_weight="3"
-                android:layout_height="wrap_content" />
+                android:orientation="horizontal"
+                android:background="@color/color_carView_mainMesage"
+                android:layout_height="150dp">
 
-            <TextView
-                android:text="去这里"
+                <!--加油站的标题信息-->
+                <LinearLayout
+                    android:layout_weight="5"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/sumbit_gastation_gastationName"
+                        android:text="中油茂昌恒港加油站"
+                        android:gravity="center|left"
+                        android:layout_weight="2"
+                        android:textSize="19sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_weight="2"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/sumbit_gastation_gastationDistance"
+                            android:text=" 公里"
+                            android:gravity="center"
+                            android:textSize="14sp"
+                            android:layout_weight="2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
+
+                        <TextView
+                            android:id="@+id/sumbit_gastation_stationType"
+                            android:gravity="center"
+                            android:layout_weight="4"
+                            android:text="中石油加油站"
+                            android:textSize="14sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--线-->
+                <View
+                    android:layout_marginBottom="50dp"
+                    android:layout_marginTop="50dp"
+                    android:background="@color/color_back_gui"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"/>
+
+                <!--设置为导航的监听事件-->
+                <!--导航的标题-->
+                <LinearLayout
+                    android:id="@+id/sumbit_gastation_goNaiv"
+                    android:orientation="vertical"
+                    android:layout_weight="2"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">\
+
+                    <ImageView
+                        android:id="@+id/sumbit_navi_toGastion_image"
+                        android:layout_width="match_parent"
+                        android:layout_weight="3"
+                        android:paddingTop="10dp"
+                        android:layout_gravity="bottom"
+                        android:src="@mipmap/ic_location_big_icon"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:text="去这里"
+                        android:layout_width="match_parent"
+                        android:gravity="center|top"
+                        android:textSize="14sp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:gravity="center"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
+                android:background="@color/colorWhite"
+                android:layout_height="0dp"
+                android:layout_weight="7"
+                android:orientation="vertical">
+
+                <!--加油站描述-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/sumbit_gastation_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:drawableLeft="@mipmap/ic_location_big_gui_icon"
+                        android:layout_weight="1"
+                        android:gravity="center|left"
+                        android:text="地址"
+                        android:textColor="@color/color_back"
+                        android:textSize="@dimen/FontSize" />
+
+                    <View
+                        android:background="#eeeeee"
+                        android:layout_width="wrap_content"
+                        android:layout_height="2dp"/>
+
+                    <TextView
+                        android:id="@+id/sumbitIndent_oil_Price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@mipmap/ic_call_phone_gui_icon"
+                        android:text="187194425973"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center|left"
+                        android:textColor="@color/color_back"
+                        android:textSize="@dimen/SmallFontSize" />
+                </LinearLayout>
+
+                <View
+                    android:background="#eeeeee"
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"/>
+
+                <!--填写加油信息-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <!--加油类型-->
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:text="加油类型"
+                        android:textColor="@color/color_back"
+                        android:textStyle="bold"
+                        android:paddingLeft="50dp"
+                        android:layout_gravity="center"
+                        android:gravity="center|left"
+                        android:textSize="17sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp" />
+
+                    <!--油类型选择-->
+                    <LinearLayout
+                        android:id="@+id/sumbit_gastation_linearLayout"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"/>
+
+                    <View
+                        android:background="#eeeeee"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+
+                    <!--加油数据升数输入-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="40dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="80dp"
+                            android:text="升数"
+                            android:textColor="#000000"
+                            android:textSize="18sp"
+                            android:gravity="center|bottom"
+                            android:layout_height="match_parent" />
+
+                        <EditText
+                            android:id="@+id/sumbitIndent_iloNumber_editInput"
+                            android:gravity="center|bottom|left"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <View
+                        android:background="@color/color_carView_mainMesage"
+                        android:layout_marginLeft="90dp"
+                        android:layout_marginRight="60dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+
+                    <!--加油数据价格输入-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="40dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="80dp"
+                            android:text="总价"
+                            android:textColor="#000000"
+                            android:textSize="18sp"
+                            android:gravity="center|bottom"
+                            android:layout_height="match_parent" />
+
+                        <EditText
+                            android:id="@+id/sumbitIndent_price_editInput"
+                            android:layout_width="match_parent"
+                            android:gravity="center|bottom|left"
+                            android:layout_height="wrap_content" />
+
+
+                    </LinearLayout>
+                    <View
+                        android:background="@color/color_carView_mainMesage"
+                        android:layout_marginLeft="90dp"
+                        android:layout_marginRight="60dp"
+                        android:layout_marginBottom="50dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+
+                    <View
+                        android:background="#eeeeee"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"/>
+
+                    <!--日期选择-->
+                    <LinearLayout
+                        android:id="@+id/sumbit_gastation_data_select"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_weight="1"
+                            android:text="预约日期"
+                            android:textSize="14sp"
+                            android:textColor="#000000"
+                            android:gravity="center"
+                            android:layout_height="match_parent" />
+                        <TextView
+                            android:id="@+id/sumbit_gastation_datatext"
+                            android:layout_width="wrap_content"
+                            android:layout_weight="1"
+                            android:text="2016-06-05 22:34:24"
+                            android:textSize="14sp"
+                            android:textColor="#000000"
+                            android:gravity="center"
+                            android:layout_height="match_parent" />
+
+                    </LinearLayout>
+
+
+
+
+
+
+
+                </LinearLayout>
+
+                <!--订单提交按钮-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@color/color_carView_mainMesage"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/sumbit_play_playAfter"
+                        android:text="预约加油"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="17sp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:background="#eeeeee"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_height="match_parent"/>
+
+
+                    <TextView
+                        android:id="@+id/sumbit_play_playNow"
+                        android:text="在线付款"
+                        android:textSize="17sp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorWhite"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:background="@drawable/background"
-        android:layout_height="0dp"
-        android:layout_weight="7"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:gravity="center"
-            android:layout_weight="1">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="center|right"
-                android:text="加油类型"
-                android:textColor="@color/color_back"
-                android:textSize="@dimen/FontSize" />
-
-            <com.miss.imissyou.mycar.ui.spinner.NiceSpinner
-                android:id="@+id/sumbitIndent_selectOilType"
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/sumbitIndent_oil_Price"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textColor="@color/color_back"
-                android:textSize="@dimen/SmallFontSize" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <TextView
-                android:text="升数:"
-                android:textColor="@color/color_back"
-                android:textStyle="bold"
-                android:paddingRight="10dp"
-                android:layout_gravity="center"
-                android:gravity="center|right"
-                android:textSize="@dimen/FontSize"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-            <EditText
-                android:id="@+id/sumbitIndent_iloNumber_editInput"
-                android:hint="请输入加油的总升数"
-                android:textColor="@color/color_back"
-                android:textStyle="bold"
-                android:layout_gravity="center|left"
-                android:textSize="@dimen/FontSize"
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:layout_weight="1">
-
-            <TextView
-
-                android:text="总价:"
-                android:textColor="@color/color_back"
-                android:textStyle="bold"
-                android:paddingRight="10dp"
-                android:layout_gravity="center"
-                android:gravity="center|right"
-                android:textSize="@dimen/FontSize"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-            <EditText
-                android:id="@+id/sumbitIndent_price_editInput"
-                android:hint="请输入加油的总价"
-                android:textColor="@color/color_back"
-                android:textStyle="bold"
-                android:layout_gravity="center|left"
-                android:textSize="@dimen/FontSize"
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:gravity="center"
-            android:layout_weight="1">
-
-            <Button
-                android:id="@+id/sumbitIndent_sumbit_btn"
-                android:text="提交"
-                android:gravity="center"
-                android:textStyle="bold"
-                style="@style/MissButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
+    </ScrollView>
 
 </LinearLayout>
