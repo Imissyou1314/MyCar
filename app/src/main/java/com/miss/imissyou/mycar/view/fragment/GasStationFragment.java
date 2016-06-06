@@ -67,12 +67,12 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
         mGasStationPresenter = new GasStationPresenterImpl(this);
 //                double lat = MapChangeUtils.Convert_GCJ02_To_BD09_Lat(Constant.MyLatitude,Constant.MyLongitude);
 //                double lng = MapChangeUtils.Convert_GCJ02_To_BD09_Lng(Constant.MyLatitude,Constant.MyLongitude);
-        //高德经纬度转百度经纬度
-        JZLocationConverter.LatLng latLng = new JZLocationConverter.LatLng(Constant.MyLatitude,Constant.MyLongitude);
-
-        latLng = JZLocationConverter.gcj02ToBd09(latLng);
-
-        mGasStationPresenter.loadServiceData(latLng.getLatitude(), latLng.getLongitude(), 10000, Constant.GET_GASSTATION_KEY ,1, 1 );
+//        //高德经纬度转百度经纬度
+//        JZLocationConverter.LatLng latLng = new JZLocationConverter.LatLng(Constant.MyLatitude,Constant.MyLongitude);
+//
+//        latLng = JZLocationConverter.gcj02ToBd09(latLng);
+//
+//        mGasStationPresenter.loadServiceData(latLng.getLatitude(), latLng.getLongitude(), 10000, Constant.GET_GASSTATION_KEY ,1, 1 );
     }
 
     @Override protected void addViewsListener() {
@@ -204,6 +204,14 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
                 LogUtils.w("定位的经纬度:" +Constant.MyLongitude + "::::" + Constant.MyLatitude );
                 LogUtils.w("定位成功：" + aMapLocation.getAddress());
                 LogUtils.w("获取城市编码：" + aMapLocation.getAdCode());
+
+                //高德经纬度转百度经纬度
+                JZLocationConverter.LatLng latLng = new JZLocationConverter.LatLng(Constant.MyLatitude,Constant.MyLongitude);
+
+                latLng = JZLocationConverter.gcj02ToBd09(latLng);
+
+                mGasStationPresenter.loadServiceData(latLng.getLatitude(), latLng.getLongitude(),
+                        Constant.GET_GASSTATION_R, Constant.GET_GASSTATION_KEY ,1, 1 );
             } else {
                 LogUtils.w("定位失败" + aMapLocation.getErrorCode() + ":" + aMapLocation.getErrorCode());
             }

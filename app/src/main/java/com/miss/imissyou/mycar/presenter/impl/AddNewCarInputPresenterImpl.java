@@ -10,18 +10,18 @@ import com.miss.imissyou.mycar.presenter.AddNewCarInputPresenter;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.view.AddNewCarInputView;
-import com.miss.imissyou.mycar.view.activity.AddNewCarInputActivity;
 
 /**
+ * 车辆输入
  * Created by Imissyou on 2016/4/18.
  */
 public class AddNewCarInputPresenterImpl implements AddNewCarInputPresenter {
 
-    private AddNewCarInputActivity addNewCarInputActivity;
+    private AddNewCarInputView addNewCarInputActivity;
     private AddNewCarInputModel addNewCarInputModel;
 
     public AddNewCarInputPresenterImpl(AddNewCarInputView addNewCarInputView) {
-        this.addNewCarInputActivity = (AddNewCarInputActivity) addNewCarInputView;
+        this.addNewCarInputActivity = addNewCarInputView;
         addNewCarInputModel = new AddNewCarInputModelImpl(this);
     }
 
@@ -42,13 +42,6 @@ public class AddNewCarInputPresenterImpl implements AddNewCarInputPresenter {
         addNewCarInputActivity = null;
     }
 
-    @Override
-    public ResultBean initCarDate() {
-        String result = addNewCarInputActivity.getIntent().getExtras().getString("result", "");
-        ResultBean resultBean = new ResultBean();
-        resultBean.setResultInfo(result);
-        return resultBean;
-    }
 
     @Override
     public void onFailure(int errorNo, String strMsg) {

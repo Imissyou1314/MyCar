@@ -2,10 +2,10 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@color/color_carView_mainMesage"
     android:layout_height="match_parent">
     <LinearLayout
         android:id="@+id/carInfo_LL"
+        android:background="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <!--汽车列表-->

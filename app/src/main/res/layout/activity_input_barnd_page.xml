@@ -19,12 +19,13 @@
         app:et_supportMode="none" />
 
 
-    <com.rey.material.widget.Button
+    <Button
         android:id="@+id/input_add_brand_sumbit"
-        android:layout_width="0dp"
-        android:layout_height="36dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="20sp"
         android:text="下一步"
         android:layout_alignParentBottom="true"
-        android:background="@null" />
+         />
 
 </RelativeLayout>

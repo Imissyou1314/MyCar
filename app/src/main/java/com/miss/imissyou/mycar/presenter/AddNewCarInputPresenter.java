@@ -21,11 +21,6 @@ public interface AddNewCarInputPresenter {
      */
     void onDestroy();
 
-    /**
-     * 加载前一个页面传进来的CarInfo
-     * @return
-     */
-    ResultBean initCarDate();
 
     /**
      * 获取扫描的车辆信息

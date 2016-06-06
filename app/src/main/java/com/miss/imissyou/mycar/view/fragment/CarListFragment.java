@@ -147,7 +147,7 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
         this.cars = resultBean;
 
 
-        carInfoList.setAdapter(new CommonAdapter<CarInfoBean>(getActivity(), resultBean, R.layout.item_carInfo_list) {
+        carInfoList.setAdapter(new CommonAdapter<CarInfoBean>(getActivity(), resultBean, R.layout.item_carinfo_list) {
             @Override
             public void convert(final ViewHolder holder, CarInfoBean car) {
                                 if (car.isCurrentCar()) {
