@@ -39,6 +39,7 @@ public class MessageActivity extends BaseActivity implements MessageView {
     @FindViewById(id = R.id.laod_message_progress)
     private CircleProgress progress;   //加载视图
 
+
     private MessagePresenter mMessagePresenter;
     List<MessageBean> messages = new ArrayList<MessageBean>();
 

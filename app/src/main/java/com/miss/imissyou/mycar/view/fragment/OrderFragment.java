@@ -77,30 +77,19 @@ public class OrderFragment extends ListFragment implements OrderListView, Screen
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         final OrderBean order = orders.get(position);
-        new AlertDialogWrapper.Builder(getActivity()).setTitle(order.getBrandName());
-        new AlertDialogWrapper.Builder(getActivity()).setMessage(order.getAddress());
-        new AlertDialogWrapper.Builder(getActivity()).setNegativeButton(R.string.go, new Dialog.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                BaseFragment NaviFragment = new NaviViewFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("address", order.getAddress());
-                bundle.putString("statioName",order.getStationName());
-                bundle.putString("brandName",order.getBrandName());
 
-                NaviFragment.getArguments().putBundle(OrderAddrress, bundle);
-            }
-        });
-        new AlertDialogWrapper.Builder(getActivity()).setPositiveButton(R.string.ok, new Dialog.OnClickListener() {
+        Bundle bundle = new Bundle();
+        bundle.putLong("orderId",order.getId());
 
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
+        OrderInfoFragment orderInfoFragment = new OrderInfoFragment();
+        orderInfoFragment.setArguments(bundle);
 
-        });
-        new AlertDialogWrapper.Builder(getActivity()).show();
+        getActivity()
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container_frame, orderInfoFragment)
+                .commit();
+
     }
 
     @Override
@@ -112,37 +101,15 @@ public class OrderFragment extends ListFragment implements OrderListView, Screen
                 R.layout.fragment_order_list) {
             @Override
             public void convert(ViewHolder holder, final OrderBean orderBean) {
-                holder.setText(R.id.order_list_gasNumber, null);
-                holder.setText(R.id.order_list_stationName, null);
-                holder.setText(R.id.order_list_gasType, null);
-                holder.setText(R.id.order_list_price, null);
-
-                holder.setOnClickListener(R.id.order_list_goStation, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //定位加油站并导航
-                        String address = orderBean.getAddress();        //地址
-                        NaviViewFragment naviViewFragment = new NaviViewFragment();
-                        FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("address", address);
-                        naviViewFragment.setArguments(bundle);
-                        fm.replace(R.id.container_frame, naviViewFragment).commit();
-                    }
-                });
-
-                holder.setOnClickListener(R.id.order_list_callStation, new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        Intent callIntent = new Intent();
-                        callIntent.setAction("Android.intent.action.CALL");
-                        callIntent.setData(Uri.parse("tel:" + "你的电话"));
-                        startActivity(callIntent);
-                    }
-                });
+                holder.setText(R.id.order_item_orderId, orderBean.getId() + "");
+//                holder.setText(R.id.order_item_carBrand, orderBean.getC)
+                holder.setText(R.id.order_item_orderState, getOrderState(orderBean.getState()));
+                holder.setText(R.id.order_item_orderTime, orderBean.getAgreementTime());
+                holder.setText(R.id.order_item_orderTotalPrice, "￥ " + orderBean.getPrice());
             }
-        });
+            });
+
+
     }
 
     @Override
@@ -154,4 +121,27 @@ public class OrderFragment extends ListFragment implements OrderListView, Screen
     public Bitmap getBitmap() {
         return null;
     }
+
+    /**
+     * 根据订单状态获取订单的中文状态
+     * @param playState
+     */
+    private String getOrderState(Integer playState) {
+        String title = "未支付";
+
+        switch (playState) {
+            case 0 :
+                title = "已支付";
+                break;
+            case 1:
+                title = "未支付";
+                break;
+            case 2:
+                title ="已过期";
+                break;
+        }
+        return title;
+    }
+
+
 }

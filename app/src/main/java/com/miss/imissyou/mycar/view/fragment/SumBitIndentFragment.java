@@ -479,16 +479,26 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     /**
      * 给LiearLayout 动态添加ItemView
      */
-    private void addItemView(Map<String, String> oilTypeBean) {
+    private void addItemView(final Map<String, String> oilTypeBean) {
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         //设置加油站有的所有的油类型
-            for (String key : oilTypeBean.keySet()) {
-                TextView tv1 = new TextView(getActivity());
+            for (final String key : oilTypeBean.keySet()) {
+                final TextView tv1 = new TextView(getActivity());
                 tv1.setLayoutParams(lp);//设置布局参数
                 tv1.setTag(key);
                 tv1.setText(oilTypeBean.get(key));
+
+                tv1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showselectPrice(oilTypeBean.get(key));
+                        tv1.setBackgroundColor(getActivity()
+                                .getResources()
+                                .getColor(R.color.color_gui));
+                    }
+                });
 
 
                 OilBean tempBean = new OilBean();
@@ -497,11 +507,14 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
                 tempBean.setPrice(oilTypeBean.get(key));
                 oilBeans.add(tempBean);
             }
+    }
 
-
-
-
-
-
+    /**
+     * 显示价格
+     * @param price
+     */
+    private void showselectPrice(String price) {
+        oilNumberInput.setText("1");
+        priceInput.setText(price);
     }
 }

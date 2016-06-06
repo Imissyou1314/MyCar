@@ -1,111 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:miss="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginBottom="3dp"
-    android:gravity="center|left"
-    android:orientation="vertical"
-    android:padding="5dp">
+    android:layout_marginTop="20dp"
+    android:padding="20dp"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <com.miss.imissyou.mycar.ui.RoundImageView
-            android:id="@+id/order_list_image"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:src="@mipmap/user_head"
-            miss:Radiustype="round"
-            miss:borderRadius="8dp" />
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="8"
-            android:paddingLeft="3dp"
-            android:layout_marginTop="10dp"
-            android:padding="3dp">
-
-            <TextView
-                android:id="@+id/order_list_stationName"
-                android:layout_marginTop="8dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginBottom="2dp"
-                style="@style/MissTextViweStyle"
-                android:text="中国加油站"
-                android:gravity="center|left"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/order_list_gasType"
-                style="@style/MissTextViweStyle"
-                android:text="中国加油站"
-                android:layout_marginBottom="2dp"
-                android:gravity="center|left"
-                android:layout_below="@+id/order_list_stationName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/order_list_gasNumber"
-                style="@style/MissTextViweStyle"
-                android:text="中国加油站"
-                android:layout_marginBottom="2dp"
-                android:gravity="center|left"
-                android:layout_below="@+id/order_list_gasType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/order_list_price"
-                style="@style/MissTextViweStyle"
-                android:text="中国加油站"
-                android:layout_marginBottom="2dp"
-                android:gravity="center|left"
-                android:layout_below="@+id/order_list_gasNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/order_list_goStation"
-            android:layout_width="0dp"
-            android:drawableLeft="@drawable/ic_action_name"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center|left"
-            android:text="到这里去"
-            android:textColor="@color/colorFont"
-            android:textSize="@dimen/FontSize" />
+            android:textColor="@color/color_back"
+            android:textSize="16sp"
+            android:text="订单号"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
 
         <TextView
-            android:id="@+id/order_list_callStation"
-            android:drawableLeft="@drawable/ic_phone"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:id="@+id/order_item_orderId"
+            android:textColor="@color/color_back"
+            android:textSize="14sp"
+            android:gravity="center|right"
             android:layout_weight="1"
-            android:gravity="center|left"
-            android:text="联系加油站"
-            android:textColor="@color/colorFont"
-            android:textSize="@dimen/FontSize" />
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        </LinearLayout>
 
-    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1.5dp"
+        android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
         android:background="@color/color_back_gui" />
+
+    <!--订单号信息-->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <!--车牌号-->
+            <TextView
+                android:id="@+id/order_item_carBrand"
+                android:textColor="@color/color_back"
+                android:text="京G888888"
+                android:textSize="14sp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <!--订单状态-->
+            <TextView
+                android:id="@+id/order_item_orderState"
+                android:layout_marginBottom="10dp"
+                android:text="未付款"
+                android:gravity="center|left"
+                android:textSize="11"
+                android:textColor="#FF0000"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <!--订单时间-->
+            <TextView
+                android:id="@+id/order_item_orderTime"
+                android:textSize="12"
+                android:text="2016-06-6 10:51:26"
+                android:textColor="@color/color_back"
+                android:gravity="center|left"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/order_item_orderTotalPrice"
+            android:textSize="27"
+            android:text="￥ 24.6"
+            android:gravity="center"
+            android:textColor="@color/colro_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

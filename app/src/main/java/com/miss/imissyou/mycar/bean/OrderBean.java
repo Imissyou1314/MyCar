@@ -35,6 +35,8 @@ public class OrderBean extends BaseBean {
     private Integer state;
     /** 下单时间*/
     private String agreementTime;
+    /**订单用户名*/
+    private String userName;
 
     public Long getId() {
         return id;
@@ -138,5 +140,13 @@ public class OrderBean extends BaseBean {
 
     public void setUnits(String units) {
         this.units = units;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }
