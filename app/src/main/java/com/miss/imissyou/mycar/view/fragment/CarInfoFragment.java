@@ -104,6 +104,7 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView {
         LogUtils.w(getArguments() + "");
         Long userId = getArguments().getLong(Constant.USER_ID);
         Long carId = getArguments().getLong(Constant.CAR_ID);
+
         this.mCarId = carId;
         mCarInfoPresenter.loadCarInfo(userId, carId);
     }

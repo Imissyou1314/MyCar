@@ -94,7 +94,7 @@ public class OrderFragment extends ListFragment implements OrderListView, Screen
         this.orders = orders;
         setListAdapter(new CommonAdapter<OrderBean>(getActivity(),
                 orders,
-                R.layout.fragment_order_list) {
+                R.layout.item_order) {
             @Override
             public void convert(ViewHolder holder, final OrderBean orderBean) {
                 holder.setText(R.id.order_item_orderId, orderBean.getId() + "");

@@ -35,7 +35,7 @@ public class ChangePasswordFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(R.layout.changepasswordfragment, inflater, container, savedInstanceState);
+        return super.onCreateView(R.layout.fragment_change_password, inflater, container, savedInstanceState);
     }
 
     @Override protected void initView(View view) {

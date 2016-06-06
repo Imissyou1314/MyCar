@@ -22,6 +22,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.cheshouye.api.client.json.CarInfo;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
@@ -47,6 +48,7 @@ import com.miss.imissyou.mycar.view.activity.HelpActivity;
 import com.miss.imissyou.mycar.view.activity.LoginActivity;
 import com.miss.imissyou.mycar.view.activity.MessageActivity;
 import com.miss.imissyou.mycar.view.activity.SettingActivity;
+import com.miss.imissyou.mycar.view.fragment.CarInfoFragment;
 import com.miss.imissyou.mycar.view.fragment.FirstAddCarFragment;
 import com.miss.imissyou.mycar.view.fragment.SettingFragment;
 import com.miss.imissyou.mycar.view.fragment.CarListFragment;
@@ -98,6 +100,8 @@ public class MainActivity extends ActionBarActivity
     private OrderFragment orderFragment;
     private GasStationFragment gasStationFragment;
     private NaviViewFragment naviViewFragment;
+    private CarInfoFragment carInfoFragment;
+    private FirstAddCarFragment firstAddCarFragment;
 
     /**
      * 双击退出程序
@@ -120,10 +124,11 @@ public class MainActivity extends ActionBarActivity
             doLogin();
 
             if(!checkUserHasCar(Constant.userBean.getId())) {
-               getSupportFragmentManager()
-                       .beginTransaction()
-                       .replace(R.id.container_frame,new FirstAddCarFragment())
-                       .commit();
+                LogUtils.w("用户没有车辆");
+//               getSupportFragmentManager()
+//                       .beginTransaction()
+//                       .replace(R.id.content_overlay,new FirstAddCarFragment())
+//                       .commit();
             }
         } else {
             LogUtils.d("用户Id" + Constant.userBean.getId());
@@ -178,6 +183,7 @@ public class MainActivity extends ActionBarActivity
                 ResultBean resultBean = GsonUtils.getResultBean(t);
                 CarInfoBean carInfoBean = GsonUtils.getParam(resultBean,"car",CarInfoBean.class);
                 if (null != carInfoBean && null != carInfoBean.getId()) {
+                    Constant.carBean = carInfoBean;
                     resultTag = true;
                 } else {
                     resultTag = false;
@@ -392,11 +398,24 @@ public class MainActivity extends ActionBarActivity
         orderFragment = new OrderFragment();
         naviViewFragment = new NaviViewFragment();
         gasStationFragment = new GasStationFragment();
+        carInfoFragment = new CarInfoFragment();
+        firstAddCarFragment = new FirstAddCarFragment();
 
+        if (null != Constant.carBean && null != Constant.carBean.getId()) {
+            Bundle bundle = new Bundle();
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, homeFragment)
-                .commit();
+            bundle.putLong(Constant.USER_ID, Constant.userBean.getId());
+            bundle.putLong(Constant.CAR_ID, Constant.carBean.getId());
+            carInfoFragment.setArguments(bundle);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_frame, carInfoFragment)
+                    .commit();
+        } else {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_frame, firstAddCarFragment)
+                    .commit();
+        }
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerLayout.setScrimColor(Color.TRANSPARENT);
         linearLayout = (LinearLayout) findViewById(R.id.left_drawer);
