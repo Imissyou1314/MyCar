@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -20,23 +20,24 @@
         </activity>
 
         <!--Activity-->
-        <activity android:name=".view.activity.SettingActivity"/>
-        <activity android:name=".view.activity.AboutActivity"/>
-        <activity android:name=".view.activity.AuthorActivity"/>
-        <activity android:name=".view.activity.HelpActivity"/>
-        <activity android:name=".view.activity.MessageActivity"/>
-        <activity android:name=".view.activity.NaviViewActivity"/>
-        <activity android:name=".view.activity.ChangePhoneNumberActivity"/>
+        <activity android:name=".view.activity.SettingActivity" android:screenOrientation="portrait"/>
+
+        <activity android:name=".view.activity.AboutActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.AuthorActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.HelpActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.MessageActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.NaviViewActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.ChangePhoneNumberActivity" android:screenOrientation="portrait"/>
 
         <!--用户登录-->
-        <activity android:name=".view.activity.FindPasswordActivity"/>
-        <activity android:name=".view.activity.LoginActivity"/>
-        <activity android:name=".view.activity.RegisterActivity"/>
+        <activity android:name=".view.activity.FindPasswordActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.LoginActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.RegisterActivity" android:screenOrientation="portrait"/>
 
         <!--扫描二维码添加车辆-->
-        <activity android:name=".view.activity.AddNewCarActivity"/>
-        <activity android:name=".view.activity.AddNewCarInputActivity"/>
-        <activity android:name=".view.activity.InputBrandPageActivity"/>
+        <activity android:name=".view.activity.AddNewCarActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.AddNewCarInputActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.InputBrandPageActivity" android:screenOrientation="portrait"/>
 
         <!--注册服务-->
         <service android:name=".service.impl.MusicPlayService"/>

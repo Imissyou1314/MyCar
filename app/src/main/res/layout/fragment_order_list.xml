@@ -68,7 +68,7 @@
                 android:layout_marginBottom="10dp"
                 android:text="未付款"
                 android:gravity="center|left"
-                android:textSize="11"
+                android:textSize="11sp"
                 android:textColor="#FF0000"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -76,7 +76,7 @@
             <!--订单时间-->
             <TextView
                 android:id="@+id/order_item_orderTime"
-                android:textSize="12"
+                android:textSize="12sp"
                 android:text="2016-06-6 10:51:26"
                 android:textColor="@color/color_back"
                 android:gravity="center|left"
@@ -87,10 +87,10 @@
 
         <TextView
             android:id="@+id/order_item_orderTotalPrice"
-            android:textSize="27"
+            android:textSize="27sp"
             android:text="￥ 24.6"
             android:gravity="center"
-            android:textColor="@color/colro_back"
+            android:textColor="@color/color_back"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
 
