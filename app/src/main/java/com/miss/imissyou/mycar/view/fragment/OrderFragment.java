@@ -1,22 +1,18 @@
 package com.miss.imissyou.mycar.view.fragment;
 
-import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.Intent;
+
 import android.graphics.Bitmap;
-import android.net.Uri;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
+
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
-import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.OrderBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
-import com.miss.imissyou.mycar.bean.UserBean;
 import com.miss.imissyou.mycar.presenter.impl.OrderPresenterImpl;
 import com.miss.imissyou.mycar.presenter.OrderPresenter;
 import com.miss.imissyou.mycar.ui.adapterutils.CommonAdapter;

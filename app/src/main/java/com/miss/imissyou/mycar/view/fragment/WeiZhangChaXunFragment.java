@@ -1,10 +1,8 @@
 package com.miss.imissyou.mycar.view.fragment;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +18,6 @@ import com.cheshouye.api.client.json.CityInfoJson;
 import com.cheshouye.api.client.json.ProvinceInfoJson;
 import com.cheshouye.api.client.json.WeizhangResponseJson;
 import com.miss.imissyou.mycar.R;
-import com.miss.imissyou.mycar.ui.sidemenu.interfaces.ScreenShotable;
-import com.miss.imissyou.mycar.view.activity.BaseActivity;
 
 import java.util.List;
 

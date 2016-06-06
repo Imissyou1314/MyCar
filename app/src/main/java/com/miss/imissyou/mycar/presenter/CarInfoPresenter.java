@@ -1,6 +1,6 @@
-package com.miss.imissyou.mycar.view;
+package com.miss.imissyou.mycar.presenter;
 
-import com.miss.imissyou.mycar.presenter.MainPresenter;
+import com.miss.imissyou.mycar.view.MainView;
 
 /**
  * 加载具体的车辆信息

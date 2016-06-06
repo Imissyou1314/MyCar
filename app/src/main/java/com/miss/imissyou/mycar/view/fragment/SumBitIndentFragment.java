@@ -8,16 +8,11 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amap.api.maps.model.Text;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.GasStationBean;
@@ -27,7 +22,6 @@ import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.presenter.SumbitIndentPresenter;
 import com.miss.imissyou.mycar.presenter.impl.SumbitIndentPresenterImpl;
 import com.miss.imissyou.mycar.ui.MissDialog;
-import com.miss.imissyou.mycar.ui.spinner.NiceSpinner;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.DialogUtils;
 import com.miss.imissyou.mycar.util.GsonUtils;
@@ -38,7 +32,6 @@ import com.rey.material.app.DialogFragment;
 import com.rey.material.app.TimePickerDialog;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 

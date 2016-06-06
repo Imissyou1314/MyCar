@@ -10,7 +10,7 @@ import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.view.CarInfoView;
 import com.miss.imissyou.mycar.view.MainView;
-import com.miss.imissyou.mycar.view.CarInfoPresenter;
+import com.miss.imissyou.mycar.presenter.CarInfoPresenter;
 import com.miss.imissyou.mycar.view.fragment.CarInfoFragment;
 
 /**

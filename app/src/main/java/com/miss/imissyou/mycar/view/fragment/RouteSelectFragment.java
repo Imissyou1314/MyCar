@@ -1,6 +1,5 @@
 package com.miss.imissyou.mycar.view.fragment;
 
-import android.media.TimedText;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -9,13 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.amap.api.maps.model.Text;
-import com.lidroid.xutils.http.client.multipart.content.StringBody;
 import com.miss.imissyou.mycar.R;
 
 /**
  * 选择导航路线
- * Created by 青玉 on 2016/5/30.
+ * Created by ImissYou on 2016/5/30.
  */
 public class RouteSelectFragment extends BaseFragment implements View.OnClickListener {
 

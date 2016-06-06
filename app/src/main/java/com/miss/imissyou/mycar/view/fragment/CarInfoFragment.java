@@ -9,8 +9,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.model.GlideUrl;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.CarInfoBean;
@@ -21,7 +19,7 @@ import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.DialogUtils;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.view.CarInfoView;
-import com.miss.imissyou.mycar.view.CarInfoPresenter;
+import com.miss.imissyou.mycar.presenter.CarInfoPresenter;
 
 
 /**
@@ -37,7 +35,7 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView {
     /**
      * 车辆描述
      */
-    private ImageView carImage;         //车辆图片
+    private ImageView carImage;         //车辆图标图片
     private TextView carBrand;                    //车辆品牌
     private TextView carVin;                       //车架号
     private TextView carRand;                      //车身等级
@@ -78,7 +76,7 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView {
         progress = (CircleProgress) view.findViewById(R.id.load_carInfo_progress);
 
         /**车辆描述*/
-        carImage = (ImageView) view.findViewById(R.id.carInfo_carImage);
+        carImage = (ImageView) view.findViewById(R.id.car_info_carBrand_image);
         carBrand = (TextView) view.findViewById(R.id.carInfo_carBrand_input);
         carEngineNumber = (TextView) view.findViewById(R.id.carInfo_carEngineNumber_input);
         carRand = (TextView) view.findViewById(R.id.carInfo_carRank_input);

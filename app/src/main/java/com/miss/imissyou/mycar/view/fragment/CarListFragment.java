@@ -17,7 +17,6 @@ import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.CarInfoBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
-import com.miss.imissyou.mycar.bean.UserBean;
 import com.miss.imissyou.mycar.presenter.CarListPresenter;
 import com.miss.imissyou.mycar.presenter.impl.CarListPresenterImpl;
 import com.miss.imissyou.mycar.ui.adapterutils.CommonAdapter;

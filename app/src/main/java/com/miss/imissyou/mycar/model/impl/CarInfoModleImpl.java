@@ -8,7 +8,7 @@ import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.model.CarInfoModle;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
-import com.miss.imissyou.mycar.view.CarInfoPresenter;
+import com.miss.imissyou.mycar.presenter.CarInfoPresenter;
 import com.miss.imissyou.mycar.presenter.impl.CarInfoPresenterImpl;
 
 /**

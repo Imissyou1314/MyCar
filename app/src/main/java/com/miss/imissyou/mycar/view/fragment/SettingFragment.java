@@ -8,14 +8,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.miss.imissyou.mycar.R;
-import com.miss.imissyou.mycar.ui.TitleFragment;
 import com.miss.imissyou.mycar.ui.ToggleButton;
 import com.miss.imissyou.mycar.util.Constant;
-import com.miss.imissyou.mycar.util.FindViewById;
 import com.miss.imissyou.mycar.util.SPUtils;
-import com.miss.imissyou.mycar.view.fragment.BaseFragment;
-import com.miss.imissyou.mycar.view.fragment.SafePasswordFragment;
-import com.miss.imissyou.mycar.view.fragment.UserInfoFragment;
 
 /**
  * Created by Imissyou on 2016/3/23.

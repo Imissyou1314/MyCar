@@ -13,7 +13,7 @@ import com.miss.imissyou.mycar.view.activity.AddNewCarActivity;
 
 /**
  *
- * 第一次进入添加新车的页面     t
+ * 第一次进入添加新车的页面
  * Created by ImissYou on 2016/6/3.
  */
 public class FirstAddNewCarFragment extends BaseFragment {

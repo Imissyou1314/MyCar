@@ -4,12 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +30,6 @@ import com.miss.imissyou.mycar.util.StringUtil;
 import com.miss.imissyou.mycar.util.ToastUtil;
 
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +50,7 @@ public class MusicFragment extends Fragment implements ScreenShotable {
     private TextView mTextViewMusicName;
     private MyBroadCastService myBroad;
     private int mPosition = 0;
-    private boolean flag;
+    private boolean flag = true;
 
     private View upView;
     /** 我的音乐*/

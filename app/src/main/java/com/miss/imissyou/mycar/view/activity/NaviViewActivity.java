@@ -80,7 +80,7 @@ public class NaviViewActivity extends BaseActivity implements AMapNaviViewListen
         mAMapNavi.addAMapNaviListener(mTtsManager);
         mAMapNavi.setEmulatorNaviSpeed(150);
 
-
+        setNaviState();             //获取导航点并设置导航方式
     }
 
     @Override
@@ -91,10 +91,10 @@ public class NaviViewActivity extends BaseActivity implements AMapNaviViewListen
         // 开启模拟导航
         AMapNavi.getInstance(this).startNavi(AMapNavi.EmulatorNaviMode);
         /**构造导航的起点和终点*/
-        startLon = getIntent().getDoubleExtra(Constant.startLongitude, 0);
-        startLat = getIntent().getDoubleExtra(Constant.startLatitude, 0);
-        endLon = getIntent().getDoubleExtra(Constant.endLongitude, 0);
-        endLat = getIntent().getDoubleExtra(Constant.endLatitude, 0);
+//        startLon = getIntent().getDoubleExtra(Constant.startLongitude, 0);
+//        startLat = getIntent().getDoubleExtra(Constant.startLatitude, 0);
+//        endLon = getIntent().getDoubleExtra(Constant.endLongitude, 0);
+//        endLat = getIntent().getDoubleExtra(Constant.endLatitude, 0);
         getLocationLatLng();
         if (mEndLatlng != null) {
             LogUtils.w("可以导航了");
@@ -400,4 +400,21 @@ public class NaviViewActivity extends BaseActivity implements AMapNaviViewListen
     public void updateAimlessModeCongestionInfo(AimLessModeCongestionInfo aimLessModeCongestionInfo) {
 
     }
+
+    /**
+     * 设置导航方式 并获取计算导航路线
+     */
+    private void setNaviState() {
+        boolean naviType = getIntent().getBooleanExtra(Constant.NO_START_NAVI,false);
+        if (naviType) {
+            // TODO: 2016/6/6 无起点导航
+            AMapNavi.getInstance(this).startGPS();
+        } else{
+            startLat = getIntent().getDoubleExtra(Constant.startLatitude,21.150468);
+            startLon = getIntent().getDoubleExtra(Constant.startLongitude,110.307201);
+        }
+        endLat = getIntent().getDoubleExtra(Constant.endLatitude,21.150668);
+        endLat = getIntent().getDoubleExtra(Constant.endLongitude,110.305201);
+    }
+
 }
