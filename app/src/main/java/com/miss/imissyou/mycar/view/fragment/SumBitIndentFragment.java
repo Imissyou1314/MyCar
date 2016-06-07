@@ -485,6 +485,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
         intent.putExtra(Constant.endLatitude, lat);
         intent.putExtra(Constant.endLongitude, lot);
 
+        LogUtils.d("传过去的经纬度:" + lat + ":::" + lot);
         getActivity().startActivity(intent);
     }
 

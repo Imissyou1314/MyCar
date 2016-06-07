@@ -61,7 +61,7 @@ public class NaviViewActivity extends BaseActivity implements AMapNaviViewListen
     private double startLat;
     private double endLon;
     private double endLat;
-    private int NaviTag = 0;        //导航模式
+    private Boolean NaviTag = false;        //导航模式
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,15 +86,16 @@ public class NaviViewActivity extends BaseActivity implements AMapNaviViewListen
     @Override
     protected void initData() {
 
+        // TODO: 2016-06-07 获取传进来的经纬度
+        //endLat = getIntent().getDoubleExtra(Constant.endLatitude,0);
+        //endLon = getIntent().getDoubleExtra(Constant.endLongitude,0);
+
+
         // 设置模拟速度
         AMapNavi.getInstance(this).setEmulatorNaviSpeed(100);
         // 开启模拟导航
         AMapNavi.getInstance(this).startNavi(AMapNavi.EmulatorNaviMode);
-        /**构造导航的起点和终点*/
-//        startLon = getIntent().getDoubleExtra(Constant.startLongitude, 0);
-//        startLat = getIntent().getDoubleExtra(Constant.startLatitude, 0);
-//        endLon = getIntent().getDoubleExtra(Constant.endLongitude, 0);
-//        endLat = getIntent().getDoubleExtra(Constant.endLatitude, 0);
+
         getLocationLatLng();
         if (mEndLatlng != null) {
             LogUtils.w("可以导航了");
@@ -107,7 +108,13 @@ public class NaviViewActivity extends BaseActivity implements AMapNaviViewListen
      * 获取本地导航
      */
     private void getLocationLatLng() {
-        if (startLat != 0L && startLon != 0L && startLat != startLon) {
+        /**构造导航的起点和终点*/
+       startLon = getIntent().getDoubleExtra(Constant.startLongitude, 0);
+       startLat = getIntent().getDoubleExtra(Constant.startLatitude, 0);
+        endLon = getIntent().getDoubleExtra(Constant.endLongitude, 0);
+        endLat = getIntent().getDoubleExtra(Constant.endLatitude, 0);
+        NaviTag = getIntent().getBooleanExtra(Constant.NO_START_NAVI, true);
+        if (startLat != 0L && startLon != 0L && startLat != startLon && !NaviTag) {
             mStartLatlng = new NaviLatLng(startLat, startLon);
             mStartList.add(mStartLatlng);
         } else {
@@ -242,7 +249,6 @@ public class NaviViewActivity extends BaseActivity implements AMapNaviViewListen
          * 模式设置为默认驾车
          */
         if (null == mapNaviView) {
-
             return;
         }
         AMapNaviViewOptions viewOptions = new AMapNaviViewOptions();

@@ -95,7 +95,7 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
                 gasFragment.setArguments(bundle);
 
                 fm.beginTransaction()
-                        .replace(R.id.container_frame, gasFragment, SumBitIndentFragment.TAG)
+                        .replace(R.id.content_overlay, gasFragment, SumBitIndentFragment.TAG)
                         .commit();
             }
         });
@@ -132,7 +132,7 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
 
                         intent.putExtra(Constant.NO_START_NAVI, true);
 
-                        LogUtils.d("穿过去的经纬度"+
+                        LogUtils.d("传过去的经纬度"+
                                 latLng.latitude +"::::" + latLng.longitude);
 
                         intent.putExtra(Constant.endLatitude, latLng.latitude);

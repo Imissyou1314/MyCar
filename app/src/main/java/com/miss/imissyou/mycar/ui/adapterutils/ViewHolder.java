@@ -221,4 +221,16 @@ public class ViewHolder {
     }
 
 
+    /**
+     * 展现实体还在隐藏视图
+     * @param viewId  图片R.id
+     */
+    public void setVisibility(int viewId) {
+        View view = getView(viewId);
+        if (view.getVisibility() == View.GONE) {
+            view.setVisibility(View.VISIBLE);
+        } else {
+            view.setVisibility(View.GONE);
+        }
+    }
 }

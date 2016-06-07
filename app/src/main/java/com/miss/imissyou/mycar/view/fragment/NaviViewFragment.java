@@ -98,9 +98,8 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
-        View view = super.onCreateView(R.layout.fragment_navi, inflater, container, savedInstanceState);
-
+        View view = super.onCreateView(R.layout.fragment_navi,
+                inflater, container, savedInstanceState);
         mMapView.onCreate(savedInstanceState);
         return view;
     }
@@ -119,6 +118,7 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void initData() {
+
     }
 
     @Override
