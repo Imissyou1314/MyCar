@@ -26,7 +26,7 @@ public class OrderBean extends BaseBean {
     /** 加油单位 */
     private String units;
     /** 价格*/
-    private Float price;
+    private Double price;
     /** 加油数量*/
     private Double number;
     /**定单总价*/
@@ -104,9 +104,7 @@ public class OrderBean extends BaseBean {
         this.brandName = brandName;
     }
 
-    public void setPrice(Float price) {
-        this.price = price;
-    }
+
 
     public Double getNumber() {
         return number;
@@ -116,11 +114,11 @@ public class OrderBean extends BaseBean {
         this.number = number;
     }
 
-    public float getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

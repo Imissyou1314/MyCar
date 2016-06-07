@@ -27,6 +27,7 @@ public class SumbitIndentModelImpl implements SumbitIndentModel {
     @Override
     public void sentIndentToService(OrderBean orderBean) {
         //TODO
+        LogUtils.d("传进来的参数:" + GsonUtils.Instance().toJson(orderBean));
         String url = Constant.SERVER_URL + "order/saveOrder";
         HttpParams params = new HttpParams();
         params.put("userId", orderBean.getUserId() + "");
@@ -46,12 +47,13 @@ public class SumbitIndentModelImpl implements SumbitIndentModel {
         RxVolley.post(url, params, new HttpCallback() {
             @Override
             public void onFailure(int errorNo, String strMsg) {
+                LogUtils.d("错误信息:" + strMsg + errorNo);
                 mSumbitIndentPresenter.onFailure(errorNo, strMsg);
             }
 
             @Override
             public void onSuccess(String t) {
-                super.onSuccess(t);
+                LogUtils.d("获取的数据:" + t);
                 ResultBean resultBean = GsonUtils.Instance().fromJson(t, ResultBean.class);
                 if (resultBean != null) {
                     mSumbitIndentPresenter.onSuccess(resultBean);

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.InputType;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.miss.imissyou.mycar.ui.MissDialog;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.DialogUtils;
 import com.miss.imissyou.mycar.util.GsonUtils;
+import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.view.SumbitIndentView;
 import com.miss.imissyou.mycar.view.activity.NaviViewActivity;
 import com.rey.material.app.DatePickerDialog;
@@ -62,7 +64,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     private TextView sumBitDayPaly;           //预约加油
 
     //加油类别
-    private double oilPrice;          //选择油类型的价格（升/元)
+    //private double oilPrice;          //选择油类型的价格（升/元)
     private double oilNumber;      //输入的油升数量
     private double price;          //输入的价格
     private OilBean oil;        //油的Bean
@@ -84,8 +86,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
                 inflater, container, savedInstanceState);
     }
 
-    @Override
-    protected void initView(View view) {
+    @Override protected void initView(View view) {
 
         gastationName = (TextView) view.findViewById(R.id.sumbit_gastation_gastationName);
         gastationAddres = (TextView) view.findViewById(R.id.sumbit_gastation_address);
@@ -107,8 +108,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
 
     }
 
-    @Override
-    protected void initData() {
+    @Override protected void initData() {
         mSumbitIndentPresenter = new SumbitIndentPresenterImpl(this);
         LogUtils.d(getArguments().getString("gasStation"));
         gasStation = GsonUtils.Instance()
@@ -120,6 +120,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
             gastationAddres.setText(gasStation.getAddress());
             gastationDistance.setText((Integer.parseInt(gasStation.getDistance()) / 1000) + "公里");
             addItemView(gasStation.getPrice());
+            initOrder(gasStation);
         }
 
         //获取到的价格不为空
@@ -150,8 +151,8 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
 //        }
     }
 
-    @Override
-    protected void addViewsListener() {
+
+    @Override protected void addViewsListener() {
 
         goNavi.setOnClickListener(this);
         gastationTimeSelect.setOnClickListener(this);
@@ -171,6 +172,14 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
                     LogUtils.d("价格输入失去焦点");
                 }
 
+            }
+        });
+
+        priceInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                LogUtils.d(priceInput.getText().toString() + "结果");
+                return false;
             }
         });
 
@@ -249,6 +258,67 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
 
     }
 
+
+
+    @Override
+    public void showResultError(int errorNo, String errorMag) {
+        String titleMage = "";
+        if (errorNo == 0) {
+            titleMage = "操作出错";
+        } else {
+            titleMage = "错误操作";
+        }
+        new DialogUtils(getActivity())
+                .errorMessage(titleMage, errorMag)
+                .show();
+    }
+
+    @Override
+    public void showResultSuccess(ResultBean resultBean) {
+
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent();
+        switch (v.getId()) {
+            case R.id.sumbit_play_playAfter:
+                initOrder(gasStation);
+                orderBean.setState(0);
+                sumbitOrder();
+                showDialog();
+                break;
+            case R.id.sumbit_play_playNow:
+                initOrder(gasStation);
+                orderBean.setState(1);
+                sumbitOrder();
+                goPlayPage();
+                break;
+            case R.id.sumbit_gastation_goNaiv:
+                intent.setClass(getActivity(), NaviViewActivity.class);
+                goNaiv(intent);
+                break;
+            case R.id.sumbit_gastation_data_select:
+                selectTime();
+                break;
+        }
+    }
+
     /**
      * 设置油量的输入
      */
@@ -303,61 +373,6 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
         return (double) (oilNumber * Double.parseDouble(oil.getPrice()));
     }
 
-    @Override
-    public void showResultError(int errorNo, String errorMag) {
-        String titleMage = "";
-        if (errorNo == 0) {
-            titleMage = "操作出错";
-        } else {
-            titleMage = "错误操作";
-        }
-        new DialogUtils(getActivity())
-                .errorMessage(titleMage, errorMag)
-                .show();
-    }
-
-    @Override
-    public void showResultSuccess(ResultBean resultBean) {
-
-    }
-
-    @Override
-    public void showProgress() {
-
-    }
-
-    @Override
-    public void hideProgress() {
-
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public void onClick(View v) {
-        Intent intent = new Intent();
-        switch (v.getId()) {
-            case R.id.sumbit_play_playAfter:
-                sumbitOrder();
-                showDialog();
-                break;
-            case R.id.sumbit_play_playNow:
-                sumbitOrder();
-                goPlayPage();
-                break;
-            case R.id.sumbit_gastation_goNaiv:
-                intent.setClass(getActivity(), NaviViewActivity.class);
-                goNaiv(intent);
-                break;
-            case R.id.sumbit_gastation_data_select:
-                selectTime();
-                break;
-        }
-    }
-
     // TODO: 2016/6/5  到付款页面
     private void goPlayPage() {
 
@@ -384,7 +399,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
                 getActivity()
                         .getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.container_frame, new OrderFragment())
+                        .replace(R.id.content_overlay, new OrderFragment())
                         .commit();
                 dialog.dismiss();
             }
@@ -395,8 +410,13 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
      * 提交订单
      */
     private void sumbitOrder() {
-        if (null != orderBean)
+        if (null != orderBean) {
+            LogUtils.d("准备提交的数据" + GsonUtils.Instance().toJson(orderBean));
             mSumbitIndentPresenter.submitOrderToService(orderBean);
+        } else {
+            ToastUtil.asLong("订单提交失败");
+            LogUtils.d("订单为空");
+        }
     }
 
     /**
@@ -518,4 +538,46 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
         oilNumberInput.setText("1");
         priceInput.setText(price);
     }
+
+    /**
+     * 装载订单
+     * @param gasStation
+     */
+    private boolean initOrder(GasStationBean gasStation) {
+        Boolean result = true;
+
+        orderBean.setStationName(gasStation.getName());
+        orderBean.setAgreementTime(gastationOrderTime.getText().toString());
+        orderBean.setNumber(oilNumber);
+        orderBean.setAddress(gasStation.getAddress());
+        orderBean.setBrandName(gasStation.getBrandname());
+        orderBean.setAmounts((int)price);
+
+        /**检查用户是否登录*/
+        if (null != Constant.userBean && null != Constant.userBean.getId() ) {
+            orderBean.setUserId(Constant.userBean.getId());
+            orderBean.setUserName(Constant.userBean.getUsername());
+        } else {
+            ToastUtil.asLong("用户没登录不能下单");
+            result = false;
+        }
+
+        /**检查用户是否有车*/
+        if (null != Constant.carBean && null != Constant.carBean.getPlateNumber()) {
+            orderBean.setPlateNumber(Constant.carBean.getPlateNumber());
+        } else {
+            ToastUtil.asLong("用户没有车辆，请去添加车辆");
+            result = false;
+        }
+
+        if (null != oil && null != oil.getPrice() && null != oil.getOilType()) {
+            orderBean.setUnits("1");
+            orderBean.setPrice(Double.parseDouble(oil.getPrice()));
+            orderBean.setType(oil.getOilType());
+        }  else {
+            result = false;
+        }
+        return result;
+    }
+
 }
