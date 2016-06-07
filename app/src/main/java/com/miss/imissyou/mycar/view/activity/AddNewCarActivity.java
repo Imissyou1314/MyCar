@@ -50,7 +50,8 @@ import java.util.Vector;
  * 添加新车页面
  * Created by Imissyou on 2016/3/23.
  */
-public class AddNewCarActivity extends BaseActivity implements SurfaceHolder.Callback, View.OnClickListener, QRCodeReaderView.OnQRCodeReadListener {
+public class AddNewCarActivity extends BaseActivity implements SurfaceHolder.Callback,
+        View.OnClickListener, QRCodeReaderView.OnQRCodeReadListener {
 
 //    @FindViewById(id = R.id.viewfinder_view)
 //    private ViewfinderView viewfinderView;   //扫描框
@@ -102,8 +103,7 @@ public class AddNewCarActivity extends BaseActivity implements SurfaceHolder.Cal
 
     /**
      * 点击事件处理
-     *
-     * @param view
+     * @param view 点击的视图
      */
     @Override
     public void onClick(View view) {
@@ -123,7 +123,7 @@ public class AddNewCarActivity extends BaseActivity implements SurfaceHolder.Cal
     /**
      * 跳转到确认添加车辆的页面
      *
-     * @param carInfoJson
+     * @param carInfoJson  车辆的Json实体
      */
     private void toVerifyAddCarActivity(String carInfoJson) {
         Intent intent = new Intent(this, AddNewCarInputActivity.class);

@@ -463,7 +463,7 @@ public class MainActivity extends ActionBarActivity
             case ContentFragment.BREAK:
                 return replaceFragment(weiZhanChaXunFragment, position);
             case ContentFragment.HOME:
-                return replaceFragment(homeFragment, position);
+                return replaceFragment(carInfoFragment, position);
             case ContentFragment.USER:
                 return replaceFragment(userInfoFragment, position);
             case ContentFragment.MUSIC:
