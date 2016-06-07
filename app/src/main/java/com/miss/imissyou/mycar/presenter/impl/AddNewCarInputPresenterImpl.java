@@ -17,11 +17,11 @@ import com.miss.imissyou.mycar.view.activity.AddNewCarInputActivity;
  */
 public class AddNewCarInputPresenterImpl implements AddNewCarInputPresenter {
 
-    private AddNewCarInputActivity addNewCarInputActivity;
+    private AddNewCarInputView addNewCarInputView;
     private AddNewCarInputModel addNewCarInputModel;
 
     public AddNewCarInputPresenterImpl(AddNewCarInputView addNewCarInputView) {
-        this.addNewCarInputActivity = (AddNewCarInputActivity) addNewCarInputView;
+        this.addNewCarInputView = addNewCarInputView;
         addNewCarInputModel = new AddNewCarInputModelImpl(this);
     }
 
@@ -38,23 +38,17 @@ public class AddNewCarInputPresenterImpl implements AddNewCarInputPresenter {
 
     @Override
     public void onDestroy() {
-        addNewCarInputActivity.hideProgress();
-        addNewCarInputActivity = null;
+        addNewCarInputView.hideProgress();
+        addNewCarInputView = null;
     }
 
-    @Override
-    public ResultBean initCarDate() {
-        String result = addNewCarInputActivity.getIntent().getExtras().getString("result", "");
-        ResultBean resultBean = new ResultBean();
-        resultBean.setResultInfo(result);
-        return resultBean;
-    }
+
 
     @Override
     public void onFailure(int errorNo, String strMsg) {
         if (errorNo == Constant.NETWORK_STATE)
             strMsg = Constant.NOTNETWORK;
-        addNewCarInputActivity.showResultError(errorNo, strMsg);
+        addNewCarInputView.showResultError(errorNo, strMsg);
         LogUtils.d("连接服务器出错>>>>" + errorNo + ">>>错误信息:::" + strMsg);
     }
 
@@ -63,9 +57,9 @@ public class AddNewCarInputPresenterImpl implements AddNewCarInputPresenter {
         ResultBean resultBean = GsonUtils.Instance().fromJson(t, ResultBean.class);
         CarInfoBean carInfoBean = GsonUtils.getParam(resultBean, "car", CarInfoBean.class);
         if (carInfoBean == null) {
-            addNewCarInputActivity.showResultError(0, resultBean.getResultInfo());
+            addNewCarInputView.showResultError(0, resultBean.getResultInfo());
         } else {
-            addNewCarInputActivity.showResultSuccess(carInfoBean);
+            addNewCarInputView.showResultSuccess(carInfoBean);
             LogUtils.w("连接服务器返回信息>>>>" + t);
         }
     }
@@ -73,10 +67,11 @@ public class AddNewCarInputPresenterImpl implements AddNewCarInputPresenter {
     @Override
     public void onAddCarSuccess(String t) {
         ResultBean resultBean = GsonUtils.getResultBean(t);
-        if (null != resultBean) {
-            addNewCarInputActivity.showResultSuccess(resultBean);
+        if (null != resultBean && resultBean.isServiceResult()) {
+            LogUtils.d("获取数据:" + GsonUtils.Instance().toJson(resultBean));
+            addNewCarInputView.showResultSuccess(resultBean);
         } else {
-            addNewCarInputActivity.showResultError(0,"获取数据异常");
+            addNewCarInputView.showResultError(0,"获取数据异常");
         }
     }
 

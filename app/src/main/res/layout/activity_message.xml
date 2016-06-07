@@ -3,7 +3,7 @@
     xmlns:circleprogress="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_gravity="center"
-    android:background="@color/color_carView_mainMesage"
+    android:background="@color/colorWhite"
     android:gravity="center"
     android:layout_height="match_parent">
 

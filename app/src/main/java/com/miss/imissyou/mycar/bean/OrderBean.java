@@ -26,9 +26,9 @@ public class OrderBean extends BaseBean {
     /** 加油单位 */
     private String units;
     /** 价格*/
-    private float price;
+    private Float price;
     /** 加油数量*/
-    private Integer number;
+    private Double number;
     /**定单总价*/
     private int  amounts;
     /** 订单状态*/
@@ -37,6 +37,16 @@ public class OrderBean extends BaseBean {
     private String agreementTime;
     /**订单用户名*/
     private String userName;
+    /**车牌号*/
+    private String plateNumber;
+
+    public String getPlateNumber() {
+        return plateNumber;
+    }
+
+    public void setPlateNumber(String plateNumber) {
+        this.plateNumber = plateNumber;
+    }
 
     public Long getId() {
         return id;
@@ -94,11 +104,15 @@ public class OrderBean extends BaseBean {
         this.brandName = brandName;
     }
 
-    public Integer getNumber() {
+    public void setPrice(Float price) {
+        this.price = price;
+    }
+
+    public Double getNumber() {
         return number;
     }
 
-    public void setNumber(Integer number) {
+    public void setNumber(Double number) {
         this.number = number;
     }
 

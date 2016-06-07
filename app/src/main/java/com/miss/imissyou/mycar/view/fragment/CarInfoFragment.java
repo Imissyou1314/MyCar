@@ -169,11 +169,11 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView {
 
         setState(carLight, carInfo.isCarLight());
         setState(carAlarm, carInfo.isCarAlarm());
-        setState(carEnginProperty, carInfo.isEnginProperty());
+        setState(carEnginProperty, carInfo.isEngineProperty());
         setState(carTransmission, carInfo.isTransmission());
 
         setOFFState(carState, carInfo.isCarState());
-        setOFFState(carSRS, carInfo.isSRS());
+        setOFFState(carSRS, carInfo.isSrs());
 
         //加载油量进度条
         setProgress(carOilProgress, carInfo.getOil(), carInfo.getOilBox());

@@ -123,18 +123,17 @@ public class MainActivity extends ActionBarActivity
             builder = new MissDialog.Builder(this);
             doLogin();
 
-            if(!checkUserHasCar(Constant.userBean.getId())) {
-                LogUtils.w("用户没有车辆");
+         //   if(!checkUserHasCar(Constant.userBean.getId())) {
+           //     LogUtils.w("用户没有车辆");
 //               getSupportFragmentManager()
 //                       .beginTransaction()
 //                       .replace(R.id.content_overlay,new FirstAddCarFragment())
 //                       .commit();
-            }
+         //   }
         } else {
             LogUtils.d("用户Id" + Constant.userBean.getId());
             setAlias(Constant.userBean.getId());
         }
-
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             LogUtils.d("kitkit");
@@ -145,7 +144,11 @@ public class MainActivity extends ActionBarActivity
         tintManager.setNavigationBarTintResource(R.color.color_activty_title);
         tintManager.setStatusBarTintResource(R.color.color_activty_title);
         setContentView(R.layout.activity_main);
-        setUpView();
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout.setScrimColor(Color.TRANSPARENT);
+        linearLayout = (LinearLayout) findViewById(R.id.left_drawer);
+
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,6 +164,8 @@ public class MainActivity extends ActionBarActivity
         createMenuList();
         viewAnimator = new ViewAnimator<>(this, list, contentFragment, drawerLayout, this);
         /**加载页面数据*/
+
+
     }
 
     /**
@@ -260,6 +265,10 @@ public class MainActivity extends ActionBarActivity
                     if (resultBean.isServiceResult()) {
                         Constant.userBean = GsonUtils.getParam(resultBean, "user", UserBean.class);
                         setAlias(Constant.userBean.getId());
+                        // TODO: 2016-06-07 获取当前车辆
+                        if (checkUserHasCar(Constant.userBean.getId())) {
+                            LogUtils.d("当前用户没有车辆");
+                        }
                     } else {
                         builder.setTitle("登录出错")
                                 .setMessage(resultBean.getResultInfo())
@@ -276,6 +285,8 @@ public class MainActivity extends ActionBarActivity
                     }
                 }
             });
+
+            setUpView();
         }
     }
 
@@ -403,7 +414,7 @@ public class MainActivity extends ActionBarActivity
 
         if (null != Constant.carBean && null != Constant.carBean.getId()) {
             Bundle bundle = new Bundle();
-
+            LogUtils.d("启动车辆信息页面");
             bundle.putLong(Constant.USER_ID, Constant.userBean.getId());
             bundle.putLong(Constant.CAR_ID, Constant.carBean.getId());
             carInfoFragment.setArguments(bundle);
@@ -412,13 +423,12 @@ public class MainActivity extends ActionBarActivity
                     .replace(R.id.content_frame, carInfoFragment)
                     .commit();
         } else {
+            LogUtils.d("启动第一次添加车辆页面");
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, firstAddCarFragment)
                     .commit();
         }
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawerLayout.setScrimColor(Color.TRANSPARENT);
-        linearLayout = (LinearLayout) findViewById(R.id.left_drawer);
+
         //编写自己的布局
     }
 

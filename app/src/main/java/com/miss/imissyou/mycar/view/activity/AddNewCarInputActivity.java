@@ -2,7 +2,11 @@ package com.miss.imissyou.mycar.view.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ClipDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,6 +27,7 @@ import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.FindViewById;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.util.SPUtils;
+import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.view.AddNewCarInputView;
 
 /**
@@ -73,7 +78,7 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
     @FindViewById(id = R.id.activity_add_newCar_temperature_input)
     private TextView temperatureInput;
 
-    @FindViewById(id = R.id.activity_add_newCar_oil_input)
+    @FindViewById(id = R.id.activity_add_newCar_oilNumber)
     private ProgressBar oilLink;            //油量进度条
 
 
@@ -106,6 +111,8 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
 //                resultBean.setStateMessage(stateMessage.getToggleOn());
 
                 if (resultBean == null) {
+                    LogUtils.d("车辆实体为空");
+                    ToastUtil.asLong("车辆信息已经过时");
                     return;
                 } else if (Constant.userBean == null) {
                     toDoLogin();
@@ -272,17 +279,18 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
 //                transmissionEdit.setText(isGood(resultBean.isTransmission()));
 //                carLightEdit.setText(isGood(resultBean.isCarLight()));
         setState(carLightMessage, resultBean.isCarLight());
-        setState(enginPropertyMessage, resultBean.isEnginProperty());
+        setState(enginPropertyMessage, resultBean.isEngineProperty());
         setState(transmissionMessage, resultBean.isTransmission());
-        setState(carAlarmMessage, resultBean.isCarAlarm());
 
         mileageInput.setText(resultBean.getMileage() + "");
         oilInput.setText(resultBean.getOil() + "");
         oilMaxInputInput.setText(resultBean.getOilBox() + "");
         temperatureInput.setText(resultBean.getTemperature() + "");
 
+        setOFFState(carAlarmMessage,resultBean.isAlarmMessage());
         setOFFState(carStateMessage, resultBean.isCarState());
-        setOFFState(srsMessage, resultBean.isSRS());
+        setOFFState(srsMessage, resultBean.isSrs());
+        setProgress(oilLink,resultBean.getOil(),resultBean.getOilBox());
 
 
         LogUtils.d("回调的信息" + GsonUtils.Instance().toJson(resultBean));
@@ -334,16 +342,23 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
         oilInput.setText(nowOil + "%");
         LogUtils.w("油量为:" + nowOil);
 
+        ClipDrawable color ;
+
         if (carOilProgress.getProgress() > 20 && carOilProgress.getProgress() < 50) {
+            color = new ClipDrawable(new ColorDrawable(Color.YELLOW),
+                    Gravity.CENTER, ClipDrawable.HORIZONTAL);
             oilInput.setTextColor(getResources().getColor(R.color.color_progress_yello));
-            carOilProgress.setBackgroundResource(R.color.color_progress_yello);
         } else if (carOilProgress.getProgress() >= 50) {
+            color = new ClipDrawable(new ColorDrawable(Color.GREEN),
+                    Gravity.CENTER, ClipDrawable.HORIZONTAL);
             oilInput.setTextColor(getResources().getColor(R.color.color_progress_greed));
-            carOilProgress.setBackgroundResource(R.color.color_progress_greed);
         } else {
-            carOilProgress.setBackgroundResource(R.color.color_progress_red);
+            color = new ClipDrawable(new ColorDrawable(Color.RED),
+                    Gravity.CENTER, ClipDrawable.HORIZONTAL);
+            oilInput.setTextColor(getResources().getColor(R.color.color_progress_red));
 
         }
+        carOilProgress.setProgressDrawable(color);
     }
 
     /**

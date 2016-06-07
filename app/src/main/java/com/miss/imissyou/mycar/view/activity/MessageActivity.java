@@ -60,8 +60,7 @@ public class MessageActivity extends BaseActivity implements MessageView {
         } else {
             mMessagePresenter.getUserUnReadMessage();
         }
-
-        changeStateToService();
+        //changeStateToService();
     }
 
     @Override public void addListeners() {
@@ -109,7 +108,7 @@ public class MessageActivity extends BaseActivity implements MessageView {
         if (messages.size() > 0) {
            setListData(messages);
         } else {
-            showResultError(0, "没有信息");
+           ToastUtil.asLong("没有信息提示");
         }
     }
 
@@ -136,7 +135,7 @@ public class MessageActivity extends BaseActivity implements MessageView {
     private void changeStateToService() {
 
         if (null != Constant.userBean && 0 !=  Constant.userBean.getId())
-        mMessagePresenter.changeStateToService(Constant.userBean.getId());
+            mMessagePresenter.changeStateToService(Constant.userBean.getId());
     }
 
     @Override public void showProgress() {

@@ -12,6 +12,7 @@
     <com.miss.imissyou.mycar.ui.TitleFragment
         android:id="@+id/addnewCarInput_title"
         android:layout_width="match_parent"
+        android:layout_marginTop="45dp"
         android:layout_height="50dp"/>
     <!--加载-->
     <com.miss.imissyou.mycar.ui.circleProgress.CircleProgress
@@ -26,7 +27,7 @@
     <!--车辆详细信息-->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -71,6 +72,7 @@
                         <TextView
                             android:id="@+id/activity_add_newCar_brand_input"
                             style="@style/car_info_input_text"
+                            android:textColor="@color/color_back"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="未知" />
@@ -92,6 +94,7 @@
                         <TextView
                             android:id="@+id/activity_add_newCar_engineNumber_input"
                             style="@style/car_info_input_text"
+                            android:textColor="@color/color_back"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="未知" />
@@ -113,6 +116,7 @@
                         <TextView
                             android:id="@+id/activity_add_newCar_vin_input"
                             style="@style/car_info_input_text"
+                            android:textColor="@color/color_back"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="未知" />
@@ -134,6 +138,7 @@
                         <TextView
                             android:id="@+id/activity_add_newCar_rank_input"
                             style="@style/car_info_input_text"
+                            android:textColor="@color/color_back"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="未知" />
@@ -273,7 +278,7 @@
                         style="@style/car_info_text"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="油量容积:  " />
+                        android:text="油箱容积:  " />
 
                     <TextView
                         android:id="@+id/activity_add_newCar_oilBox_input"
@@ -439,7 +444,7 @@
                             style="@style/car_info_text"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="变速箱性能:  " />
+                            android:text="转速器性能:  " />
 
                         <TextView
                             android:id="@+id/activity_add_newCar_transmission_message"
@@ -453,17 +458,19 @@
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/activity_addNew_sumbit_tonewPage"
-                android:background="@color/color_carView_mainMesage"
-                android:gravity="center"
-                android:text="确认信息"
-                android:textSize="20sp"
-                android:textColor="@color/color_back"
-                android:layout_width="match_parent"
-                android:layout_height="50dp" />
+
         </LinearLayout>
 
     </ScrollView>
+    <Button
+        android:id="@+id/activity_addNew_sumbit_tonewPage"
+        android:background="@color/color_carView_mainMesage"
+        android:gravity="center"
+        android:text="确认信息"
+        android:textSize="20sp"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="45dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
 
 </LinearLayout>

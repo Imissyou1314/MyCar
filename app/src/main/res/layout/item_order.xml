@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="3dp"
+    android:layout_marginBottom="30dp"
     android:layout_marginTop="20dp"
     android:padding="20dp"
     android:background="@color/colorWhite"
@@ -34,15 +34,15 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1.5dp"
+        android:layout_height="1dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
-        android:background="@color/color_back_gui" />
+        android:background="#eeeeee" />
 
     <!--订单号信息-->
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
+        android:orientation="horizontal"
         android:layout_height="wrap_content">
 
         <LinearLayout
@@ -95,7 +95,5 @@
             android:layout_height="match_parent" />
 
     </LinearLayout>
-
-
 
 </LinearLayout>

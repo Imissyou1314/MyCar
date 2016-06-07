@@ -2,7 +2,6 @@ package com.miss.imissyou.mycar.model.impl;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
@@ -28,14 +27,10 @@ public class MessageModelImpl implements MessageModle {
         String url = Constant.SERVER_URL + "message/getAll/userId=" + userId;
 
         LogUtils.d("请求路径：" + url);
-        RxVolley.get(url, new HttpCallback() {
+        HttpCallback callback =  new HttpCallback() {
 
             @Override public void onSuccess(String t) {
                 ResultBean resultBean = GsonUtils.getResultBean(t);
-                if (resultBean == null) {
-                    onFailure(0, "解析数据异常");
-                    return;
-                }
                 mMessagePresenter.onSuccess(resultBean);
             }
 
@@ -44,7 +39,15 @@ public class MessageModelImpl implements MessageModle {
                     strMsg = Constant.NOTNETWORK;
                 mMessagePresenter.onFailure(errorNo, strMsg);
             }
-        });
+        };
+
+        new RxVolley.Builder()
+                .shouldCache(false)
+                .cacheTime(0)
+                .url(url)
+                .callback(callback)
+                .httpMethod(RxVolley.Method.GET)
+                .doTask();
     }
 
     /**
@@ -108,7 +111,7 @@ public class MessageModelImpl implements MessageModle {
     @Override public void getUserUnReadMessage(Long userId) {
         String url = Constant.SERVER_URL + "message/getUnread/userId=" + userId;
         LogUtils.d("请求路径:" + url);
-        RxVolley.get(url, new HttpCallback() {
+       HttpCallback callback = new HttpCallback() {
             @Override
             public void onFailure(int errorNo, String strMsg) {
                 mMessagePresenter.onFailure(errorNo, strMsg);
@@ -124,7 +127,15 @@ public class MessageModelImpl implements MessageModle {
                     mMessagePresenter.onSuccess(resultBean);
                 }
             }
-        });
+        };
+
+        new RxVolley.Builder()
+                .shouldCache(false)
+                .cacheTime(0)
+                .url(url)
+                .callback(callback)
+                .httpMethod(RxVolley.Method.GET)
+                .doTask();
     }
 
     public MessageModelImpl(MessagePresenterImpl messagePresenter) {

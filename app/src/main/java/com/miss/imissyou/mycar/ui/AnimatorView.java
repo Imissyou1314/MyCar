@@ -5,7 +5,9 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.view.View;
-import android.view.ViewAnimationUtils;
+
+import io.codetail.animation.ViewAnimationUtils;
+
 
 /**
  * Created by Imissyou on 2016/4/27.

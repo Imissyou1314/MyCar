@@ -73,6 +73,8 @@ public class OrderFragment extends ListFragment implements OrderListView, Screen
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         final OrderBean order = orders.get(position);
+        // TODO: 2016-06-06 添加ListView的间距
+        l.setDividerHeight(10);
 
         Bundle bundle = new Bundle();
         bundle.putLong("orderId",order.getId());
@@ -83,9 +85,8 @@ public class OrderFragment extends ListFragment implements OrderListView, Screen
         getActivity()
                 .getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container_frame, orderInfoFragment)
+                .replace(R.id.content_overlay, orderInfoFragment)
                 .commit();
-
     }
 
     @Override
@@ -98,7 +99,7 @@ public class OrderFragment extends ListFragment implements OrderListView, Screen
             @Override
             public void convert(ViewHolder holder, final OrderBean orderBean) {
                 holder.setText(R.id.order_item_orderId, orderBean.getId() + "");
-//                holder.setText(R.id.order_item_carBrand, orderBean.getC)
+                holder.setText(R.id.order_item_carBrand, orderBean.getPlateNumber());
                 holder.setText(R.id.order_item_orderState, getOrderState(orderBean.getState()));
                 holder.setText(R.id.order_item_orderTime, orderBean.getAgreementTime());
                 holder.setText(R.id.order_item_orderTotalPrice, "￥ " + orderBean.getPrice());

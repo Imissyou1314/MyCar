@@ -38,8 +38,10 @@ public class GasStationPresenterImpl implements GasStationPresenter {
             List<GasStationBean> resultBeans = ((GasStationResultBean)resultBean).getResult().getData();
             LogUtils.d("加油站的数量" + resultBeans.size());
             mGasStationListView.showResultSuccess(resultBeans);
+        } else if (((GasStationResultBean) resultBean).getResultcode() == 205 ){
+            mGasStationListView.showResultError(2, "附近10公里没有加油站");
         } else {
-            mGasStationListView.showResultError(0, "连接网络失败");
+            mGasStationListView.showResultError(1,"获取不到数据");
         }
         mGasStationListView.hideProgress();
     }

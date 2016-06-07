@@ -78,12 +78,19 @@ public class AddNewCarActivity extends BaseActivity implements SurfaceHolder.Cal
     private Bitmap scanBitmap;
     @FindViewById(id = R.id.qrdecoderview)
     private QRCodeReaderView mydecoderview;
+    private boolean isFirst = true;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_add_newcar);
 //        CameraManager.init(getApplication());
 //        hasSurface = false;
 //        inactivityTimer = new InactivityTimer(this);
+    }
+
+    @Override
+    protected void onStart() {
+        isFirst = true;
+        super.onStart();
     }
 
     @Override
@@ -315,7 +322,7 @@ public class AddNewCarActivity extends BaseActivity implements SurfaceHolder.Cal
             return;
         }
         //TODO 跳转到下一页
-        toVerifyAddCarActivity(resultString);
+        //toVerifyAddCarActivity(resultString);
 
     }
 
@@ -426,7 +433,10 @@ public class AddNewCarActivity extends BaseActivity implements SurfaceHolder.Cal
     @Override
     public void onQRCodeRead(String text, PointF[] points) {
         LogUtils.w("扫描结果:" + text);
-        toVerifyAddCarActivity(text);
+        if (isFirst) {
+            toVerifyAddCarActivity(text);
+            isFirst = !isFirst;
+        }
         this.finish();
     }
 

@@ -38,7 +38,7 @@ public class SumbitIndentModelImpl implements SumbitIndentModel {
         params.put("type", orderBean.getType());
         params.put("units", orderBean.getUnits());
         params.put("price", orderBean.getPrice() + "");
-        params.put("number", orderBean.getNumber());
+        params.put("number", orderBean.getNumber() + "");
         params.put("amounts", orderBean.getAmounts());
         params.put("state", orderBean.getState());
 

@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 
+import com.bumptech.glide.Glide;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.lidroid.xutils.util.LogUtils;
@@ -147,7 +148,7 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
         this.cars = resultBean;
 
 
-        carInfoList.setAdapter(new CommonAdapter<CarInfoBean>(getActivity(), resultBean, R.layout.item_carInfo_list) {
+        carInfoList.setAdapter(new CommonAdapter<CarInfoBean>(getActivity(), resultBean, R.layout.item_carinfo_list) {
             @Override
             public void convert(final ViewHolder holder, CarInfoBean car) {
                                 if (car.isCurrentCar()) {
@@ -170,26 +171,11 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
                 }
 
                 if (!car.getMark().equals("")) {
-                    LogUtils.d("请求图片的地址:" + Constant.SERVER_URL + car.getMark());
-
-
-                    RxVolley.get(Constant.SERVER_URL + car.getMark(), new HttpCallback() {
-                        @Override
-                        public void onSuccess(Map<String, String> headers, Bitmap bitmap) {
-                            if (bitmap != null)
-                                holder.setImage(R.id.car_list_item_carImage, bitmap);
-                        }
-
-                        @Override
-                        public void onFailure(int errorNo, String strMsg) {
-                            LogUtils.d("连接服务器异常:" + strMsg);
-                        }
-                    });
+                    //Glide.with(this).load(Constant.SERVER_URL + car.getMark()).into()
                 }
             }
         });
     }
-
 
     @Override
     public void onDestroy() {

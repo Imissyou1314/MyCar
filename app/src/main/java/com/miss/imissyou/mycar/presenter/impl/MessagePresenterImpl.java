@@ -17,8 +17,6 @@ public class MessagePresenterImpl implements MessagePresenter {
     private MessageView mMessageView;
     private MessageModle mMessageModle;
 
-
-
     public MessagePresenterImpl(MessageActivity messageActivity) {
         attachView(messageActivity);
         mMessageModle = new MessageModelImpl(this);

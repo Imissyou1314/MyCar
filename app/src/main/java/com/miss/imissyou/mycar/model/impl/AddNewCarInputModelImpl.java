@@ -61,6 +61,7 @@ public class AddNewCarInputModelImpl implements AddNewCarInputModel {
                 addNewCarInputPresenter.onFailure(errorNo,strMsg);
             }
             @Override public void onSuccess(String t) {
+                LogUtils.d("收到的数据"  + t);
                 addNewCarInputPresenter.onAddCarSuccess(t);
             }
         };
@@ -70,6 +71,7 @@ public class AddNewCarInputModelImpl implements AddNewCarInputModel {
                 .httpMethod(RxVolley.Method.POST)
                 .encoding("utf-8")
                 .url(url)
+                .timeout(6000)
                 .params(params)
                 .callback(callback)
                 .doTask();
@@ -103,9 +105,9 @@ public class AddNewCarInputModelImpl implements AddNewCarInputModel {
 
         new RxVolley.Builder()
                 .shouldCache(false)
+                .cacheTime(0)
                 .url(url)
                 .callback(httpCallback)
-                .timeout(6000)
                 .httpMethod(RxVolley.Method.GET)
                 .doTask();
     }

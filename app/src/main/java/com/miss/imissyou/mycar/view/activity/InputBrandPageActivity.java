@@ -1,7 +1,9 @@
 package com.miss.imissyou.mycar.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,6 +46,7 @@ public class InputBrandPageActivity extends BaseActivity implements View.OnClick
         mAddNewCarInputPresenter = new AddNewCarInputPresenterImpl(this);
         Bundle bundle = getIntent().getBundleExtra("carInfoBean");
         carInfoBean = (CarInfoBean) bundle.getSerializable("carInfo");
+        LogUtils.d("车辆信息:" + GsonUtils.Instance().toJson(carInfoBean));
     }
 
     @Override
@@ -53,11 +56,14 @@ public class InputBrandPageActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
+
         String carBrand = brandInput.getText().toString();
-        if (StringUtil.isEmpty(carBrand)) {
+        LogUtils.d("提交车辆"+ carBrand);
+        if (null == carBrand && "".equals(carBrand)) {
+            LogUtils.d("车牌号为空");
             showResultError(0,"请输入车牌号");
         } else {
-            carInfoBean.setBrand(carBrand);
+            carInfoBean.setPlateNumber(carBrand);
             // TODO: 2016/6/5 打印车辆信息
             LogUtils.w("提交车辆的信息:" + GsonUtils.Instance().toJson(carInfoBean));
             mAddNewCarInputPresenter.sentCarInfoToService(carInfoBean);
@@ -82,9 +88,14 @@ public class InputBrandPageActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void showResultSuccess(ResultBean resultBean) {
+        LogUtils.d("添加车辆成功" + GsonUtils.Instance().toJson(resultBean));
         if (resultBean.isServiceResult()) {
             // TODO: 2016/6/5 提示添加车辆成功
-            new DialogUtils(this).showSucces(resultBean.getResultInfo(),Constant.SUCCESS_TITLE, MainActivity.class);
+            //new DialogUtils(this).showSucces(resultBean.getResultInfo(),
+               //     Constant.SUCCESS_TITLE, MainActivity.class);\
+            Intent intent = new Intent();
+            intent.setClass(this,MainActivity.class);
+            startActivity(intent);
         } else {
             showResultError(0, resultBean.getResultInfo());
         }

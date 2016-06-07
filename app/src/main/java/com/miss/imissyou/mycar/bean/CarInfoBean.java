@@ -19,14 +19,14 @@ public class CarInfoBean extends BaseBean {
     private double oilBox;                  //油量容积
     private double oil;                      //油量
     private double temperature;             //温度
-    private boolean enginProperty;           //发动机性能
+    private boolean engineProperty;           //发动机性能
     private boolean transmission;            //变速器性能
     private boolean carLight;                //车灯性能
     private boolean carState;                //车状态
     private boolean carAlarm;                //车警报
 
 
-    private boolean SRS;                    //安全气囊
+    private boolean srs;                    //安全气囊
 
     /**
      * 警告信息
@@ -232,12 +232,12 @@ public class CarInfoBean extends BaseBean {
         this.carState = carState;
     }
 
-    public boolean isEnginProperty() {
-        return enginProperty;
+    public boolean isEngineProperty() {
+        return engineProperty;
     }
 
-    public void setEnginProperty(boolean enginProperty) {
-        this.enginProperty = enginProperty;
+    public void setEngineProperty(boolean engineProperty) {
+        this.engineProperty = engineProperty;
     }
 
     public String getModels() {
@@ -248,11 +248,11 @@ public class CarInfoBean extends BaseBean {
         this.models = models;
     }
 
-    public boolean isSRS() {
-        return SRS;
+    public boolean isSrs() {
+        return srs;
     }
 
-    public void setSRS(boolean SRS) {
-        this.SRS = SRS;
+    public void setSrs(boolean srs) {
+        this.srs = srs;
     }
 }

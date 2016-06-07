@@ -1,5 +1,7 @@
 package com.miss.imissyou.mycar.model.impl;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.miss.imissyou.mycar.bean.GasStationResultBean;
 import com.miss.imissyou.mycar.model.GasStationModle;
 import com.miss.imissyou.mycar.presenter.GasStationPresenter;
@@ -26,8 +28,11 @@ public class GasStationModelImpl implements GasStationModle {
     @Override public void loadGasStationData(double lon, double lat, int r, int page, String key, int format) {
 
         HttpParams param = new HttpParams();
-        param.put("lon",lon + "");
-        param.put("lat",lat + "");
+       // param.put("lon",lon + "");
+        //param.put("lat",lat + "");
+
+        param.put("lon","121.538123");
+        param.put("lat","31.677123");
         param.put("r", + r);
         param.put("page", page);
         param.put("key", key);
@@ -42,11 +47,16 @@ public class GasStationModelImpl implements GasStationModle {
             }
 
             @Override public void onSuccess(String t) {
-                GasStationResultBean  gasStationResultBean = GsonUtils
-                        .Instance().fromJson(t, GasStationResultBean.class);
+                LogUtils.d("获取加油站的信息：" + t);
+
+                Gson gsonBuilder =new GsonBuilder().create();
+                GasStationResultBean gasStationResultBean = gsonBuilder.fromJson(t, GasStationResultBean.class);
+               // GasStationResultBean  gasStationResultBean = GsonUtils.Instance().fromJson(t, GasStationResultBean.class);
                 LogUtils.w("获取加油站的信息:" + t);
-                if (gasStationResultBean != null)
+
+                if (gasStationResultBean != null) {
                     gasStation.onSuccess(gasStationResultBean);
+                }
             }
         });
     }

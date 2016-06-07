@@ -74,7 +74,7 @@ public class Constant {
     /**
      * 设置获取加油站的默认选项
      */
-    public static int GET_GASSTATION_R = 10000;         //设置半径为10公里
+    public static int GET_GASSTATION_R = 10000;         //设置半径为50公里
     public static final String GET_GASSTATION_KEY = "b752fa0f5e45383bb66b8b8758040c72";
 
     /**

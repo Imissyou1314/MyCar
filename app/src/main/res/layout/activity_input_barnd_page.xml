@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
     <!--输入车牌号的页面-->
 
-    <com.rey.material.widget.EditText
+    <EditText
         android:id="@+id/input_add_brand_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,17 +14,17 @@
         android:layout_marginRight="15dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="40dp"
-        android:hint="车牌号"
-        app:et_labelTextSize="20sp"
-        app:et_supportMode="none" />
+        android:hint="车牌号"  />
 
 
-    <com.rey.material.widget.Button
+    <Button
         android:id="@+id/input_add_brand_sumbit"
-        android:layout_width="0dp"
-        android:layout_height="36dp"
-        android:text="下一步"
         android:layout_alignParentBottom="true"
-        android:background="@null" />
+        android:layout_width="match_parent"
+        android:textSize="20sp"
+        android:background="@color/color_carView_mainMesage"
+        android:textColor="@color/colorWhite"
+        android:layout_height="50dp"
+        android:text="下一步" />
 
 </RelativeLayout>
