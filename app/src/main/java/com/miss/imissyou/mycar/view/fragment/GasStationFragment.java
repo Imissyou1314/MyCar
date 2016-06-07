@@ -75,7 +75,7 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
 //                double lng = MapChangeUtils.Convert_GCJ02_To_BD09_Lng(Constant.MyLatitude,Constant.MyLongitude);
 
 
-     //   mGasStationPresenter.loadServiceData(latLng.getLatitude(), latLng.getLongitude(), 10000, Constant.GET_GASSTATION_KEY, 1, 1);
+        //   mGasStationPresenter.loadServiceData(latLng.getLatitude(), latLng.getLongitude(), 10000, Constant.GET_GASSTATION_KEY, 1, 1);
     }
 
     @Override
@@ -91,7 +91,6 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
 
                 Bundle bundle = new Bundle();
                 LogUtils.d("加油站的信息" + GsonUtils.Instance().toJson(gasStationBean));
-
                 bundle.putString("gasStation", GsonUtils.Instance().toJson(gasStationBean));
                 gasFragment.setArguments(bundle);
 
@@ -117,7 +116,7 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
                 }
                 holder.setText(R.id.gasSattion_Item_gasName, gasStationBean.getName());
                 holder.setText(R.id.gasSattion_Item_stationAddress, gasStationBean.getAddress());
-                holder.addText(R.id.gasSattion_Item_diatance, (Double.parseDouble(gasStationBean.getDistance()) / 1000) + "");
+                holder.setText(R.id.gasSattion_Item_diatance, (Double.parseDouble(gasStationBean.getDistance()) / 1000) + "km");
 
                 // TODO: 2016/6/5 等待测试 
                 //跳转到导航哪里
@@ -133,6 +132,9 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
 
                         intent.putExtra(Constant.NO_START_NAVI, true);
 
+                        LogUtils.d("穿过去的经纬度"+
+                                latLng.latitude +"::::" + latLng.longitude);
+
                         intent.putExtra(Constant.endLatitude, latLng.latitude);
                         intent.putExtra(Constant.endLongitude, latLng.longitude);
 
@@ -146,16 +148,6 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + Constant.GASSTION_PHONE));
-                        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                            // TODO: Consider calling
-                            //    ActivityCompat#requestPermissions
-                            // here to request the missing permissions, and then overriding
-                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                            //                                          int[] grantResults)
-                            // to handle the case where the user grants the permission. See the documentation
-                            // for ActivityCompat#requestPermissions for more details.
-                            return;
-                        }
                         getActivity().startActivity(intent);
                     }
                 });
@@ -164,11 +156,12 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
 
     }
 
-    @Override public void showResultError(int errorNo, String errorMag) {
-        String title ="提示";
+    @Override
+    public void showResultError(int errorNo, String errorMag) {
+        String title = "提示";
         if (errorNo == 0) {
             title = "错误";
-        } else if (errorNo == 2){
+        } else if (errorNo == 2) {
             title = "提示";
         }
 
@@ -177,17 +170,73 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
                 .show();
     }
 
-    @Override public void showResultSuccess(ResultBean resultBean) {
+    @Override
+    public void showResultSuccess(ResultBean resultBean) {
 
     }
 
-    @Override public void showProgress() {
+    @Override
+    public void showProgress() {
 
     }
 
-    @Override public void hideProgress() {
+    @Override
+    public void hideProgress() {
 
     }
+
+    /**
+     * 定位成功后回调函数
+     *
+     * @param aMapLocation
+     */
+    @Override
+    public void onLocationChanged(AMapLocation aMapLocation) {
+        if (null != aMapLocation && 0 == aMapLocation.getErrorCode()) {
+            LogUtils.w("停止定位");
+
+            //获取开始的经纬度
+            Constant.MyLongitude = aMapLocation.getLongitude();
+            Constant.MyLatitude = aMapLocation.getLatitude();
+            LogUtils.w("定位的经纬度:" + Constant.MyLongitude + "::::" + Constant.MyLatitude);
+            LogUtils.w("定位成功：" + aMapLocation.getAddress());
+            LogUtils.w("获取城市编码：" + aMapLocation.getAdCode());
+
+            //高德经纬度转百度经纬度
+            JZLocationConverter.LatLng latLng = new JZLocationConverter.LatLng(Constant.MyLatitude, Constant.MyLongitude);
+
+            latLng = JZLocationConverter.gcj02ToBd09(latLng);
+            LogUtils.d("转换后的经纬度:" + latLng.getLatitude() + "::::" + latLng.getLongitude());
+            mGasStationPresenter.loadServiceData(latLng.getLatitude(), latLng.getLongitude(), Constant.GET_GASSTATION_R,
+                    Constant.GET_GASSTATION_KEY, 1, 1);
+        } else {
+            // TODO: 2016-06-06 测试
+            mGasStationPresenter.loadServiceData(1.0, 2.0, Constant.GET_GASSTATION_R,
+                    Constant.GET_GASSTATION_KEY, 1, 1);
+            LogUtils.w("定位失败" + aMapLocation.getErrorCode() + ":" + aMapLocation.getErrorCode());
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //mlocationClient.onDestroy();
+    }
+
+    @Override
+    public void onStart() {
+        if (null != mlocationClient)
+            mlocationClient.startLocation();
+        super.onStart();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (null != mlocationClient)
+            mlocationClient.stopLocation();
+    }
+
 
     /**
      * 初始化定位功能
@@ -209,58 +258,5 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
             mlocationClient.setLocationOption(mLocationOption);
             mlocationClient.startLocation();
         }
-    }
-
-    /**
-     * 定位成功后回调函数
-     *
-     * @param aMapLocation
-     */
-    @Override
-    public void onLocationChanged(AMapLocation aMapLocation) {
-
-            if (null != aMapLocation && 0 == aMapLocation.getErrorCode()) {
-                LogUtils.w("停止定位");
-
-                //获取开始的经纬度
-                Constant.MyLongitude = aMapLocation.getLongitude();
-                Constant.MyLatitude = aMapLocation.getLatitude();
-                LogUtils.w("定位的经纬度:" +Constant.MyLongitude + "::::" + Constant.MyLatitude );
-                LogUtils.w("定位成功：" + aMapLocation.getAddress());
-                LogUtils.w("获取城市编码：" + aMapLocation.getAdCode());
-
-                //高德经纬度转百度经纬度
-                JZLocationConverter.LatLng latLng = new JZLocationConverter.LatLng(Constant.MyLatitude, Constant.MyLongitude);
-
-                latLng = JZLocationConverter.gcj02ToBd09(latLng);
-                LogUtils.d("转换后的经纬度:" + latLng.getLatitude() + "::::" + latLng.getLongitude());
-                mGasStationPresenter.loadServiceData(latLng.getLatitude(), latLng.getLongitude(), Constant.GET_GASSTATION_R,
-                        Constant.GET_GASSTATION_KEY, 1, 1);
-            } else {
-                // TODO: 2016-06-06 测试
-                mGasStationPresenter.loadServiceData(1.0, 2.0, Constant.GET_GASSTATION_R,
-                        Constant.GET_GASSTATION_KEY, 1, 1);
-                LogUtils.w("定位失败" + aMapLocation.getErrorCode() + ":" + aMapLocation.getErrorCode());
-            }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mlocationClient.onDestroy();
-    }
-
-    @Override
-    public void onStart() {
-        if (null != mlocationClient)
-        mlocationClient.startLocation();
-        super.onStart();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (null != mlocationClient)
-            mlocationClient.stopLocation();
     }
 }

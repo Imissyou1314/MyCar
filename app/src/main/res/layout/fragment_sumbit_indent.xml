@@ -216,6 +216,7 @@
                         <EditText
                             android:id="@+id/sumbitIndent_iloNumber_editInput"
                             android:gravity="center|bottom|left"
+                            android:background="@null"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
@@ -248,6 +249,7 @@
                             android:id="@+id/sumbitIndent_price_editInput"
                             android:layout_width="match_parent"
                             android:gravity="center|bottom|left"
+                            android:background="@null"
                             android:layout_height="wrap_content" />
 
 
@@ -291,13 +293,6 @@
                             android:layout_height="match_parent" />
 
                     </LinearLayout>
-
-
-
-
-
-
-
                 </LinearLayout>
 
                 <!--订单提交按钮-->

@@ -57,6 +57,7 @@ dependencies {
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
     compile files('libs/gson-2.2.4.jar')
     compile files('libs/weizhang_sdk.jar')
+
     //FAB Button
     compile 'com.github.shell-software:fab:1.1.2'
     compile files('libs/jpush-android-2.1.3.jar')
@@ -66,7 +67,7 @@ dependencies {
     //定位搜索导航
     compile files('libs/Msc.jar')
     compile files('libs/jaudiotagger-2.0.4.jar')
-    compile files('libs/AMap3DMap_3.3.2_AMapNavi_1.8.0_AMapSearch_3.2.1_AMapLocation_2.4.1_20160524.jar')
+     compile files('libs/AMap3DMap_3.3.2_AMapNavi_1.8.0_AMapSearch_3.2.1_AMapLocation_2.4.1_20160524.jar')
     //二维码扫描
     compile 'com.dlazaro66.qrcodereaderview:qrcodereaderview:1.0.0'
    //compile files('libs/zxing.jar')
@@ -74,4 +75,12 @@ dependencies {
     compile 'com.github.rey5137:material:1.2.4'
 
     compile 'org.jetbrains:annotations-java5:15.0'
+
+    //添加单元测试
+    testCompile 'org.robolectric:robolectric:3.0'
+    //testCompile 'junit:junit:4.12'
+    //androidTestCompile 'com.android.support.test:runner:0.2'
+    //androidTestCompile 'com.android.support.test.rules:0.2'
+    //
+    // androidTestCompile 'com.android.support.test.espresso:espresso-core:2.1'
 }

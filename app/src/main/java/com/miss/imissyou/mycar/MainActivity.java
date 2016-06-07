@@ -54,7 +54,6 @@ import com.miss.imissyou.mycar.view.fragment.SettingFragment;
 import com.miss.imissyou.mycar.view.fragment.CarListFragment;
 import com.miss.imissyou.mycar.view.fragment.ContentFragment;
 import com.miss.imissyou.mycar.view.fragment.GasStationFragment;
-import com.miss.imissyou.mycar.view.fragment.HomeFragment;
 import com.miss.imissyou.mycar.view.fragment.LocationMapFragment;
 import com.miss.imissyou.mycar.view.fragment.MusicFragment;
 import com.miss.imissyou.mycar.view.fragment.NaviViewFragment;
@@ -91,7 +90,7 @@ public class MainActivity extends ActionBarActivity
     private Intent intent;
 
     /** 导航栏的Item fragment*/
-    private HomeFragment homeFragment;
+    //private HomeFragment homeFragment;
     private CarListFragment carListFragement;
     private MusicFragment musicFragment;
     private WZCXFragment weiZhanChaXunFragment;
@@ -400,7 +399,7 @@ public class MainActivity extends ActionBarActivity
     private void setUpView() {
         //TODO
         contentFragment = ContentFragment.newInstance(R.mipmap.content_music);
-        homeFragment = new HomeFragment();
+        //homeFragment = new HomeFragment();
         carListFragement = new CarListFragment();
         musicFragment = new MusicFragment();
         weiZhanChaXunFragment = new WZCXFragment();

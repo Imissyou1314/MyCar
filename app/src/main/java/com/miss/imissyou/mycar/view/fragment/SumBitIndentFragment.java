@@ -48,9 +48,9 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     private TextView gastationAddres;       //加油站地址
     private TextView gastationDistance;     //加油站距离
     private TextView gastationType;         //加油站类型
-
     private TextView gastationOrderTime;    //预约时间
 
+    private LinearLayout gastationTimeSelect;       //现在预订时间
     private LinearLayout goNavi;            //去到导航页面
     private LinearLayout selectOilType;     //选择油类型
 
@@ -94,7 +94,9 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
         gastationAddres = (TextView) view.findViewById(R.id.sumbit_gastation_address);
         gastationDistance = (TextView) view.findViewById(R.id.sumbit_gastation_gastationDistance);
         gastationType = (TextView) view.findViewById(R.id.sumbit_gastation_stationType);
+        gastationOrderTime = (TextView) view.findViewById(R.id.sumbit_gastation_datatext);
 
+        gastationTimeSelect = (LinearLayout) view.findViewById(R.id.sumbit_gastation_data_select);
         goNavi = (LinearLayout) view.findViewById(R.id.sumbit_gastation_goNaiv);
         selectOilType = (LinearLayout) view.findViewById(R.id.sumbit_gastation_linearLayout);
 
@@ -153,6 +155,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     protected void addViewsListener() {
 
         goNavi.setOnClickListener(this);
+        gastationTimeSelect.setOnClickListener(this);
         sumbitNowPlay.setOnClickListener(this);
         sumBitDayPaly.setOnClickListener(this);
         /**
@@ -420,7 +423,8 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
 
         builder.positiveAction("确定")
                 .negativeAction("取消");
-
+        DialogFragment fragment = DialogFragment.newInstance(builder);
+        fragment.show(getFragmentManager(),null);
     }
 
     /**
@@ -446,6 +450,8 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
 
         builderTime.positiveAction("确认")
                 .negativeAction("取消");
+        DialogFragment fragment = DialogFragment.newInstance(builderTime);
+        fragment.show(getFragmentManager(),null);
     }
 
     /**

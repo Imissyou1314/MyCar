@@ -105,8 +105,6 @@ public class OrderFragment extends ListFragment implements OrderListView, Screen
                 holder.setText(R.id.order_item_orderTotalPrice, "￥ " + orderBean.getPrice());
             }
             });
-
-
     }
 
     @Override
