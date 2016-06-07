@@ -55,7 +55,6 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     private LinearLayout selectOilType;     //选择油类型
 
 
-
     private EditText priceInput;            //总价格输入
     private EditText oilNumberInput;        //总油量输入
 
@@ -69,12 +68,10 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     private OilBean oil;        //油的Bean
 
     private SumbitIndentPresenter mSumbitIndentPresenter;
-    private OrderBean orderBean;
+    private OrderBean orderBean = new OrderBean();
     private double lat;            //经度
     private double lot;            //纬度
     private String address;        //地址
-    private List<OilBean> oilBeans;
-    private List<String> oilType;
     private GasStationBean gasStation;
 
     private String date;            //日期
@@ -107,6 +104,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
 
         sumBitDayPaly = (TextView) view.findViewById(R.id.sumbit_play_playAfter);
         sumbitNowPlay = (TextView) view.findViewById(R.id.sumbit_play_playNow);
+
     }
 
     @Override
@@ -120,7 +118,8 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
             gastationName.setText(gasStation.getName());
             gastationType.setText(gasStation.getBrandname());
             gastationAddres.setText(gasStation.getAddress());
-            gastationDistance.setText((Integer.parseInt(gasStation.getDistance()) / 1000)  + "公里");
+            gastationDistance.setText((Integer.parseInt(gasStation.getDistance()) / 1000) + "公里");
+            addItemView(gasStation.getPrice());
         }
 
         //获取到的价格不为空
@@ -162,7 +161,8 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
          * 监控油量输入
          */
         priceInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override public void onFocusChange(View v, boolean hasFocus) {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
                 LogUtils.d("价格输入焦点该变");
                 if (hasFocus) {
                     LogUtils.d("价格输入获取焦点");
@@ -178,7 +178,8 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
          * 监控油量输入
          */
         oilNumberInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override public void onFocusChange(View v, boolean hasFocus) {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
                 LogUtils.d("油量输入焦点该变");
                 if (hasFocus) {
                     LogUtils.d("油量输入获取焦点");
@@ -297,7 +298,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
      * @return
      */
     private double getPrice(double oilNumber) {
-        if (oilNumber <= 0 || oil == null )
+        if (oilNumber <= 0 || oil == null)
             return 0;
         return (double) (oilNumber * Double.parseDouble(oil.getPrice()));
     }
@@ -338,7 +339,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     @Override
     public void onClick(View v) {
         Intent intent = new Intent();
-        switch(v.getId()) {
+        switch (v.getId()) {
             case R.id.sumbit_play_playAfter:
                 sumbitOrder();
                 showDialog();
@@ -370,13 +371,13 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
                 .setTitle("提示")
                 .setMessage("预约成功")
                 .setNegativeButton("到这里去", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                /**跳转到导航页面*/
-                goNaiv(new Intent(getActivity(), NaviViewActivity.class));
-                dialog.dismiss();
-            }
-        }).setPositiveButton("查看订单", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        /**跳转到导航页面*/
+                        goNaiv(new Intent(getActivity(), NaviViewActivity.class));
+                        dialog.dismiss();
+                    }
+                }).setPositiveButton("查看订单", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 /**跳转到订单页面*/
@@ -424,18 +425,19 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
         builder.positiveAction("确定")
                 .negativeAction("取消");
         DialogFragment fragment = DialogFragment.newInstance(builder);
-        fragment.show(getFragmentManager(),null);
+        fragment.show(getFragmentManager(), null);
     }
 
     /**
      * 选择时间
      */
     private void showselectTime() {
-        DatePickerDialog.Builder builderTime = new DatePickerDialog.Builder(){
+        TimePickerDialog.Builder builderTime = new TimePickerDialog.Builder() {
             @Override
             public void onPositiveActionClicked(DialogFragment fragment) {
-                TimePickerDialog dialog = (TimePickerDialog)fragment.getDialog();
-                time = dialog.getFormattedTime(SimpleDateFormat.getTimeInstance());
+                TimePickerDialog dialog = (TimePickerDialog) fragment.getDialog();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+                time = dialog.getFormattedTime(format);
                 addText(gastationOrderTime, " " + time);
                 Toast.makeText(getActivity(), "Date is " + time, Toast.LENGTH_SHORT).show();
                 super.onPositiveActionClicked(fragment);
@@ -443,7 +445,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
 
             @Override
             public void onNegativeActionClicked(DialogFragment fragment) {
-                Toast.makeText(getActivity(), "Cancelled" , Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_SHORT).show();
                 super.onNegativeActionClicked(fragment);
             }
         };
@@ -451,7 +453,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
         builderTime.positiveAction("确认")
                 .negativeAction("取消");
         DialogFragment fragment = DialogFragment.newInstance(builderTime);
-        fragment.show(getFragmentManager(),null);
+        fragment.show(getFragmentManager(), null);
     }
 
     /**
@@ -459,17 +461,17 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
      */
     private void goNaiv(Intent intent) {
 
-        intent.putExtra(Constant.NO_START_NAVI,true);
-        intent.putExtra(Constant.endLatitude,lat);
-        intent.putExtra(Constant.endLongitude,lot);
+        intent.putExtra(Constant.NO_START_NAVI, true);
+        intent.putExtra(Constant.endLatitude, lat);
+        intent.putExtra(Constant.endLongitude, lot);
 
         getActivity().startActivity(intent);
     }
 
     /**
      * View添加内容
-     * @param view
-     * @param text
+     * @param view  TextView
+     * @param text  添加的内容
      */
     private void addText(TextView view, String text) {
         view.setText(view.getText() + text);
@@ -483,33 +485,33 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         //设置加油站有的所有的油类型
-            for (final String key : oilTypeBean.keySet()) {
-                final TextView tv1 = new TextView(getActivity());
-                tv1.setLayoutParams(lp);//设置布局参数
-                tv1.setTag(key);
-                tv1.setText(oilTypeBean.get(key));
+        for (final String key : oilTypeBean.keySet()) {
+            final TextView tv1 = new TextView(getActivity());
+            tv1.setLayoutParams(lp);//设置布局参数
+            tv1.setTag(key);
+            tv1.setText(key);
+            tv1.setPadding(15,10,15,10);
 
-                tv1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showselectPrice(oilTypeBean.get(key));
-                        tv1.setBackgroundColor(getActivity()
-                                .getResources()
-                                .getColor(R.color.color_gui));
-                    }
-                });
-
-
-                OilBean tempBean = new OilBean();
-                oilType.add(key);
-                tempBean.setOilType(key);
-                tempBean.setPrice(oilTypeBean.get(key));
-                oilBeans.add(tempBean);
-            }
+            tv1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    oil = new OilBean();
+                    oil.setOilType(key);
+                    oil.setPrice(oilTypeBean.get(key));
+                    LogUtils.d("油价类型:" + key + "油价:" + oil.getPrice());
+                    showselectPrice(oilTypeBean.get(key));
+                    tv1.setBackgroundColor(getActivity()
+                            .getResources()
+                            .getColor(R.color.color_gui));
+                }
+            });
+            selectOilType.addView(tv1);
+        }
     }
 
     /**
      * 显示价格
+     *
      * @param price
      */
     private void showselectPrice(String price) {
