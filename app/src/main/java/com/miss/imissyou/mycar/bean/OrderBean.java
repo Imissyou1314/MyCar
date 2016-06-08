@@ -1,7 +1,5 @@
 package com.miss.imissyou.mycar.bean;
 
-import java.util.Date;
-
 /**
  * 订单BeanModle
  * Created by Imissyou on 2016/3/28.

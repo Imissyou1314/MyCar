@@ -1,7 +1,6 @@
 package com.miss.imissyou.mycar.view.fragment;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +10,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 
-import com.bumptech.glide.Glide;
-import com.kymjs.rxvolley.RxVolley;
-import com.kymjs.rxvolley.client.HttpCallback;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.CarInfoBean;
@@ -31,8 +27,6 @@ import com.software.shell.fab.ActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
 
 /**
  * 车辆信息 车库
