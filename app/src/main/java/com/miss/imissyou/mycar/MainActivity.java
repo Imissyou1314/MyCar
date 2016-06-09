@@ -89,7 +89,9 @@ public class MainActivity extends ActionBarActivity
 
     private Intent intent;
 
-    /** 导航栏的Item fragment*/
+    /**
+     * 导航栏的Item fragment
+     */
     //private HomeFragment homeFragment;
     private CarListFragment carListFragement;
     private MusicFragment musicFragment;
@@ -122,13 +124,13 @@ public class MainActivity extends ActionBarActivity
             builder = new MissDialog.Builder(this);
             doLogin();
 
-         //   if(!checkUserHasCar(Constant.userBean.getId())) {
-           //     LogUtils.w("用户没有车辆");
+            //   if(!checkUserHasCar(Constant.userBean.getId())) {
+            //     LogUtils.w("用户没有车辆");
 //               getSupportFragmentManager()
 //                       .beginTransaction()
 //                       .replace(R.id.content_overlay,new FirstAddCarFragment())
 //                       .commit();
-         //   }
+            //   }
         } else {
             LogUtils.d("用户Id" + Constant.userBean.getId());
             setAlias(Constant.userBean.getId());
@@ -169,6 +171,7 @@ public class MainActivity extends ActionBarActivity
 
     /**
      * 检查用户是否拥有车辆
+     *
      * @param id
      * @return
      */
@@ -185,11 +188,13 @@ public class MainActivity extends ActionBarActivity
             public void onSuccess(String t) {
                 LogUtils.w(t);
                 ResultBean resultBean = GsonUtils.getResultBean(t);
-                CarInfoBean carInfoBean = GsonUtils.getParam(resultBean,"car",CarInfoBean.class);
+                CarInfoBean carInfoBean = GsonUtils.getParam(resultBean, "car", CarInfoBean.class);
                 if (null != carInfoBean && null != carInfoBean.getId()) {
                     Constant.carBean = carInfoBean;
+                    startMainFragment();
                     resultTag = true;
                 } else {
+                    Constant.carBean = null;
                     resultTag = false;
                 }
             }
@@ -202,7 +207,6 @@ public class MainActivity extends ActionBarActivity
                 .httpMethod(RxVolley.Method.GET)
                 .callback(callback)
                 .doTask();
-
 
         return resultTag;
     }
@@ -237,6 +241,7 @@ public class MainActivity extends ActionBarActivity
                 params.put("cookie", Constant.COOKIE);
             //服务器URL
             String url = Constant.SERVER_URL + "users/doLogin";
+            LogUtils.d("登录: " + url);
             RxVolley.post(url, params, new HttpCallback() {
                 @Override
                 public void onFailure(int errorNo, String strMsg) {
@@ -291,6 +296,7 @@ public class MainActivity extends ActionBarActivity
 
     /**
      * JPushInterface绑定别名
+     *
      * @param id
      */
     private void setAlias(Long id) {
@@ -412,23 +418,37 @@ public class MainActivity extends ActionBarActivity
         firstAddCarFragment = new FirstAddCarFragment();
 
         if (null != Constant.carBean && null != Constant.carBean.getId()) {
+            startMainFragment();
+        } else {
+            LogUtils.d("启动第一次添加车辆页面");
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.content_frame, firstAddCarFragment, Constant.FirstAddCarFragment)
+                    .replace(R.id.content_frame, firstAddCarFragment)
+                    .commit();
+        }
+
+        //编写自己的布
+    }
+
+    /**
+     * 启动默认主页
+     */
+    private void startMainFragment() {
+        if (null != Constant.carBean && null != Constant.carBean.getId()) {
             Bundle bundle = new Bundle();
             LogUtils.d("启动车辆信息页面");
             bundle.putLong(Constant.USER_ID, Constant.userBean.getId());
             bundle.putLong(Constant.CAR_ID, Constant.carBean.getId());
             carInfoFragment.setArguments(bundle);
-
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, carInfoFragment)
+                    .replace(R.id.content_frame, carInfoFragment, Constant.CarInfoFragment)
                     .commit();
         } else {
             LogUtils.d("启动第一次添加车辆页面");
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, firstAddCarFragment)
+                    .replace(R.id.content_frame, firstAddCarFragment, Constant.FirstAddCarFragment)
                     .commit();
         }
-
-        //编写自己的布局
     }
 
 
@@ -452,25 +472,25 @@ public class MainActivity extends ActionBarActivity
             case ContentFragment.CAR:
                 //关掉菜单项
                 LogUtils.d("position :" + position);
-                return replaceFragment(carListFragement, position);
+                return replaceFragment(carListFragement, position, Constant.CarListFragment);
             case ContentFragment.MOVIE:
                 //电源菜单项
                 LogUtils.d("position :" + position);
-                return replaceFragment(gasStationFragment, position);
+                return replaceFragment(gasStationFragment, position, Constant.GasStationFragmetn);
             case ContentFragment.ORDER:
-                return replaceFragment(orderFragment, position);
+                return replaceFragment(orderFragment, position, Constant.OrderFragment);
             case ContentFragment.BREAK:
-                return replaceFragment(weiZhanChaXunFragment, position);
+                return replaceFragment(weiZhanChaXunFragment, position, Constant.WeiZhanChaXunFragment);
             case ContentFragment.HOME:
-                return replaceFragment(carInfoFragment, position);
+                return replaceFragment(carInfoFragment, position, Constant.CarInfoFragment);
             case ContentFragment.USER:
-                return replaceFragment(userInfoFragment, position);
+                return replaceFragment(userInfoFragment, position, Constant.UserInfoFragment);
             case ContentFragment.MUSIC:
-                return replaceFragment(musicFragment, position);
+                return replaceFragment(musicFragment, position, Constant.MusicFragment);
             case ContentFragment.MAP:
-                return replaceFragment(locationMapFragment, position);
+                return replaceFragment(locationMapFragment, position, Constant.LocationMapFragment);
             case ContentFragment.NAVIGATION:
-                return replaceFragment(naviViewFragment, position);
+                return replaceFragment(naviViewFragment, position, Constant.NaviViewFragment);
             default:
                 //更换菜单项
                 LogUtils.d("position :" + position);
@@ -500,7 +520,7 @@ public class MainActivity extends ActionBarActivity
     /**
      * 更换Fragment
      */
-    private ScreenShotable replaceFragment(ScreenShotable screenShotable, int topPosition) {
+    private ScreenShotable replaceFragment(ScreenShotable screenShotable, int topPosition, String Tag) {
         //更改页面布局
 
         View view = findViewById(R.id.content_frame);
@@ -513,7 +533,7 @@ public class MainActivity extends ActionBarActivity
 
         animator.start();
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, (Fragment) screenShotable).commit();
+                .replace(R.id.content_frame, (Fragment) screenShotable, Tag).commit();
         return screenShotable;
     }
 

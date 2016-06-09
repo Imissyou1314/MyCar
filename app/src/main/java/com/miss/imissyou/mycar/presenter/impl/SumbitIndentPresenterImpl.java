@@ -2,6 +2,7 @@ package com.miss.imissyou.mycar.presenter.impl;
 
 import com.miss.imissyou.mycar.bean.BaseBean;
 import com.miss.imissyou.mycar.bean.OrderBean;
+import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.model.SumbitIndentModel;
 import com.miss.imissyou.mycar.model.impl.SumbitIndentModelImpl;
 import com.miss.imissyou.mycar.presenter.SumbitIndentPresenter;
@@ -31,7 +32,7 @@ public class SumbitIndentPresenterImpl implements SumbitIndentPresenter {
     }
 
     @Override public void onSuccess(BaseBean resultBean) {
-
+        mSumbitIndentView.showResultSuccess((ResultBean) resultBean);
     }
 
     @Override public void loadServiceData(BaseBean useBean) {

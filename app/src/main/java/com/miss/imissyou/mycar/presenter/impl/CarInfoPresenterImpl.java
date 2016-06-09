@@ -22,7 +22,7 @@ public class CarInfoPresenterImpl implements CarInfoPresenter {
     private CarInfoModle mCarInfoModle;
 
 
-    public CarInfoPresenterImpl(CarInfoFragment carInfoFragment) {
+    public CarInfoPresenterImpl(CarInfoView carInfoFragment) {
         attachView(carInfoFragment);
         mCarInfoModle =new CarInfoModleImpl(this);
     }
@@ -36,8 +36,7 @@ public class CarInfoPresenterImpl implements CarInfoPresenter {
         mCarInfoView.showResultError(errorNo, strMsg);
     }
 
-    @Override
-    public void onSuccess(BaseBean resultBean) {
+    @Override public void onSuccess(BaseBean resultBean) {
         mCarInfoView.hideProgress();
         CarInfoBean carInfoBean =  GsonUtils.getParam((ResultBean) resultBean, "car", CarInfoBean.class);
         if (carInfoBean != null) {
@@ -85,5 +84,13 @@ public class CarInfoPresenterImpl implements CarInfoPresenter {
         }         else {
             mCarInfoView.showResultError(0,"传入的车辆Id不符合要求");
         }
+    }
+
+    @Override public void setCuurentCar(Long userId, Long carId) {
+        mCarInfoModle.setCurrentCar(userId, carId);
+    }
+
+    @Override public void setCurrentCarSuccess(ResultBean resultBean) {
+        mCarInfoView.showResultSuccess(resultBean);
     }
 }

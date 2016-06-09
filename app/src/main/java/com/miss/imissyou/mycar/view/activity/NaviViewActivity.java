@@ -49,10 +49,10 @@ public class NaviViewActivity extends BaseActivity implements AMapNaviViewListen
 
     AMapNavi mAMapNavi;
     TTSController mTtsManager;
-    NaviLatLng mEndLatlng;
-    NaviLatLng mStartLatlng;
-    //    NaviLatLng mEndLatlng = new NaviLatLng(21.150477, 110.307201);
-//    NaviLatLng mStartLatlng = new NaviLatLng(21.150468, 110.306202);
+    //NaviLatLng mEndLatlng;
+    // NaviLatLng mStartLatlng;
+    NaviLatLng mEndLatlng = new NaviLatLng(21.150477, 110.307201);
+    NaviLatLng mStartLatlng = new NaviLatLng(21.150468, 110.306202);
     List<NaviLatLng> mStartList = new ArrayList<NaviLatLng>();      //起点位置坐标
     List<NaviLatLng> mEndList = new ArrayList<NaviLatLng>();       //目标地坐标
     List<NaviLatLng> mWayPointList;             //途径路径点
@@ -80,7 +80,7 @@ public class NaviViewActivity extends BaseActivity implements AMapNaviViewListen
         mAMapNavi.addAMapNaviListener(mTtsManager);
         mAMapNavi.setEmulatorNaviSpeed(150);
 
-        setNaviState();             //获取导航点并设置导航方式
+
     }
 
     @Override
@@ -95,8 +95,8 @@ public class NaviViewActivity extends BaseActivity implements AMapNaviViewListen
         AMapNavi.getInstance(this).setEmulatorNaviSpeed(100);
         // 开启模拟导航
         AMapNavi.getInstance(this).startNavi(AMapNavi.EmulatorNaviMode);
-
-        getLocationLatLng();
+        setNaviState();             //获取导航点并设置导航方式
+        //getLocationLatLng();
         if (mEndLatlng != null) {
             LogUtils.w("可以导航了");
         } else {
@@ -109,18 +109,19 @@ public class NaviViewActivity extends BaseActivity implements AMapNaviViewListen
      */
     private void getLocationLatLng() {
         /**构造导航的起点和终点*/
-       startLon = getIntent().getDoubleExtra(Constant.startLongitude, 0);
-       startLat = getIntent().getDoubleExtra(Constant.startLatitude, 0);
+        startLon = getIntent().getDoubleExtra(Constant.startLongitude, 0);
+        startLat = getIntent().getDoubleExtra(Constant.startLatitude, 0);
         endLon = getIntent().getDoubleExtra(Constant.endLongitude, 0);
         endLat = getIntent().getDoubleExtra(Constant.endLatitude, 0);
         NaviTag = getIntent().getBooleanExtra(Constant.NO_START_NAVI, true);
-        if (startLat != 0L && startLon != 0L && startLat != startLon && !NaviTag) {
+        if (!NaviTag) {
+            LogUtils.d("有起点导航");
             mStartLatlng = new NaviLatLng(startLat, startLon);
             mStartList.add(mStartLatlng);
         } else {
+            LogUtils.d("无起点导航");
             AMapNavi.getInstance(this).startGPS();
         }
-
         LogUtils.w("开始经度：" + startLat + "开始纬度:" + startLon);
         LogUtils.w("结束经度：" + endLat + "结束纬度:" + endLon);
         mEndLatlng = new NaviLatLng(endLat, endLon);
@@ -411,16 +412,20 @@ public class NaviViewActivity extends BaseActivity implements AMapNaviViewListen
      * 设置导航方式 并获取计算导航路线
      */
     private void setNaviState() {
-        boolean naviType = getIntent().getBooleanExtra(Constant.NO_START_NAVI,false);
+        boolean naviType = getIntent().getBooleanExtra(Constant.NO_START_NAVI, false);
         if (naviType) {
             // TODO: 2016/6/6 无起点导航
             AMapNavi.getInstance(this).startGPS();
-        } else{
-            startLat = getIntent().getDoubleExtra(Constant.startLatitude,21.150468);
-            startLon = getIntent().getDoubleExtra(Constant.startLongitude,110.307201);
+        } else {
+            startLat = getIntent().getDoubleExtra(Constant.startLatitude, 21.150468);
+            startLon = getIntent().getDoubleExtra(Constant.startLongitude, 110.307201);
+            mStartLatlng = new NaviLatLng(startLat, startLon);
         }
-        endLat = getIntent().getDoubleExtra(Constant.endLatitude,21.150668);
-        endLat = getIntent().getDoubleExtra(Constant.endLongitude,110.305201);
+        endLat = getIntent().getDoubleExtra(Constant.endLatitude, 21.150668);
+        endLon = getIntent().getDoubleExtra(Constant.endLongitude, 110.305201);
+        mEndLatlng = new NaviLatLng(endLat,endLon);
+        LogUtils.w("开始经度：" + startLat + "开始纬度:" + startLon);
+        LogUtils.w("结束经度：" + endLat + "结束纬度:" + endLon);
     }
 
 }

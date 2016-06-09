@@ -9,7 +9,7 @@
     <!--具体车辆信息-->
     <!--加载-->
     <com.miss.imissyou.mycar.ui.circleProgress.CircleProgress
-        android:id="@+id/load_carInfo_progress"
+        android:id="@+id/car_info_change_progress"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:visibility="gone"
@@ -19,8 +19,9 @@
 
     <!--车辆详细信息-->
     <ScrollView
+        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,7 +38,7 @@
                 android:paddingBottom="15dp">
 
                 <ImageView
-                    android:id="@+id/car_info_carBrand_image"
+                    android:id="@+id/car_info_change_carBrand_image"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:src="@mipmap/bz" />
@@ -63,7 +64,7 @@
                             android:text="型号:  " />
 
                         <TextView
-                            android:id="@+id/carInfo_carBrand_input"
+                            android:id="@+id/car_info_change_carBrand_input"
                             style="@style/car_info_input_text"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
@@ -84,7 +85,7 @@
                             android:text="发动机号:  " />
 
                         <TextView
-                            android:id="@+id/carInfo_carEngineNumber_input"
+                            android:id="@+id/car_info_change_carEngineNumber_input"
                             style="@style/car_info_input_text"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
@@ -105,7 +106,7 @@
                             android:text="车架号:  " />
 
                         <TextView
-                            android:id="@+id/carInfo_carVin_input"
+                            android:id="@+id/car_info_change_carVin_input"
                             style="@style/car_info_input_text"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
@@ -126,7 +127,7 @@
                             android:text="车身等级:  " />
 
                         <TextView
-                            android:id="@+id/carInfo_carRank_input"
+                            android:id="@+id/car_info_change_carRank_input"
                             style="@style/car_info_input_text"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
@@ -180,7 +181,7 @@
                         android:text="油量:  " />
 
                     <TextView
-                        android:id="@+id/carInfo_carOil_input"
+                        android:id="@+id/car_info_change_carOil_input"
                         style="@style/car_info_input_text"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -197,7 +198,7 @@
                     android:paddingRight="20dp">
 
                     <ProgressBar
-                        android:id="@+id/carInfo_carOil_progress"
+                        android:id="@+id/car_info_change_carOil_progress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:max="100"
@@ -225,7 +226,7 @@
                         android:text="里程数:  " />
 
                     <TextView
-                        android:id="@+id/carInfo_carMileage_input"
+                        android:id="@+id/car_info_change_carMileage_input"
                         style="@style/car_info_input_text"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -248,7 +249,7 @@
                         android:text="温度:  " />
 
                     <TextView
-                        android:id="@+id/carInfo_carTemperature_input"
+                        android:id="@+id/car_info_change_carTemperature_input"
                         style="@style/car_info_input_text"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -271,7 +272,7 @@
                         android:text="油量容积:  " />
 
                     <TextView
-                        android:id="@+id/carInfo_carOilBox_input"
+                        android:id="@+id/car_info_change_carOilBox_input"
                         style="@style/car_info_input_text"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -327,7 +328,7 @@
                             android:text="车灯:  " />
 
                         <TextView
-                            android:id="@+id/carInfo_carLight_input"
+                            android:id="@+id/car_info_change_carLight_input"
                             style="@style/car_info_input_text"
                             android:layout_weight="1"
                             android:layout_width="wrap_content"
@@ -343,7 +344,7 @@
                             android:text="警报:  " />
 
                         <TextView
-                            android:id="@+id/carInfo_carAlarm_input"
+                            android:id="@+id/car_info_change_carAlarm_input"
                             style="@style/car_info_input_text"
                             android:layout_weight="1"
                             android:layout_width="wrap_content"
@@ -368,7 +369,7 @@
                             android:text="当前状态:  " />
 
                         <TextView
-                            android:id="@+id/carInfo_carState_input"
+                            android:id="@+id/car_info_change_carState_input"
                             style="@style/car_info_input_text"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
@@ -391,7 +392,7 @@
                             android:text="安全气囊系统:  " />
 
                         <TextView
-                            android:id="@+id/carInfo_carSRS_input"
+                            android:id="@+id/car_info_change_carSRS_input"
                             style="@style/car_info_input_text"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
@@ -414,7 +415,7 @@
                             android:text="发动机性能:  " />
 
                         <TextView
-                            android:id="@+id/carInfo_carEnginProperty_input"
+                            android:id="@+id/car_info_change_carEnginProperty_input"
                             style="@style/car_info_input_text"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
@@ -437,7 +438,7 @@
                             android:text="变速箱性能:  " />
 
                         <TextView
-                            android:id="@+id/carInfo_carTransmission_input"
+                            android:id="@+id/car_info_change_carTransmission_input"
                             style="@style/car_info_input_text"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
@@ -451,5 +452,14 @@
 
     </ScrollView>
 
-
+    <Button
+        android:id="@+id/car_info_change_changeState_Btn"
+        android:textSize="16sp"
+        android:layout_marginBottom="50dp"
+        android:gravity="center"
+        android:text="设置为当前车辆"
+        android:textColor="@color/colorWhite"
+        android:background="@color/color_carView_mainMesage"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
 </LinearLayout>

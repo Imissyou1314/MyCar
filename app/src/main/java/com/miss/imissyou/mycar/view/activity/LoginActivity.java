@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
@@ -96,10 +97,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 LogUtils.d("登录加载用户图片");
                 String url = Constant.SERVER_URL + Constant.userBean.getUserImg();
                 LogUtils.d("加载图片的地址" + url);
-//                Glide.with(this)
-//                        .load(Constant.SERVER_URL + Constant.userBean.getUserImg())
-//                        .centerCrop()
-//                        .into(userHeadImage);
+               Glide.with(this)
+                        .load(Constant.SERVER_URL + Constant.userBean.getUserImg())
+                       .centerCrop()
+                       .into(userHeadImage);
             }
 
         } else {

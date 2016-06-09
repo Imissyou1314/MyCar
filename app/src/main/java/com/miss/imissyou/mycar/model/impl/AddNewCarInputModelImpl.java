@@ -84,7 +84,7 @@ public class AddNewCarInputModelImpl implements AddNewCarInputModel {
 
     @Override public void loadCar(String url) {
 
-        LogUtils.w("请求路径：" + url);
+        LogUtils.w("请求路径：::" + url);
 //        String missurl = Constant.SERVER_URL + "car/vin=123456";
 //        LogUtils.d("请求路径：" + missurl);
 

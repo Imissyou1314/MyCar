@@ -8,13 +8,13 @@ import java.util.List;
  */
 public class GasStationList {
 
-    private List<Object> data;
+    private List<GasStationBean> data;
 
-    public List<Object> getData() {
+    public List<GasStationBean> getData() {
         return data;
     }
 
-    public void setData(List<Object> data) {
+    public void setData(List<GasStationBean> data) {
         this.data = data;
     }
 }

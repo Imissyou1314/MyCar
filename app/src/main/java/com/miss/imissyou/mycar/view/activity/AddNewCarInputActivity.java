@@ -139,6 +139,7 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
         intent.putExtra("carInfoBean",bundle);
         intent.setClass(this, InputBrandPageActivity.class);
         startActivity(intent);
+        this.finish();
 
     }
 
@@ -290,6 +291,7 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
         setOFFState(carAlarmMessage,resultBean.isAlarmMessage());
         setOFFState(carStateMessage, resultBean.isCarState());
         setOFFState(srsMessage, resultBean.isSrs());
+
         setProgress(oilLink,resultBean.getOil(),resultBean.getOilBox());
 
 
@@ -344,21 +346,22 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
 
         ClipDrawable color ;
 
-        if (carOilProgress.getProgress() > 20 && carOilProgress.getProgress() < 50) {
-            color = new ClipDrawable(new ColorDrawable(Color.YELLOW),
-                    Gravity.CENTER, ClipDrawable.HORIZONTAL);
+        if (carOilProgress.getProgress() > 20 && carOilProgress.getProgress() < 50)  {
             oilInput.setTextColor(getResources().getColor(R.color.color_progress_yello));
+            carOilProgress.setBackgroundResource(R.drawable.progress_yellow_background);
+            carOilProgress.setProgressDrawable(getResources()
+                    .getDrawable(R.drawable.progress_yellow_background));
         } else if (carOilProgress.getProgress() >= 50) {
-            color = new ClipDrawable(new ColorDrawable(Color.GREEN),
-                    Gravity.CENTER, ClipDrawable.HORIZONTAL);
             oilInput.setTextColor(getResources().getColor(R.color.color_progress_greed));
+            //carOilProgress.setBackgroundResource(R.color.color_progress_greed);
+            carOilProgress.setProgressDrawable(getResources()
+                    .getDrawable(R.drawable.progress_gree_background));
         } else {
-            color = new ClipDrawable(new ColorDrawable(Color.RED),
-                    Gravity.CENTER, ClipDrawable.HORIZONTAL);
             oilInput.setTextColor(getResources().getColor(R.color.color_progress_red));
-
+            //carOilProgress.setBackgroundResource(R.color.color_progress_red);
+            carOilProgress.setProgressDrawable(getResources().getDrawable(R.drawable.progress_red_background));
         }
-        carOilProgress.setProgressDrawable(color);
+       // carOilProgress.setProgressDrawable(color);
     }
 
     /**

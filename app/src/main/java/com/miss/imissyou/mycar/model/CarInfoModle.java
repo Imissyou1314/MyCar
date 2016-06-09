@@ -22,8 +22,15 @@ public interface CarInfoModle {
 
     /**
      * 控制车当前起动和熄火状态
-     * @param state
-     * @param carId
+     * @param state  状态码
+     * @param carId 车Id
      */
-    void changeCarState(int state, Long carId)    ;
+    void changeCarState(int state, Long carId);
+
+    /**
+     * 更改为当前车辆信息
+     * @param carId 车Id
+     * @param userId 用户Id
+     */
+    void setCurrentCar(Long userId, Long carId);
 }

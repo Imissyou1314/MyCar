@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
-    android:layout_marginTop="20dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="30dp"
     android:background="@color/colorWhite"
     android:orientation="vertical">
 
@@ -14,7 +14,7 @@
         android:paddingLeft="15dp"
         android:text="中有茂昌恒港加油站"
         android:textColor="@color/color_back"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,18 +23,27 @@
         android:orientation="horizontal"
         android:paddingLeft="15dp">
 
-        <TextView
-            android:id="@+id/gasSattion_Item_stationAddress"
+        <TableLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:ellipsize="none"
-            android:minLines="2"
-            android:maxLines="50"
-            android:singleLine="true"
-            android:text="未知"
-            android:textColor="@color/color_back_gui"
-            android:textSize="@dimen/FontSize" />
+            android:stretchColumns="1"
+            android:shrinkColumns="1">
+
+            <TextView
+                android:id="@+id/gasSattion_Item_stationAddress"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:ellipsize="none"
+                android:minLines="2"
+                android:maxLines="50"
+                android:singleLine="true"
+                android:text="未知"
+                android:textColor="@color/color_back_gui"
+                android:textSize="14sp" />
+        </TableLayout>
+
+
 
         <TextView
             android:id="@+id/gasSattion_Item_diatance"
@@ -52,6 +61,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
         android:layout_height="30dp"
         android:orientation="horizontal">
 
@@ -65,7 +75,7 @@
             android:paddingLeft="20dp"
             android:text="到这里"
             android:textColor="@color/color_back"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <View
             android:layout_width="1dp"
@@ -84,8 +94,6 @@
             android:paddingLeft="20dp"
             android:text="电话"
             android:textColor="@color/color_back"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
     </LinearLayout>
-
-
 </LinearLayout>

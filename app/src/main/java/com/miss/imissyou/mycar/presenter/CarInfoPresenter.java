@@ -1,5 +1,6 @@
 package com.miss.imissyou.mycar.presenter;
 
+import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.view.MainView;
 
 /**
@@ -17,13 +18,26 @@ public interface CarInfoPresenter extends MainPresenter<MainView>{
 
     /**
      * 控制车辆警报状态
-     * @param carId
+     * @param carId 车辆ID
      */
     void changeCarAlarmState(Long carId);
 
     /**
      * 控制车辆启动和熄火状态
-     * @param carId
+     * @param carId  车辆Id
      */
     void changeCarState(Long carId);
+
+    /**
+     * 设置为当前车辆
+     * @param userId 用户Id
+     * @param carId 车辆Id
+     */
+    void setCuurentCar(Long userId, Long carId);
+
+    /**
+     * 设置为当前状态成功
+     * @param resultBean  回调的结果
+     */
+    void setCurrentCarSuccess(ResultBean resultBean);
 }

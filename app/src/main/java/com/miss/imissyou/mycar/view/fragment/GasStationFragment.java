@@ -21,6 +21,7 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 
 import com.amap.api.maps.model.LatLng;
+import com.lidroid.xutils.http.client.multipart.content.StringBody;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.GasStationBean;
@@ -95,7 +96,7 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
                 gasFragment.setArguments(bundle);
 
                 fm.beginTransaction()
-                        .replace(R.id.content_overlay, gasFragment, SumBitIndentFragment.TAG)
+                        .replace(R.id.content_frame, gasFragment, SumBitIndentFragment.TAG)
                         .commit();
             }
         });
@@ -115,7 +116,9 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
                     }
                 }
                 holder.setText(R.id.gasSattion_Item_gasName, gasStationBean.getName());
-                holder.setText(R.id.gasSattion_Item_stationAddress, gasStationBean.getAddress());
+                String address = setText(gasStationBean.getAddress());
+                LogUtils.d("地址信息" + address);
+                holder.setText(R.id.gasSattion_Item_stationAddress, address);
                 holder.setText(R.id.gasSattion_Item_diatance, (Double.parseDouble(gasStationBean.getDistance()) / 1000) + "km");
 
                 // TODO: 2016/6/5 等待测试 
@@ -155,6 +158,8 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
         });
 
     }
+
+
 
     @Override
     public void showResultError(int errorNo, String errorMag) {
@@ -258,5 +263,20 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
             mlocationClient.setLocationOption(mLocationOption);
             mlocationClient.startLocation();
         }
+    }
+
+    /**
+     * 设置自动分行
+     * @param address 传进来的字符串
+     * @return
+     */
+    private String setText(String address) {
+        StringBuffer str = new StringBuffer(address);
+        if (str.length() >= 14)  {
+            str.insert(14,"\n");
+        } else {
+            str.append("\n");
+        }
+        return str.toString();
     }
 }

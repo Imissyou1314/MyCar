@@ -1,12 +1,11 @@
 package com.miss.imissyou.mycar.view.fragment;
 
-import android.graphics.drawable.ClipDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -16,20 +15,22 @@ import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.CarInfoBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
+import com.miss.imissyou.mycar.presenter.CarInfoPresenter;
 import com.miss.imissyou.mycar.presenter.impl.CarInfoPresenterImpl;
 import com.miss.imissyou.mycar.ui.circleProgress.CircleProgress;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.DialogUtils;
 import com.miss.imissyou.mycar.util.GsonUtils;
+import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.view.CarInfoView;
-import com.miss.imissyou.mycar.presenter.CarInfoPresenter;
 
 
 /**
  * 单架车的具体信息
  * Created by Imissyou on 2016/5/3.
  */
-public class CarInfoFragment extends BaseFragment implements CarInfoView {
+public class CarInfoChangeStateFragment extends BaseFragment
+        implements CarInfoView, View.OnClickListener {
 
     private CircleProgress progress;
 
@@ -64,64 +65,59 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView {
     private TextView carSRS;                  //安全气囊
 
     private Long mCarId;
-
+    private Button changeStateBtn;          //设置为当前车辆
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(R.layout.fragment_car_info, inflater, container, savedInstanceState);
+        return super.onCreateView(R.layout.fragment_car_info_change,
+                inflater, container, savedInstanceState);
     }
 
     @Override
     protected void initView(View view) {
 
-        progress = (CircleProgress) view.findViewById(R.id.load_carInfo_progress);
+        progress = (CircleProgress) view.findViewById(R.id.car_info_change_progress) ;
 
         /**车辆描述*/
-        carImage = (ImageView) view.findViewById(R.id.car_info_carBrand_image);
-        carBrand = (TextView) view.findViewById(R.id.carInfo_carBrand_input);
-        carEngineNumber = (TextView) view.findViewById(R.id.carInfo_carEngineNumber_input);
-        carRand = (TextView) view.findViewById(R.id.carInfo_carRank_input);
-        carVin = (TextView) view.findViewById(R.id.carInfo_carVin_input);
+        carImage = (ImageView) view.findViewById(R.id.car_info_change_carBrand_image);
+        carBrand = (TextView) view.findViewById(R.id.car_info_change_carBrand_input);
+        carEngineNumber = (TextView) view.findViewById(R.id.car_info_change_carEngineNumber_input);
+        carRand = (TextView) view.findViewById(R.id.car_info_change_carRank_input);
+        carVin = (TextView) view.findViewById(R.id.car_info_change_carVin_input);
 
         /**车辆信息*/
-        carOil = (TextView) view.findViewById(R.id.carInfo_carOil_input);
-        carOilProgress = (ProgressBar) view.findViewById(R.id.carInfo_carOil_progress);
-        carTemperature = (TextView) view.findViewById(R.id.carInfo_carTemperature_input);
-        carMileage = (TextView) view.findViewById(R.id.carInfo_carMileage_input);
-        carOilBox = (TextView) view.findViewById(R.id.carInfo_carOilBox_input);
+        carOil = (TextView) view.findViewById(R.id.car_info_change_carOil_input);
+        carOilProgress = (ProgressBar) view.findViewById(R.id.car_info_change_carOil_progress);
+        carTemperature = (TextView) view.findViewById(R.id.car_info_change_carTemperature_input);
+        carMileage = (TextView) view.findViewById(R.id.car_info_change_carMileage_input);
+        carOilBox = (TextView) view.findViewById(R.id.car_info_change_carOilBox_input);
 
         /**车辆状态*/
-        carLight = (TextView) view.findViewById(R.id.carInfo_carLight_input);
-        carAlarm = (TextView) view.findViewById(R.id.carInfo_carAlarm_input);
-        carState = (TextView) view.findViewById(R.id.carInfo_carState_input);
-        carSRS = (TextView) view.findViewById(R.id.carInfo_carSRS_input);
-        carTransmission = (TextView) view.findViewById(R.id.carInfo_carTransmission_input);
-        carEnginProperty = (TextView) view.findViewById(R.id.carInfo_carEnginProperty_input);
-    }
+        carLight = (TextView) view.findViewById(R.id.car_info_change_carLight_input);
+        carAlarm = (TextView) view.findViewById(R.id.car_info_change_carAlarm_input);
+        carState = (TextView) view.findViewById(R.id.car_info_change_carState_input);
+        carSRS = (TextView) view.findViewById(R.id.car_info_change_carSRS_input);
+        carTransmission = (TextView) view.findViewById(R.id.car_info_change_carTransmission_input);
+        carEnginProperty = (TextView) view.findViewById(R.id.car_info_change_carEnginProperty_input);
 
+        changeStateBtn = (Button) view.findViewById(R.id.car_info_change_changeState_Btn);
+    }
 
     @Override
     protected void initData() {
-        if (null != getArguments()) {
-            Long userId = getArguments().getLong(Constant.USER_ID);
-            Long carId = getArguments().getLong(Constant.CAR_ID);
-            this.mCarId = carId;
-            mCarInfoPresenter.loadCarInfo(userId, carId);
+        LogUtils.w(getArguments() + "");
+        Long userId = getArguments().getLong(Constant.USER_ID);
+        Long carId = getArguments().getLong(Constant.CAR_ID);
 
-        } else {
-            LogUtils.d("没有设置车辆信息");
-            getActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.content_overlay,new FirstAddCarFragment())
-                    .hide(this)
-                    .commit();
-        }
+        this.mCarId = carId;
+        mCarInfoPresenter.loadCarInfo(userId, carId);
     }
 
     @Override
     protected void addViewsListener() {
         mCarInfoPresenter = new CarInfoPresenterImpl(this);
+        changeStateBtn.setOnClickListener(this);
     }
 
     @Override
@@ -141,7 +137,8 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView {
         if (resultBean.isServiceResult()) {
             showResultError(Constant.SUCCESS_NO, resultBean.getResultInfo());
         } else {
-            showPage((CarInfoBean) GsonUtils.getParam(resultBean, "car", CarInfoBean.class));
+            ToastUtil.asLong(resultBean.getResultInfo());
+            //showPage((CarInfoBean) GsonUtils.getParam(resultBean, "car", CarInfoBean.class));
         }
     }
 
@@ -164,6 +161,15 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView {
     public void showResultSuccess(CarInfoBean resultBean) {
         LogUtils.w(resultBean.getBrand());
         showPage(resultBean);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.car_info_change_changeState_Btn) {
+            mCarInfoPresenter.setCuurentCar(Constant.userBean.getId(), mCarId);
+        } else {
+            LogUtils.d("点击其他");
+        }
     }
 
     private void showPage(CarInfoBean carInfo) {
@@ -264,5 +270,6 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView {
         LogUtils.w("加载图片地址:" + imageUrl);
         Glide.with(this).load(Constant.SERVER_URL + imageUrl).asBitmap().into(carImage);
     }
+
 
 }

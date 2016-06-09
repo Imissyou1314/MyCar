@@ -42,11 +42,11 @@ public class OrderInfoFragment extends BaseFragment implements OrderInfoView {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(R.layout.fragment_orderinfo,inflater, container, savedInstanceState);
+        return super.onCreateView(R.layout.fragment_orderinfo,
+                inflater, container, savedInstanceState);
     }
 
-    @Override
-    protected void initView(View view) {
+    @Override protected void initView(View view) {
         orderState = (TextView) view.findViewById(R.id.orderInfo_orderState_tv);
         orderPrice = (TextView) view.findViewById(R.id.orderInfo_orderTotalPrice);
 
@@ -61,13 +61,9 @@ public class OrderInfoFragment extends BaseFragment implements OrderInfoView {
         orderCodeImage = (ImageView) view.findViewById(R.id.orderInfo_orderCode_image);
     }
 
-    @Override
-    protected void initData() {
+    @Override protected void initData() {
         Long orderId = getArguments().getLong("orderId");
-
-        // TODO: 2016/6/6
         LogUtils.w("获取到的订单Id:" + orderId);
-
         mOrderInfoPresenter = new OrderInfoPresenterImpl(this);
         mOrderInfoPresenter.loadOrderFormService(orderId);
     }
@@ -124,7 +120,7 @@ public class OrderInfoFragment extends BaseFragment implements OrderInfoView {
      * @param imageUrl
      */
     private void loadOrderCodeImage(String imageUrl) {
-        Glide.with(this).load(imageUrl).into(orderCodeImage);
+       // Glide.with(this).load(imageUrl).into(orderCodeImage);
     }
 
     /**

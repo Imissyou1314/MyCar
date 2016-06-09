@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.util.StringUtil;
 
@@ -233,4 +234,5 @@ public class ViewHolder {
             view.setVisibility(View.GONE);
         }
     }
+
 }

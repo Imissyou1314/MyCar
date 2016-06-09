@@ -6,10 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 
+import com.bumptech.glide.Glide;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.CarInfoBean;
@@ -97,13 +99,14 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
                 LogUtils.w("点击了那个" + position);
                 android.support.v4.app.FragmentManager fm = getActivity()
                         .getSupportFragmentManager();
-                CarInfoFragment carInfoFragment = new CarInfoFragment();
+                CarInfoChangeStateFragment carInfoChangeFragment = new CarInfoChangeStateFragment();
                 //跳转到车辆信息那个页面
                 Bundle bundle = new Bundle();
                 bundle.putLong(Constant.CAR_ID, cars.get(position).getId());
                 bundle.putLong(Constant.USER_ID, cars.get(position).getUserId());
-                carInfoFragment.setArguments(bundle);
-                fm.beginTransaction().replace(R.id.content_frame, carInfoFragment).commit();
+                carInfoChangeFragment.setArguments(bundle);
+                fm.beginTransaction().replace(R.id.content_frame,
+                        carInfoChangeFragment).commit();
             }
         });
 
@@ -157,7 +160,11 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
                 holder.addText(R.id.car_list_item_carOil_text, oilNumber);
                 holder.addText(R.id.car_list_item_carMalied_text,car.getMileage() + "");
 
-
+                //加载图片
+                LogUtils.d("加载图片地址：" + Constant.SERVER_URL + car.getMark());
+               Glide.with(getActivity())
+                       .load(Constant.SERVER_URL + car.getMark())
+                       .into((ImageView) holder.getView(R.id.car_list_item_carImage));
                 // TODO: 2016/6/4  待测试的页面
                 /**设置背景色*/
                 //int nowList = holder.getmPosition();

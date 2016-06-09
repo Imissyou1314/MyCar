@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.InputType;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +34,9 @@ import com.rey.material.app.DatePickerDialog;
 import com.rey.material.app.DialogFragment;
 import com.rey.material.app.TimePickerDialog;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -68,6 +71,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     private double oilNumber;      //输入的油升数量
     private double price;          //输入的价格
     private OilBean oil;        //油的Bean
+    DecimalFormat doubleformat = new DecimalFormat("0.00");
 
     private SumbitIndentPresenter mSumbitIndentPresenter;
     private OrderBean orderBean = new OrderBean();
@@ -78,6 +82,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
 
     private String date;            //日期
     private String time;           //时间
+    private boolean isReadOrder = false;            //准备订单是否完成
 
     @Nullable
     @Override
@@ -118,6 +123,9 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
             gastationName.setText(gasStation.getName());
             gastationType.setText(gasStation.getBrandname());
             gastationAddres.setText(gasStation.getAddress());
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:MM:ss");
+            gastationOrderTime.setText(formatter.format(new Date()));       //显示当前时间
             gastationDistance.setText((Integer.parseInt(gasStation.getDistance()) / 1000) + "公里");
             addItemView(gasStation.getPrice());
             initOrder(gasStation);
@@ -275,7 +283,11 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
 
     @Override
     public void showResultSuccess(ResultBean resultBean) {
-
+        if (resultBean.isServiceResult()) {
+            showDialog();
+        } else {
+            showResultError(0,resultBean.getResultInfo());
+        }
     }
 
     @Override
@@ -298,13 +310,12 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
         Intent intent = new Intent();
         switch (v.getId()) {
             case R.id.sumbit_play_playAfter:
-                initOrder(gasStation);
+                 isReadOrder = initOrder(gasStation);
                 orderBean.setState(0);
                 sumbitOrder();
-                showDialog();
                 break;
             case R.id.sumbit_play_playNow:
-                initOrder(gasStation);
+                isReadOrder = initOrder(gasStation);
                 orderBean.setState(1);
                 sumbitOrder();
                 goPlayPage();
@@ -330,6 +341,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
             price = Double.parseDouble(priceInput.getText().toString());
             oilNumber = getoilNumber(price);
 
+            doubleformat.format(oilNumber);
             oilNumberInput.setText(oilNumber + "");
         }
     }
@@ -345,6 +357,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
             oilNumber = Double.parseDouble(oilNumberInput.getText().toString());
             price = getPrice(oilNumber);
 
+            doubleformat.format(price);
             priceInput.setText(price + "");
         }
     }
@@ -370,7 +383,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     private double getPrice(double oilNumber) {
         if (oilNumber <= 0 || oil == null)
             return 0;
-        return (double) (oilNumber * Double.parseDouble(oil.getPrice()));
+        return (oilNumber * Double.parseDouble(oil.getPrice()));
     }
 
     // TODO: 2016/6/5  到付款页面
@@ -396,12 +409,12 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 /**跳转到订单页面*/
-                getActivity()
-                        .getSupportFragmentManager()
+                dialog.dismiss();
+                getActivity().getSupportFragmentManager()
                         .beginTransaction()
+                        .add(R.id.content_overlay,new OrderFragment())
                         .replace(R.id.content_overlay, new OrderFragment())
                         .commit();
-                dialog.dismiss();
             }
         }).create().show();
     }
@@ -410,7 +423,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
      * 提交订单
      */
     private void sumbitOrder() {
-        if (null != orderBean) {
+        if (null != orderBean && isReadOrder ) {
             LogUtils.d("准备提交的数据" + GsonUtils.Instance().toJson(orderBean));
             mSumbitIndentPresenter.submitOrderToService(orderBean);
         } else {
@@ -502,38 +515,47 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
      * 给LiearLayout 动态添加ItemView
      */
     private void addItemView(final Map<String, String> oilTypeBean) {
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        lp.setMargins(0,0,10,10);
         //设置加油站有的所有的油类型
         for (final String key : oilTypeBean.keySet()) {
             final TextView tv1 = new TextView(getActivity());
             tv1.setLayoutParams(lp);//设置布局参数
             tv1.setTag(key);
             tv1.setText(key);
+            tv1.setGravity(Gravity.CENTER);
+            tv1.setTextColor(R.color.color_back);
             tv1.setPadding(15,10,15,10);
 
             tv1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    LogUtils.d("选择加油信息");
+                    rewmoveAllSelect();
                     oil = new OilBean();
                     oil.setOilType(key);
                     oil.setPrice(oilTypeBean.get(key));
                     LogUtils.d("油价类型:" + key + "油价:" + oil.getPrice());
                     showselectPrice(oilTypeBean.get(key));
-                    tv1.setBackgroundColor(getActivity()
-                            .getResources()
-                            .getColor(R.color.color_gui));
+                   tv1.setBackgroundResource(R.drawable.sumbit_text_bord);
                 }
             });
             selectOilType.addView(tv1);
         }
     }
 
+    private void rewmoveAllSelect() {
+        LogUtils.d("油类型数量" + selectOilType.getChildCount() + "");
+        for (int i = selectOilType.getChildCount() - 1;i >= 0 ; i--) {
+            selectOilType.getChildAt(i)
+                    .setBackgroundResource(R.drawable.sumbit_text_nobord);
+        }
+    }
+
     /**
      * 显示价格
      *
-     * @param price
+     * @param price  价格
      */
     private void showselectPrice(String price) {
         oilNumberInput.setText("1");
@@ -580,5 +602,4 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
         }
         return result;
     }
-
 }

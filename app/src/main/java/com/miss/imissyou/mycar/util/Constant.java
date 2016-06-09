@@ -92,4 +92,16 @@ public class Constant {
     public static double MyLongitude = 0d;
     public static String NO_START_NAVI = "NO_START_NAVI";
     public static String GASSTION_PHONE = "13763012723";
+
+    //设置Fragment的Tag
+    public final static String FirstAddCarFragment = "FirstAddCarFragment";
+    public final static String CarInfoFragment = "CarInfoFragment";
+    public final static String CarListFragment = "CarListFragment";
+    public final static String NaviViewFragment = "NaviViewFragment";
+    public final static String LocationMapFragment ="LocationMapFragment";
+    public final static String MusicFragment = "MusicFragment";
+    public final static String UserInfoFragment = "UserInfoFragment";
+    public final static String WeiZhanChaXunFragment = "WeiZhanChaXunFragment";
+    public final static String OrderFragment = "OrderFragment";
+    public final static String GasStationFragmetn = "GasStationFragmetn";
 }

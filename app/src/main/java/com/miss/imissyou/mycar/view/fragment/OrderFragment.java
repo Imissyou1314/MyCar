@@ -7,9 +7,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import android.support.v4.app.ListFragment;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.OrderBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
@@ -31,67 +37,52 @@ import java.util.List;
 public class OrderFragment extends ListFragment implements OrderListView, ScreenShotable {
 
     private OrderPresenter mOrderPresenter;
-    private List<OrderBean> mOrders = new ArrayList<>();
     private List<OrderBean> orders;         //定单列表
 
     public static final String  OrderAddrress= "order";
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mOrderPresenter = new OrderPresenterImpl(this);
         mOrderPresenter.loadServiceData(Constant.userBean);
     }
 
-    @Override
-    public void showResultError(int errorNo, String errorMag) {
+    @Override public void showResultError(int errorNo, String errorMag) {
 
     }
 
-    @Override
-    public void showResultSuccess(ResultBean resultBean) {
+    @Override public void showResultSuccess(ResultBean resultBean) {
     }
 
-    @Override
-    public void showProgress() {
-
-    }
-
-    @Override
-    public void hideProgress() {
+    @Override public void showProgress() {
 
     }
 
-    @Override
-    public void onDestroy() {
+    @Override public void hideProgress() {
+
+    }
+
+    @Override public void onDestroy() {
         super.onDestroy();
         mOrderPresenter.detchView();
     }
 
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
-        final OrderBean order = orders.get(position);
+    @Override public void onListItemClick(ListView l, View v, int position, long id) {
+        final OrderBean order = orders.get(position -1);
         // TODO: 2016-06-06 添加ListView的间距
-        l.setDividerHeight(10);
-
+        OrderInfoFragment orderInfoFragment = new OrderInfoFragment();
+        LogUtils.d("订单Id :" + order.getId());
         Bundle bundle = new Bundle();
         bundle.putLong("orderId",order.getId());
-
-        OrderInfoFragment orderInfoFragment = new OrderInfoFragment();
         orderInfoFragment.setArguments(bundle);
-
-        getActivity()
-                .getSupportFragmentManager()
+        getActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.content_overlay, orderInfoFragment)
+                .replace(R.id.content_overlay,orderInfoFragment)
                 .commit();
     }
 
-    @Override
-    public void showResultSuccess(List<OrderBean> orders) {
-        //TODO 给mOrders填充数据
+    @Override public void showResultSuccess(List<OrderBean> orders) {
+        this.getListView().addHeaderView(getListTitle());
         this.orders = orders;
         setListAdapter(new CommonAdapter<OrderBean>(getActivity(),
                 orders,
@@ -105,15 +96,14 @@ public class OrderFragment extends ListFragment implements OrderListView, Screen
                 holder.setText(R.id.order_item_orderTotalPrice, "￥ " + orderBean.getPrice());
             }
             });
-    }
-
-    @Override
-    public void takeScreenShot() {
 
     }
 
-    @Override
-    public Bitmap getBitmap() {
+    @Override public void takeScreenShot() {
+
+    }
+
+    @Override public Bitmap getBitmap() {
         return null;
     }
 
@@ -138,5 +128,22 @@ public class OrderFragment extends ListFragment implements OrderListView, Screen
         return title;
     }
 
-
+    /**
+     * 添加标题
+     * @return
+     */
+    private View getListTitle() {
+        AbsListView.LayoutParams lp = new AbsListView.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        final TextView title = new TextView(getActivity());
+        title.setLayoutParams(lp);//设置布局参数
+        title.setText("订单列表");
+        title.setPadding(0,15,0,15);
+        title.setGravity(Gravity.CENTER);
+        title.setTextSize(20);
+        title.setBackgroundColor(getActivity()
+                .getResources()
+                .getColor(R.color.color_carView_mainMesage));
+        return title;
+    }
 }

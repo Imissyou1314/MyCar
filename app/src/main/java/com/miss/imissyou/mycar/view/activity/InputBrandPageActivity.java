@@ -93,9 +93,10 @@ public class InputBrandPageActivity extends BaseActivity implements View.OnClick
             // TODO: 2016/6/5 提示添加车辆成功
             //new DialogUtils(this).showSucces(resultBean.getResultInfo(),
                //     Constant.SUCCESS_TITLE, MainActivity.class);\
-            Intent intent = new Intent();
-            intent.setClass(this,MainActivity.class);
-            startActivity(intent);
+            //Intent intent = new Intent();
+            //intent.setClass(this,MainActivity.class);
+           // startActivity(intent);
+            this.finish();
         } else {
             showResultError(0, resultBean.getResultInfo());
         }
