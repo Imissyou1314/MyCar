@@ -35,6 +35,7 @@
                         android:id="@+id/sumbit_gastation_gastationName"
                         android:text="中油茂昌恒港加油站"
                         android:gravity="center|left"
+                        android:textStyle="bold"
                         android:layout_weight="2"
                         android:textSize="19sp"
                         android:layout_width="match_parent"
@@ -59,9 +60,11 @@
                             android:id="@+id/sumbit_gastation_stationType"
                             android:gravity="center"
                             android:layout_weight="2"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="15dp"
                             android:text="中石油加油站"
                             android:textSize="14sp"
-                            android:layout_marginLeft="20dp"
+                            android:layout_marginLeft="30dp"
                             android:background="@drawable/sumbit_gastype_brod"
                             android:layout_width="100dp"
                             android:layout_height="match_parent" />
@@ -136,7 +139,7 @@
                         android:gravity="center|left"
                         android:text="地址"
                         android:textColor="@color/color_back"
-                        android:textSize="@dimen/FontSize" />
+                        android:textSize="@dimen/SmallFontSize" />
 
                     <View
                         android:background="#eeeeee"
@@ -186,11 +189,12 @@
                         android:id="@+id/sumbit_gastation_linearLayout"
                         android:orientation="horizontal"
                         android:gravity="center"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"/>
+                        android:layout_height="50dp"/>
 
                     <View
+                        android:layout_marginTop="5dp"
                         android:background="#eeeeee"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"

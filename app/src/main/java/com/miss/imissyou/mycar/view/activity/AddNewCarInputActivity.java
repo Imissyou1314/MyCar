@@ -341,7 +341,7 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
         int nowOil = ((int) oil * 100) / ((int) oilBox);
 
         carOilProgress.setProgress(nowOil);
-        oilInput.setText(nowOil + "%");
+        oilInput.setText(oil+ "(" +nowOil + "%)" );
         LogUtils.w("油量为:" + nowOil);
 
         ClipDrawable color ;

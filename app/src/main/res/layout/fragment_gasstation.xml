@@ -6,6 +6,7 @@
     <!--加油站的所有信息-->
     <ListView
         android:id="@+id/gasStation_ListView"
+        android:divider="#eeeeee"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

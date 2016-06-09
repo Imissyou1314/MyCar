@@ -57,4 +57,16 @@ public abstract class BaseFragment extends Fragment implements ScreenShotable {
     @Override public Bitmap getBitmap() {
         return null;
     }
+
+    /**
+     * 回到上一个fragment
+     */
+    public void goBack() {
+        getActivity()
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .remove(this);
+    }
+
+
 }

@@ -7,10 +7,12 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.amap.api.maps.model.Text;
 import com.bumptech.glide.Glide;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
@@ -21,6 +23,7 @@ import com.miss.imissyou.mycar.ui.circleProgress.CircleProgress;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.DialogUtils;
 import com.miss.imissyou.mycar.util.GsonUtils;
+import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.view.CarInfoView;
 import com.miss.imissyou.mycar.presenter.CarInfoPresenter;
 
@@ -43,6 +46,7 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView {
     private TextView carVin;                       //车架号
     private TextView carRand;                      //车身等级
     private TextView carEngineNumber;             //车发动机号
+    private TextView carPlatNumber;                //车牌号
 
     /**
      * 车辆信息
@@ -80,6 +84,7 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView {
         /**车辆描述*/
         carImage = (ImageView) view.findViewById(R.id.car_info_carBrand_image);
         carBrand = (TextView) view.findViewById(R.id.carInfo_carBrand_input);
+        carPlatNumber = ( TextView) view.findViewById(R.id.carInfo_carplatName_input);
         carEngineNumber = (TextView) view.findViewById(R.id.carInfo_carEngineNumber_input);
         carRand = (TextView) view.findViewById(R.id.carInfo_carRank_input);
         carVin = (TextView) view.findViewById(R.id.carInfo_carVin_input);
@@ -141,7 +146,8 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView {
         if (resultBean.isServiceResult()) {
             showResultError(Constant.SUCCESS_NO, resultBean.getResultInfo());
         } else {
-            showPage((CarInfoBean) GsonUtils.getParam(resultBean, "car", CarInfoBean.class));
+            LogUtils.d("更改车辆信息完成:" + resultBean.getResultInfo());
+            ToastUtil.asLong(resultBean.getResultInfo());
         }
     }
 
@@ -163,15 +169,16 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView {
     @Override
     public void showResultSuccess(CarInfoBean resultBean) {
         LogUtils.w(resultBean.getBrand());
+        LogUtils.d("设置车辆信息页面:" + GsonUtils.Instance().toJson(resultBean));
         showPage(resultBean);
     }
 
     private void showPage(CarInfoBean carInfo) {
-        carBrand.setText(carInfo.getBrand());
+        carBrand.setText(carInfo.getBrand() + " " + carInfo.getModles());
+        carPlatNumber.setText(carInfo.getPlateNumber());
         carRand.setText(carInfo.getRank());
         carVin.setText(carInfo.getVin());
         carEngineNumber.setText(carInfo.getEngineNumber());
-
 
         carOilBox.setText(carInfo.getOilBox() + "");
         carTemperature.setText(carInfo.getTemperature() + "");
@@ -194,8 +201,8 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView {
     /**
      * 设置状态信息  良好和损坏
      *
-     * @param text
-     * @param state
+     * @param text TextView
+     * @param state 状态
      */
     private void setState(TextView text, boolean state) {
         if (state) {
@@ -209,9 +216,8 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView {
 
     /**
      * 设置状态信息关闭
-     *
-     * @param text
-     * @param state
+     * @param text  TextView
+     * @param state 状态
      */
     private void setOFFState(TextView text, boolean state) {
         if (state) {
@@ -225,16 +231,15 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView {
 
     /**
      * 设置油量进度条
-     *
-     * @param carOilProgress
-     * @param oil
-     * @param oilBox
+     * @param carOilProgress  油量进度条
+     * @param oil    油量
+     * @param oilBox 油箱
      */
     private void setProgress(ProgressBar carOilProgress, double oil, double oilBox) {
         int nowOil = ((int) oil * 100)  / ((int) oilBox);
 
         carOilProgress.setProgress(nowOil);
-        carOil.setText(nowOil + "%");
+        carOil.setText(oil+ "(" +nowOil + "%)" );;
         LogUtils.w("油量为:" + nowOil);
 
 
@@ -257,12 +262,11 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView {
 
     /**
      * 加载图片
-     * @param carImage
-     * @param imageUrl
+     * @param carImage  ImageView
+     * @param imageUrl  图片地址
      */
     private void loadImage(ImageView carImage, String imageUrl) {
         LogUtils.w("加载图片地址:" + imageUrl);
         Glide.with(this).load(Constant.SERVER_URL + imageUrl).asBitmap().into(carImage);
     }
-
 }

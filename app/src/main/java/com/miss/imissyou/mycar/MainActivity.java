@@ -123,14 +123,6 @@ public class MainActivity extends ActionBarActivity
         if (Constant.userBean.getUsername() == null) {
             builder = new MissDialog.Builder(this);
             doLogin();
-
-            //   if(!checkUserHasCar(Constant.userBean.getId())) {
-            //     LogUtils.w("用户没有车辆");
-//               getSupportFragmentManager()
-//                       .beginTransaction()
-//                       .replace(R.id.content_overlay,new FirstAddCarFragment())
-//                       .commit();
-            //   }
         } else {
             LogUtils.d("用户Id" + Constant.userBean.getId());
             setAlias(Constant.userBean.getId());
@@ -165,8 +157,6 @@ public class MainActivity extends ActionBarActivity
         createMenuList();
         viewAnimator = new ViewAnimator<>(this, list, contentFragment, drawerLayout, this);
         /**加载页面数据*/
-
-
     }
 
     /**
@@ -597,8 +587,7 @@ public class MainActivity extends ActionBarActivity
                 startActivity(intent);
                 return true;
             case R.id.action_unregister:
-                SPUtils.init(this);
-                SPUtils.ClearAllData();
+                unRegister();
                 intent.setClass(this, LoginActivity.class);
                 startActivity(intent);
                 return true;
@@ -610,6 +599,8 @@ public class MainActivity extends ActionBarActivity
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 
     @Override
     protected void onPause() {
@@ -627,7 +618,8 @@ public class MainActivity extends ActionBarActivity
     public void onBackPressed() {
         if (!isQuit) {
             isQuit = true;
-            Toast.makeText(getBaseContext(), "再按一次返回键退出程序", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(),
+                    "再按一次返回键退出程序", Toast.LENGTH_SHORT).show();
             TimerTask task = null;
             task = new TimerTask() {
                 @Override
@@ -641,5 +633,15 @@ public class MainActivity extends ActionBarActivity
             System.exit(0);
             android.os.Process.killProcess(android.os.Process.myPid());
         }
+    }
+
+    /**
+     * 注销登录
+     */
+    private void unRegister() {
+        SPUtils.init(this);
+        SPUtils.ClearAllData();
+        Constant.userBean = null;
+        Constant.carBean = null;
     }
 }

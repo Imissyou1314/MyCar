@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.amap.api.maps.model.Text;
 import com.bumptech.glide.Glide;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
@@ -44,6 +45,7 @@ public class CarInfoChangeStateFragment extends BaseFragment
     private TextView carVin;                       //车架号
     private TextView carRand;                      //车身等级
     private TextView carEngineNumber;             //车发动机号
+    private TextView carPlatNumber;               //车牌号
 
     /**
      * 车辆信息
@@ -82,6 +84,7 @@ public class CarInfoChangeStateFragment extends BaseFragment
         /**车辆描述*/
         carImage = (ImageView) view.findViewById(R.id.car_info_change_carBrand_image);
         carBrand = (TextView) view.findViewById(R.id.car_info_change_carBrand_input);
+        carPlatNumber = (TextView) view.findViewById(R.id.car_info_change_carPlatNumber_input);
         carEngineNumber = (TextView) view.findViewById(R.id.car_info_change_carEngineNumber_input);
         carRand = (TextView) view.findViewById(R.id.car_info_change_carRank_input);
         carVin = (TextView) view.findViewById(R.id.car_info_change_carVin_input);
@@ -173,16 +176,17 @@ public class CarInfoChangeStateFragment extends BaseFragment
     }
 
     private void showPage(CarInfoBean carInfo) {
-        carBrand.setText(carInfo.getBrand());
+        carBrand.setText(carInfo.getBrand() + " " + carInfo.getModles());
+        carPlatNumber.setText(carInfo.getPlateNumber());
         carRand.setText(carInfo.getRank());
         carVin.setText(carInfo.getVin());
         carEngineNumber.setText(carInfo.getEngineNumber());
-
 
         carOilBox.setText(carInfo.getOilBox() + "");
         carTemperature.setText(carInfo.getTemperature() + "");
         carMileage.setText(carInfo.getMileage() + "");
 
+        setSumbitState(changeStateBtn,carInfo.isCurrentCar());
         setState(carLight, carInfo.isCarLight());
         setState(carEnginProperty, carInfo.isEngineProperty());
         setState(carTransmission, carInfo.isTransmission());
@@ -240,7 +244,7 @@ public class CarInfoChangeStateFragment extends BaseFragment
         int nowOil = ((int) oil * 100)  / ((int) oilBox);
 
         carOilProgress.setProgress(nowOil);
-        carOil.setText(nowOil + "%");
+        carOil.setText(oil+ "(" +nowOil + "%)" );
         LogUtils.w("油量为:" + nowOil);
 
 
@@ -271,5 +275,16 @@ public class CarInfoChangeStateFragment extends BaseFragment
         Glide.with(this).load(Constant.SERVER_URL + imageUrl).asBitmap().into(carImage);
     }
 
+    /**
+     * 设置提交按钮不可点击
+     * @param sumbit Button
+     * @param state  状态
+     */
+    private void setSumbitState(Button sumbit, boolean state) {
+        if (state) {
+            sumbit.setEnabled(false);
+            sumbit.setBackgroundResource(R.color.color_gui);
+        }
+    }
 
 }

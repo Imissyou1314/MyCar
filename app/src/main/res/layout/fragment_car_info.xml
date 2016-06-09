@@ -69,6 +69,28 @@
                             android:layout_height="match_parent"
                             android:text="未知" />
                     </LinearLayout>
+
+                    <!--车牌号-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/car_info_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="车牌号:  " />
+
+                        <TextView
+                            android:id="@+id/carInfo_carplatName_input"
+                            style="@style/car_info_input_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="未知" />
+                    </LinearLayout>
                     <!--发动机号-->
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -268,7 +290,7 @@
                         style="@style/car_info_text"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="油量容积:  " />
+                        android:text="油箱容积:  " />
 
                     <TextView
                         android:id="@+id/carInfo_carOilBox_input"
@@ -434,7 +456,7 @@
                             style="@style/car_info_text"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="变速箱性能:  " />
+                            android:text="转速器性能:  " />
 
                         <TextView
                             android:id="@+id/carInfo_carTransmission_input"

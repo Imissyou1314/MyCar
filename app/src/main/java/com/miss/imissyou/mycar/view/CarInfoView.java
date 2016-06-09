@@ -10,4 +10,5 @@ import com.miss.imissyou.mycar.bean.CarInfoBean;
 public interface CarInfoView extends MainView{
 
     void showResultSuccess(CarInfoBean resultBean);
+
 }

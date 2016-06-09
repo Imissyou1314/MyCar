@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amap.api.maps.model.LatLng;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.GasStationBean;
@@ -27,6 +28,7 @@ import com.miss.imissyou.mycar.ui.MissDialog;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.DialogUtils;
 import com.miss.imissyou.mycar.util.GsonUtils;
+import com.miss.imissyou.mycar.util.MapChangeUtils;
 import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.view.SumbitIndentView;
 import com.miss.imissyou.mycar.view.activity.NaviViewActivity;
@@ -37,7 +39,6 @@ import com.rey.material.app.TimePickerDialog;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -77,7 +78,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     private OrderBean orderBean = new OrderBean();
     private double lat;            //经度
     private double lot;            //纬度
-    private String address;        //地址
+    //private String address;        //地址
     private GasStationBean gasStation;
 
     private String date;            //日期
@@ -110,27 +111,12 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
 
         sumBitDayPaly = (TextView) view.findViewById(R.id.sumbit_play_playAfter);
         sumbitNowPlay = (TextView) view.findViewById(R.id.sumbit_play_playNow);
-
+        initSetUp();
     }
 
+
+
     @Override protected void initData() {
-        mSumbitIndentPresenter = new SumbitIndentPresenterImpl(this);
-        LogUtils.d(getArguments().getString("gasStation"));
-        gasStation = GsonUtils.Instance()
-                .fromJson(getArguments().getString("gasStation"), GasStationBean.class);
-
-        if (null != gasStation && null != gasStation.getPrice()) {
-            gastationName.setText(gasStation.getName());
-            gastationType.setText(gasStation.getBrandname());
-            gastationAddres.setText(gasStation.getAddress());
-
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:MM:ss");
-            gastationOrderTime.setText(formatter.format(new Date()));       //显示当前时间
-            gastationDistance.setText((Integer.parseInt(gasStation.getDistance()) / 1000) + "公里");
-            addItemView(gasStation.getPrice());
-            initOrder(gasStation);
-        }
-
         //获取到的价格不为空
 //        if (null != gasStation.getPrice() && null != gasStation.getGastprice()) {
 //            oilBeans = new ArrayList<OilBean>();
@@ -158,7 +144,6 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
 //            showResultError(0, "加油站的价格为空");
 //        }
     }
-
 
     @Override protected void addViewsListener() {
 
@@ -266,10 +251,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
 
     }
 
-
-
-    @Override
-    public void showResultError(int errorNo, String errorMag) {
+    @Override public void showResultError(int errorNo, String errorMag) {
         String titleMage = "";
         if (errorNo == 0) {
             titleMage = "操作出错";
@@ -277,12 +259,11 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
             titleMage = "错误操作";
         }
         new DialogUtils(getActivity())
-                .errorMessage(titleMage, errorMag)
+                .errorMessage(errorMag,titleMage)
                 .show();
     }
 
-    @Override
-    public void showResultSuccess(ResultBean resultBean) {
+    @Override public void showResultSuccess(ResultBean resultBean) {
         if (resultBean.isServiceResult()) {
             showDialog();
         } else {
@@ -365,8 +346,8 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     /**
      * 根据价格获取油量
      *
-     * @param price
-     * @return
+     * @param price  输入价格获取油量数
+     * @return  油量数
      */
     private double getoilNumber(double price) {
         if (price <= 0 || oil == null)
@@ -376,9 +357,8 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
 
     /**
      * 根据输入油升数获取价格
-     *
-     * @param oilNumber
-     * @return
+     * @param oilNumber  油量数
+     * @return  价格数
      */
     private double getPrice(double oilNumber) {
         if (oilNumber <= 0 || oil == null)
@@ -432,6 +412,8 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
         }
     }
 
+
+
     /**
      * 选择预约时间
      */
@@ -466,8 +448,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
      */
     private void showselectTime() {
         TimePickerDialog.Builder builderTime = new TimePickerDialog.Builder() {
-            @Override
-            public void onPositiveActionClicked(DialogFragment fragment) {
+            @Override public void onPositiveActionClicked(DialogFragment fragment) {
                 TimePickerDialog dialog = (TimePickerDialog) fragment.getDialog();
                 SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
                 time = dialog.getFormattedTime(format);
@@ -516,7 +497,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
      */
     private void addItemView(final Map<String, String> oilTypeBean) {
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        lp.setMargins(0,0,10,10);
+        lp.setMargins(0,0,10,0);
         //设置加油站有的所有的油类型
         for (final String key : oilTypeBean.keySet()) {
             final TextView tv1 = new TextView(getActivity());
@@ -564,7 +545,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
 
     /**
      * 装载订单
-     * @param gasStation
+     * @param gasStation 加油站
      */
     private boolean initOrder(GasStationBean gasStation) {
         Boolean result = true;
@@ -602,4 +583,39 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
         }
         return result;
     }
+
+    /**
+     * 装载经纬度
+     * @param gasStation  加油站
+     */
+    private void setLatlng(GasStationBean gasStation) {
+        LatLng latLng = MapChangeUtils
+                .Convert_BD0911_TO_GCJ02(gasStation.getLat(),
+                        gasStation.getLon(), getActivity());
+        lat = latLng.latitude;
+        lot = latLng.longitude;
+    }
+    private void initSetUp() {
+        mSumbitIndentPresenter = new SumbitIndentPresenterImpl(this);
+        LogUtils.d(getArguments().getString("gasStation"));
+        gasStation = GsonUtils.Instance()
+                .fromJson(getArguments().getString("gasStation"), GasStationBean.class);
+
+        if (null != gasStation && null != gasStation.getPrice()) {
+
+            setLatlng(gasStation);          //装载经纬度
+            gastationName.setText(gasStation.getName());
+            gastationType.setText(gasStation.getBrandname());
+            gastationAddres.setText(gasStation.getAddress());
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:MM:ss");
+            gastationOrderTime.setText(formatter.format(new Date()));       //显示当前时间
+            gastationDistance.setText((Integer.parseInt(gasStation.getDistance()) / 1000) + "公里");
+            addItemView(gasStation.getPrice());
+            initOrder(gasStation);
+        }
+    }
+
+
+
 }

@@ -1,13 +1,10 @@
 package com.miss.imissyou.mycar.view.fragment;
 
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +18,6 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 
 import com.amap.api.maps.model.LatLng;
-import com.lidroid.xutils.http.client.multipart.content.StringBody;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.GasStationBean;
@@ -105,10 +101,10 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
     @Override
     public void showResultSuccess(List<GasStationBean> resultBeans) {
         this.gasStationBeens = resultBeans;
+        gasListView.setDividerHeight(10);           //TODO 添加Item的距离
         gasListView.setAdapter(new CommonAdapter<GasStationBean>(getActivity(), resultBeans, R.layout.item_gasstionlist) {
 
-            @Override
-            public void convert(ViewHolder holder, final GasStationBean gasStationBean) {
+            @Override public void convert(ViewHolder holder, final GasStationBean gasStationBean) {
                 StringBuffer oilTypeStr = new StringBuffer();
                 if (gasStationBean.getGastprice() != null) {
                     for (String key : gasStationBean.getGastprice().keySet()) {
@@ -192,8 +188,7 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
 
     /**
      * 定位成功后回调函数
-     *
-     * @param aMapLocation
+     * @param aMapLocation  定位回调的数据
      */
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
@@ -268,15 +263,10 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
     /**
      * 设置自动分行
      * @param address 传进来的字符串
-     * @return
+     * @return  返回进行换行的字符串
      */
     private String setText(String address) {
         StringBuffer str = new StringBuffer(address);
-        if (str.length() >= 14)  {
-            str.insert(14,"\n");
-        } else {
-            str.append("\n");
-        }
         return str.toString();
     }
 }
