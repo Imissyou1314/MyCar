@@ -60,14 +60,14 @@
                             android:id="@+id/sumbit_gastation_stationType"
                             android:gravity="center"
                             android:layout_weight="2"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="15dp"
+
+                            android:padding="5dp"
                             android:text="中石油加油站"
                             android:textSize="14sp"
                             android:layout_marginLeft="30dp"
                             android:background="@drawable/sumbit_gastype_brod"
-                            android:layout_width="100dp"
-                            android:layout_height="match_parent" />
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -89,7 +89,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="10dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent">\
+                    android:layout_height="match_parent">
 
                     <ImageView
                         android:id="@+id/sumbit_navi_toGastion_image"
@@ -189,7 +189,6 @@
                         android:id="@+id/sumbit_gastation_linearLayout"
                         android:orientation="horizontal"
                         android:gravity="center"
-                        android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"/>
 

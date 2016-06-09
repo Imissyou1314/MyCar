@@ -446,7 +446,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
 
             @Override
             public void onNegativeActionClicked(DialogFragment fragment) {
-                Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "取消", Toast.LENGTH_SHORT).show();
                 super.onNegativeActionClicked(fragment);
             }
         };
@@ -474,7 +474,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
 
             @Override
             public void onNegativeActionClicked(DialogFragment fragment) {
-                Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "取消", Toast.LENGTH_SHORT).show();
                 super.onNegativeActionClicked(fragment);
             }
         };
@@ -517,17 +517,24 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
      * 给LiearLayout 动态添加ItemView
      */
     private void addItemView(final Map<String, String> oilTypeBean) {
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.setMargins(0, 0, 10, 0);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams
+                (ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.setMargins(0, 0, 18, 0);
         //设置加油站有的所有的油类型
-        for (final String key : oilTypeBean.keySet()) {
+        for (Map.Entry entry: oilTypeBean.entrySet()) {
             final TextView tv1 = new TextView(getActivity());
+
+            final String key = entry.getKey().toString();
+            String tempkey = key;
+
             tv1.setLayoutParams(lp);//设置布局参数
-            tv1.setTag(key);
-            tv1.setText(key);
+            tv1.setTag(entry.getKey());
+            tv1.setText(tempkey.replace("E","") + "#");
+            tv1.setTextSize(20);
             tv1.setGravity(Gravity.CENTER);
-            tv1.setTextColor(R.color.color_back);
-            tv1.setPadding(15, 10, 15, 10);
+            tv1.setTextColor(getActivity().getResources().getColor(R.color.color_back));
+            tv1.setBackgroundResource(R.drawable.sumbit_text_nobord);
+            tv1.setPadding(20, 20, 20, 20);
 
             tv1.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -577,8 +584,17 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
 
         orderBean.setStationName(gasStation.getName());
         LogUtils.d(gastationOrderTime.getText().toString());
-
-        orderBean.setAgreementTime(gastationOrderTime.getText().toString());
+        try {
+            if (formatter.parse(gastationOrderTime.getText().toString()).after(new Date())) {
+                orderBean.setAgreementTime(gastationOrderTime.getText().toString());
+            } else {
+                LogUtils.d("选择的时间不合适");
+                Toast.makeText(getActivity(), "选择订单的时间不合适", Toast.LENGTH_SHORT).show();
+                result = false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         LogUtils.d("时间格式:" + orderBean.getAgreementTime());
         orderBean.setNumber(oilNumber);
@@ -608,6 +624,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
             orderBean.setPrice(Double.parseDouble(oil.getPrice()));
             orderBean.setType(oil.getOilType());
         } else {
+            ToastUtil.asLong("用户没有选择加油类型");
             result = false;
         }
         return result;
