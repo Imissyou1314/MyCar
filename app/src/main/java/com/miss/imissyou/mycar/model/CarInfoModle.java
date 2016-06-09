@@ -33,4 +33,10 @@ public interface CarInfoModle {
      * @param userId 用户Id
      */
     void setCurrentCar(Long userId, Long carId);
+
+    /**
+     * 获取用户当前车辆
+     * @param userId  用户ID
+     */
+    void getUserCurrentCar(Long userId);
 }

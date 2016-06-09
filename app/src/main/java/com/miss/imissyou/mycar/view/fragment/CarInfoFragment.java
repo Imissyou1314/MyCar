@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -17,6 +18,7 @@ import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.CarInfoBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.presenter.impl.CarInfoPresenterImpl;
+import com.miss.imissyou.mycar.ui.MissScrollView;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.DialogUtils;
 import com.miss.imissyou.mycar.util.GsonUtils;
@@ -29,7 +31,7 @@ import com.miss.imissyou.mycar.presenter.CarInfoPresenter;
  * 单架车的具体信息
  * Created by Imissyou on 2016/5/3.
  */
-public class CarInfoFragment extends BaseFragment implements CarInfoView {
+public class CarInfoFragment extends BaseFragment implements CarInfoView, MissScrollView.OnScrollToBottomListener {
 
     //private CircleProgress progress;
 
@@ -64,7 +66,10 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView {
     private TextView carTransmission;        //变速器性能
     private TextView carSRS;                  //安全气囊
 
+    private MissScrollView mcarScrollView;         //设置滑动刷新
+
     private Long mCarId;
+    private Long mUserId;
 
 
     @Nullable
@@ -82,7 +87,7 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView {
     protected void initView(View view) {
 
         //progress = (CircleProgress) view.findViewById(R.id.load_carInfo_progress);
-
+        mcarScrollView = (MissScrollView) view.findViewById(R.id.car_info_scrollview);
         /**车辆描述*/
         carImage = (ImageView) view.findViewById(R.id.car_info_carBrand_image);
         carBrand = (TextView) view.findViewById(R.id.carInfo_carBrand_input);
@@ -107,14 +112,14 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView {
         carEnginProperty = (TextView) view.findViewById(R.id.carInfo_carEnginProperty_input);
     }
 
-
     @Override
     protected void initData() {
         if (null != getArguments()) {
             Long userId = getArguments().getLong(Constant.USER_ID);
             Long carId = getArguments().getLong(Constant.CAR_ID);
+            this.mUserId = userId;
             this.mCarId = carId;
-            mCarInfoPresenter.loadCarInfo(userId, carId);
+            mCarInfoPresenter.getCurrentCar(userId);
 
         } else {
             LogUtils.d("没有设置车辆信息");
@@ -128,6 +133,7 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView {
 
     @Override
     protected void addViewsListener() {
+        mcarScrollView.setOnScrollToBottomLintener(this);
         mCarInfoPresenter = new CarInfoPresenterImpl(this);
     }
 
@@ -174,7 +180,15 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView {
         LogUtils.d("设置车辆信息页面:" + GsonUtils.Instance().toJson(resultBean));
         showPage(resultBean);
     }
+    @Override
+    public void onScrollBottomListener(boolean isBottom) {
+        mCarInfoPresenter.getCurrentCar(mUserId);
+    }
 
+    /**
+     * 绘制页面信息
+     * @param carInfo 车辆信息
+     */
     private void showPage(CarInfoBean carInfo) {
         carBrand.setText(carInfo.getBrand() + " " + carInfo.getModles());
         carPlatNumber.setText(carInfo.getPlateNumber());
@@ -271,4 +285,6 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView {
         LogUtils.w("加载图片地址:" + imageUrl);
         Glide.with(this).load(Constant.SERVER_URL + imageUrl).asBitmap().into(carImage);
     }
+
+
 }

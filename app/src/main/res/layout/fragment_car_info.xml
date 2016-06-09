@@ -18,7 +18,8 @@
         circleprogress:color3="@android:color/holo_blue_light" />
 
     <!--车辆详细信息-->
-    <ScrollView
+    <com.miss.imissyou.mycar.ui.MissScrollView
+        android:id="@+id/car_info_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -471,7 +472,7 @@
             </LinearLayout>
         </LinearLayout>
 
-    </ScrollView>
+    </com.miss.imissyou.mycar.ui.MissScrollView>
 
 
 </LinearLayout>

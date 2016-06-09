@@ -94,4 +94,9 @@ public class CarInfoPresenterImpl implements CarInfoPresenter {
         LogUtils.d("获取的信息:" + GsonUtils.Instance().toJson(resultBean));
         mCarInfoView.showResultSuccess(resultBean);
     }
+
+    @Override
+    public void getCurrentCar(Long userId) {
+        mCarInfoModle.getUserCurrentCar(userId);
+    }
 }

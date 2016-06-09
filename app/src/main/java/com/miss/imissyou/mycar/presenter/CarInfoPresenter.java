@@ -41,4 +41,10 @@ public interface CarInfoPresenter extends MainPresenter<CarInfoView>{
      * @param resultBean  回调的结果
      */
     void setCurrentCarSuccess(ResultBean resultBean);
+
+    /**
+     * 获取用户当前车辆
+     * @param userId  用户ID
+     */
+    void getCurrentCar(Long userId);
 }

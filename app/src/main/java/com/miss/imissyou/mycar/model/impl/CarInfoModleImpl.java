@@ -126,4 +126,31 @@ public class CarInfoModleImpl implements CarInfoModle {
             }
         });
     }
+
+    @Override
+    public void getUserCurrentCar(Long userId) {
+        HttpCallback callback = new HttpCallback() {
+            @Override public void onFailure(int errorNo, String strMsg) {
+                mCarInfoPresenter.onFailure(errorNo, strMsg);
+            }
+
+            @Override public void onSuccess(String t) {
+                LogUtils.w(t);
+                ResultBean resultBean = GsonUtils.Instance().fromJson(t, ResultBean.class);
+                mCarInfoPresenter.onSuccess(resultBean);
+            }
+        };
+        String  url = Constant.SERVER_URL + "car/currentCar=" + userId;
+
+        LogUtils.w("请求路径:" + url);
+        new RxVolley.Builder()
+                .httpMethod(RxVolley.Method.GET)
+                .encoding("utf-8")
+                .url(url)
+                .callback(callback)
+                .timeout(5000)
+                .shouldCache(false)
+                .cacheTime(0)
+                .doTask();
+    }
 }
