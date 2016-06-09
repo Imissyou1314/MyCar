@@ -31,7 +31,7 @@ public class OrderModelImpl implements OrderModel {
             }
 
             @Override public void onSuccess(String t) {
-                LogUtils.d(t);
+                LogUtils.d("获取到的数据" + t);
                 ResultBean resultBean = GsonUtils.Instance().fromJson(t, ResultBean.class);
                 mOrderPresenter.onSuccess(resultBean);
             }

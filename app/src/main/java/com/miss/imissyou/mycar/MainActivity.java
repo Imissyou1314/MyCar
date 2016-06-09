@@ -41,9 +41,11 @@ import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.util.SPUtils;
 import com.miss.imissyou.mycar.util.StringUtil;
+import com.miss.imissyou.mycar.view.BackHandledInterface;
 import com.miss.imissyou.mycar.view.activity.AboutActivity;
 import com.miss.imissyou.mycar.view.activity.AuthorActivity;
 
+import com.miss.imissyou.mycar.view.activity.BaseActivity;
 import com.miss.imissyou.mycar.view.activity.HelpActivity;
 import com.miss.imissyou.mycar.view.activity.LoginActivity;
 import com.miss.imissyou.mycar.view.activity.MessageActivity;
@@ -74,7 +76,7 @@ import cn.jpush.android.api.TagAliasCallback;
 import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
 
-public class MainActivity extends ActionBarActivity
+public class MainActivity extends BaseActivity
         implements ViewAnimator.ViewAnimatorListener {
     /**
      * 布局
@@ -337,7 +339,7 @@ public class MainActivity extends ActionBarActivity
         list.add(menuItem3);
         SlideMenuItem menuItem5 = new SlideMenuItem(ContentFragment.BREAK, R.mipmap.ic_break_icon);
         list.add(menuItem5);
-        SlideMenuItem menuItem7 = new SlideMenuItem(ContentFragment.MOVIE, R.mipmap.icn_7);
+        SlideMenuItem menuItem7 = new SlideMenuItem(ContentFragment.OIL, R.mipmap.ic_gasstation_oil_icon);
         list.add(menuItem7);
         SlideMenuItem menuItem8 = new SlideMenuItem(ContentFragment.USER, R.mipmap.ic_me_icon);
         list.add(menuItem8);
@@ -347,8 +349,6 @@ public class MainActivity extends ActionBarActivity
         list.add(menuItem10);
         SlideMenuItem menuItem11 = new SlideMenuItem(ContentFragment.NAVIGATION, R.mipmap.ic_guide_icon);
         list.add(menuItem11);
-        SlideMenuItem menuItem12 = new SlideMenuItem(ContentFragment.SETTING, R.mipmap.ic_setting_icon);
-        list.add(menuItem12);
     }
 
     /**
@@ -463,8 +463,8 @@ public class MainActivity extends ActionBarActivity
                 //关掉菜单项
                 LogUtils.d("position :" + position);
                 return replaceFragment(carListFragement, position, Constant.CarListFragment);
-            case ContentFragment.MOVIE:
-                //电源菜单项
+            case ContentFragment.OIL:
+                //加油菜单项
                 LogUtils.d("position :" + position);
                 return replaceFragment(gasStationFragment, position, Constant.GasStationFragmetn);
             case ContentFragment.ORDER:
@@ -613,6 +613,16 @@ public class MainActivity extends ActionBarActivity
     protected void onResume() {
         JPushInterface.onResume(this);
         super.onResume();
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    public void addListeners() {
+
     }
 
     @Override

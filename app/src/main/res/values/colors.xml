@@ -13,6 +13,7 @@
     <color name="color_cardView">#44B4C1</color>
     <color name="color_carView_background">#828B23</color>
     <color name="color_blue_dark">#31bff7</color>
+    <color name="color_b">#bbbbbb</color>
 
     <!--上导航栏的背景色-->
     <color name="color_toolbar_background">#38393D</color>

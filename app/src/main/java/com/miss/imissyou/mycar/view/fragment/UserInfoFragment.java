@@ -62,6 +62,11 @@ public class UserInfoFragment extends BaseFragment implements UserInfoView, View
         return super.onCreateView(R.layout.fragment_user_info, inflater, container, savedInstanceState);
     }
 
+    @Override
+    public boolean onBackPressed() {
+        return false;
+    }
+
     @Override protected void initView(View view) {
 
         submit = (Button) view.findViewById(R.id.userInfo_submit);

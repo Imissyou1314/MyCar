@@ -53,6 +53,11 @@ public class WeiZhangChaXunFragment extends BaseFragment implements View.OnClick
     }
 
     @Override
+    public boolean onBackPressed() {
+        return false;
+    }
+
+    @Override
     protected void initView(View view) {
         chePai = (EditText) view.findViewById(R.id.weizhangchaxun_brandNumber_input);
         cheJia = (EditText) view.findViewById(R.id.weizhangchaxun_carNumber_input);

@@ -1,6 +1,7 @@
 package com.miss.imissyou.mycar.view.activity;
 
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 
 import com.lidroid.xutils.util.LogUtils;
@@ -20,7 +21,8 @@ import java.lang.reflect.Method;
  * 所有的Activity都继承的基类
  * Created by Imissyou on 2016/3/23.
  */
-public abstract class BaseActivity extends FragmentActivity implements BackHandledInterface{
+public abstract class BaseActivity extends ActionBarActivity
+        implements BackHandledInterface{
 
     private static String TAG = "BaseActivity";
     private Class<?> clazz;
@@ -79,6 +81,7 @@ public abstract class BaseActivity extends FragmentActivity implements BackHandl
             }
         }
     }
+
     private void byIdViews() {
         // TODO 自动生成的方法存根
         //获取类所有的属性对象
@@ -137,13 +140,11 @@ public abstract class BaseActivity extends FragmentActivity implements BackHandl
      */
     public abstract void  addListeners();
 
-    @Override
-    public void setSelectedFragment(BaseFragment selectedFragment) {
+    @Override public void setSelectedFragment(BaseFragment selectedFragment) {
         this.mBaseFragment = selectedFragment;
     }
 
-    @Override
-    public void onBackPressed() {
+    @Override public void onBackPressed() {
         if (mBaseFragment == null || !mBaseFragment.onBackPressed()){
             if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
                 super.onBackPressed();

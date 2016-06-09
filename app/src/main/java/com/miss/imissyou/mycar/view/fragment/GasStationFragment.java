@@ -6,11 +6,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -42,7 +47,8 @@ import java.util.List;
  * 加油站的信息列表
  * Created by Imissyou on 2016/5/9.
  */
-public class GasStationFragment extends BaseFragment implements GasStationView, AMapLocationListener {
+public class GasStationFragment extends BaseFragment
+        implements GasStationView, AMapLocationListener {
 
     private static final String TAG = "GASSTATIONFRAGMENT";
     private ListView gasListView;       //加油站的列表
@@ -75,8 +81,10 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
         //   mGasStationPresenter.loadServiceData(latLng.getLatitude(), latLng.getLongitude(), 10000, Constant.GET_GASSTATION_KEY, 1, 1);
     }
 
-    @Override
-    protected void addViewsListener() {
+    @Override protected void addViewsListener() {
+        gasListView.addHeaderView(getTitleView());
+        gasListView.addFooterView(getFooterView());
+        gasListView.setDividerHeight(10);           //TODO 添加Item的距离
         gasListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -92,16 +100,17 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
                 gasFragment.setArguments(bundle);
 
                 fm.beginTransaction()
+                        .addToBackStack(Constant.GasStationFragmetn)
                         .replace(R.id.content_frame, gasFragment, SumBitIndentFragment.TAG)
                         .commit();
             }
         });
     }
 
-    @Override
-    public void showResultSuccess(List<GasStationBean> resultBeans) {
+
+    @Override public void showResultSuccess(List<GasStationBean> resultBeans) {
         this.gasStationBeens = resultBeans;
-        gasListView.setDividerHeight(10);           //TODO 添加Item的距离
+
         gasListView.setAdapter(new CommonAdapter<GasStationBean>(getActivity(), resultBeans, R.layout.item_gasstionlist) {
 
             @Override public void convert(ViewHolder holder, final GasStationBean gasStationBean) {
@@ -112,9 +121,8 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
                     }
                 }
                 holder.setText(R.id.gasSattion_Item_gasName, gasStationBean.getName());
-                String address = setText(gasStationBean.getAddress());
-                LogUtils.d("地址信息" + address);
-                holder.setText(R.id.gasSattion_Item_stationAddress, address);
+                LogUtils.d("地址信息" + gasStationBean.getAddress());
+                holder.setText(R.id.gasSattion_Item_stationAddress, gasStationBean.getAddress());
                 holder.setText(R.id.gasSattion_Item_diatance, (Double.parseDouble(gasStationBean.getDistance()) / 1000) + "km");
 
                 // TODO: 2016/6/5 等待测试 
@@ -155,10 +163,7 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
 
     }
 
-
-
-    @Override
-    public void showResultError(int errorNo, String errorMag) {
+    @Override public void showResultError(int errorNo, String errorMag) {
         String title = "提示";
         if (errorNo == 0) {
             title = "错误";
@@ -171,18 +176,15 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
                 .show();
     }
 
-    @Override
-    public void showResultSuccess(ResultBean resultBean) {
+    @Override public void showResultSuccess(ResultBean resultBean) {
 
     }
 
-    @Override
-    public void showProgress() {
+    @Override public void showProgress() {
 
     }
 
-    @Override
-    public void hideProgress() {
+    @Override public void hideProgress() {
 
     }
 
@@ -220,11 +222,11 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //mlocationClient.onDestroy();
     }
 
     @Override
     public boolean onBackPressed() {
+        LogUtils.d("按了返回键");
         return false;
     }
 
@@ -266,12 +268,36 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
     }
 
     /**
-     * 设置自动分行
-     * @param address 传进来的字符串
-     * @return  返回进行换行的字符串
+     * 添加标题
+     * @return  title TextView
      */
-    private String setText(String address) {
-        StringBuffer str = new StringBuffer(address);
-        return str.toString();
+    private View getTitleView() {
+        AbsListView.LayoutParams lp = new AbsListView.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        final TextView title = new TextView(getActivity());
+        title.setLayoutParams(lp); //设置布局参数
+        title.setText("加油站");
+        title.setPadding(0, 15, 0, 15);
+        title.setGravity(Gravity.CENTER);
+        title.setTextSize(20);
+        title.setBackgroundColor(getActivity()
+                .getResources()
+                .getColor(R.color.color_carView_mainMesage));
+        return title;
     }
+
+    /**
+     * 添加一个View
+     * @return View
+     */
+    private View getFooterView() {
+        AbsListView.LayoutParams lp = new
+                AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,20);
+
+        View view = new View(getActivity());
+        view.setLayoutParams(lp);
+        view.setBackgroundResource(R.color.color_gui);
+        return view;
+    }
+
 }

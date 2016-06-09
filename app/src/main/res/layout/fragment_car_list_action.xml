@@ -31,7 +31,6 @@
     <ListView
         android:id="@+id/carlist_myCar_ListView"
         android:layout_below="@+id/car_list_title"
-        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

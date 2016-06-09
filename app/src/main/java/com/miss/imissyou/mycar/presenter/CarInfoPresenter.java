@@ -1,13 +1,14 @@
 package com.miss.imissyou.mycar.presenter;
 
 import com.miss.imissyou.mycar.bean.ResultBean;
+import com.miss.imissyou.mycar.view.CarInfoView;
 import com.miss.imissyou.mycar.view.MainView;
 
 /**
  * 加载具体的车辆信息
  * Created by Imissyou on 2016/5/3.
  */
-public interface CarInfoPresenter extends MainPresenter<MainView>{
+public interface CarInfoPresenter extends MainPresenter<CarInfoView>{
 
     /**
      * 加载车辆信息

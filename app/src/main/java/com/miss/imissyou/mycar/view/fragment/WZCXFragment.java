@@ -15,7 +15,10 @@ import com.miss.imissyou.mycar.R;
  * Created by Imissyou on 2016/4/23.
  */
 public class WZCXFragment extends BaseFragment{
-
+    @Override
+    public boolean onBackPressed() {
+        return false;
+    }
 
     private WebView mWebView;
 

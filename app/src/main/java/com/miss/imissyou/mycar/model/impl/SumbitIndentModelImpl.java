@@ -34,7 +34,7 @@ public class SumbitIndentModelImpl implements SumbitIndentModel {
         params.put("stationName", orderBean.getStationName());
         params.put("address", orderBean.getAddress());
         params.put("brandName", orderBean.getBrandName());
-        params.put("agreementTime", orderBean.getAgreementTime());
+
         params.put("type", orderBean.getType());
         params.put("units", orderBean.getUnits());
         params.put("price", orderBean.getPrice() + "");
@@ -42,6 +42,7 @@ public class SumbitIndentModelImpl implements SumbitIndentModel {
         params.put("amounts", orderBean.getAmounts());
         params.put("state", orderBean.getState());
         params.put("plateNumber",orderBean.getPlateNumber());
+        params.put("agreementTime", orderBean.getAgreementTime());
 
         LogUtils.d("提交订单的URL:" + url);
         RxVolley.post(url, params, new HttpCallback() {

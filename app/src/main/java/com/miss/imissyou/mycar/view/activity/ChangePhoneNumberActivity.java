@@ -37,10 +37,8 @@ public class ChangePhoneNumberActivity extends BaseActivity implements ChangePho
     private int TAG;
     private String titlePage = "更改手机号";
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_change_phonenumber);
-
     }
 
     @Override protected void initData() {
@@ -66,8 +64,7 @@ public class ChangePhoneNumberActivity extends BaseActivity implements ChangePho
         });
     }
 
-    @Override
-    public void showResultError(int errorNo, String errorMag) {
+    @Override public void showResultError(int errorNo, String errorMag) {
         String title = "";
         if (0 == errorNo) {
             title = "操作异常";
@@ -86,13 +83,11 @@ public class ChangePhoneNumberActivity extends BaseActivity implements ChangePho
             }
     }
 
-    @Override
-    public void showProgress() {
+    @Override public void showProgress() {
 
     }
 
-    @Override
-    public void hideProgress() {
+    @Override public void hideProgress() {
 
     }
 

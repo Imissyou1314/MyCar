@@ -68,18 +68,15 @@ public class OrderInfoFragment extends BaseFragment implements OrderInfoView {
         mOrderInfoPresenter.loadOrderFormService(orderId);
     }
 
-    @Override
-    protected void addViewsListener() {
+    @Override protected void addViewsListener() {
 
     }
 
-    @Override
-    public void callBackOderBean(OrderBean orderBean) {
+    @Override public void callBackOderBean(OrderBean orderBean) {
         setupPage(orderBean);
     }
 
-    @Override
-    public void showResultError(int errorNo, String errorMag) {
+    @Override public void showResultError(int errorNo, String errorMag) {
 
     }
 
@@ -98,6 +95,15 @@ public class OrderInfoFragment extends BaseFragment implements OrderInfoView {
 
     }
 
+    @Override
+    public boolean onBackPressed() {
+        return true;
+    }
+
+    /**
+     * 设置页面信息
+     * @param orderBean  订单实体
+     */
     private void setupPage(OrderBean orderBean) {
 
         orderPrice.setText(orderBean.getPrice() + "");
@@ -105,27 +111,24 @@ public class OrderInfoFragment extends BaseFragment implements OrderInfoView {
 
         oilType.setText(orderBean.getType());
         userName.setText(orderBean.getUserName());
-        address.setText(orderBean.getAddress());
+        address.setText(orderBean.getStationName());
 
         carBrand.setText(orderBean.getBrandName());
         orderId.setText(orderBean.getId() + "");
         orderTime.setText(orderBean.getAgreementTime());
 
-        String imageUrl = Constant.SERVER_URL + orderBean.getId() + ".png";
+        String imageUrl = Constant.SERVER_URL + "QRCodeImg/" +orderBean.getId() + ".png";
+        LogUtils.d("请求二维码" + imageUrl);
         loadOrderCodeImage(imageUrl);
     }
 
-    @Override
-    public boolean onBackPressed() {
-        return true;
-    }
 
     /**
      * 加载订单二维码
      * @param imageUrl
      */
     private void loadOrderCodeImage(String imageUrl) {
-       // Glide.with(this).load(imageUrl).into(orderCodeImage);
+      Glide.with(this).load(imageUrl).into(orderCodeImage);
     }
 
     /**

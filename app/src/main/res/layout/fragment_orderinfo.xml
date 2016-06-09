@@ -5,11 +5,6 @@
     android:background="#eeeeee"
     android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="#eeeeee" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -45,10 +40,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
                             android:layout_marginRight="10dp"
-
                             android:gravity="center|left"
                             android:text="订单金额"
-                            android:textColor="#eeeeee"
+                            android:textColor="@color/color_b"
                             android:textSize="20sp" />
 
                         <!--订单状态-->
@@ -94,7 +88,7 @@
                         android:layout_weight="1"
                         android:gravity="center|left"
                         android:text="加油类型"
-                        android:textColor="#eeeeee"
+                        android:textColor="@color/color_b"
                         android:textSize="16sp" />
 
                     <TextView
@@ -116,19 +110,21 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="80dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center|left"
-                        android:text="加油站地址"
-                        android:textColor="#eeeeee"
+                        android:text="加油站"
+                        android:textColor="@color/color_b"
                         android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/orderInfo_oilStationAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:gravity="center|right"
+                        android:gravity="center|left"
+                        android:ellipsize="none"
+                        android:singleLine="false"
                         android:text="湛江麻章"
                         android:textColor="#000000"
                         android:textSize="16sp" />
@@ -154,7 +150,7 @@
                         android:layout_weight="1"
                         android:gravity="center|left"
                         android:text="用户名"
-                        android:textColor="#eeeeee"
+                        android:textColor="@color/color_b"
                         android:textSize="16sp" />
 
                     <TextView
@@ -181,7 +177,7 @@
                         android:layout_weight="1"
                         android:gravity="center|left"
                         android:text="车牌号"
-                        android:textColor="#eeeeee"
+                        android:textColor="@color/color_b"
                         android:textSize="16sp" />
 
                     <TextView
@@ -208,7 +204,7 @@
                         android:layout_weight="1"
                         android:gravity="center|left"
                         android:text="预约时间"
-                        android:textColor="#eeeeee"
+                        android:textColor="@color/color_b"
                         android:textSize="16sp" />
 
                     <TextView
@@ -235,7 +231,7 @@
                         android:layout_weight="1"
                         android:gravity="center|left"
                         android:text="订单号"
-                        android:textColor="#eeeeee"
+                        android:textColor="@color/color_b"
                         android:textSize="16sp" />
 
                     <TextView

@@ -6,11 +6,12 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import android.support.v4.app.ListFragment;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,7 +23,6 @@ import com.miss.imissyou.mycar.presenter.impl.OrderPresenterImpl;
 import com.miss.imissyou.mycar.presenter.OrderPresenter;
 import com.miss.imissyou.mycar.ui.adapterutils.CommonAdapter;
 import com.miss.imissyou.mycar.ui.adapterutils.ViewHolder;
-import com.miss.imissyou.mycar.ui.sidemenu.interfaces.ScreenShotable;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.view.OrderListView;
 
@@ -32,16 +32,47 @@ import java.util.List;
  * 订单列表
  * Created by Imissyou on 2016/4/20.
  */
-public class OrderFragment extends ListFragment implements OrderListView, ScreenShotable {
+public class OrderFragment extends BaseFragment implements
+        OrderListView, AdapterView.OnItemClickListener {
 
     private OrderPresenter mOrderPresenter;
     private List<OrderBean> orders;         //定单列表
+    private ListView orderListView;       //订单列表视图
 
+    @Nullable
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return super.onCreateView(R.layout.fragment_order_list,inflater, container, savedInstanceState);
+    }
+
+    @Override public boolean onBackPressed() {
+        return false;
+    }
+
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mOrderPresenter = new OrderPresenterImpl(this);
+    }
+
+    @Override protected void initView(View view) {
+        orderListView = (ListView) view.findViewById(R.id.order_listView);
+        //orderListView.addHeaderView(getListTitle());
+        orderListView.addFooterView(getFooterView());
+//        orderListView.setDividerHeight(30);
+//        orderListView.setDivider(getActivity()
+//                .getResources()
+//                .getDrawable(R.color.color_gui));
+
+    }
+
+    @Override protected void initData() {
+        if (mOrderPresenter == null) {
+            mOrderPresenter = new OrderPresenterImpl(this);
+        }
         mOrderPresenter.loadServiceData(Constant.userBean);
+    }
+
+    @Override protected void addViewsListener() {
+        orderListView.setOnItemClickListener(this);
     }
 
     @Override public void showResultError(int errorNo, String errorMag) {
@@ -62,36 +93,17 @@ public class OrderFragment extends ListFragment implements OrderListView, Screen
 
     @Override public void onDestroy() {
         super.onDestroy();
-        mOrderPresenter.detchView();
-    }
-
-    @Override public void onListItemClick(ListView l, View v, int position, long id) {
-        final OrderBean order = orders.get(position - 1);
-        OrderInfoFragment orderInfoFragment = new OrderInfoFragment();
-        LogUtils.d("订单Id :" + order.getId());
-
-        Bundle bundle = new Bundle();
-        bundle.putLong("orderId", order.getId());
-        orderInfoFragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .add(orderInfoFragment,Constant.OrderFragment)
-                .replace(R.id.content_overlay, orderInfoFragment)
-                .commit();
     }
 
     @Override public void showResultSuccess(List<OrderBean> orders) {
-        this.getListView().addHeaderView(getListTitle());
-        this.getListView().setDividerHeight(15);
-        this.getListView().setDivider(getActivity().getDrawable(R.color.color_gui));
+
         this.orders = orders;
-        setListAdapter(new CommonAdapter<OrderBean>(getActivity(),
-                orders,
-                R.layout.item_order) {
-            @Override
-            public void convert(ViewHolder holder, final OrderBean orderBean) {
+        orderListView.setAdapter(new CommonAdapter<OrderBean>
+                (getActivity(), orders, R.layout.item_order) {
+            @Override public void convert(ViewHolder holder, final OrderBean orderBean) {
                 holder.setText(R.id.order_item_orderId, orderBean.getId() + "");
                 holder.setText(R.id.order_item_carBrand, orderBean.getPlateNumber());
+                LogUtils.d("获取的订单状态:" + orderBean.getState());
                 holder.setText(R.id.order_item_orderState, getOrderState(orderBean.getState()));
                 holder.setText(R.id.order_item_orderTime, orderBean.getAgreementTime());
                 holder.setText(R.id.order_item_orderTotalPrice, "￥ " + orderBean.getPrice());
@@ -99,23 +111,28 @@ public class OrderFragment extends ListFragment implements OrderListView, Screen
         });
     }
 
-    @Override
-    public void takeScreenShot() {
+    @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        OrderBean order = orders.get(position - 1);
+        LogUtils.d("订单信息ID " + order.getId());
+        android.support.v4.app.FragmentManager fm = getActivity()
+                .getSupportFragmentManager();
+        OrderInfoFragment orderInfoFragment = new OrderInfoFragment();
+        Bundle bundle = new Bundle();
+        bundle.putLong("orderId", order.getId());
+        orderInfoFragment.setArguments(bundle);
 
-    }
-
-    @Override public Bitmap getBitmap() {
-        return null;
+        fm.beginTransaction()
+                .addToBackStack(Constant.OrderFragment)
+                .replace(R.id.content_frame,orderInfoFragment)
+                .commit();
     }
 
     /**
      * 根据订单状态获取订单的中文状态
-     *
      * @param playState  订单的状态
      */
     private String getOrderState(Integer playState) {
         String title = "未支付";
-
         switch (playState) {
             case 0:
                 title = "已支付";
@@ -131,21 +148,16 @@ public class OrderFragment extends ListFragment implements OrderListView, Screen
     }
 
     /**
-     * 添加标题
-     * @return LinearLayout
+     * 添加一个View
+     * @return View
      */
-    private View getListTitle() {
-        AbsListView.LayoutParams lp = new AbsListView.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        final TextView title = new TextView(getActivity());
-        title.setLayoutParams(lp);//设置布局参数
-        title.setText("订单列表");
-        title.setPadding(0, 15, 0, 15);
-        title.setGravity(Gravity.CENTER);
-        title.setTextSize(20);
-        title.setBackgroundColor(getActivity()
-                .getResources()
-                .getColor(R.color.color_carView_mainMesage));
-        return title;
+    private View getFooterView() {
+        AbsListView.LayoutParams lp = new
+                AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,20);
+
+        View view = new View(getActivity());
+        view.setLayoutParams(lp);
+        view.setBackgroundResource(R.color.color_gui);
+        return view;
     }
 }

@@ -12,9 +12,9 @@ import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.view.CarInfoView;
 import com.miss.imissyou.mycar.view.MainView;
 import com.miss.imissyou.mycar.presenter.CarInfoPresenter;
-import com.miss.imissyou.mycar.view.fragment.CarInfoFragment;
 
-/**
+/**或者更新车辆状态
+ * 获取车辆信息
  * Created by Imissyou on 2016/5/3.
  */
 public class CarInfoPresenterImpl implements CarInfoPresenter {
@@ -28,8 +28,7 @@ public class CarInfoPresenterImpl implements CarInfoPresenter {
         mCarInfoModle =new CarInfoModleImpl(this);
     }
 
-    @Override
-    public void onFailure(int errorNo, String strMsg) {
+    @Override public void onFailure(int errorNo, String strMsg) {
         mCarInfoView.hideProgress();
         if (errorNo == Constant.NETWORK_STATE) {
             strMsg = Constant.NOTNETWORK;
@@ -51,8 +50,8 @@ public class CarInfoPresenterImpl implements CarInfoPresenter {
 
     }
 
-    @Override public void attachView(MainView view) {
-        this.mCarInfoView = (CarInfoView) view;
+    @Override public void attachView(CarInfoView view) {
+        this.mCarInfoView = view;
         mCarInfoView.showProgress();
     }
 

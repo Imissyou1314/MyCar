@@ -1,25 +1,22 @@
 package com.miss.imissyou.mycar.view.fragment;
 
-import android.graphics.drawable.ClipDrawable;
-import android.graphics.drawable.Drawable;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.amap.api.maps.model.Text;
 import com.bumptech.glide.Glide;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.CarInfoBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.presenter.impl.CarInfoPresenterImpl;
-import com.miss.imissyou.mycar.ui.circleProgress.CircleProgress;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.DialogUtils;
 import com.miss.imissyou.mycar.util.GsonUtils;
@@ -34,7 +31,7 @@ import com.miss.imissyou.mycar.presenter.CarInfoPresenter;
  */
 public class CarInfoFragment extends BaseFragment implements CarInfoView {
 
-    private CircleProgress progress;
+    //private CircleProgress progress;
 
     private CarInfoPresenter mCarInfoPresenter;
 
@@ -84,7 +81,7 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView {
     @Override
     protected void initView(View view) {
 
-        progress = (CircleProgress) view.findViewById(R.id.load_carInfo_progress);
+        //progress = (CircleProgress) view.findViewById(R.id.load_carInfo_progress);
 
         /**车辆描述*/
         carImage = (ImageView) view.findViewById(R.id.car_info_carBrand_image);
@@ -158,12 +155,12 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView {
 
     @Override
     public void showProgress() {
-        progress.startAnim();
+        //progress.startAnim();
     }
 
     @Override
     public void hideProgress() {
-        progress.stopAnim();
+        //progress.stopAnim();
     }
 
     @Override

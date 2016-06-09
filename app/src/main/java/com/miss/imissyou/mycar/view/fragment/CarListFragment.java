@@ -110,8 +110,11 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
                 bundle.putLong(Constant.CAR_ID, cars.get(position).getId());
                 bundle.putLong(Constant.USER_ID, cars.get(position).getUserId());
                 carInfoChangeFragment.setArguments(bundle);
-                fm.beginTransaction().replace(R.id.content_frame,
-                        carInfoChangeFragment).commit();
+
+                fm.beginTransaction()
+                        .addToBackStack(Constant.CarListFragment)
+                        .replace(R.id.content_frame, carInfoChangeFragment)
+                        .commit();
             }
         });
 

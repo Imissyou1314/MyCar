@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.ui.sidemenu.interfaces.ScreenShotable;
 import com.miss.imissyou.mycar.view.BackHandledInterface;
 
@@ -27,20 +28,20 @@ public abstract class BaseFragment extends Fragment implements ScreenShotable {
      */
     public abstract boolean onBackPressed();
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (!(getActivity() instanceof BackHandledInterface)) {
-            throw new ClassCastException("你没有实现BackHandledInterface接口");
+            throw new ClassCastException("你没有实现BackHandledInterface接口"
+                    + getActivity().getPackageName().toString() + ":::>>>" + getActivity().getComponentName());
         } else {
             this.mBackHandledInterface = (BackHandledInterface) getActivity();
         }
     }
 
-
-    @Nullable
-    public View onCreateView(@Nullable int layoutResID,@Nullable LayoutInflater inflater,
+    @Nullable public View onCreateView(@Nullable int layoutResID,@Nullable LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        LogUtils.d("你进入----------------------------------------------->"
+                + getActivity().getComponentName());
         View view = inflater.inflate(layoutResID,container, false);
         initView(view);         //加载页面控件
         addViewsListener();     //添加页面监听事件
@@ -48,8 +49,7 @@ public abstract class BaseFragment extends Fragment implements ScreenShotable {
         return view;
     }
 
-    @Override
-    public void onStart() {
+    @Override public void onStart() {
         super.onStart();
         mBackHandledInterface.setSelectedFragment(this);
         initData();             //加载数据
