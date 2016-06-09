@@ -38,6 +38,11 @@ public class ChangePasswordFragment extends BaseFragment {
         return super.onCreateView(R.layout.fragment_change_password, inflater, container, savedInstanceState);
     }
 
+    @Override
+    public boolean onBackPressed() {
+        return true;
+    }
+
     @Override protected void initView(View view) {
         oldPassword = (EditText) view.findViewById(R.id.changePassword_old_input);
         passwordOne = (EditText) view.findViewById(R.id.changePassword_new_input);

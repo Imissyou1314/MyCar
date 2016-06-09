@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.view.activity.AddNewCarActivity;
@@ -18,7 +18,7 @@ import com.miss.imissyou.mycar.view.activity.AddNewCarActivity;
  */
 public class FirstAddNewCarFragment extends BaseFragment {
 
-    private ImageButton addButton;
+    private ImageView addButton;
 
     @Nullable
     @Override
@@ -28,7 +28,12 @@ public class FirstAddNewCarFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-        addButton = (ImageButton) view.findViewById(R.id.first_add_image_btn);
+        addButton = (ImageView) view.findViewById(R.id.first_add_image_btn);
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        return false;
     }
 
     @Override

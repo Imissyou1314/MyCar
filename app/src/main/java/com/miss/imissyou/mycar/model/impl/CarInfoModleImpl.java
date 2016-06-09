@@ -9,7 +9,6 @@ import com.miss.imissyou.mycar.model.CarInfoModle;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.presenter.CarInfoPresenter;
-import com.miss.imissyou.mycar.presenter.impl.CarInfoPresenterImpl;
 
 /**
  * 获取单架车辆的信息
@@ -19,7 +18,7 @@ public class CarInfoModleImpl implements CarInfoModle {
 
     private CarInfoPresenter mCarInfoPresenter;
 
-    public CarInfoModleImpl(CarInfoPresenterImpl carInfoPresenter) {
+    public CarInfoModleImpl(CarInfoPresenter carInfoPresenter) {
         this.mCarInfoPresenter = carInfoPresenter;
     }
 
@@ -107,8 +106,7 @@ public class CarInfoModleImpl implements CarInfoModle {
             }
 
             @Override public void onSuccess(String t) {
-                LogUtils.d("获取到的数据" + t);
-
+                LogUtils.d("获取到的数据" + t  + "车辆信息");
                 ResultBean resultBean = GsonUtils.getResultBean(t);
                 if (null != resultBean && resultBean.isServiceResult()) {
                     mCarInfoPresenter.setCurrentCarSuccess(resultBean);

@@ -40,6 +40,11 @@ public class InputRouteFragment extends BaseFragment implements TextWatcher, Vie
     }
 
     @Override
+    public boolean onBackPressed() {
+        return true;
+    }
+
+    @Override
     protected void initView(View view) {
         inputListView = (ListView) view.findViewById(R.id.input_route_listView);
         autoCompleteTextView = (AutoCompleteTextView) view.findViewById(R.id.input_route_autoText);

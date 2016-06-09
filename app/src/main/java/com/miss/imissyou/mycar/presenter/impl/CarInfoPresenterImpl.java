@@ -1,5 +1,6 @@
 package com.miss.imissyou.mycar.presenter.impl;
 
+import com.google.gson.Gson;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.bean.BaseBean;
 import com.miss.imissyou.mycar.bean.CarInfoBean;
@@ -91,6 +92,7 @@ public class CarInfoPresenterImpl implements CarInfoPresenter {
     }
 
     @Override public void setCurrentCarSuccess(ResultBean resultBean) {
+        LogUtils.d("获取的信息:" + GsonUtils.Instance().toJson(resultBean));
         mCarInfoView.showResultSuccess(resultBean);
     }
 }

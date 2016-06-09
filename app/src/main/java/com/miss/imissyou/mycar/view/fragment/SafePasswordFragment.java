@@ -40,6 +40,11 @@ public class SafePasswordFragment extends BaseFragment implements SafePasswordVi
     }
 
     @Override
+    public boolean onBackPressed() {
+        return true;
+    }
+
+    @Override
     protected void initView(View view) {
         passWordInput = (EditText) view.findViewById(R.id.safepassword_password_Edit);
         safePasswordInput = (EditText) view.findViewById(R.id.safepassword_safepasswordOne_Edit);

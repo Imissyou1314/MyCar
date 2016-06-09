@@ -77,6 +77,11 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView {
     }
 
     @Override
+    public boolean onBackPressed() {
+        return false;
+    }
+
+    @Override
     protected void initView(View view) {
 
         progress = (CircleProgress) view.findViewById(R.id.load_carInfo_progress);

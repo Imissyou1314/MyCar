@@ -26,6 +26,11 @@ public class FirstAddCarFragment extends BaseFragment{
     }
 
     @Override
+    public boolean onBackPressed() {
+        return false;
+    }
+
+    @Override
     protected void initView(View view) {
         go_addBtn = (ImageView) view.findViewById(R.id.first_add_image_btn);
     }

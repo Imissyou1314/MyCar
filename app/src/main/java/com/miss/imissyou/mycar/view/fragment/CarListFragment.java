@@ -53,6 +53,11 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
     }
 
     @Override
+    public boolean onBackPressed() {
+        return false;
+    }
+
+    @Override
     protected void initView(View view) {
         carInfoList = (ListView) view.findViewById(R.id.carlist_myCar_ListView);
         progress = (CircleProgress) view.findViewById(R.id.load_carList_progress);

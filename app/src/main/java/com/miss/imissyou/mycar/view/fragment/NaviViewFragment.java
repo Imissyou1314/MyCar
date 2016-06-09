@@ -105,6 +105,11 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
     }
 
     @Override
+    public boolean onBackPressed() {
+        return false;
+    }
+
+    @Override
     protected void initView(View view) {
         mMapView = (MapView) view.findViewById(R.id.navi_mapView);
 

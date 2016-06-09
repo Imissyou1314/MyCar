@@ -115,6 +115,11 @@ public class OrderInfoFragment extends BaseFragment implements OrderInfoView {
         loadOrderCodeImage(imageUrl);
     }
 
+    @Override
+    public boolean onBackPressed() {
+        return true;
+    }
+
     /**
      * 加载订单二维码
      * @param imageUrl

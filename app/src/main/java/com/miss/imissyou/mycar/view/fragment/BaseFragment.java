@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.miss.imissyou.mycar.ui.sidemenu.interfaces.ScreenShotable;
+import com.miss.imissyou.mycar.view.BackHandledInterface;
 
 
 /**
@@ -17,6 +18,25 @@ import com.miss.imissyou.mycar.ui.sidemenu.interfaces.ScreenShotable;
  * Created by Imissyou on 2016/4/24.
  */
 public abstract class BaseFragment extends Fragment implements ScreenShotable {
+
+    protected BackHandledInterface mBackHandledInterface;
+
+    /**
+     * 返回按键事件
+     * @return 返回按键
+     */
+    public abstract boolean onBackPressed();
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (!(getActivity() instanceof BackHandledInterface)) {
+            throw new ClassCastException("你没有实现BackHandledInterface接口");
+        } else {
+            this.mBackHandledInterface = (BackHandledInterface) getActivity();
+        }
+    }
+
 
     @Nullable
     public View onCreateView(@Nullable int layoutResID,@Nullable LayoutInflater inflater,
@@ -31,6 +51,7 @@ public abstract class BaseFragment extends Fragment implements ScreenShotable {
     @Override
     public void onStart() {
         super.onStart();
+        mBackHandledInterface.setSelectedFragment(this);
         initData();             //加载数据
     }
 
@@ -57,16 +78,5 @@ public abstract class BaseFragment extends Fragment implements ScreenShotable {
     @Override public Bitmap getBitmap() {
         return null;
     }
-
-    /**
-     * 回到上一个fragment
-     */
-    public void goBack() {
-        getActivity()
-                .getSupportFragmentManager()
-                .beginTransaction()
-                .remove(this);
-    }
-
 
 }

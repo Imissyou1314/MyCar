@@ -523,6 +523,7 @@ public class MainActivity extends ActionBarActivity
 
         animator.start();
         getSupportFragmentManager().beginTransaction()
+                .addToBackStack(Tag)
                 .replace(R.id.content_frame, (Fragment) screenShotable, Tag).commit();
         return screenShotable;
     }

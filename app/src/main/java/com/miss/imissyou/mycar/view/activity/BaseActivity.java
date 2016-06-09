@@ -5,6 +5,8 @@ import android.util.Log;
 
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.util.FindViewById;
+import com.miss.imissyou.mycar.view.BackHandledInterface;
+import com.miss.imissyou.mycar.view.fragment.BaseFragment;
 
 import android.os.Bundle;
 import android.view.View;
@@ -18,10 +20,13 @@ import java.lang.reflect.Method;
  * 所有的Activity都继承的基类
  * Created by Imissyou on 2016/3/23.
  */
-public abstract class BaseActivity extends FragmentActivity {
+public abstract class BaseActivity extends FragmentActivity implements BackHandledInterface{
 
     private static String TAG = "BaseActivity";
     private Class<?> clazz;
+
+    private BaseFragment mBaseFragment;
+    private boolean hadIntercept;
 
     /**
      * 调用onFinish 返回上一个页面
@@ -132,4 +137,23 @@ public abstract class BaseActivity extends FragmentActivity {
      */
     public abstract void  addListeners();
 
+    @Override
+    public void setSelectedFragment(BaseFragment selectedFragment) {
+        this.mBaseFragment = selectedFragment;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mBaseFragment == null || !mBaseFragment.onBackPressed()){
+            if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+                super.onBackPressed();
+            } else {
+                //退栈
+                getSupportFragmentManager().popBackStack();
+            }
+        } else{
+            LogUtils.d("没有Fragment");
+            super.onBackPressed();
+        }
+    }
 }

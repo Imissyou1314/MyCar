@@ -62,6 +62,11 @@ public class LocationMapFragment extends BaseFragment implements LocationView, A
         locationClient.startLocation();
     }
 
+    @Override
+    public boolean onBackPressed() {
+        return false;
+    }
+
     @Override protected void initView(View view) {
         mapView = (MapView) view.findViewById(R.id.location_mapView);
     }

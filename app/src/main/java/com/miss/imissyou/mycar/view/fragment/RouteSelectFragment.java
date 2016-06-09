@@ -20,6 +20,12 @@ public class RouteSelectFragment extends BaseFragment implements View.OnClickLis
     private TextView startRouteInput;           //输入起点路径
     private TextView endRouteInput;             //输入终点路径
     private ImageButton changeBtn;                    //改变起点和终点路径
+
+    @Override
+    public boolean onBackPressed() {
+        return true;
+    }
+
     private TextView goBack;                      //返回上一页
 
     private final int StartTag = 1;                       //起点的标志

@@ -57,6 +57,11 @@ public class HomeFragment extends BaseFragment implements HomeView {
                inflater, container, savedInstanceState);
     }
 
+    @Override
+    public boolean onBackPressed() {
+        return false;
+    }
+
     @Override protected void initView(View view) {
 
         carImageView = (RoundImageView) view.findViewById(R.id.home_car_image);

@@ -224,6 +224,11 @@ public class GasStationFragment extends BaseFragment implements GasStationView, 
     }
 
     @Override
+    public boolean onBackPressed() {
+        return false;
+    }
+
+    @Override
     public void onStart() {
         if (null != mlocationClient)
             mlocationClient.startLocation();

@@ -38,6 +38,11 @@ public class SettingFragment extends BaseFragment{
     }
 
     @Override
+    public boolean onBackPressed() {
+        return false;
+    }
+
+    @Override
     protected void initView(View view) {
 
         noReadMessageBtn = (ToggleButton) view.findViewById(R.id.setting_noReadMessage_button);
