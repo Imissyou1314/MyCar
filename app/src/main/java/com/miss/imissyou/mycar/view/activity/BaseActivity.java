@@ -21,7 +21,7 @@ import java.lang.reflect.Method;
  * 所有的Activity都继承的基类
  * Created by Imissyou on 2016/3/23.
  */
-public abstract class BaseActivity extends ActionBarActivity
+public abstract class BaseActivity extends FragmentActivity
         implements BackHandledInterface{
 
     private static String TAG = "BaseActivity";

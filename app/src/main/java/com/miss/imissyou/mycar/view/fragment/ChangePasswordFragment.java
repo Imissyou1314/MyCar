@@ -40,6 +40,7 @@ public class ChangePasswordFragment extends BaseFragment {
 
     @Override
     public boolean onBackPressed() {
+        LogUtils.d("按下返回键");
         return true;
     }
 
@@ -97,7 +98,6 @@ public class ChangePasswordFragment extends BaseFragment {
                 } else {
                     dialogToUser("操作失败", resultBean.getResultInfo());
                 }
-
             }
             @Override public void onFailure(int errorNo, String strMsg) {
 

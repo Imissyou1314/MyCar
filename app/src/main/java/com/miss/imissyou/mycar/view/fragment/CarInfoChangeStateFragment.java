@@ -67,6 +67,7 @@ public class CarInfoChangeStateFragment extends BaseFragment
 
     private Long mCarId;
     private Button changeStateBtn;          //设置为当前车辆
+    private CarInfoBean carBean;            //车辆实体
 
     @Nullable
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -130,7 +131,10 @@ public class CarInfoChangeStateFragment extends BaseFragment
 
     @Override public void showResultSuccess(ResultBean resultBean) {
         if (resultBean.isServiceResult()) {
+            Constant.carBean = carBean;
+            Constant.carBean.setCurrentCar(true);
             Toast.makeText(getActivity(),resultBean.getResultInfo(), Toast.LENGTH_SHORT).show();
+
             LogUtils.d("获取到的数据:" + resultBean.getResultInfo());
         } else {
             LogUtils.d("获取到的数据:" + resultBean.getResultInfo());
@@ -153,6 +157,7 @@ public class CarInfoChangeStateFragment extends BaseFragment
 
     @Override public void showResultSuccess(CarInfoBean resultBean) {
         LogUtils.w(resultBean.getBrand());
+        this.carBean = resultBean;
         showPage(resultBean);
     }
 
@@ -166,6 +171,7 @@ public class CarInfoChangeStateFragment extends BaseFragment
     }
 
     @Override public boolean onBackPressed() {
+        LogUtils.d("按下返回键");
         return true;
     }
 

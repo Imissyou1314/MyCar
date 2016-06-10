@@ -8,6 +8,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 
+import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.ui.sidemenu.animation.FlipAnimation;
 import com.miss.imissyou.mycar.ui.sidemenu.interfaces.Resourceble;
@@ -78,7 +79,6 @@ public class ViewAnimator<T extends Resourceble> {
                 }
             }, (long) delay);
         }
-
     }
 
     private void hideMenuContent() {

@@ -22,11 +22,9 @@ import android.view.animation.AccelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.cheshouye.api.client.json.CarInfo;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
-import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.bean.CarInfoBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
@@ -50,6 +48,7 @@ import com.miss.imissyou.mycar.view.activity.HelpActivity;
 import com.miss.imissyou.mycar.view.activity.LoginActivity;
 import com.miss.imissyou.mycar.view.activity.MessageActivity;
 import com.miss.imissyou.mycar.view.activity.SettingActivity;
+import com.miss.imissyou.mycar.view.fragment.BaseFragment;
 import com.miss.imissyou.mycar.view.fragment.CarInfoFragment;
 import com.miss.imissyou.mycar.view.fragment.FirstAddCarFragment;
 import com.miss.imissyou.mycar.view.fragment.SettingFragment;
@@ -76,8 +75,8 @@ import cn.jpush.android.api.TagAliasCallback;
 import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
 
-public class MainActivity extends BaseActivity
-        implements ViewAnimator.ViewAnimatorListener {
+public class MainActivity extends ActionBarActivity
+        implements ViewAnimator.ViewAnimatorListener ,BackHandledInterface{
     /**
      * 布局
      */
@@ -112,6 +111,7 @@ public class MainActivity extends BaseActivity
     private boolean isQuit;
     private Timer timer = new Timer();
     private boolean resultTag = false;
+    private BaseFragment mBaseFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,7 +122,7 @@ public class MainActivity extends BaseActivity
         JPushInterface.init(getApplication());
         JpushReceiver jpushReceiver = new JpushReceiver();
 
-        if (Constant.userBean.getUsername() == null) {
+        if (Constant.userBean.getId() == null) {
             builder = new MissDialog.Builder(this);
             doLogin();
         } else {
@@ -130,9 +130,6 @@ public class MainActivity extends BaseActivity
             setAlias(Constant.userBean.getId());
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            LogUtils.d("kitkit");
-        }
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
         tintManager.setStatusBarTintEnabled(true);
         tintManager.setNavigationBarTintEnabled(true);
@@ -157,6 +154,7 @@ public class MainActivity extends BaseActivity
         setActionBar();
         /**创建菜单项*/
         createMenuList();
+        setUpView();
         viewAnimator = new ViewAnimator<>(this, list, contentFragment, drawerLayout, this);
         /**加载页面数据*/
     }
@@ -223,7 +221,6 @@ public class MainActivity extends BaseActivity
                         }
                     });
             builder.create().show();
-
         } else {
 
             HttpParams params = new HttpParams();
@@ -281,14 +278,11 @@ public class MainActivity extends BaseActivity
                     }
                 }
             });
-
-            setUpView();
         }
     }
 
     /**
      * JPushInterface绑定别名
-     *
      * @param id
      */
     private void setAlias(Long id) {
@@ -329,18 +323,17 @@ public class MainActivity extends BaseActivity
     //TODO 更换布局
     private void createMenuList() {
         SlideMenuItem menuItem0 = new SlideMenuItem(ContentFragment.CLOSE, R.mipmap.icn_close);
-
         list.add(menuItem0);
-        SlideMenuItem menuItem = new SlideMenuItem(ContentFragment.HOME, R.mipmap.ic_home_icon);
-        list.add(menuItem);
+        SlideMenuItem menuItem1 = new SlideMenuItem(ContentFragment.HOME, R.mipmap.ic_home_icon);
+        list.add(menuItem1);
         SlideMenuItem menuItem2 = new SlideMenuItem(ContentFragment.CAR, R.mipmap.ic_car_icon);
         list.add(menuItem2);
         SlideMenuItem menuItem3 = new SlideMenuItem(ContentFragment.ORDER, R.mipmap.ic_order_icon);
         list.add(menuItem3);
-        SlideMenuItem menuItem5 = new SlideMenuItem(ContentFragment.BREAK, R.mipmap.ic_break_icon);
+        SlideMenuItem menuItem4 = new SlideMenuItem(ContentFragment.BREAK, R.mipmap.ic_break_icon);
+        list.add(menuItem4);
+        SlideMenuItem menuItem5 = new SlideMenuItem(ContentFragment.OIL, R.mipmap.ic_gasstation_oil_icon);
         list.add(menuItem5);
-        SlideMenuItem menuItem7 = new SlideMenuItem(ContentFragment.OIL, R.mipmap.ic_gasstation_oil_icon);
-        list.add(menuItem7);
         SlideMenuItem menuItem8 = new SlideMenuItem(ContentFragment.USER, R.mipmap.ic_me_icon);
         list.add(menuItem8);
         SlideMenuItem menuItem9 = new SlideMenuItem(ContentFragment.MUSIC, R.mipmap.ic_music_icon);
@@ -406,18 +399,17 @@ public class MainActivity extends BaseActivity
         gasStationFragment = new GasStationFragment();
         carInfoFragment = new CarInfoFragment();
         firstAddCarFragment = new FirstAddCarFragment();
-
-        if (null != Constant.carBean && null != Constant.carBean.getId()) {
-            startMainFragment();
-        } else {
-            LogUtils.d("启动第一次添加车辆页面");
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.content_frame, firstAddCarFragment, Constant.FirstAddCarFragment)
-                    .replace(R.id.content_frame, firstAddCarFragment)
-                    .commit();
-        }
-
         //编写自己的布
+
+        startMainFragment();
+//        if (null != Constant.carBean && null != Constant.carBean.getId()) {
+//
+//        } else {
+//            LogUtils.d("启动第一次添加车辆页面");
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.content_overlay, firstAddCarFragment)
+//                    .commit();
+//        }
     }
 
     /**
@@ -426,7 +418,7 @@ public class MainActivity extends BaseActivity
     private void startMainFragment() {
         if (null != Constant.carBean && null != Constant.carBean.getId()) {
             Bundle bundle = new Bundle();
-            LogUtils.d("启动车辆信息页面");
+            LogUtils.w("启动车辆信息页面");
             bundle.putLong(Constant.USER_ID, Constant.userBean.getId());
             bundle.putLong(Constant.CAR_ID, Constant.carBean.getId());
             carInfoFragment.setArguments(bundle);
@@ -434,9 +426,9 @@ public class MainActivity extends BaseActivity
                     .replace(R.id.content_frame, carInfoFragment, Constant.CarInfoFragment)
                     .commit();
         } else {
-            LogUtils.d("启动第一次添加车辆页面");
+            LogUtils.w("启动第一次添加车辆页面");
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, firstAddCarFragment, Constant.FirstAddCarFragment)
+                    .replace(R.id.content_frame, firstAddCarFragment)
                     .commit();
         }
     }
@@ -472,7 +464,9 @@ public class MainActivity extends BaseActivity
             case ContentFragment.BREAK:
                 return replaceFragment(weiZhanChaXunFragment, position, Constant.WeiZhanChaXunFragment);
             case ContentFragment.HOME:
-                return replaceFragment(carInfoFragment, position, Constant.CarInfoFragment);
+                startMainFragment();
+                return screenShotable;
+                //return replaceFragment(carInfoFragment, position, Constant.CarInfoFragment);
             case ContentFragment.USER:
                 return replaceFragment(userInfoFragment, position, Constant.UserInfoFragment);
             case ContentFragment.MUSIC:
@@ -513,7 +507,7 @@ public class MainActivity extends BaseActivity
     private ScreenShotable replaceFragment(ScreenShotable screenShotable, int topPosition, String Tag) {
         //更改页面布局
 
-        View view = findViewById(R.id.content_frame);
+        View view = findViewById(R.id.content_overlay);
         int finalRadius = Math.max(view.getWidth(), view.getHeight());
 
         SupportAnimator animator = ViewAnimationUtils
@@ -521,10 +515,11 @@ public class MainActivity extends BaseActivity
         animator.setInterpolator(new AccelerateInterpolator());
         animator.setDuration(ViewAnimator.CIRCULAR_REVEAL_ANIMATION_DURATION);
 
-        animator.start();
         getSupportFragmentManager().beginTransaction()
-                .addToBackStack(Tag)
-                .replace(R.id.content_frame, (Fragment) screenShotable, Tag).commit();
+                .replace(R.id.content_frame, (Fragment) screenShotable, Tag)
+                .commit();
+
+        animator.start();
         return screenShotable;
     }
 
@@ -616,34 +611,38 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
-    protected void initData() {
-
-    }
-
-    @Override
-    public void addListeners() {
-
-    }
-
-    @Override
     public void onBackPressed() {
-        if (!isQuit) {
-            isQuit = true;
-            Toast.makeText(getBaseContext(),
-                    "再按一次返回键退出程序", Toast.LENGTH_SHORT).show();
-            TimerTask task = null;
-            task = new TimerTask() {
-                @Override
-                public void run() {
-                    isQuit = false;
+        if (mBaseFragment == null || !mBaseFragment.onBackPressed()){
+            if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+                //双击退出
+                if (!isQuit) {
+                    isQuit = true;
+                    Toast.makeText(getBaseContext(),
+                            "再按一次返回键退出程序", Toast.LENGTH_SHORT).show();
+                    TimerTask task = null;
+                    task = new TimerTask() {
+                        @Override
+                        public void run() {
+                            isQuit = false;
+                        }
+                    };
+                    timer.schedule(task, 2000);
+                } else {
+                    finish();
+                    System.exit(0);
+                    android.os.Process.killProcess(android.os.Process.myPid());
                 }
-            };
-            timer.schedule(task, 2000);
-        } else {
-            finish();
-            System.exit(0);
-            android.os.Process.killProcess(android.os.Process.myPid());
+            } else {
+                super.onBackPressed();
+                //退栈
+                getSupportFragmentManager().popBackStack();
+            }
+        } else{
+            LogUtils.d("没有Fragment");
+            super.onBackPressed();
         }
+
+
     }
 
     /**
@@ -655,4 +654,9 @@ public class MainActivity extends BaseActivity
         Constant.userBean = null;
         Constant.carBean = null;
     }
+
+    @Override public void setSelectedFragment(BaseFragment selectedFragment) {
+        this.mBaseFragment = selectedFragment;
+    }
+
 }
