@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.Toast;
 
 
 import com.lidroid.xutils.util.LogUtils;
@@ -15,6 +16,7 @@ import com.miss.imissyou.mycar.presenter.impl.MessagePresenterImpl;
 import com.miss.imissyou.mycar.ui.AnimatorView;
 import com.miss.imissyou.mycar.ui.MissDialog;
 import com.miss.imissyou.mycar.ui.MissSwipDismissListView;
+import com.miss.imissyou.mycar.ui.TitleFragment;
 import com.miss.imissyou.mycar.ui.adapterutils.CommonAdapter;
 import com.miss.imissyou.mycar.ui.adapterutils.ViewHolder;
 import com.miss.imissyou.mycar.ui.circleProgress.CircleProgress;
@@ -34,10 +36,12 @@ import java.util.List;
  */
 public class MessageActivity extends BaseActivity implements MessageView {
 
+    @FindViewById(id = R.id.message_title)
+    private TitleFragment titleView;
     @FindViewById(id = R.id.message_allmessage_listView)
     private MissSwipDismissListView listView;          //消息列
-    @FindViewById(id = R.id.laod_message_progress)
-    private CircleProgress progress;   //加载视图
+    //@FindViewById(id = R.id.laod_message_progress)
+    //private CircleProgress progress;   //加载视图
 
 
     private MessagePresenter mMessagePresenter;
@@ -45,7 +49,6 @@ public class MessageActivity extends BaseActivity implements MessageView {
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_message);
-        initData();
     }
 
     /**
@@ -54,16 +57,18 @@ public class MessageActivity extends BaseActivity implements MessageView {
     @Override public void initData() {
         mMessagePresenter = new MessagePresenterImpl(this);
         SPUtils.init(this);
-
         if (SPUtils.getSp_set().getBoolean(Constant.MESSAGEALL, false)) {
+            LogUtils.w("获取所有未用户信息");
             mMessagePresenter.getUserAllMessage();
         } else {
+            LogUtils.w("获取用户所有未读信息");
             mMessagePresenter.getUserUnReadMessage();
         }
         //changeStateToService();
     }
 
     @Override public void addListeners() {
+        titleView.setTitleText("我的信息");         //设置标题
 
         listView.setOnDismissCallback(new MissSwipDismissListView.OnDismissCallback() {
             @Override
@@ -75,9 +80,7 @@ public class MessageActivity extends BaseActivity implements MessageView {
         });
     }
 
-    private void removeMessage(int dismissPosition) {
-        this.messages.remove(dismissPosition);
-    }
+
 
     @Override
     public void showResultError(int errorNo, String errorMag) {
@@ -86,6 +89,8 @@ public class MessageActivity extends BaseActivity implements MessageView {
             title = "程序异常";
         } else if (errorNo == Constant.NETWORK_STATE){
             title = "网络异常";
+        } else {
+            title = "请求异常";
         }
         /**弹框提示用户*/
         MissDialog.Builder dialog = new MissDialog.Builder(this);
@@ -103,13 +108,12 @@ public class MessageActivity extends BaseActivity implements MessageView {
     }
 
     @Override public void showResultSuccess(ResultBean resultBean) {
-
-        this.messages.addAll(GsonUtils.getParams(resultBean, "message", MessageBean.class));
-        if (messages.size() > 0) {
-           setListData(messages);
-        } else {
-           ToastUtil.asLong("没有信息提示");
-        }
+            this.messages.addAll(GsonUtils.getParams(resultBean, "message", MessageBean.class));
+            if (messages.size() > 0) {
+                setListData(messages);
+            } else {
+                ToastUtil.asLong("没有信息提示");
+            }
     }
 
     /**
@@ -117,6 +121,7 @@ public class MessageActivity extends BaseActivity implements MessageView {
      * @param messages
      */
     private void setListData(List<MessageBean> messages) {
+        LogUtils.d("获取到的订单列表:" + GsonUtils.Instance().toJson(messages));
         CommonAdapter adapter = new CommonAdapter<MessageBean>(this, messages,
                 R.layout.item_message) {
             @Override public void convert(ViewHolder holder, final MessageBean messageBean) {
@@ -124,7 +129,7 @@ public class MessageActivity extends BaseActivity implements MessageView {
                     /**设置没点击过的背景色*/
                     holder.setBackGround(R.color.color_blue);
                 }
-                holder.setText(R.id.message_item_msg_text, messageBean.getContent());
+                holder.setText(R.id.message_item_msg_text, "   " + messageBean.getContent());
                 holder.setText(R.id.message_item_time_text, messageBean.getSystemData());
                 holder.setText(R.id.message_item_title_text, messageBean.getMessageTitle());
             }
@@ -132,6 +137,9 @@ public class MessageActivity extends BaseActivity implements MessageView {
         listView.setAdapter(adapter);
     }
 
+    /**
+     * 改变状态
+     */
     private void changeStateToService() {
 
         if (null != Constant.userBean && 0 !=  Constant.userBean.getId())
@@ -139,34 +147,43 @@ public class MessageActivity extends BaseActivity implements MessageView {
     }
 
     @Override public void showProgress() {
-        progress.startAnim();
-        progress.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right,
-                                       int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                v.removeOnLayoutChangeListener(this);
-                AnimatorView.showView(progress);
-            }
-        });
+//        progress.startAnim();
+//        progress.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+//            @Override
+//            public void onLayoutChange(View v, int left, int top, int right,
+//                                       int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+//                v.removeOnLayoutChangeListener(this);
+//                AnimatorView.showView(progress);
+//            }
+//        });
     }
 
     @Override public void hideProgress() {
-        progress.stopAnim();
-        progress.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override public void onLayoutChange(View v, int left, int top, int right, int bottom,
-                                       int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                v.removeOnLayoutChangeListener(this);
-                AnimatorView.disShowView(progress);
-            }
-        });
+//        progress.stopAnim();
+//        progress.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+//            @Override public void onLayoutChange(View v, int left, int top, int right, int bottom,
+//                                       int oldLeft, int oldTop, int oldRight, int oldBottom) {
+//                v.removeOnLayoutChangeListener(this);
+//                AnimatorView.disShowView(progress);
+//            }
+//        });
     }
 
     @Override protected void onDestroy() {
-        mMessagePresenter.detchView();
         super.onDestroy();
+        mMessagePresenter.detchView();
     }
 
     @Override public void deleteSucces(String resultMessage) {
-        ToastUtil.asShort(resultMessage);
+        LogUtils.d("删除成功");
+        Toast.makeText(MessageActivity.this, "删除成功", Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 删除信息
+     * @param dismissPosition
+     */
+    private void removeMessage(int dismissPosition) {
+        this.messages.remove(dismissPosition);
     }
 }

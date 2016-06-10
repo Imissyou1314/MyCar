@@ -316,9 +316,9 @@ public class MusicFragment extends Fragment implements ScreenShotable {
      */
     private void changePlayIcon(boolean state) {
         if (state) {
-            mBtnPauseMusic.setBackgroundResource(R.mipmap.start_play_press);
-        } else {
             mBtnPauseMusic.setBackgroundResource(R.mipmap.start_pause_press);
+        } else {
+            mBtnPauseMusic.setBackgroundResource(R.mipmap.start_play_press);
         }
     }
 }

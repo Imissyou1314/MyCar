@@ -416,6 +416,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
      * 提交订单
      */
     private void sumbitOrder() {
+        initOrder(gasStation);
         if (null != orderBean && isReadOrder) {
             LogUtils.d("准备提交的数据" + GsonUtils.Instance().toJson(orderBean));
             mSumbitIndentPresenter.submitOrderToService(orderBean);
@@ -602,21 +603,26 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
         orderBean.setBrandName(gasStation.getBrandname());
         orderBean.setAmounts((int) price);
 
+        // TODO: 2016-06-10 添加只提示一条信息
         /**检查用户是否登录*/
         if (null != Constant.userBean && null != Constant.userBean.getId()) {
             orderBean.setUserId(Constant.userBean.getId());
             orderBean.setUserName(Constant.userBean.getUsername());
         } else {
-            ToastUtil.asLong("用户没登录不能下单");
+            Toast.makeText(getActivity(), "用户没登录不能下单", Toast.LENGTH_SHORT).show();
+            //ToastUtil.asLong("用户没登录不能下单");
             result = false;
+            return result;
         }
 
         /**检查用户是否有车*/
         if (null != Constant.carBean && null != Constant.carBean.getPlateNumber()) {
             orderBean.setPlateNumber(Constant.carBean.getPlateNumber());
         } else {
-            ToastUtil.asLong("用户没有车辆，请去添加车辆");
+            Toast.makeText(getActivity(), "用户没有车辆，请去添加车辆", Toast.LENGTH_SHORT).show();
+            //ToastUtil.asLong("用户没有车辆，请去添加车辆");
             result = false;
+            return result;
         }
 
         if (null != oil && null != oil.getPrice() && null != oil.getOilType()) {
@@ -624,8 +630,10 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
             orderBean.setPrice(Double.parseDouble(oil.getPrice()));
             orderBean.setType(oil.getOilType());
         } else {
-            ToastUtil.asLong("用户没有选择加油类型");
+            Toast.makeText(getActivity(), "用户没有选择加油类型,不能下单", Toast.LENGTH_SHORT).show();
+            //ToastUtil.asLong("用户没有选择加油类型");
             result = false;
+            return result;
         }
         return result;
     }
@@ -660,7 +668,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
             gastationOrderTime.setText(formatter.format(new Date()));       //显示当前时间
             gastationDistance.setText((Integer.parseInt(gasStation.getDistance()) / 1000) + "公里");
             addItemView(gasStation.getPrice());
-            initOrder(gasStation);
+
         }
     }
 }

@@ -112,7 +112,8 @@ public class OrderFragment extends BaseFragment implements
     }
 
     @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        OrderBean order = orders.get(position - 1);
+        LogUtils.d("点击的：" + position);
+        OrderBean order = orders.get(position);
         LogUtils.d("订单信息ID " + order.getId());
         android.support.v4.app.FragmentManager fm = getActivity()
                 .getSupportFragmentManager();

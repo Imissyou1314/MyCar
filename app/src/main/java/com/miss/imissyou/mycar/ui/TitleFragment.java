@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.miss.imissyou.mycar.R;
@@ -16,7 +17,7 @@ import com.miss.imissyou.mycar.R;
  */
 public class TitleFragment extends FrameLayout {
 
-    private TextView gBackTv;
+    private LinearLayout gBackTv;
     private TextView textTitleTv;
     public TitleFragment(final Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -34,7 +35,7 @@ public class TitleFragment extends FrameLayout {
      * 获取页面控件
      */
     private void setUpview() {
-        gBackTv = (TextView) findViewById(R.id.activity_title_back);
+        gBackTv = (LinearLayout) findViewById(R.id.activity_title_back);
         textTitleTv = (TextView) findViewById(R.id.activity_title);
     }
 
@@ -42,9 +43,6 @@ public class TitleFragment extends FrameLayout {
         textTitleTv.setText(title);
     }
 
-    public void setBackText(String text) {
-        gBackTv.setText(text);
-    }
 
     public void setBackOnClick(OnClickListener click) {
         gBackTv.setOnClickListener(click);

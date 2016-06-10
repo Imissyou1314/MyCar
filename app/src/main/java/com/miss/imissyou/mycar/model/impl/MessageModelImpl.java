@@ -110,7 +110,7 @@ public class MessageModelImpl implements MessageModle {
      */
     @Override public void getUserUnReadMessage(Long userId) {
         String url = Constant.SERVER_URL + "message/getUnread/userId=" + userId;
-        LogUtils.d("请求路径:" + url);
+        LogUtils.w("请求路径:" + url);
        HttpCallback callback = new HttpCallback() {
             @Override
             public void onFailure(int errorNo, String strMsg) {
@@ -122,9 +122,9 @@ public class MessageModelImpl implements MessageModle {
                 LogUtils.d(t);
                 ResultBean resultBean = GsonUtils.Instance().fromJson(t, ResultBean.class);
                 if (resultBean.isServiceResult()) {
-                   onFailure(0, resultBean.getResultInfo());
-                } else {
                     mMessagePresenter.onSuccess(resultBean);
+                } else {
+                    onFailure(2 , resultBean.getResultInfo());
                 }
             }
         };
@@ -133,6 +133,7 @@ public class MessageModelImpl implements MessageModle {
                 .shouldCache(false)
                 .cacheTime(0)
                 .url(url)
+                .timeout(5000)
                 .callback(callback)
                 .httpMethod(RxVolley.Method.GET)
                 .doTask();

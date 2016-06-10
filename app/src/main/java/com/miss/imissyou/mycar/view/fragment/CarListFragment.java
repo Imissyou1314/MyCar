@@ -157,38 +157,39 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
                 R.layout.item_carinfo_list) {
             @Override
             public void convert(final ViewHolder holder, CarInfoBean car) {
-                                if (car.isCurrentCar()) {
-                                   holder.setVisibility(R.id.car_list_item_car_isSelect);
-                                }
+                if (car.isCurrentCar()) {
+                    Constant.carBean = car;
+                    holder.setVisibility(R.id.car_list_item_car_isSelect);
+                }
                 LogUtils.d("车牌号" + car.getPlateNumber());
                 holder.addText(R.id.car_list_item_carbarnd, car.getPlateNumber());
-                String oilNumber = ((int) car.getOil()) * 100 / ((int)car.getOilBox()) + "%";
+                String oilNumber = ((int) car.getOil()) * 100 / ((int) car.getOilBox()) + "%";
 
                 LogUtils.d("油量比" + oilNumber);
                 holder.addText(R.id.car_list_item_carOil_text, oilNumber);
-                holder.addText(R.id.car_list_item_carMalied_text,car.getMileage() + "");
+                holder.addText(R.id.car_list_item_carMalied_text, car.getMileage() + "");
 
                 //加载图片
                 LogUtils.d("加载图片地址：" + Constant.SERVER_URL + car.getMark());
-               Glide.with(getActivity())
-                       .load(Constant.SERVER_URL + car.getMark())
-                       .into((ImageView) holder.getView(R.id.car_list_item_carImage));
+                Glide.with(getActivity())
+                        .load(Constant.SERVER_URL + car.getMark())
+                        .into((ImageView) holder.getView(R.id.car_list_item_carImage));
                 // TODO: 2016/6/4  待测试的页面
                 /**设置背景色*/
                 //int nowList = holder.getmPosition();
                 //if (nowList % 4 == 0) {
-                 //   holder.setViewBackGround(R.id.car_list_item_carBackground,R.color.color_gree_background);
-               // } else if (nowList % 3 == 0) {
-               //     holder.setViewBackGround(R.id.car_list_item_carBackground,R.color.color_yellow_background);
+                //   holder.setViewBackGround(R.id.car_list_item_carBackground,R.color.color_gree_background);
+                // } else if (nowList % 3 == 0) {
+                //     holder.setViewBackGround(R.id.car_list_item_carBackground,R.color.color_yellow_background);
                 //} else if(nowList % 2 == 0 ) {
-                 //   holder.setViewBackGround(R.id.car_list_item_carBackground,R.color.color_red_background);
+                //   holder.setViewBackGround(R.id.car_list_item_carBackground,R.color.color_red_background);
                 //} else {
                 //    holder.setViewBackGround(R.id.car_list_item_carBackground, R.color.color_blue_background);
-               // }
+                // }
 
-               // if (!car.getMark().equals("")) {
-                    //Glide.with(this).load(Constant.SERVER_URL + car.getMark()).into()
-               // }
+                // if (!car.getMark().equals("")) {
+                //Glide.with(this).load(Constant.SERVER_URL + car.getMark()).into()
+                // }
             }
         });
     }

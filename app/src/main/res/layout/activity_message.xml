@@ -3,9 +3,16 @@
     xmlns:circleprogress="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_gravity="center"
-    android:background="@color/colorWhite"
+    android:background="#eeeeee"
     android:gravity="center"
     android:layout_height="match_parent">
+
+    <!--标题-->
+    <com.miss.imissyou.mycar.ui.TitleFragment
+        android:id="@+id/message_title"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+    </com.miss.imissyou.mycar.ui.TitleFragment>
 
     <!--加载页面-->
     <com.miss.imissyou.mycar.ui.circleProgress.CircleProgress
@@ -20,6 +27,7 @@
     <!--消息页面-->
     <com.miss.imissyou.mycar.ui.MissSwipDismissListView
         android:id="@+id/message_allmessage_listView"
+        android:dividerHeight="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

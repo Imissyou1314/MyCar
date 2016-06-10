@@ -69,7 +69,11 @@ public class MusicPlayService extends Service{
      */
     private void seekToProgress(Intent intent) {
         int progress = intent.getIntExtra("progress",0);
-        musicPlay.seekTo(progress);
+        if (null != musicPlay) {
+            musicPlay.seekTo(progress);
+        } else {
+            LogUtils.d("没有进行播放的条件");
+        }
     }
 
     /**
