@@ -104,4 +104,5 @@ public class Constant {
     public final static String WeiZhanChaXunFragment = "WeiZhanChaXunFragment";
     public final static String OrderFragment = "OrderFragment";
     public final static String GasStationFragmetn = "GasStationFragmetn";
+
 }

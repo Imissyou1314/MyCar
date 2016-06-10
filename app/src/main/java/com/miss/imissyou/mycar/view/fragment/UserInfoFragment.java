@@ -44,7 +44,7 @@ public class UserInfoFragment extends BaseFragment implements UserInfoView, View
     private EditText userDersasPhone;   //用户亲人手机号
     private Button submit;              //更新用户操作
     private RoundImageView userheadView;          //用户头像
-    private CircleProgress progress;
+    //private CircleProgress progress;
 
     private UserBean mUserBean;
 
@@ -86,7 +86,7 @@ public class UserInfoFragment extends BaseFragment implements UserInfoView, View
         goChagenUserPhone = (LinearLayout) view.findViewById(R.id.userInfo_userdPhone_goChagne);
         goChagenUserdersaPhone = (LinearLayout) view.findViewById(R.id.userInfo_userdersaPhone_goChagen);
 
-        progress = (CircleProgress) view.findViewById(R.id.userInfo_progress);
+        //progress = (CircleProgress) view.findViewById(R.id.userInfo_progress);
     }
 
     @Override
@@ -172,13 +172,12 @@ public class UserInfoFragment extends BaseFragment implements UserInfoView, View
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override public void showProgress() {
-        progress.startAnim();
-
+        //progress.startAnim();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override public void hideProgress() {
-        progress.stopAnim();
+        //progress.stopAnim();
     }
 
     @Override public void onDestroy() {

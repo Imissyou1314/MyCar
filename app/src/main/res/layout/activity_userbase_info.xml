@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="#bbbbbb"
+    android:layout_height="match_parent">
+
+    <!--用户基本信息-->
+    <com.miss.imissyou.mycar.ui.TitleFragment
+        android:id="@+id/userBase_info_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </com.miss.imissyou.mycar.ui.TitleFragment>
+
+    <!--昵称-->
+    <com.miss.imissyou.mycar.ui.LinearText
+        android:id="@+id/userBase_info_userName"
+        android:layout_width="match_parent"
+
+        android:layout_height="50dp"/>
+
+    <View
+        android:background="#eeeeee"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <!--账号-->
+    <com.miss.imissyou.mycar.ui.LinearText
+        android:id="@+id/userBase_info_account"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+    <View
+        android:background="#eeeeee"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <!--真实姓名-->
+    <com.miss.imissyou.mycar.ui.LinearText
+        android:id="@+id/userBase_info_userRealeName"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+    <!--分行-->
+    <View
+        android:background="#eeeeee"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+
+    <!--绑定手机-->
+    <com.miss.imissyou.mycar.ui.LinearText
+        android:id="@+id/userBase_info_userPhone"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+    <View
+        android:background="#eeeeee"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <!--亲人手机-->
+    <com.miss.imissyou.mycar.ui.LinearText
+        android:id="@+id/userBase_info_relatedPhone"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+    <View
+        android:background="#eeeeee"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <!--设置安全密码-->
+    <com.miss.imissyou.mycar.ui.LinearText
+        android:id="@+id/userBase_info_sentSaftPassword"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+    <View
+        android:background="#eeeeee"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <!--修改账号密码-->
+    <com.miss.imissyou.mycar.ui.LinearText
+        android:id="@+id/userBase_info_changePassword"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+    <View
+        android:background="#eeeeee"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+</LinearLayout>

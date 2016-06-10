@@ -48,6 +48,7 @@ import com.miss.imissyou.mycar.view.activity.HelpActivity;
 import com.miss.imissyou.mycar.view.activity.LoginActivity;
 import com.miss.imissyou.mycar.view.activity.MessageActivity;
 import com.miss.imissyou.mycar.view.activity.SettingActivity;
+import com.miss.imissyou.mycar.view.activity.UserBaseActivity;
 import com.miss.imissyou.mycar.view.fragment.BaseFragment;
 import com.miss.imissyou.mycar.view.fragment.CarInfoFragment;
 import com.miss.imissyou.mycar.view.fragment.FirstAddCarFragment;
@@ -575,7 +576,7 @@ public class MainActivity extends ActionBarActivity
                 startActivity(intent);
                 return true;
             case R.id.action_help:
-                intent.setClass(this, HelpActivity.class);
+                intent.setClass(this, UserBaseActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.action_login:
