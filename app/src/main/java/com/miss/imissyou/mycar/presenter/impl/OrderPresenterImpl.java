@@ -1,6 +1,5 @@
 package com.miss.imissyou.mycar.presenter.impl;
 
-import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.bean.BaseBean;
 import com.miss.imissyou.mycar.bean.OrderBean;
 import com.miss.imissyou.mycar.bean.ResultBean;

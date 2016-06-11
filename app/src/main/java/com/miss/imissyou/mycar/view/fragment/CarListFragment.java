@@ -6,6 +6,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -49,6 +50,7 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
     // TODO: 2016-06-11 添加长按删除
     MissPopWindows missPopWindows;                                      //底部弹框
     private int delectCarId;                                            //删除车辆Id
+    private CommonAdapter<CarInfoBean> adapter;                         //adapter
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -172,7 +174,7 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
         this.cars = resultBean;
 
 
-        carInfoList.setAdapter(new CommonAdapter<CarInfoBean>(getActivity(), resultBean,
+        adapter = new CommonAdapter<CarInfoBean>(getActivity(), resultBean,
                 R.layout.item_carinfo_list) {
             @Override
             public void convert(final ViewHolder holder, CarInfoBean car) {
@@ -210,7 +212,8 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
                 //Glide.with(this).load(Constant.SERVER_URL + car.getMark()).into()
                 // }
             }
-        });
+        };
+        carInfoList.setAdapter(adapter);
     }
 
     @Override
@@ -219,7 +222,7 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
         Toast.makeText(getActivity(), resultBean.getResultInfo(),
                 Toast.LENGTH_SHORT).show();
         cars.remove(delectCarId);
-        carInfoList.notify();
+        adapter.notifyDataSetChanged();
     }
 
     @Override

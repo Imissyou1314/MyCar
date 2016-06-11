@@ -22,7 +22,7 @@ public class OrderModelImpl implements OrderModel {
 
     @Override
     public void delectOrder(Long orderId) {
-        String url = Constant.SERVER_URL + "order/delectOrder";
+        String url = Constant.SERVER_URL + "order/delete";
 
         HttpParams params = new HttpParams();
         params.put("id",orderId + "");

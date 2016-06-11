@@ -42,6 +42,7 @@ public class OrderFragment extends BaseFragment implements
 
     MissPopWindows missPopWindows;                                      //底部弹框
     private int delectOrderId;                                            //删除订单Id
+    private CommonAdapter<OrderBean> adapter;
 
     @Nullable
     @Override
@@ -87,7 +88,7 @@ public class OrderFragment extends BaseFragment implements
     @Override public void showResultSuccess(ResultBean resultBean) {
         if (resultBean.isServiceResult()) {
             orders.remove(delectOrderId);
-            orderListView.notify();
+            adapter.notifyDataSetChanged();
         }
     }
 
@@ -106,7 +107,8 @@ public class OrderFragment extends BaseFragment implements
     @Override public void showResultSuccess(List<OrderBean> orders) {
 
         this.orders = orders;
-        orderListView.setAdapter(new CommonAdapter<OrderBean>
+
+        adapter = new CommonAdapter<OrderBean>
                 (getActivity(), orders, R.layout.item_order) {
             @Override public void convert(ViewHolder holder, final OrderBean orderBean) {
                 holder.setText(R.id.order_item_orderId, orderBean.getId() + "");
@@ -116,7 +118,8 @@ public class OrderFragment extends BaseFragment implements
                 holder.setText(R.id.order_item_orderTime, orderBean.getAgreementTime());
                 holder.setText(R.id.order_item_orderTotalPrice, "￥ " + orderBean.getPrice());
             }
-        });
+        };
+        orderListView.setAdapter(adapter);
     }
 
     @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

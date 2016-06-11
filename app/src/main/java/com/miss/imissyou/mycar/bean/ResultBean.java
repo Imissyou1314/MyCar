@@ -1,6 +1,5 @@
 package com.miss.imissyou.mycar.bean;
 
-import java.util.List;
 import java.util.Map;
 
 /**

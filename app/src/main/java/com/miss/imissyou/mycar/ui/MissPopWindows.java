@@ -53,11 +53,16 @@ public class MissPopWindows extends PopupWindow {
         mMenuView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                int height= mMenuView.findViewById(R.layout.aler_dialog).getTop();
-                int y = (int) event.getY();
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (y < height) {
-                        dismiss();
+                View view = mMenuView.findViewById(R.layout.aler_dialog);
+                if (null == view) {
+                    dismiss();
+                } else {
+                    int height = mMenuView.findViewById(R.layout.aler_dialog).getTop();
+                    int y = (int) event.getY();
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        if (y < height) {
+                            dismiss();
+                        }
                     }
                 }
                 return true;

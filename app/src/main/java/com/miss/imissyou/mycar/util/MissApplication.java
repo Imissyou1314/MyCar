@@ -8,8 +8,6 @@ import android.os.Build;
 import android.os.Environment;
 import android.support.multidex.MultiDex;
 import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
 import com.lidroid.xutils.util.LogUtils;
 
 import java.io.File;
@@ -20,13 +18,13 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Field;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
+
 import java.util.Map;
+
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * 获取系统Context
@@ -52,6 +50,8 @@ public class MissApplication extends Application implements Thread.UncaughtExcep
 
     @Override public void onCreate() {
         super.onCreate();
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
        final Context mContext = this;
         setContext(mContext);
        // Thread.setDefaultUncaughtExceptionHandler(this);
