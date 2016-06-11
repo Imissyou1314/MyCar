@@ -30,8 +30,8 @@
             android:paddingTop="12dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:layout_width="55dp"
-            android:layout_height="35dp"
+            android:layout_width="@dimen/toggle_btn_width"
+            android:layout_height="@dimen/toggle_btn_height"
             android:layout_weight="0.03" />
 
     </LinearLayout>
@@ -67,8 +67,8 @@
             android:paddingTop="12dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:layout_width="55dp"
-            android:layout_height="35dp"
+            android:layout_width="@dimen/toggle_btn_width"
+            android:layout_height="@dimen/toggle_btn_height"
             android:layout_weight="0.03" />
 
     </LinearLayout>
@@ -103,8 +103,8 @@
             android:paddingTop="12dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:layout_width="55dp"
-            android:layout_height="35dp"
+            android:layout_width="@dimen/toggle_btn_width"
+            android:layout_height="@dimen/toggle_btn_height"
             android:layout_weight="0.03" />
 
     </LinearLayout>
@@ -139,8 +139,8 @@
             android:paddingTop="12dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:layout_width="55dp"
-            android:layout_height="35dp"
+            android:layout_width="@dimen/toggle_btn_width"
+            android:layout_height="@dimen/toggle_btn_height"
             android:layout_weight="0.03" />
     </LinearLayout>
     <View

@@ -2,6 +2,7 @@ package com.miss.imissyou.mycar.model.impl;
 
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
+import com.kymjs.rxvolley.client.HttpParams;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.bean.BaseBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
@@ -18,6 +19,36 @@ import com.miss.imissyou.mycar.view.MainView;
  */
 public class OrderModelImpl implements OrderModel {
     private OrderPresenter mOrderPresenter;
+
+    @Override
+    public void delectOrder(Long orderId) {
+        String url = Constant.SERVER_URL + "order/delectOrder";
+
+        HttpParams params = new HttpParams();
+        params.put("id",orderId + "");
+        LogUtils.w("请求地址");
+        RxVolley.post(url, params, new HttpCallback() {
+            @Override
+            public void onFailure(int errorNo, String strMsg) {
+
+                if (errorNo == Constant.NETWORK_STATE)
+                    strMsg = Constant.NOTNETWORK;
+                mOrderPresenter.onFailure(errorNo,strMsg);
+            }
+
+            @Override
+            public void onSuccess(String t) {
+                ResultBean resultBean = GsonUtils.getResultBean(t);
+                if (resultBean.isServiceResult()) {
+                    mOrderPresenter.delectOrderSuccess(resultBean);
+                } else {
+                    mOrderPresenter.onFailure(0,resultBean.getResultInfo());
+                }
+            }
+
+        });
+    }
+
     public OrderModelImpl(OrderPresenter orderPresenter) {
         this.mOrderPresenter = orderPresenter;
     }

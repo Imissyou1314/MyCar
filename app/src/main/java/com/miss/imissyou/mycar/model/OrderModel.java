@@ -13,4 +13,10 @@ public interface OrderModel {
      * @param useBean
      */
     void loadOrderData(BaseBean useBean);
+
+    /**
+     * 删除订单
+     * @param orderId 订单号
+     */
+    void delectOrder(Long orderId);
 }

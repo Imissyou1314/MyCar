@@ -41,7 +41,7 @@ public class OrderFragment extends BaseFragment implements
     private ListView orderListView;       //订单列表视图
 
     MissPopWindows missPopWindows;                                      //底部弹框
-    private int delectCarId;                                            //删除订单Id
+    private int delectOrderId;                                            //删除订单Id
 
     @Nullable
     @Override
@@ -85,7 +85,10 @@ public class OrderFragment extends BaseFragment implements
     }
 
     @Override public void showResultSuccess(ResultBean resultBean) {
-
+        if (resultBean.isServiceResult()) {
+            orders.remove(delectOrderId);
+            orderListView.notify();
+        }
     }
 
     @Override public void showProgress() {
@@ -171,7 +174,7 @@ public class OrderFragment extends BaseFragment implements
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         LogUtils.w("点击了那个" + position);
         missPopWindows = new MissPopWindows(getActivity(),itemOnClick);
-        delectCarId = position;
+        delectOrderId = position;
         //显示弹窗的位置
         missPopWindows.showAtLocation(getActivity().findViewById(R.id.container_frame),
                 Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL,0,0);
@@ -193,6 +196,6 @@ public class OrderFragment extends BaseFragment implements
      * 删除订单
      */
     private void delectOrder() {
-
+        mOrderPresenter.delectOrder(orders.get(delectOrderId).getId());
     }
 }

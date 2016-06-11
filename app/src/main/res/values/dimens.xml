@@ -13,4 +13,8 @@
     <dimen name="one_and_a_half_grid_unit">12dp</dimen>
 
     <dimen name="default_circle_view_size">200dp</dimen>
+
+    <!--开关按钮的大小-->
+    <dimen name="toggle_btn_width">50dp</dimen>
+    <dimen name="toggle_btn_height">25dp</dimen>
 </resources>

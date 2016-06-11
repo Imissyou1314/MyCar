@@ -53,4 +53,14 @@ public class OrderPresenterImpl implements OrderPresenter<MainView> {
     @Override public void detchView() {
         this.mOrderFragment = null;
     }
+
+    @Override
+    public void delectOrder(Long orderId) {
+        mOrderModel.delectOrder(orderId);
+    }
+
+    @Override
+    public void delectOrderSuccess(ResultBean resultBean) {
+        mOrderFragment.showResultSuccess(resultBean);
+    }
 }
