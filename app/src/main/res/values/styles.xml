@@ -137,4 +137,13 @@
         <item name="android:gravity">center|left</item>
     </style>
 
+    <!--弹框提示-->
+    <style name="popwindow_anim_style">
+        <!--显示弹框-->
+        <item name="android:windowEnterAnimation">@anim/popshow_anim</item>
+        <!--隐藏弹框-->
+        <item name="android:windowExitAnimation">@anim/pophidden_anim</item>
+
+    </style>
+
 </resources>

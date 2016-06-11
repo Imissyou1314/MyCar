@@ -21,6 +21,7 @@ import com.miss.imissyou.mycar.bean.OrderBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.presenter.impl.OrderPresenterImpl;
 import com.miss.imissyou.mycar.presenter.OrderPresenter;
+import com.miss.imissyou.mycar.ui.MissPopWindows;
 import com.miss.imissyou.mycar.ui.adapterutils.CommonAdapter;
 import com.miss.imissyou.mycar.ui.adapterutils.ViewHolder;
 import com.miss.imissyou.mycar.util.Constant;
@@ -33,11 +34,14 @@ import java.util.List;
  * Created by Imissyou on 2016/4/20.
  */
 public class OrderFragment extends BaseFragment implements
-        OrderListView, AdapterView.OnItemClickListener {
+        OrderListView, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
     private OrderPresenter mOrderPresenter;
     private List<OrderBean> orders;         //定单列表
     private ListView orderListView;       //订单列表视图
+
+    MissPopWindows missPopWindows;                                      //底部弹框
+    private int delectCarId;                                            //删除订单Id
 
     @Nullable
     @Override
@@ -72,6 +76,7 @@ public class OrderFragment extends BaseFragment implements
     }
 
     @Override protected void addViewsListener() {
+        orderListView.setOnItemLongClickListener(this);
         orderListView.setOnItemClickListener(this);
     }
 
@@ -160,5 +165,34 @@ public class OrderFragment extends BaseFragment implements
         view.setLayoutParams(lp);
         view.setBackgroundResource(R.color.color_gui);
         return view;
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        LogUtils.w("点击了那个" + position);
+        missPopWindows = new MissPopWindows(getActivity(),itemOnClick);
+        delectCarId = position;
+        //显示弹窗的位置
+        missPopWindows.showAtLocation(getActivity().findViewById(R.id.container_frame),
+                Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL,0,0);
+        return true;
+    }
+
+    /**弹框的监听事件*/
+    private View.OnClickListener itemOnClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            missPopWindows.dismiss();
+            if (v.getId() == R.id.btn_pop_delect) {
+                delectOrder();
+            }
+        }
+    };
+
+    /**
+     * 删除订单
+     */
+    private void delectOrder() {
+
     }
 }

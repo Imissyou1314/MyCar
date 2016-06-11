@@ -1,6 +1,7 @@
 package com.miss.imissyou.mycar.view;
 
 import com.miss.imissyou.mycar.bean.CarInfoBean;
+import com.miss.imissyou.mycar.bean.ResultBean;
 
 import java.util.List;
 
@@ -11,4 +12,6 @@ public interface CarListFragmentView extends MainView{
 
 
     void showResultSuccess(List<CarInfoBean> resultBean);
+
+    void showDelectSuccess(ResultBean resultBean);
 }

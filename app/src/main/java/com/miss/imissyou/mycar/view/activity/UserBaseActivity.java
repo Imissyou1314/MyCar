@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.UserBean;
 import com.miss.imissyou.mycar.ui.LinearText;
@@ -64,10 +65,14 @@ public class UserBaseActivity extends BaseActivity implements View.OnClickListen
         //取得用户实体
         if (null != Constant.userBean && null != Constant.userBean.getId()) {
             userBean = Constant.userBean;
-            initViewData(userBean);         //填充数据
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initViewData(userBean);         //填充数据
+    }
 
     @Override
     public void addListeners() {
@@ -112,6 +117,7 @@ public class UserBaseActivity extends BaseActivity implements View.OnClickListen
      * @param Tag 标志
      */
     private void changeUserPassword(int Tag) {
+        LogUtils.d("标志");
         String title = "更改账户密码";
         if (Tag != ACCOUNT_PASSWOED) {
             if (null != userBean.getSafePassword()) {
@@ -124,12 +130,7 @@ public class UserBaseActivity extends BaseActivity implements View.OnClickListen
         intent.putExtra("title", title);
         intent.putExtra("Tag", Tag);
         intent.setClass(this, ChangePasswordActivity.class);
-    }
-
-    /**
-     * 设置安全码
-     */
-    private void sentSatfPassoword() {
+        startActivity(intent);
     }
 
     /**
@@ -146,7 +147,7 @@ public class UserBaseActivity extends BaseActivity implements View.OnClickListen
         }
 
         intent.putExtra("title", title);
-        intent.putExtra("TAG", Tag);
+        intent.putExtra("Tag", Tag);
         intent.setClass(this, ChangePhoneNumberActivity.class);
         startActivity(intent);
     }
@@ -154,10 +155,21 @@ public class UserBaseActivity extends BaseActivity implements View.OnClickListen
     /**
      * 更改用户名
      *
-     * @param Tag 标志
+     * @param nameTag 标志
      */
-    private void changeUserName(int Tag) {
+    private void changeUserName(int nameTag) {
         // TODO: 2016-06-10 更改用户名
+        String title = "用户名";
+        if (nameTag == USER_NAME_TAG) {
+            title = "更改用户昵称";
+        } else {
+            title = "更改用户名";
+        }
+
+        intent.putExtra("title", title);
+        intent.putExtra("Tag", nameTag);
+        intent.setClass(this, ChangeUserNameActivity.class);
+        startActivity(intent);
     }
 
 

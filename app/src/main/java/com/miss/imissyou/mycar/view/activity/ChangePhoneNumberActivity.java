@@ -1,18 +1,23 @@
 package com.miss.imissyou.mycar.view.activity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.presenter.ChangePhoneNumberPresenter;
 import com.miss.imissyou.mycar.presenter.impl.ChangePhoneNumberPresenterImpl;
+import com.miss.imissyou.mycar.ui.MissDialog;
 import com.miss.imissyou.mycar.ui.TitleFragment;
+import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.DialogUtils;
 import com.miss.imissyou.mycar.util.FindViewById;
+import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.view.ChangePhoneNumberView;
 
 /**
@@ -32,10 +37,11 @@ public class ChangePhoneNumberActivity extends BaseActivity implements ChangePho
     @FindViewById(id = R.id.changePhone_title)
     TitleFragment title;
 
-
+    private Boolean  isSumbit = false;
     private ChangePhoneNumberPresenter mChangePhoneNumberPresenter;
     private int TAG;
     private String titlePage = "更改手机号";
+    private String phone;       //手机号
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_change_phonenumber);
@@ -47,19 +53,22 @@ public class ChangePhoneNumberActivity extends BaseActivity implements ChangePho
 
     @Override public void addListeners() {
         titlePage = getIntent().getStringExtra("title");
-        TAG = getIntent().getIntExtra("TAG", 0);
+        TAG = getIntent().getIntExtra("Tag", 0);
 
         title.setTitleText(titlePage);
 
         getCodeSubmit.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                mChangePhoneNumberPresenter.getCode(phoneNumberInput.getText().toString());
+                phone = phoneNumberInput.getText().toString();
+                mChangePhoneNumberPresenter.getCode(phone);
             }
         });
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                mChangePhoneNumberPresenter.submit(phoneNumberInput.getText().toString(), codeInput.getText().toString(), TAG);
+                isSumbit = true;
+                mChangePhoneNumberPresenter.submit(phone,
+                        codeInput.getText().toString(), TAG);
             }
         });
     }
@@ -71,15 +80,23 @@ public class ChangePhoneNumberActivity extends BaseActivity implements ChangePho
         } else {
             title = "系统异常";
         }
-        showMessage(title,errorMag);
+
+        Toast.makeText(ChangePhoneNumberActivity.this,
+                title + ":" +errorMag, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showResultSuccess(ResultBean resultBean) {
             if (resultBean.isServiceResult()) {
-                showMessage("操作成功",resultBean.getResultInfo());
+                if (isSumbit) {
+                    showMessage("操作成功", resultBean.getResultInfo());
+                } else {
+                    Toast.makeText(ChangePhoneNumberActivity.this,
+                            resultBean.getResultInfo(), Toast.LENGTH_SHORT).show();
+                }
             } else {
-                showMessage("操作失败",resultBean.getResultInfo());
+                Toast.makeText(ChangePhoneNumberActivity.this,
+                        resultBean.getResultInfo(), Toast.LENGTH_SHORT).show();
             }
     }
 
@@ -97,8 +114,24 @@ public class ChangePhoneNumberActivity extends BaseActivity implements ChangePho
      * @param message
      */
     private void showMessage(String title, String message) {
-        new DialogUtils(this)
-                .errorMessage(title, message)
-                .show();
+     new MissDialog.Builder(this).setTitle(title).setMessage(message).setSingleButton(true).setNegativeButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                goBack();
+            }
+        }).create().show();
+    }
+
+    /**
+     * 返回上一页面
+     */
+    private void goBack() {
+        if (TAG == 0) {
+            Constant.userBean.setPhone(phone);
+        } else {
+            Constant.userBean.setRelatedPhone(phone);
+        }
+        this.finish();
     }
 }

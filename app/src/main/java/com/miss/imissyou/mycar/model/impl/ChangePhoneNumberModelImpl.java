@@ -43,32 +43,50 @@ public class ChangePhoneNumberModelImpl implements ChangePhoneNumberModle {
     }
 
     @Override public void changeUserPhone(String phoneNumber, String code) {
-        String url = Constant.SERVER_URL + "user/changePhone";
-        submit(phoneNumber, code, url);
-    }
+        String url = Constant.SERVER_URL + "users/update";
 
-    @Override public void changeUserdersaPhone(String phoneNumber, String code) {
-        String url = Constant.SERVER_URL + "users/changeRelatedPhone";
-        submit(phoneNumber, code, url);
-    }
-
-   public void submit(String phoneNumber, String code, String url) {
-
-       LogUtils.d("验证码:" + code + "手机号：" + phoneNumber);
         HttpParams params = new HttpParams();
         params.putHeaders("cookie", Constant.COOKIE);
         params.put("id", Constant.userBean.getId() + "");
         params.put("newPhone", phoneNumber);
         params.put("verifyCode", code);
+        if (null != Constant.userBean.getUsername())
+            params.put("username",Constant.userBean.getUsername());
+        if (null != Constant.userBean.getRealName())
+            params.put("username",Constant.userBean.getRealName());
+        if (null != Constant.userBean.getPassword())
+            params.put("username",Constant.userBean.getPassword());
+        if (null != Constant.userBean.getSafePassword())
+            params.put("username",Constant.userBean.getSafePassword());
 
-       LogUtils.d(url);
+        submit(phoneNumber, code, url,params);
+    }
+
+    @Override public void changeUserdersaPhone(String phoneNumber, String code) {
+        String url = Constant.SERVER_URL + "users/changeRelatedPhone";
+
+        HttpParams params = new HttpParams();
+        params.putHeaders("cookie", Constant.COOKIE);
+        params.put("id", Constant.userBean.getId() + "");
+        params.put("newPhone", phoneNumber);
+        params.put("verifyCode", code);
+        submit(phoneNumber, code, url,params);
+    }
+
+   public void submit(String phoneNumber, String code, String url, HttpParams params) {
+
+       LogUtils.w("验证码:" + code + "手机号：" + phoneNumber);
+
+
+       LogUtils.w(url);
         RxVolley.post(url, params, new HttpCallback() {
             @Override public void onFailure(int errorNo, String strMsg) {
+                LogUtils.w("错误码:" + errorNo + ">>>::错误信息:" + strMsg);
                 mChangePhoneNumberPresenter.onFailure(errorNo, strMsg);
             }
 
             @Override public void onSuccess(String t) {
-                LogUtils.d(t);
+                LogUtils.w(t);
                 ResultBean resultBean = GsonUtils.Instance().fromJson(t, ResultBean.class);
                 if (resultBean.isServiceResult()) {
                     mChangePhoneNumberPresenter.onSuccess(resultBean);

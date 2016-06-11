@@ -1,253 +1,86 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--用户个人信息页面-->
+<?xml version="1.0" encoding="utf-8"?><!--用户个人信息页面-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:miss="http://schemas.android.com/apk/res-auto"
-    xmlns:circleprogress="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <com.miss.imissyou.mycar.ui.circleProgress.CircleProgress
-        android:id="@+id/userInfo_progress"
+    <FrameLayout
+        android:layout_weight="3"
+        android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:visibility="gone"
-        circleprogress:color1="@android:color/holo_red_light"
-        circleprogress:color2="@android:color/holo_green_light"
-        circleprogress:color3="@android:color/holo_blue_light"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content">
 
-    <com.miss.imissyou.mycar.ui.RoundImageView
-        android:padding="5dp"
-        android:layout_marginTop="10dp"
-        android:id="@+id/userInfo_userHead_Image"
-        android:gravity="center"
-        miss:Radiustype="circle"
-        android:src="@mipmap/user_head"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        app:cardElevation="4dp"
-        app:cardCornerRadius="20dp"
-        app:cardBackgroundColor="@color/color_cardView"
-        android:layout_weight="4"
-        android:layout_height="0dp">
-
-        <LinearLayout
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:padding="10dp"
-            android:orientation="vertical"
+        <ImageView
+            android:id="@+id/user_info_userhendImage"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <!--用户名-->
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:layout_marginBottom="5dp"
-                android:paddingRight="20dp"
-                android:background="@color/color_miniblue"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="0dp">
-                <TextView
-                    android:id="@+id/userInfo_username"
-                    android:text="用户名:"
-                    style="@style/MissTextViweStyle"
-                    android:gravity="center|right"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-                <EditText
-                    android:id="@+id/userInfo_userName_input"
-                    style="@style/MissTextViweStyle"
-                    android:background="@null"
-                    android:layout_width="0dp"
-                    android:gravity="center|left"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
+            android:layout_height="match_parent" />
 
-            <!--用户账号-->
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_marginBottom="5dp"
-                android:background="@color/color_miniblue"
-                android:paddingRight="20dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="0dp">
-                <TextView
-                    android:id="@+id/userInfo_useraccount"
-                    android:text="用户账号:"
-                    style="@style/MissTextViweStyle"
-                    android:gravity="center|right"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content" />
-                <EditText
-                    android:id="@+id/userInfo_userdaccount_input"
-                    android:inputType="phone"
-                    style="@style/MissTextViweStyle"
-                    android:gravity="center|left"
-                    android:background="@null"
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
+        <com.miss.imissyou.mycar.ui.RoundImageView
+            android:id="@+id/user_info_roundImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
 
+    <LinearLayout
+        android:layout_weight="4"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="120dp">
 
-            <!--用户真名-->
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:layout_marginBottom="5dp"
-                android:gravity="center"
-                android:background="@color/color_miniblue"
-                android:paddingRight="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="0dp">
-                <TextView
-                    android:id="@+id/userInfo_userRealName"
-                    android:text="用户真名:"
-                    style="@style/MissTextViweStyle"
-                    android:gravity="center|right"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content" />
-                <EditText
-                    android:id="@+id/userInfo_userRealName_input"
-                    android:inputType="phone"
-                    style="@style/MissTextViweStyle"
-                    android:background="@null"
-                    android:gravity="center|left"
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
+        <!--用户基本信息-->
+        <com.miss.imissyou.mycar.ui.LinearText
+            android:id="@+id/user_info_userBaseInfo"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
 
-            <!--&lt;!&ndash;车辆数&ndash;&gt;-->
-            <!--<LinearLayout-->
-                <!--android:orientation="horizontal"-->
-                <!--android:layout_weight="1"-->
-                <!--android:layout_marginBottom="5dp"-->
-                <!--android:gravity="center"-->
-                <!--android:paddingRight="20dp"-->
-                <!--android:background="@color/color_miniblue"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="0dp">-->
-                <!--<TextView-->
-                    <!--android:id="@+id/userInfo_usercarNumber"-->
-                    <!--android:text="用户车数:"-->
-                    <!--style="@style/MissTextViweStyle"-->
-                    <!--android:gravity="center|right"-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:layout_height="wrap_content" />-->
-                <!--<EditText-->
-                    <!--android:id="@+id/userInfo_usercarNumber_Input"-->
-                    <!--style="@style/MissTextViweStyle"-->
-                    <!--android:background="@null"-->
-                    <!--android:gravity="center|left"-->
-                    <!--android:enabled="false"-->
-                    <!--android:inputType="number"-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="2" />-->
+        <View
+            android:background="#eeeeee"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
 
+        <!--车辆与安全-->
+        <com.miss.imissyou.mycar.ui.LinearText
+            android:id="@+id/user_info_userBaseSaft"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
 
-            <!--</LinearLayout>-->
+        <View
+            android:background="#eeeeee"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
 
-            <!--用户手机号-->
-            <LinearLayout
-                android:id="@+id/userInfo_userdPhone_goChagne"
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:layout_marginBottom="5dp"
-                android:gravity="center"
-                android:background="@color/color_miniblue"
-                android:layout_width="match_parent"
-                android:paddingRight="20dp"
-                android:layout_height="0dp">
-                <TextView
-                    android:id="@+id/userInfo_userPhone"
-                    android:text="用户电话:"
-                    style="@style/MissTextViweStyle"
-                    android:gravity="center|right"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content" />
-                <EditText
-                    android:id="@+id/userInfo_userdPhone_input"
-                    android:inputType="phone"
-                    style="@style/MissTextViweStyle"
-                    android:background="@null"
-                    android:gravity="center|left"
-                    android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
-                    android:enabled="false"
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <!--亲人电话-->
-            <LinearLayout
-                android:id="@+id/userInfo_userdersaPhone_goChagen"
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:paddingRight="20dp"
-                android:gravity="center"
-                android:layout_marginBottom="5dp"
-                android:background="@color/color_miniblue"
-                android:layout_width="match_parent"
-                android:layout_height="0dp">
-                <TextView
-                    android:id="@+id/userInfo_userdersaPhone"
-                    android:text="亲人电话:"
-                    style="@style/MissTextViweStyle"
-                    android:gravity="center|right"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content" />
-                <EditText
-                    android:id="@+id/userInfo_userdersaPhone_Input"
-                    style="@style/MissTextViweStyle"
-                    android:background="@null"
-                    android:enabled="false"
-                    android:gravity="left|center"
-                    android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
-                    android:inputType="phone"
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_weight="2"
+        <RelativeLayout
+            android:layout_weight="3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/userInfo_submit"
-                android:layout_width="match_parent"
+            <TextView
                 android:layout_gravity="center"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:text="更新"
-                android:background="@color/color_carView_background_tran"
-                style="@style/MissButton"
+                android:textColor="#000000"
+                android:textSize="14sp"
                 android:gravity="center"
-                android:layout_height="wrap_content" />
-            </LinearLayout>
-        </LinearLayout>
-
-    </android.support.v7.widget.CardView>
+                android:layout_marginBottom="5dp"
+                android:text="客服电话: 400-850-177"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/user_userinfo_textView"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+            <TextView
+                android:layout_marginBottom="45dp"
+                android:layout_gravity="center"
+                android:textColor="#bbbbbb"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:text="服务时间:8:00 - 22:00"
+                android:layout_width="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_height="wrap_content"
+                android:id="@+id/user_userinfo_textView" />
+        </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>

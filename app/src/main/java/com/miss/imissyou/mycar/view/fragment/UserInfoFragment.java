@@ -2,8 +2,10 @@ package com.miss.imissyou.mycar.view.fragment;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
@@ -24,223 +27,163 @@ import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.bean.UserBean;
 import com.miss.imissyou.mycar.presenter.UserInfoPresenter;
 import com.miss.imissyou.mycar.presenter.impl.UserInfoPresenterImpl;
+import com.miss.imissyou.mycar.ui.LinearText;
 import com.miss.imissyou.mycar.ui.RoundImageView;
 import com.miss.imissyou.mycar.ui.circleProgress.CircleProgress;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.DialogUtils;
 import com.miss.imissyou.mycar.view.UserInfoView;
 import com.miss.imissyou.mycar.view.activity.ChangePhoneNumberActivity;
+import com.miss.imissyou.mycar.view.activity.LoginActivity;
+import com.miss.imissyou.mycar.view.activity.UserBaseActivity;
 import com.nineoldandroids.view.ViewHelper;
 
 /**
  * Created by Imissyou on 2016/4/26.
  */
-public class UserInfoFragment extends BaseFragment implements UserInfoView, View.OnClickListener {
+public class UserInfoFragment extends BaseFragment implements View.OnClickListener, UserInfoView {
 
-    private EditText userName;          //用户名
-    private EditText userReadName;      //用户的真实姓名
-    private EditText userAccount;       //用户账号
-    private EditText userPhone;         //用户手机号
-    private EditText userDersasPhone;   //用户亲人手机号
-    private Button submit;              //更新用户操作
-    private RoundImageView userheadView;          //用户头像
-    //private CircleProgress progress;
+    private ImageView userHeadBackground;           //用户头像背景图
+    private RoundImageView userHeadRound;           //用户头像圆形图
 
-    private UserBean mUserBean;
-
-    private LinearLayout goChagenUserPhone;     //跳转到更改用户手机号的页面
-    private LinearLayout goChagenUserdersaPhone;//跳转到更改用户亲人手机号的页面
-
-
-    private UserInfoPresenter mUserInfoPresenter;
-
+    private LinearText userBaseLinear;              //用户的基本信息
+    private LinearText userSaftCarInfo;             //用户车辆安全信息
+    private Intent intent;                              //启动
+    public final static int REQUEST_PHOTO = 2;          //页面photo
+    private String photo_path ="";                      //图片地址
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         return super.onCreateView(R.layout.fragment_user_info, inflater, container, savedInstanceState);
     }
 
+
     @Override
     public boolean onBackPressed() {
+        LogUtils.d("返回事件到这里了");
         return false;
     }
 
     @Override protected void initView(View view) {
+        userHeadBackground = (ImageView) view.findViewById(R.id.user_info_userhendImage);
+        userHeadRound = (RoundImageView) view.findViewById(R.id.user_info_roundImage);
 
-        submit = (Button) view.findViewById(R.id.userInfo_submit);
-        userheadView =(RoundImageView) view.findViewById(R.id.userInfo_userHead_Image);
-        userName = (EditText) view.findViewById(R.id.userInfo_userName_input);
-        userName.setEnabled(false);
-        userReadName = (EditText) view.findViewById(R.id.userInfo_userRealName_input);
-        userReadName.setEnabled(false);
-
-        userAccount = (EditText) view.findViewById(R.id.userInfo_userdaccount_input);
-        userAccount.setEnabled(false);
-        userPhone = (EditText) view.findViewById(R.id.userInfo_userdPhone_input);
-        userPhone.setEnabled(false);
-        userDersasPhone = (EditText) view.findViewById(R.id.userInfo_userdersaPhone_Input);
-        userDersasPhone.setEnabled(false);
-
-        goChagenUserPhone = (LinearLayout) view.findViewById(R.id.userInfo_userdPhone_goChagne);
-        goChagenUserdersaPhone = (LinearLayout) view.findViewById(R.id.userInfo_userdersaPhone_goChagen);
-
-        //progress = (CircleProgress) view.findViewById(R.id.userInfo_progress);
+        userBaseLinear = (LinearText) view.findViewById(R.id.user_info_userBaseInfo);
+        userSaftCarInfo = (LinearText) view.findViewById(R.id.user_info_userBaseSaft);
     }
 
     @Override
     protected void initData() {
-        mUserInfoPresenter = new UserInfoPresenterImpl(this);
-        mUserInfoPresenter.loadServiceData(null);
-    }
-
-    @Override protected void addViewsListener() {
-        //添加动画效果
-        final Spring spring = SpringSystem.create().createSpring();
-        SpringConfig config = new SpringConfig(40, 3);
-        spring.setSpringConfig(config);
-        final float maxScale = 0.1f;
-        spring.addListener(new SimpleSpringListener(){
-            @Override
-            public void onSpringUpdate(Spring spring) {
-                super.onSpringUpdate(spring);
-                float value = (float) spring.getCurrentValue();
-                float scale = 1f - (value * maxScale);
-
-                ViewHelper.setScaleX(userheadView, scale);
-                ViewHelper.setScaleY(userheadView, scale);
-                //或者这样
-//                userheadView.setScaleX(scale);
-//                userheadView.setScaleY(scale);
-            }
-        });
-
-        userheadView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                int key = event.getAction();
-                switch (key) {
-                    case MotionEvent.ACTION_DOWN:
-                        spring.setEndValue(1.0);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL:
-                        spring.setEndValue(0.0);
-                        break;
-                    default:
-                        break;
-                }
-                return false;
-            }
-        });
-
-        submit.setOnClickListener(this);
-        goChagenUserPhone.setOnClickListener(this);
-        goChagenUserdersaPhone.setOnClickListener(this);
+        userBaseLinear.setTitle("基本信息").setTitleSize(16).setMessage("");
+        userSaftCarInfo.setTitle("车辆与安全").setTitleSize(16).setMessage("");
+        if (null != Constant.userBean && null != Constant.userBean.getUserImg()) {
+            Glide.with(this).load(Constant.SERVER_URL + Constant.userBean.getUserImg()).into(userHeadRound);
+        } else {
+            LogUtils.w("用户没有图片");
+        }
     }
 
     @Override
-    public void showResultError(int errorNo, String errorMag) {
-        String title = "标题";
-        if (errorNo == Constant.WARE_ERROR || errorNo == Constant.WARE_USERDO_ERROR) {
-            title = "警告";
-        } else {
-            title = "错误";
+    protected void addViewsListener() {
+        userBaseLinear.setOnClickListener(this);
+        userHeadRound.setOnClickListener(this);
+        userSaftCarInfo.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        intent = new Intent();
+
+        switch (v.getId()) {
+            case R.id.user_info_userBaseInfo:
+                toBasePage();
+                break;
+            case R.id.user_info_userBaseSaft:
+                toBaseSaftPage();
+                break;
+            case R.id.user_info_roundImage:
+                toSelectPhoto();
+                break;
         }
-       showDialog(title, errorMag);
     }
 
-    @Override public void onUpdateSuccess(String resultMessage) {
-        showDialog("操作成功", resultMessage);
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == getActivity().RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_PHOTO:
+                    //获取选中图片的路径
+                    Cursor cursor = getActivity().getContentResolver().query(data.getData(), null, null, null, null);
+                    if (cursor.moveToFirst()) {
+                        photo_path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+                        LogUtils.w("图片地址:" + photo_path);
+                    }
+                    cursor.close();
+                    break;
+            }
+        }
     }
 
-    private void showDialog(String title, String errorMag) {
-        new DialogUtils(getActivity()).errorMessage(title, errorMag);
+    /**
+     * 去选择图片
+     */
+    private void toSelectPhoto() {
+        //直接调用相册的图片
+        Intent innerIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        //"android.intent.action.GET_CONTENT"
+        innerIntent.setType("image/*");
+        Intent wrapperIntent = Intent.createChooser(innerIntent, "选择二维码图片");
+        this.startActivityForResult(wrapperIntent, REQUEST_PHOTO);
+    }
+
+    /**
+     * 去车辆安全页面
+     */
+    private void toBaseSaftPage() {
+        // TODO: 2016-06-11 车辆与安全页面
+    }
+
+    /**
+     * 去有户详情页面
+     */
+    private void toBasePage() {
+        if (null != Constant.userBean  && null != Constant.userBean.getId()) {
+            intent.setClass(getActivity(), LoginActivity.class);
+        }  else {
+            intent.setClass(getActivity(),UserBaseActivity.class);
+        }
+        startActivity(intent);
+    }
+
+    @Override
+    public void onUpdateSuccess(String resultMessage) {
+
     }
 
     @Override
     public void showResultOnSuccess(UserBean userBean) {
-        setUpdate(userBean);
+
     }
 
     @Override
-    public void showResultSuccess(ResultBean userBean) {
+    public void showResultError(int errorNo, String errorMag) {
 
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    @Override public void showProgress() {
-        //progress.startAnim();
+    @Override
+    public void showResultSuccess(ResultBean resultBean) {
+
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    @Override public void hideProgress() {
-        //progress.stopAnim();
+    @Override
+    public void showProgress() {
+
     }
 
-    @Override public void onDestroy() {
-        super.onDestroy();
-        hideProgress();
-        mUserInfoPresenter.detchView();
-    }
+    @Override
+    public void hideProgress() {
 
-    @Override public void onClick(View v) {
-        Intent intent = new Intent();
-        String title ="";
-        int TAG = 0;
-        intent.setClass(getActivity(), ChangePhoneNumberActivity.class);
-        switch (v.getId()) {
-            case R.id.userInfo_userdersaPhone_goChagen:
-                title="更改亲人手机";
-                TAG = 1;
-                break;
-            case R.id.userInfo_userdPhone_goChagne:
-                title="更改用户手机";
-
-                break;
-            case R.id.userInfo_submit:
-                changeUserInfo();
-                return;
-        }
-        intent.putExtra("title", title);
-        intent.putExtra("TAG", TAG);
-        getActivity().startActivity(intent);
-    }
-
-    /**
-     * 提交信息到服务器
-     */
-    private void changeUserInfo() {
-        if (null != mUserBean) {
-            mUserBean.setRealName(userReadName.getText().toString());
-            mUserBean.setUsername(userName.getText().toString());
-            mUserInfoPresenter.changeUserInfo(mUserBean);
-        } else {
-            showResultError(Constant.WARE_ERROR, Constant.WARE_ERROR_COSTANT);
-        }
-    }
-
-    /**
-     * 转载页面数据
-     * @param userBean
-     */
-    private void setUpdate(UserBean userBean) {
-        this.mUserBean = userBean;
-        if (null != userBean && null != userBean.getUserImg()) {
-            LogUtils.d("获取图片地址:" + Constant.SERVER_URL + userBean.getUserImg());
-            Glide.with(this).load(Constant.SERVER_URL + userBean.getUserImg()).into(userheadView);
-        }
-        userName.setText(mUserBean.getUsername());
-        userName.setEnabled(true);
-
-        userReadName.setText(mUserBean.getRealName());
-        userReadName.setEnabled(true);
-
-        userAccount.setText(mUserBean.getLoginid());
-
-        userPhone.setText(mUserBean.getPhone());
-        userDersasPhone.setText(mUserBean.getRelatedPhone());
     }
 }

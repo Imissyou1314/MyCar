@@ -1,6 +1,7 @@
 package com.miss.imissyou.mycar.presenter;
 
 import com.miss.imissyou.mycar.bean.BaseBean;
+import com.miss.imissyou.mycar.bean.ResultBean;
 
 /**
  * 获取用户
@@ -37,5 +38,17 @@ public interface CarListPresenter<V> {
      * 加载服务器数据或者缓存数据
      */
     void loadServiceData(String userId);
+
+    /**
+     * 删除车辆
+     * @param carId
+     */
+    void delectCar(Long carId);
+
+    /**
+     * 删除成功
+     * @param resultBean
+     */
+    void delectSuccess(ResultBean resultBean);
 
 }

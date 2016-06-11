@@ -2,6 +2,7 @@ package com.miss.imissyou.mycar.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.miss.imissyou.mycar.bean.CarInfoBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.presenter.CarListPresenter;
 import com.miss.imissyou.mycar.presenter.impl.CarListPresenterImpl;
+import com.miss.imissyou.mycar.ui.MissPopWindows;
 import com.miss.imissyou.mycar.ui.adapterutils.CommonAdapter;
 import com.miss.imissyou.mycar.ui.adapterutils.ViewHolder;
 import com.miss.imissyou.mycar.ui.circleProgress.CircleProgress;
@@ -44,12 +46,15 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
 
     private List<CarInfoBean> cars = new ArrayList<CarInfoBean>();                //所有车辆
     private DialogUtils dialog;
+    // TODO: 2016-06-11 添加长按删除
+    MissPopWindows missPopWindows;                                      //底部弹框
+    private int delectCarId;                                            //删除车辆Id
 
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
-        return super.onCreateView(R.layout.fragment_car_list_action, inflater, container, savedInstanceState);
+        return super.onCreateView(R.layout.fragment_car_list_action,
+                inflater, container, savedInstanceState);
     }
 
     @Override
@@ -118,6 +123,20 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
             }
         });
 
+        //长按删除
+        carInfoList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                LogUtils.w("点击了那个" + position);
+                missPopWindows = new MissPopWindows(getActivity(),itemOnClick);
+                delectCarId = position;
+                //显示弹窗的位置
+                missPopWindows.showAtLocation(getActivity().findViewById(R.id.container_frame),
+                        Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL,0,0);
+                return true;
+            }
+        });
+
     }
 
     @Override
@@ -145,7 +164,7 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
 
     @Override
     public void showResultSuccess(ResultBean resultBean) {
-
+        Toast.makeText(getActivity(), resultBean.getResultInfo(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -195,6 +214,15 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
     }
 
     @Override
+    public void showDelectSuccess(ResultBean resultBean) {
+        // TODO: 2016-06-11 删除成功
+        Toast.makeText(getActivity(), resultBean.getResultInfo(),
+                Toast.LENGTH_SHORT).show();
+        cars.remove(delectCarId);
+        carInfoList.notify();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
     }
@@ -202,4 +230,29 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
     private String isGood(boolean check) {
         return check ? "好" : "坏";
     }
+
+    /**
+     * 删除车辆
+     */
+    private void delectCar() {
+        LogUtils.d("你删除了" + delectCarId+"驾车");
+        if (!cars.get(delectCarId).isCurrentCar()) {
+            mCarListPresenter.delectCar(cars.get(delectCarId).getId());
+            Toast.makeText(getActivity(), "删除除了" + delectCarId, Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getActivity(), "你不能删除当前车辆",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**弹框的监听事件*/
+    private View.OnClickListener itemOnClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            missPopWindows.dismiss();
+            if (v.getId() == R.id.btn_pop_delect) {
+                delectCar();
+            }
+        }
+    };
 }

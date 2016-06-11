@@ -62,6 +62,17 @@ public class CarListPresenterImpl implements CarListPresenter<CarListFragmentVie
         mCarListModel.loadAllCarInfoData(userId);
     }
 
+    @Override
+    public void delectCar(Long carId) {
+        mCarListModel.delectCar(carId);
+    }
+
+    @Override
+    public void delectSuccess(ResultBean resultBean) {
+        //删除成功
+        mCarListFragmentView.showDelectSuccess(resultBean);
+    }
+
     @Override public void detchView() {
 
     }

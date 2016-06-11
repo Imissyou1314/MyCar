@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/color_gui"
+    android:layout_height="match_parent">
+
+    <com.miss.imissyou.mycar.ui.TitleFragment
+        android:id="@+id/change_username_title"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"/>
+    <EditText
+        android:id="@+id/change_username_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_below="@+id/change_username_title"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="60dp"
+        android:textColorHint="#bbbbbb"
+        android:textSize="16sp"
+        android:padding="10dp"
+        android:textColor="#000000"
+        android:hint="请输入"/>
+
+    <Button
+        android:id="@+id/change_username_sumbit"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:textSize="20sp"
+        android:background="@color/color_carView_mainMesage"
+        android:textColor="@color/colorWhite"
+        android:layout_height="50dp"
+        android:text="更改" />
+
+
+</RelativeLayout>

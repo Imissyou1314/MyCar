@@ -18,6 +18,8 @@ import com.miss.imissyou.mycar.util.GsonUtils;
 public class CarListModelImpl implements CarListModel {
     private CarListPresenter mCarListPresenter;
 
+
+
     public CarListModelImpl(CarListPresenter carListPresenter) {
         this.mCarListPresenter = carListPresenter;
     }
@@ -53,5 +55,33 @@ public class CarListModelImpl implements CarListModel {
                 .shouldCache(false)
                 .cacheTime(0)
                 .doTask();
+    }
+
+    @Override public void delectCar(Long carId) {
+        String url = Constant.SERVER_URL + "car/delete";
+        LogUtils.w("请求地址:" + url + "车辆Id" + carId);
+
+        HttpParams params = new HttpParams();
+        params.put("id",carId+"");
+
+        RxVolley.post(url, params, new HttpCallback() {
+            @Override
+            public void onFailure(int errorNo, String strMsg) {
+                if (errorNo == Constant.NETWORK_STATE)
+                    strMsg = Constant.NOTNETWORK;
+                mCarListPresenter.onFailure(errorNo,strMsg);
+            }
+
+            @Override
+            public void onSuccess(String t) {
+                LogUtils.w("请求结果:" + t);
+                ResultBean resultBean = GsonUtils.getResultBean(t);
+                if (resultBean.isServiceResult()) {
+                    mCarListPresenter.delectSuccess(resultBean);
+                } else {
+                    onFailure(0,resultBean.getResultInfo());
+                }
+            }
+        });
     }
 }

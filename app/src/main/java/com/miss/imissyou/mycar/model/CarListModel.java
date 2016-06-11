@@ -12,4 +12,10 @@ public interface CarListModel {
      * @param userId
      */
     void loadAllCarInfoData(String userId);
+
+    /**
+     * 删除车辆
+     * @param carId
+     */
+    void delectCar(Long carId);
 }

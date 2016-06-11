@@ -6,6 +6,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
+import android.support.multidex.MultiDex;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -33,29 +34,34 @@ import java.util.Map;
  */
 public class MissApplication extends Application implements Thread.UncaughtExceptionHandler{
 
-    private static Context mContext;
-
     private static MissApplication INSTANCE;
-
+    private static Context context;
     // 用来存储设备信息和异常信息
     private Map<String, String> info = new HashMap<String, String>();
     // 用于格式化日期,作为日志文件名的一部分
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 
+    public static Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        MissApplication.context = context;
+    }
+
 
     @Override public void onCreate() {
         super.onCreate();
-        this.mContext = getApplicationContext();
-        Thread.setDefaultUncaughtExceptionHandler(this);
+       final Context mContext = this;
+        setContext(mContext);
+       // Thread.setDefaultUncaughtExceptionHandler(this);
     }
 
-    /**
-     * 获取系统Context
-     * @return mContext  Context
-     */
-    public static Context getContext() {
 
-        return mContext;
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 
     public MissApplication(){
@@ -72,7 +78,7 @@ public class MissApplication extends Application implements Thread.UncaughtExcep
     @Override
     public void uncaughtException(Thread thread, Throwable ex) {
         // 收集设备参数信息
-        collectDeviceInfo(mContext);
+        collectDeviceInfo();
         // 保存日志文件
         saveCrashInfo2File(ex);
     }
@@ -81,7 +87,7 @@ public class MissApplication extends Application implements Thread.UncaughtExcep
      * 收集设备参数信息
      *
      */
-    public void collectDeviceInfo(Context context) {
+    public void collectDeviceInfo() {
         try {
             PackageManager pm = context.getPackageManager();// 获得包管理器
             PackageInfo pi = pm.getPackageInfo(context.getPackageName(), PackageManager.GET_ACTIVITIES);// 得到该应用的信息，即主Activity
