@@ -33,9 +33,9 @@ public class MessagePresenterImpl implements MessagePresenter {
         mMessageView.showResultSuccess((ResultBean) resultBean);
     }
 
-    @Override public void loadServiceData(BaseBean useBean) {
-
-    }
+//    @Override public void loadServiceData(BaseBean useBean) {
+//
+//    }
 
     @Override public void attachView(MessageView view) {
         this.mMessageView = view;

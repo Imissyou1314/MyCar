@@ -1,5 +1,6 @@
 package com.miss.imissyou.mycar.presenter;
 
+import com.miss.imissyou.mycar.bean.BaseBean;
 import com.miss.imissyou.mycar.bean.OrderBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
 
@@ -20,4 +21,10 @@ public interface OrderPresenter<V> extends MainPresenter{
      * @param resultBean 返回结果
      */
     void delectOrderSuccess(ResultBean resultBean);
+
+    /**
+     * 加载点单
+     * @param useBean
+     */
+    void loadServiceData(BaseBean useBean);
 }

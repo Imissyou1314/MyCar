@@ -42,10 +42,10 @@ public class OrderInfoPresenterImpl implements OrderInfoPresenter {
         }
     }
 
-    @Override
-    public void loadServiceData(BaseBean useBean) {
-
-    }
+//    @Override
+//    public void loadServiceData(BaseBean useBean) {
+//
+//    }
 
     @Override
     public void attachView(OrderInfoView view) {

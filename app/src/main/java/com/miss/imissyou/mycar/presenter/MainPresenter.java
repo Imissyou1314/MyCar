@@ -23,10 +23,10 @@ public interface  MainPresenter<V> {
      */
     void onSuccess(BaseBean resultBean);
 
-    /**
-     * 加载服务器数据或者缓存数据
-     */
-    void loadServiceData(BaseBean useBean);
+//    /**
+//     * 加载服务器数据或者缓存数据
+//     */
+//    void loadServiceData(BaseBean useBean);
 
     /**
      * 装载View

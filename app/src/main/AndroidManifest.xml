@@ -33,6 +33,7 @@
         <activity android:name=".view.activity.UserBaseActivity" android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.ChangePasswordActivity" android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.ChangeUserNameActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.CarAndSaftActivity" android:screenOrientation="portrait"/>
 
         <!--用户登录-->
         <activity android:name=".view.activity.FindPasswordActivity" android:screenOrientation="portrait"/>

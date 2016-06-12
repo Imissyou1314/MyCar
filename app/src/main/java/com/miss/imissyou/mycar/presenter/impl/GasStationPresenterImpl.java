@@ -46,9 +46,9 @@ public class GasStationPresenterImpl implements GasStationPresenter {
         mGasStationListView.hideProgress();
     }
 
-    @Override public void loadServiceData(BaseBean useBean) {
-
-    }
+//    @Override public void loadServiceData(BaseBean useBean) {
+//
+//    }
 
     @Override public void attachView(GasStationView view) {
         this.mGasStationListView = view;

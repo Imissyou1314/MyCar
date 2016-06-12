@@ -2,11 +2,9 @@ package com.miss.imissyou.mycar.presenter.impl;
 
 import com.miss.imissyou.mycar.bean.BaseBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
-import com.miss.imissyou.mycar.bean.UserBean;
 import com.miss.imissyou.mycar.model.UserInfoModel;
 import com.miss.imissyou.mycar.model.impl.UserInfoModelImpl;
 import com.miss.imissyou.mycar.presenter.UserInfoPresenter;
-import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.view.UserInfoView;
 import com.miss.imissyou.mycar.view.fragment.UserInfoFragment;
 
@@ -36,10 +34,10 @@ public class UserInfoPresenterImpl implements UserInfoPresenter{
 
     }
 
-    @Override
-    public void loadServiceData(BaseBean useBean) {
-
-    }
+//    @Override
+//    public void loadServiceData(BaseBean useBean) {
+//
+//    }
 
     @Override public void attachView(UserInfoView view) {
         this.mUserInfoView = view;

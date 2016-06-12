@@ -48,9 +48,9 @@ public class CarInfoPresenterImpl implements CarInfoPresenter {
         }
     }
 
-    @Override public void loadServiceData(BaseBean useBean) {
-
-    }
+//    @Override public void loadServiceData(BaseBean useBean) {
+//
+//    }
 
     @Override public void attachView(CarInfoView view) {
         this.mCarInfoView = view;

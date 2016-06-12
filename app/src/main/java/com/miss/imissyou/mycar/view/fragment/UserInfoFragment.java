@@ -40,6 +40,7 @@ import com.miss.imissyou.mycar.util.DialogUtils;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.view.UserInfoView;
+import com.miss.imissyou.mycar.view.activity.CarAndSaftActivity;
 import com.miss.imissyou.mycar.view.activity.ChangePhoneNumberActivity;
 import com.miss.imissyou.mycar.view.activity.LoginActivity;
 import com.miss.imissyou.mycar.view.activity.UserBaseActivity;
@@ -197,7 +198,7 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void showResultSuccess(ResultBean resultBean) {
         if (resultBean.isServiceResult()) {
-            intent.setClass(getActivity(), UserBaseActivity.class);
+            intent.setClass(getActivity(), CarAndSaftActivity.class);
             startActivity(intent);
         } else {
             Toast.makeText(getActivity(), resultBean.getResultInfo().equals("") ? "安全码不正确" : resultBean.getResultInfo()

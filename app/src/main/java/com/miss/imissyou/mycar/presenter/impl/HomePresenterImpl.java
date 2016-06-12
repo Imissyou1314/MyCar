@@ -28,9 +28,9 @@ public class HomePresenterImpl implements HomePresenter {
 
     }
 
-    @Override public void loadServiceData(BaseBean useBean) {
-
-    }
+//    @Override public void loadServiceData(BaseBean useBean) {
+//
+//    }
 
     @Override public void attachView(HomeView view) {
 

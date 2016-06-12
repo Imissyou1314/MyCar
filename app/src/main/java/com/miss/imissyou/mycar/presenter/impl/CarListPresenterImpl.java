@@ -1,7 +1,6 @@
 package com.miss.imissyou.mycar.presenter.impl;
 
 
-import android.widget.Toast;
 
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.bean.BaseBean;
@@ -58,7 +57,6 @@ public class CarListPresenterImpl implements CarListPresenter<CarListFragmentVie
     }
 
     @Override public void loadServiceData(String userId) {
-
         mCarListModel.loadAllCarInfoData(userId);
     }
 

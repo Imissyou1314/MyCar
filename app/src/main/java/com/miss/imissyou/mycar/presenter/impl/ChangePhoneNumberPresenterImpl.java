@@ -34,10 +34,10 @@ public class ChangePhoneNumberPresenterImpl implements ChangePhoneNumberPresente
         }
     }
 
-    @Override
-    public void loadServiceData(BaseBean useBean) {
-
-    }
+//    @Override
+//    public void loadServiceData(BaseBean useBean) {
+//
+//    }
 
     @Override public void attachView(ChangePhoneNumberView view) {
         this.mChangePhoneNumberView = view;

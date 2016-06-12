@@ -35,9 +35,9 @@ public class SumbitIndentPresenterImpl implements SumbitIndentPresenter {
         mSumbitIndentView.showResultSuccess((ResultBean) resultBean);
     }
 
-    @Override public void loadServiceData(BaseBean useBean) {
-
-    }
+//    @Override public void loadServiceData(BaseBean useBean) {
+//
+//    }
 
     @Override public void attachView(BaseFragment view) {
         mSumbitIndentView = (SumbitIndentView) view;

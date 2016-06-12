@@ -42,6 +42,7 @@ public class UserInfoModelImpl implements UserInfoModel{
             }
 
             @Override public void onSuccess(String t) {
+                LogUtils.d("获取到的数据" + t);
                 ResultBean resultBean = GsonUtils.getResultBean(t);
                 if (resultBean.isServiceResult()) {
                     mUserInfoPresenter.onSuccess(resultBean);
