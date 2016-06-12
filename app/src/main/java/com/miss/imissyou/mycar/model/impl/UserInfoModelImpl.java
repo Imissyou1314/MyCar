@@ -27,10 +27,14 @@ public class UserInfoModelImpl implements UserInfoModel{
         this.mUserInfoPresenter = userInfoPresenter;
     }
 
-    @Override public void loadUserInfo(String userId) {
+    @Override public void checkSafePassword(CharSequence safePasswordInput) {
 
-        String url = Constant.SERVER_URL + "users/id=" + userId;
+        String url = Constant.SERVER_URL + "users/confirmSafePassword";
         LogUtils.d("请求路径：" + url);
+
+        HttpParams params = new HttpParams();
+        params.put("id",Constant.userBean.getId() + "");
+        params.put("safePassword",StringUtil.strToMD5(safePasswordInput.toString()));
 
         HttpCallback callBack = new HttpCallback() {
             @Override public void onFailure(int errorNo, String strMsg) {
@@ -42,43 +46,33 @@ public class UserInfoModelImpl implements UserInfoModel{
                 if (resultBean.isServiceResult()) {
                     mUserInfoPresenter.onSuccess(resultBean);
                 } else {
-                    onFailure(1, resultBean.getResultInfo());
+                    onFailure(0, resultBean.getResultInfo());
                 }
             }
         };
 
         new RxVolley.Builder()
                 .shouldCache(false)
-                .httpMethod(RxVolley.Method.GET)
+                .httpMethod(RxVolley.Method.POST)
                 .cacheTime(0)
                 .url(url)
+                .params(params)
                 .callback(callBack)
                 .doTask();
 
     }
 
-    @Override public void ChangeUserInfo(UserBean userbean) {
-        String url = Constant.SERVER_URL + "users/update";
+    @Override public void updataUserImage(String ImagePath) {
+        String url = Constant.SERVER_URL + "users/updateImg";
         LogUtils.d("请求路径" + url);
 
         HttpParams params = new HttpParams();
+        if (Constant.userBean == null || null == Constant.userBean.getId()) {
+            return;
+        }
+        params.put("id",Constant.userBean.getId() + "");
 
-        params.put("loginid", userbean.getLoginid());
-        if (null != userbean.getUsername()) {
-            params.put("username", userbean.getUsername());
-        }
-        if (null != userbean.getRealName()) {
-            params.put("realName", userbean.getRealName());
-        }
-
-        if (null != userbean.getUserImg()) {
-             params.put("userImage", userbean.getUserImg());
-        }
-        if (null != userbean.getSafePassword()) {
-            params.put("safePassword", userbean.getSafePassword());
-        }
-
-        RxVolley.post(url, params, new HttpCallback() {
+        HttpCallback callback = new HttpCallback() {
             @Override public void onFailure(int errorNo, String strMsg) {
                 mUserInfoPresenter.onFailure(errorNo, strMsg);
             }
@@ -92,7 +86,14 @@ public class UserInfoModelImpl implements UserInfoModel{
                     onFailure(Constant.WARE_ERROR, resultBean.getResultInfo());
                 }
             }
-        });
+        };
+
+        new RxVolley.Builder()
+                .url(url)
+                .httpMethod(RxVolley.Method.POST)
+                .params(params)
+                .callback(callback)
+                .doTask();
     }
 
 }

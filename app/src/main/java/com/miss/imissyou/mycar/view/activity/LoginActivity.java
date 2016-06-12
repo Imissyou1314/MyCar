@@ -66,6 +66,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
      * 密码长度
      */
     private int length = 0;
+    private String SetHintText = "11111111";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +88,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         if (!account.equals("") && !password.equals("")) {
             accountEt.setText(account);
             //构造加密码
-            passwordEt.setText("11111111");
+            passwordEt.setText(SetHintText);
         }
         if (!SPUtils.getSp_user().getString(Constant.UserBeanID, "").equals("")) {
             Constant.userBean = GsonUtils.Instance()
@@ -154,12 +155,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             account = tmpaccount;
             password = tmpPassword;
             length = password.length();
-            password = StringUtil.strToMD5(password);
+            if (!password.equals(SetHintText)) {
+                password = StringUtil.strToMD5(password);
+            } else {
+                SPUtils.init(this);
+                password = SPUtils.getSp_user().getString(Constant.UserPassID,"");
+            }
         }
 
-        /**
-         * 验证密码
-         */
+        /** 验证密码*/
         if (account.equals("") || password.equals("")
                 && (length > 4 && length < 16)) {
             builder.setTitle("请正确输入")
@@ -208,7 +212,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 if (resultBean.isServiceResult()) {
                     Constant.COOKIE = headers.get("Set-Cookie");
                     Constant.userBean = GsonUtils.getParam(resultBean, "user", UserBean.class);
-                    savePassWord(password, account, GsonUtils.Instance().toJson(Constant.userBean));
+                    //savePassWord(password, account, GsonUtils.Instance().toJson(Constant.userBean));
                     setAlias(Constant.userBean.getId());
                     toMainView();
                 } else {

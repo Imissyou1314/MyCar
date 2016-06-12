@@ -1,6 +1,5 @@
 package com.miss.imissyou.mycar.model;
 
-import com.miss.imissyou.mycar.bean.UserBean;
 
 /**
  * 用户的模型层
@@ -8,15 +7,16 @@ import com.miss.imissyou.mycar.bean.UserBean;
  */
 public interface UserInfoModel {
 
-    /**
-     * 获取服务器用户数据
-     * @param userId 用户Id
-     */
-    void loadUserInfo(String userId);
 
     /**
-     * 更新服务器用户数据
-     * @param userbean
+     * 检查用户安全码是否正确
+     * @param safePasswordInput  安全码
      */
-    void ChangeUserInfo(UserBean userbean);
+    void checkSafePassword(CharSequence safePasswordInput);
+
+    /**
+     * 更新用户头像
+     * @param ImagePath 头像地址
+     */
+    void updataUserImage(String ImagePath);
 }

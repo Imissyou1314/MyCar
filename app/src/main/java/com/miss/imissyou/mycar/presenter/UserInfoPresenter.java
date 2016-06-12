@@ -10,8 +10,18 @@ import com.miss.imissyou.mycar.view.UserInfoView;
  */
 public interface UserInfoPresenter extends MainPresenter<UserInfoView>{
 
-    void changeUserInfo(UserBean userBean);
 
     void onUpdateSuccess(ResultBean resultBean);
 
+    /**
+     * 检查用户车辆安全码是否正确
+     * @param safePasswordInput  安全码
+     */
+    void checkSafePassword(CharSequence safePasswordInput);
+
+    /**
+     * 更新用户头像
+     * @param Imagepath  图片地址
+     */
+    void updataUserImage(String Imagepath);
 }

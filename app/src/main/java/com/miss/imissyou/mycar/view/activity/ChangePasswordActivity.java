@@ -73,6 +73,8 @@ public class ChangePasswordActivity extends BaseActivity{
         oldPassword = passwordInput1.getText().toString();
         if (passwordInput2.getVisibility() == View.VISIBLE) {           //可见状态获取第二次输入
             newPassword = passwordInput2.getText().toString();
+        } else {
+            newPassword = oldPassword;
         }
 
         LogUtils.w("新密码:" + newPassword + "::>>>>旧密码:" + oldPassword );
