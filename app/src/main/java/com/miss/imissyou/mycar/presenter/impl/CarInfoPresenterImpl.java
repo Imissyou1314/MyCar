@@ -38,7 +38,7 @@ public class CarInfoPresenterImpl implements CarInfoPresenter {
 
     @Override public void onSuccess(BaseBean resultBean) {
         mCarInfoView.hideProgress();
-        mCarInfoView.showResultSuccess((ResultBean) resultBean);
+
         CarInfoBean carInfoBean =  GsonUtils.getParam((ResultBean) resultBean, "car", CarInfoBean.class);
         if (carInfoBean != null) {
 

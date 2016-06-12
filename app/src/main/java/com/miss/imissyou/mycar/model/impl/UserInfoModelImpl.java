@@ -1,13 +1,11 @@
 package com.miss.imissyou.mycar.model.impl;
 
-import android.util.Log;
 
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.bean.ResultBean;
-import com.miss.imissyou.mycar.bean.UserBean;
 import com.miss.imissyou.mycar.presenter.UserInfoPresenter;
 import com.miss.imissyou.mycar.model.UserInfoModel;
 import com.miss.imissyou.mycar.util.Constant;

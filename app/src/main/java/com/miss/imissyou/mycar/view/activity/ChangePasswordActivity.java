@@ -92,8 +92,8 @@ public class ChangePasswordActivity extends BaseActivity{
                 params.put("newSafePassword",newPassword);
                 break;
             case 2:                 //设置安全码
-                //params.put("oldSafePassword",oldPassword);          //不需要
-                params.put("newSafePassword",oldPassword);
+                params.put("oldSafePassword",oldPassword);          //不需要
+                params.put("newSafePassword",newPassword);
                 break;
         }
         return params;
@@ -117,8 +117,9 @@ public class ChangePasswordActivity extends BaseActivity{
                 ResultBean resultBean = GsonUtils.getResultBean(t);
 
                 if (resultBean.isServiceResult()) {
-                    Toast.makeText(ChangePasswordActivity.this,
-                            resultBean.getResultInfo(), Toast.LENGTH_SHORT).show();
+                    goBack();
+//                    Toast.makeText(ChangePasswordActivity.this,
+//                            resultBean.getResultInfo(), Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(ChangePasswordActivity.this,
                             resultBean.getResultInfo(), Toast.LENGTH_SHORT).show();
@@ -140,13 +141,13 @@ public class ChangePasswordActivity extends BaseActivity{
     private void setUpView(int Tag) {
         switch (Tag) {
             case 0 :
-                url = url + "user/changePassword";
+                url = url + "users/changePassword";
                 break;
             case 1:
-                url = url + "user/changeSafePassword";
+                url = url + "users/changeSafePassword";
                 break;
             case 2:
-                url = url + "user/changeSafePassword";
+                url = url + "users/changeSafePassword";
                 passwordInput1.setHint("请输入安全码");
                 passwordInput2.setVisibility(View.GONE);
                 break;

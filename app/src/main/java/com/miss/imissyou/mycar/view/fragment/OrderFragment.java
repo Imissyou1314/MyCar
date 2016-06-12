@@ -14,6 +14,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
@@ -87,6 +88,9 @@ public class OrderFragment extends BaseFragment implements
 
     @Override public void showResultSuccess(ResultBean resultBean) {
         if (resultBean.isServiceResult()) {
+            Toast.makeText(getActivity(), resultBean.getResultInfo().equals("")?
+                    "删除第"+ delectOrderId + "条订单成功": resultBean.getResultInfo()
+                    , Toast.LENGTH_SHORT).show();
             orders.remove(delectOrderId);
             adapter.notifyDataSetChanged();
         }

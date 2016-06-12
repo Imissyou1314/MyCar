@@ -418,11 +418,14 @@ public class MainActivity extends ActionBarActivity
      */
     private void startMainFragment() {
         if (null != Constant.carBean && null != Constant.carBean.getId()) {
-            Bundle bundle = new Bundle();
-            LogUtils.w("启动车辆信息页面");
-            bundle.putLong(Constant.USER_ID, Constant.userBean.getId());
-            bundle.putLong(Constant.CAR_ID, Constant.carBean.getId());
-            carInfoFragment.setArguments(bundle);
+
+            if (!carInfoFragment.isAdded()) {
+                Bundle bundle = new Bundle();
+                LogUtils.w("启动车辆信息页面");
+                bundle.putLong(Constant.USER_ID, Constant.userBean.getId());
+                bundle.putLong(Constant.CAR_ID, Constant.carBean.getId());
+                carInfoFragment.setArguments(bundle);
+            }
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, carInfoFragment, Constant.CarInfoFragment)
                     .commit();
