@@ -177,7 +177,7 @@ public class UserBaseActivity extends BaseActivity implements View.OnClickListen
 
         userNameText.setTitle("昵称").setMessage(userBean.getUsername());
         userReadleText.setTitle("真实姓名").setMessage(userBean.getRealName());
-        userAccountText.setTitle("账号").setMessage(userBean.getId() + "");
+        userAccountText.setTitle("账号").setMessage(userBean.getLoginid() + "");
 
         userPhoneText.setTitle("绑定手机")
                 .setMessage(null != userBean.getPhone() ? userBean.getPhone() : "未绑定");

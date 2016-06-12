@@ -5,7 +5,7 @@
     android:gravity="center"
     android:paddingLeft="10dp"
     android:background="@color/color_toolbar_background"
-    android:layout_height="45dp">
+    android:layout_height="55dp">
 
     <LinearLayout
         android:id="@+id/activity_title_back"
@@ -26,6 +26,8 @@
     <TextView
         android:id="@+id/activity_title"
         android:text="Miss"
+        android:textSize="18sp"
+        android:textStyle="bold"
         android:layout_weight="1"
         android:layout_marginRight="60dp"
         style="@style/title_back_textView" />

@@ -7,7 +7,6 @@ import com.miss.imissyou.mycar.model.impl.MessageModelImpl;
 import com.miss.imissyou.mycar.presenter.MessagePresenter;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.view.MessageView;
-import com.miss.imissyou.mycar.view.activity.MessageActivity;
 
 /**
  * Created by Imissyou on 2016/5/2.
@@ -17,7 +16,7 @@ public class MessagePresenterImpl implements MessagePresenter {
     private MessageView mMessageView;
     private MessageModle mMessageModle;
 
-    public MessagePresenterImpl(MessageActivity messageActivity) {
+    public MessagePresenterImpl(MessageView messageActivity) {
         attachView(messageActivity);
         mMessageModle = new MessageModelImpl(this);
     }
@@ -77,7 +76,7 @@ public class MessagePresenterImpl implements MessagePresenter {
     }
     @Override public void getUserAllMessage() {
 
-        if (null != Constant.userBean && 0 != Constant.userBean.getId()) {
+        if (null != Constant.userBean && null != Constant.userBean.getId()) {
             mMessageModle.getUserAllMessage(Constant.userBean.getId());
         } else {
             mMessageView.showResultError(1, "用户没登录");

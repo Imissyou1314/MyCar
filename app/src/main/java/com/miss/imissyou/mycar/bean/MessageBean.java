@@ -12,7 +12,7 @@ public class MessageBean extends BaseBean{
     private int id;
     private int type;     //消息类型
     private boolean state;     //消息是否阅读
-    private String messageTitle;//消息标题
+    private String title;//消息标题
     private String content;  //消息的主消息
     private String nowData;  //信息当前的信息
 
@@ -22,6 +22,14 @@ public class MessageBean extends BaseBean{
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public int getType() {
@@ -39,16 +47,6 @@ public class MessageBean extends BaseBean{
         this.id = id;
     }
 
-    public String getMessageTitle() {
-        if (getType() == 1) {
-            messageTitle = "维修警报";
-        } else if (getType() == 2) {
-            messageTitle = "加油警告";
-        } else {
-            messageTitle ="无关警告";
-        }
-        return messageTitle;
-    }
 
     public boolean isState() {
         return state;
@@ -56,10 +54,6 @@ public class MessageBean extends BaseBean{
 
     public void setState(boolean state) {
         this.state = state;
-    }
-
-    public void setMessageTitle(String messageTitle) {
-        this.messageTitle = messageTitle;
     }
 
     public String getSystemData() {

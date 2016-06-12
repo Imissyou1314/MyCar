@@ -8,7 +8,7 @@
     <com.miss.imissyou.mycar.ui.TitleFragment
         android:id="@+id/about_title"
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="@dimen/title_height">
     </com.miss.imissyou.mycar.ui.TitleFragment>
 
     <!--关于页面-->

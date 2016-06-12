@@ -34,9 +34,11 @@
             android:layout_height="match_parent" />
         <View
             android:background="@mipmap/ic_linear_text_go_icon"
-            android:layout_width="50dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
+            android:layout_width="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
             android:layout_height="match_parent"/>
     </LinearLayout>
 

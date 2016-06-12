@@ -105,4 +105,6 @@ public class Constant {
     public final static String OrderFragment = "OrderFragment";
     public final static String GasStationFragmetn = "GasStationFragmetn";
 
+    public static final String  MAP_MAINTAIN = "MainTain";          //附近维修站
+    public static final String MAP_GASSTATION = "GasStation";       //附近加油站
 }

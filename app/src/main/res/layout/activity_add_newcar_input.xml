@@ -13,7 +13,7 @@
         android:id="@+id/addnewCarInput_title"
         android:layout_width="match_parent"
         android:layout_marginTop="45dp"
-        android:layout_height="50dp"/>
+        android:layout_height="@dimen/title_height"/>
     <!--加载-->
     <com.miss.imissyou.mycar.ui.circleProgress.CircleProgress
         android:id="@+id/load_carInfo_progress"

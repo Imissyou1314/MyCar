@@ -1,9 +1,11 @@
 package com.miss.imissyou.mycar.view.activity;
 
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 
@@ -26,6 +28,7 @@ import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.util.SPUtils;
 import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.view.MessageView;
+import com.miss.imissyou.mycar.view.fragment.NaviViewFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +43,8 @@ public class MessageActivity extends BaseActivity implements MessageView {
     private TitleFragment titleView;
     @FindViewById(id = R.id.message_allmessage_listView)
     private MissSwipDismissListView listView;          //消息列
+    @FindViewById(id = R.id.message_over)
+    FrameLayout frame;
     //@FindViewById(id = R.id.laod_message_progress)
     //private CircleProgress progress;   //加载视图
 
@@ -56,6 +61,7 @@ public class MessageActivity extends BaseActivity implements MessageView {
      */
     @Override public void initData() {
         mMessagePresenter = new MessagePresenterImpl(this);
+        frame.setVisibility(View.GONE);
         SPUtils.init(this);
         if (SPUtils.getSp_set().getBoolean(Constant.MESSAGEALL, false)) {
             LogUtils.w("获取所有未用户信息");
@@ -120,7 +126,7 @@ public class MessageActivity extends BaseActivity implements MessageView {
      * 加载ListView的数据
      * @param messages
      */
-    private void setListData(List<MessageBean> messages) {
+    private void setListData(final List<MessageBean> messages) {
         LogUtils.d("获取到的订单列表:" + GsonUtils.Instance().toJson(messages));
         CommonAdapter adapter = new CommonAdapter<MessageBean>(this, messages,
                 R.layout.item_message) {
@@ -129,12 +135,51 @@ public class MessageActivity extends BaseActivity implements MessageView {
                     /**设置没点击过的背景色*/
                     holder.setBackGround(R.color.color_blue);
                 }
+
+
+                //// TODO: 2016/6/12 添加到附近加油站和维修站
+
+                if (messageBean.getType() == 0) {
+                    holder.setText(R.id.message_item_stateTask,"附近维修站");
+                    holder.setOnClickListener(R.id.message_item_stateTask, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            goMapService(Constant.MAP_MAINTAIN);           //到附近维修站
+                        }
+                    });
+                } else{
+                    holder.setOnClickListener(R.id.message_item_stateTask, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            goMapService(Constant.MAP_GASSTATION);                //到附近加油站
+                        }
+                    });
+                }
+
                 holder.setText(R.id.message_item_msg_text, "   " + messageBean.getContent());
                 holder.setText(R.id.message_item_time_text, messageBean.getSystemData());
-                holder.setText(R.id.message_item_title_text, messageBean.getMessageTitle());
+                holder.setText(R.id.message_item_title_text, messageBean.getTitle());
             }
         };
         listView.setAdapter(adapter);
+    }
+
+    /**
+     * 到引导导航页面
+     * @param mapType  引导类型
+     */
+    private void goMapService(String mapType) {
+        frame.setVisibility(View.VISIBLE);
+        listView.setVisibility(View.GONE);
+        NaviViewFragment fragment = new NaviViewFragment();
+        Bundle bundle = new Bundle();
+        if (mapType.equals(Constant.MAP_GASSTATION)) {
+            bundle.putString("type", Constant.MAP_GASSTATION);
+        } else {
+            bundle.putString("type", Constant.MAP_MAINTAIN);
+        }
+        fragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.message_over,fragment).commit();
     }
 
     /**

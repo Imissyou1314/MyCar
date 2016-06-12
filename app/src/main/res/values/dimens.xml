@@ -17,4 +17,7 @@
     <!--开关按钮的大小-->
     <dimen name="toggle_btn_width">50dp</dimen>
     <dimen name="toggle_btn_height">25dp</dimen>
+
+    <!--title height-->
+    <dimen name="title_height">55dp</dimen>
 </resources>
