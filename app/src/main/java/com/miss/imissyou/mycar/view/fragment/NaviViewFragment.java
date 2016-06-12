@@ -1,9 +1,9 @@
 package com.miss.imissyou.mycar.view.fragment;
 
 
-
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -27,9 +28,11 @@ import com.amap.api.maps.AMapOptions;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 
+import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.overlay.PoiOverlay;
 import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.LatLonPoint;
@@ -39,11 +42,19 @@ import com.amap.api.services.help.Inputtips;
 import com.amap.api.services.help.Tip;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
+import com.bumptech.glide.Glide;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
+import com.miss.imissyou.mycar.bean.ResultBean;
+import com.miss.imissyou.mycar.bean.StopStation;
+import com.miss.imissyou.mycar.presenter.NaviViewPresenter;
+import com.miss.imissyou.mycar.presenter.impl.NaviViewPresenterImpl;
 import com.miss.imissyou.mycar.ui.RoundImageView;
 import com.miss.imissyou.mycar.util.Constant;
+import com.miss.imissyou.mycar.util.GsonUtils;
+import com.miss.imissyou.mycar.util.StringUtil;
 import com.miss.imissyou.mycar.util.ToastUtil;
+import com.miss.imissyou.mycar.view.NaviVieFragmentView;
 import com.miss.imissyou.mycar.view.activity.NaviViewActivity;
 
 import java.util.ArrayList;
@@ -54,7 +65,8 @@ import java.util.List;
  * Created by Imissyou on 2016/5/2.
  */
 public class NaviViewFragment extends BaseFragment implements View.OnClickListener,
-        LocationSource, AMapLocationListener, PoiSearch.OnPoiSearchListener, TextWatcher, AMap.OnMarkerClickListener, AMap.InfoWindowAdapter {
+        LocationSource, AMapLocationListener, PoiSearch.OnPoiSearchListener,
+        TextWatcher, AMap.OnMarkerClickListener, AMap.InfoWindowAdapter, NaviVieFragmentView {
 
 
     private TextView searchBtn;       //搜索按钮
@@ -94,6 +106,8 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
     private String cityName;            //城市名称
     private String cityCode;            //城市编码
 
+    private NaviViewPresenter mNaviViewPresenter;               //导航控制类
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -101,6 +115,7 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
         View view = super.onCreateView(R.layout.fragment_navi,
                 inflater, container, savedInstanceState);
         mMapView.onCreate(savedInstanceState);
+
         return view;
     }
 
@@ -123,7 +138,24 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void initData() {
-
+        String tag = getArguments().getString("Tag");
+        Double lat = getArguments().getDouble(Constant.endLatitude);
+        Double lon = getArguments().getDouble(Constant.endLongitude);
+        LatLng latlng = new LatLng(lat, lon);
+        mNaviViewPresenter = new NaviViewPresenterImpl(this);
+        if (null != tag && null != latlng) {
+            switch (tag) {
+                case Constant.MAP_GASSTATION:
+                    mNaviViewPresenter.loadGasStation(latlng);
+                    break;
+                case Constant.MAP_PARK:
+                    mNaviViewPresenter.loadPack(latlng);
+                    break;
+                case Constant.MAP_MAINTAIN:
+                    mNaviViewPresenter.loadRepairShop(latlng);
+                    break;
+            }
+        }
     }
 
     @Override
@@ -131,7 +163,7 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
         mAMap = mMapView.getMap();
         mAMap.setLocationSource(this);
         mAMap.getUiSettings().setZoomPosition(1);
-        mAMap.getUiSettings().setZoomPosition(AMapOptions.ZOOM_POSITION_RIGHT_CENTER );// 设置默认定位按钮是否显示
+        mAMap.getUiSettings().setZoomPosition(AMapOptions.ZOOM_POSITION_RIGHT_CENTER);// 设置默认定位按钮是否显示
         mAMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         // 设置定位的类型为定位模式，参见类AMap。
         //跟随模式
@@ -148,6 +180,7 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
 
     /**
      * 点击事件
+     *
      * @param v
      */
     @Override
@@ -243,7 +276,7 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
                 LogUtils.w("城市名称" + cityName);
                 cityCode = aMapLocation.getCityCode();
                 LogUtils.w("城市名称" + cityCode);
-                mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude()), 17));
+                mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()), 17));
                 mLocation.onLocationChanged(aMapLocation);      //显示系统小蓝点
             } else {
                 LogUtils.w("定位失败" + aMapLocation.getErrorCode() + ":" + aMapLocation.getErrorCode());
@@ -267,7 +300,7 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
             mlocationClient.setLocationListener(this);
             //设置为高精度定位模式
             mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-           mLocationOption.setInterval(5000);
+            mLocationOption.setInterval(5000);
             //设置定位参数
             mlocationClient.setLocationOption(mLocationOption);
             mlocationClient.startLocation();
@@ -492,6 +525,66 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
         super.onSaveInstanceState(outState);
         mMapView.onSaveInstanceState(outState);
     }
+
+
+    @Override
+    public void loadFail(int errorNumber, String errMsg) {
+        LogUtils.d("错误信息:" + errMsg + ">>>>>>>" + errorNumber);
+        Toast.makeText(getActivity(), errMsg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void loadSucccessPark(ResultBean resultBean) {
+        List<StopStation> stations = GsonUtils.getParams(resultBean, "park", StopStation.class);
+        showInPage(stations);
+    }
+
+    @Override
+    public void loadSuccessRepairSHop(ResultBean resultBean) {
+        List<StopStation> stations = GsonUtils.getParams(resultBean, "repairShop", StopStation.class);
+        showInPage(stations);
+    }
+
+
+    @Override
+    public void loadSuccessGasStation(ResultBean resultBean) {
+
+    }
+
+    /**
+     * 展现Marker列表
+     *
+     * @param stations 场地列表
+     */
+    private void showInPage(List<StopStation> stations) {
+
+        for (StopStation station : stations) {
+            Bitmap markIcon = getBtimap(station.getImg());
+            LatLng latLng = new LatLng(station.getLat(), station.getLot());
+            Marker marler = mAMap.addMarker(new MarkerOptions()
+                    .anchor(0.5f, 1)
+                    .position(latLng)
+                    .title(station.getName()).icon(BitmapDescriptorFactory.fromBitmap(markIcon)));
+        }
+    }
+
+    /**
+     * 获取封装后的图片
+     *
+     * @param urlStr 图片地址
+     * @return
+     */
+    private Bitmap getBtimap(String urlStr) {
+        View view = View.inflate(getActivity(), R.layout.marker_icon, null);
+        RoundImageView roundView = (RoundImageView) view.findViewById(R.id.marker_round_icon);
+        String url = Constant.SERVER_URL + urlStr;
+        Glide.with(this).load(url).into(roundView);
+        Bitmap bitmap = StringUtil.convertViewToBitmap(roundView);
+        //TODO添加默认图片
+        return null != bitmap ? bitmap : null;
+    }
+
+
 }
 
 

@@ -107,4 +107,5 @@ public class Constant {
 
     public static final String  MAP_MAINTAIN = "MainTain";          //附近维修站
     public static final String MAP_GASSTATION = "GasStation";       //附近加油站
+    public static final String MAP_PARK = "park";                   //附近停车场
 }

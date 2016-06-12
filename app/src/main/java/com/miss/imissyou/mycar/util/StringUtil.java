@@ -1,5 +1,7 @@
 package com.miss.imissyou.mycar.util;
 
+import android.graphics.Bitmap;
+import android.view.View;
 import android.widget.EditText;
 
 import com.lidroid.xutils.util.LogUtils;
@@ -125,5 +127,24 @@ public class StringUtil {
      */
     public static boolean checkUserIsLogin() {
         return null != Constant.userBean.getId() ? true : false;
+    }
+
+    /**
+     * View转成Biimap
+     * @param view  View视图
+     * @return bitmap
+     */
+    public static Bitmap convertViewToBitmap(View view) {
+
+        view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+
+        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+
+        view.buildDrawingCache();
+
+        Bitmap bitmap = view.getDrawingCache();
+
+        return bitmap;
+
     }
 }

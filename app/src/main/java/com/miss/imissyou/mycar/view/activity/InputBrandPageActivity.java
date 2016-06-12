@@ -1,16 +1,14 @@
 package com.miss.imissyou.mycar.view.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SimpleAdapter;
 
-import com.google.gson.Gson;
 import com.lidroid.xutils.util.LogUtils;
-import com.miss.imissyou.mycar.MainActivity;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.CarInfoBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
@@ -20,21 +18,33 @@ import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.DialogUtils;
 import com.miss.imissyou.mycar.util.FindViewById;
 import com.miss.imissyou.mycar.util.GsonUtils;
-import com.miss.imissyou.mycar.util.StringUtil;
 import com.miss.imissyou.mycar.view.AddNewCarInputView;
+import com.rey.material.widget.Spinner;
 
 /**
+ * 车牌号输入页面
  * Created by Imissyou on 2016/6/4.
  */
-public class InputBrandPageActivity extends BaseActivity implements View.OnClickListener ,AddNewCarInputView {
+public class InputBrandPageActivity extends BaseActivity implements View.OnClickListener ,AddNewCarInputView, Spinner.OnItemSelectedListener {
 
     @FindViewById( id = R.id.input_add_brand_input)
     private EditText brandInput;        //车牌号输入
     @FindViewById(id = R.id.input_add_brand_sumbit)
     private Button sumbit;              //提交按钮
 
+    @FindViewById(id = R.id.input_barnd_page_SelectEn)
+    private Spinner selectEn;       //选择英文
+    @FindViewById(id = R.id.input_brand_page_selectZH)
+    private Spinner selectCH;      //选择中文
+
     private AddNewCarInputPresenter mAddNewCarInputPresenter;
     private CarInfoBean carInfoBean;            //获取上一页面传进来的对象
+
+    String[] cityName = {"贵","豫","鲁","川","苏","青","新","闽","浙","鄂","藏","粤","云","京", "陕",
+            "甘","冀","吉","宁","湘","皖","蒙","沪","晋","琼","辽","渝","黑","津","桂","赣",};
+    String[] cityEn = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",};
+    private String carCityName;  //城市名
+    private String carEnName;    //英文字
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,11 +57,21 @@ public class InputBrandPageActivity extends BaseActivity implements View.OnClick
         Bundle bundle = getIntent().getBundleExtra("carInfoBean");
         carInfoBean = (CarInfoBean) bundle.getSerializable("carInfo");
         LogUtils.d("车辆信息:" + GsonUtils.Instance().toJson(carInfoBean));
+
+        ArrayAdapter<String> cityAdapter = new ArrayAdapter<String>(this, R.layout.row_spn, cityName);
+        cityAdapter.setDropDownViewResource(R.layout.row_spn_dropdown);
+        selectCH.setAdapter(cityAdapter);
+        ArrayAdapter<String> cityEnAdapter = new ArrayAdapter<String>(this, R.layout.row_spn, cityEn);
+        cityAdapter.setDropDownViewResource(R.layout.row_spn_dropdown);
+        selectEn.setAdapter(cityEnAdapter);
     }
 
     @Override
     public void addListeners() {
+
         sumbit.setOnClickListener(this);
+        selectCH.setOnItemSelectedListener(this);
+        selectEn.setOnItemSelectedListener(this);
     }
 
     @Override
@@ -63,7 +83,7 @@ public class InputBrandPageActivity extends BaseActivity implements View.OnClick
             LogUtils.d("车牌号为空");
             showResultError(0,"请输入车牌号");
         } else {
-            carInfoBean.setPlateNumber(carBrand);
+            carInfoBean.setPlateNumber(carCityName + carEnName + " " + carBrand);
             // TODO: 2016/6/5 打印车辆信息
             LogUtils.w("提交车辆的信息:" + GsonUtils.Instance().toJson(carInfoBean));
             mAddNewCarInputPresenter.sentCarInfoToService(carInfoBean);
@@ -110,5 +130,17 @@ public class InputBrandPageActivity extends BaseActivity implements View.OnClick
     @Override
     public void hideProgress() {
 
+    }
+
+    @Override
+    public void onItemSelected(Spinner parent, View view, int position, long id) {
+        switch (view.getId()) {
+            case R.id.input_brand_page_selectZH:
+                carCityName = cityName[position];
+                break;
+            case R.id.input_barnd_page_SelectEn:
+                carEnName = cityEn[position];
+                break;
+        }
     }
 }

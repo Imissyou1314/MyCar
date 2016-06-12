@@ -10,6 +10,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 
 /**
@@ -137,6 +138,11 @@ public class MissDialog extends Dialog {
         }
 
         public MissDialog create() {
+            if (null == context) {
+                LogUtils.d("上下文为空");
+                return null;
+            }
+
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             // instantiate the dialog with the custom Theme
