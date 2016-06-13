@@ -20,6 +20,12 @@ public interface UserInfoPresenter extends MainPresenter<UserInfoView>{
     void checkSafePassword(CharSequence safePasswordInput);
 
     /**
+     * 检查用户安全码正确回调
+     * @param resultBean  结果集
+     */
+    void checkSafePasswordSuccess(ResultBean resultBean);
+
+    /**
      * 更新用户头像
      * @param Imagepath  图片地址
      */

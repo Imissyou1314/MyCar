@@ -15,9 +15,10 @@
             android:layout_height="match_parent" />
 
         <com.miss.imissyou.mycar.ui.RoundImageView
+            android:layout_gravity="center"
             android:id="@+id/user_info_roundImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="140dp"
+            android:layout_height="match_parent" />
     </FrameLayout>
 
     <LinearLayout

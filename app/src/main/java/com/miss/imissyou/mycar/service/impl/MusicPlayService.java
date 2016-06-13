@@ -82,7 +82,7 @@ public class MusicPlayService extends Service{
      */
     private void pauseMusic(Intent intent) {
         LogUtils.d("停止音乐播放");
-        flag = intent.getBooleanExtra("flag",true);
+        flag = intent.getBooleanExtra("flag",false);
 
         if (!flag) {
             //涨停音乐播放    线程关闭

@@ -138,24 +138,30 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void initData() {
-        String tag = getArguments().getString("Tag");
-        Double lat = getArguments().getDouble(Constant.endLatitude);
-        Double lon = getArguments().getDouble(Constant.endLongitude);
-        LatLng latlng = new LatLng(lat, lon);
         mNaviViewPresenter = new NaviViewPresenterImpl(this);
-        if (null != tag && null != latlng) {
-            switch (tag) {
-                case Constant.MAP_GASSTATION:
-                    mNaviViewPresenter.loadGasStation(latlng);
-                    break;
-                case Constant.MAP_PARK:
-                    mNaviViewPresenter.loadPack(latlng);
-                    break;
-                case Constant.MAP_MAINTAIN:
-                    mNaviViewPresenter.loadRepairShop(latlng);
-                    break;
+        if (null != getArguments()) {
+            String tag = getArguments().getString("Tag");
+            Double lat = getArguments().getDouble(Constant.endLatitude);
+            Double lon = getArguments().getDouble(Constant.endLongitude);
+            LatLng latlng = new LatLng(lat, lon);
+            if (null != tag && null != latlng) {
+                switch (tag) {
+                    case Constant.MAP_GASSTATION:
+                        mNaviViewPresenter.loadGasStation(latlng);
+                        break;
+                    case Constant.MAP_PARK:
+                        mNaviViewPresenter.loadPack(latlng);
+                        break;
+                    case Constant.MAP_MAINTAIN:
+                        mNaviViewPresenter.loadRepairShop(latlng);
+                        break;
+                }
             }
+        } else {
+            LogUtils.d("正常进入");
         }
+
+
     }
 
     @Override

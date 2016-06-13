@@ -84,16 +84,16 @@ public class ChangePasswordActivity extends BaseActivity{
 
         switch (Tag) {
             case 0:
-                params.put("newPassword",newPassword);
-                params.put("oldPassword",oldPassword);
+                params.put("newPassword",StringUtil.strToMD5(newPassword));
+                params.put("oldPassword",StringUtil.strToMD5(oldPassword));
                 break;
             case 1:             //更新安全码
-                params.put("oldSafePassword",oldPassword);
-                params.put("newSafePassword",newPassword);
+                params.put("oldSafePassword",StringUtil.strToMD5(newPassword));
+                params.put("newSafePassword",StringUtil.strToMD5(newPassword));
                 break;
             case 2:                 //设置安全码
-                params.put("oldSafePassword",oldPassword);          //不需要
-                params.put("newSafePassword",newPassword);
+                params.put("oldSafePassword",StringUtil.strToMD5(newPassword));          //不需要
+                params.put("newSafePassword",StringUtil.strToMD5(newPassword));
                 break;
         }
         return params;
@@ -142,9 +142,13 @@ public class ChangePasswordActivity extends BaseActivity{
         switch (Tag) {
             case 0 :
                 url = url + "users/changePassword";
+                passwordInput1.setHint("请输入旧密码");
+                passwordInput2.setHint("亲输入新密码");
                 break;
             case 1:
                 url = url + "users/changeSafePassword";
+                passwordInput1.setHint("请输入旧安全码");
+                passwordInput2.setHint("亲输入新安全码");
                 break;
             case 2:
                 url = url + "users/changeSafePassword";

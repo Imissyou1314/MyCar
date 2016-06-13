@@ -1,10 +1,13 @@
 <resources>
     <string name="app_name">护车宝</string>
 
-    <string name="action_login">登录</string>
+
+    <string name="action_setUserInfo">用户信息</string>
+    <string name="action_setSeting">设置</string>
+    <string name="action_unlogin">注销</string>
     <string name="action_setAbout">关于</string>
-    <string name="action_setHelp">帮助</string>
-    <string name="action_setAuthor">作者</string>
+    <string name="action_setSystemMessage">系统消息</string>
+
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
 

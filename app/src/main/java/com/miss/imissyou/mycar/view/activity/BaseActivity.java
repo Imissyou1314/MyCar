@@ -147,9 +147,11 @@ public abstract class BaseActivity extends FragmentActivity
     @Override public void onBackPressed() {
         if (mBaseFragment == null || !mBaseFragment.onBackPressed()){
             if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+                LogUtils.d("只有一个fragment");
                 super.onBackPressed();
             } else {
                 //退栈
+                LogUtils.d("退出当前的Fragment");
                 getSupportFragmentManager().popBackStack();
             }
         } else{

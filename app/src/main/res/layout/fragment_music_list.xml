@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:background="#eeeeee"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -15,10 +16,12 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
+        android:dividerHeight="10dp"
         android:cacheColorHint="#00000000"
-        android:background="#ffffff"
-        android:divider="@null"
-        android:layout_weight="1"></ListView>
+        android:background="#eeeeee"
+        android:divider="#eeeeee"
+        android:listSelector="#bbbbbb"
+        android:layout_weight="1"/>
 
     <LinearLayout
         android:layout_width="match_parent"

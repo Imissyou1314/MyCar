@@ -32,6 +32,8 @@ public class UserInfoModelImpl implements UserInfoModel{
 
         HttpParams params = new HttpParams();
         params.put("id",Constant.userBean.getId() + "");
+        LogUtils.d("用户id 和加密后的安全码：" + StringUtil.strToMD5(safePasswordInput.toString()
+                + ">>>>>ID::" + Constant.userBean.getId()));
         params.put("safePassword",StringUtil.strToMD5(safePasswordInput.toString()));
 
         HttpCallback callBack = new HttpCallback() {
@@ -43,7 +45,7 @@ public class UserInfoModelImpl implements UserInfoModel{
                 LogUtils.d("获取到的数据" + t);
                 ResultBean resultBean = GsonUtils.getResultBean(t);
                 if (resultBean.isServiceResult()) {
-                    mUserInfoPresenter.onSuccess(resultBean);
+                    mUserInfoPresenter.checkSafePasswordSuccess(resultBean);
                 } else {
                     onFailure(0, resultBean.getResultInfo());
                 }

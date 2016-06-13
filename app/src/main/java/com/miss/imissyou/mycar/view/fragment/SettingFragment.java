@@ -22,14 +22,16 @@ public class SettingFragment extends BaseFragment{
     private ToggleButton wareMessageBtn;
 
     private ToggleButton noReadMessageBtn;
+    private ToggleButton startMusic;
 
-    private LinearLayout goMyHome;
-    private LinearLayout setSavePassword;
+//    private LinearLayout goMyHome;
+//    private LinearLayout setSavePassword;
 
     private boolean allMessageState;
     private boolean errorMessageState;
     private boolean wareMessageState;
     private boolean noReadMessageState;
+    private boolean stratMusicState;
 
     @Nullable
     @Override
@@ -49,9 +51,8 @@ public class SettingFragment extends BaseFragment{
         allMessageBtn = (ToggleButton) view.findViewById(R.id.setting_allMessage_button);
         errorMessageBtn = (ToggleButton) view.findViewById(R.id.setting_errorMessage_button);
         wareMessageBtn = (ToggleButton) view.findViewById(R.id.setting_wareMessage_button);
+        startMusic = (ToggleButton) view.findViewById(R.id.setting_startMusic_button);
 
-        goMyHome = (LinearLayout) view.findViewById(R.id.setting_goMyHome);
-        setSavePassword = (LinearLayout) view.findViewById(R.id.setting_setSavePassword);
     }
 
     @Override protected void initData() {
@@ -59,28 +60,30 @@ public class SettingFragment extends BaseFragment{
         errorMessageState = SPUtils.getSp_set().getBoolean(Constant.MESSAGEERROR, true);
         wareMessageState = SPUtils.getSp_set().getBoolean(Constant.MESSAGEWARE, true);
         noReadMessageState = SPUtils.getSp_set().getBoolean(Constant.MESSAGENOREAD, true);
+        stratMusicState = SPUtils.getSp_set().getBoolean(Constant.MESSAGEMUSIC,true);
 
         allMessageBtn.setToggleSate(allMessageState);
         errorMessageBtn.setToggleSate(errorMessageState);
         wareMessageBtn.setToggleSate(wareMessageState);
         noReadMessageBtn.setToggleSate(noReadMessageState);
+        startMusic.setToggleSate(stratMusicState);
     }
 
     @Override
     protected void addViewsListener() {
         /**跳转到设置用户信息的主页*/
-        goMyHome.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                toUserHome();
-            }
-        });
+//        goMyHome.setOnClickListener(new View.OnClickListener() {
+//            @Override public void onClick(View v) {
+//                toUserHome();
+//            }
+//        });
 
         /**设置安全码*/
-        setSavePassword.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                toSetSavePassword();
-            }
-        });
+//        setSavePassword.setOnClickListener(new View.OnClickListener() {
+//            @Override public void onClick(View v) {
+//                toSetSavePassword();
+//            }
+//        });
 
     }
 
@@ -114,11 +117,13 @@ public class SettingFragment extends BaseFragment{
         errorMessageState = errorMessageBtn.getToggleOn();
         wareMessageState = wareMessageBtn.getToggleOn();
         noReadMessageState = noReadMessageBtn.getToggleOn();
+        stratMusicState = startMusic.getToggleOn();
 
         SPUtils.putSetData(Constant.MESSAGEALL, allMessageState);
         SPUtils.putSetData(Constant.MESSAGEERROR, errorMessageState);
         SPUtils.putSetData(Constant.MESSAGENOREAD, noReadMessageState);
         SPUtils.putSetData(Constant.MESSAGEWARE, wareMessageState);
+        SPUtils.putSetData(Constant.MESSAGEMUSIC, stratMusicState);
         super.onPause();
     }
 }

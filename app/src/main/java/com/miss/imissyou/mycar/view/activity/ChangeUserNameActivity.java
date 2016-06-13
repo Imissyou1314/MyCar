@@ -35,7 +35,7 @@ public class ChangeUserNameActivity extends BaseActivity {
     private String name;            //用户名
     private int Tag;                //标志
     private String titleStr;         //标题
-    private String url = Constant.SERVER_URL;           //请求URL
+    private String url = Constant.SERVER_URL + "users/update";           //请求URL
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -130,7 +130,6 @@ public class ChangeUserNameActivity extends BaseActivity {
         }
 
         HttpParams params = new HttpParams();
-        url = url + "users/update";
         params.put("id", Constant.userBean.getId() + "");
 
         if (null != Constant.userBean.getPhone())

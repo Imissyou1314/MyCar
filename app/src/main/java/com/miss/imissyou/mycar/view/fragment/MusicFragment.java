@@ -56,13 +56,14 @@ public class MusicFragment extends Fragment implements ScreenShotable {
     private int mPosition = 0;
 
     private boolean isfirstTouch = true;
-    private boolean flag = true;
+    private boolean flag = false;
 
     private View upView;
     /**
      * 我的音乐
      */
     private List<Music> mMusics = new ArrayList<>();
+    private CommonAdapter<Music> adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -79,12 +80,14 @@ public class MusicFragment extends Fragment implements ScreenShotable {
      * 展现数据
      */
     private void showView() {
+
         /**
          * 设置Item
          */
-        mListView.setAdapter(new CommonAdapter<Music>(getActivity(), mMusics, R.layout.item_music) {
+        adapter = new CommonAdapter<Music>(getActivity(), mMusics, R.layout.item_music) {
             @Override
             public void convert(ViewHolder holder, Music music) {
+
                 holder.setText(R.id.tv_music_auther, music.getMusicArtist());
                 if (music.getMusicName() == null || music.getMusicName().equals("")) {
                     holder.setText(R.id.textview_music_name, music.getMusicName());
@@ -92,7 +95,8 @@ public class MusicFragment extends Fragment implements ScreenShotable {
                     holder.setText(R.id.textview_music_name, music.getMusicTitle());
                 }
             }
-        });
+        };
+        mListView.setAdapter(adapter);
     }
 
     /**
@@ -164,7 +168,6 @@ public class MusicFragment extends Fragment implements ScreenShotable {
             }
         });
 
-
         mBtnPauseMusic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -172,14 +175,15 @@ public class MusicFragment extends Fragment implements ScreenShotable {
                 if (isfirstTouch) {
                     palyMusic(Constant.MUSIC_PREVIOUS, mPosition);
                     isfirstTouch = false;
+                    flag = !flag;
+                    changePlayIcon(flag);
                 } else {
                     Intent intent = new Intent(getActivity().getApplicationContext(), MusicPlayService.class);
                     intent.putExtra("flag", flag);
                     intent.putExtra("type", Constant.MUSIC_BUTTON_PAUSE);
                     getActivity().startService(intent);
-
-                    changePlayIcon(flag);
                     flag = !flag;
+                    changePlayIcon(flag);
                 }
             }
         });
@@ -222,6 +226,9 @@ public class MusicFragment extends Fragment implements ScreenShotable {
     private void palyMusic(int type, int mPosition) {
         LogUtils.w("当前播放音乐:" + mPosition);
         LogUtils.w("总音乐数量:" + mMusics.size());
+        // TODO: 2016/6/13 添加显示当前音乐的
+        mListView.setSelection(mPosition);
+
         Music music = mMusics.get(mPosition);
         Intent intent = new Intent(getActivity().getApplicationContext(), MusicPlayService.class);
         intent.putExtra("musicPath", music.getMusicPath());
@@ -315,6 +322,7 @@ public class MusicFragment extends Fragment implements ScreenShotable {
      * @param state
      */
     private void changePlayIcon(boolean state) {
+        LogUtils.d("当前状态：" + state);
         if (state) {
             mBtnPauseMusic.setBackgroundResource(R.mipmap.start_pause_press);
         } else {

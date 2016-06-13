@@ -2,8 +2,11 @@ package com.miss.imissyou.mycar;
 
 
 import android.annotation.TargetApi;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
@@ -27,18 +30,23 @@ import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.bean.CarInfoBean;
+import com.miss.imissyou.mycar.bean.Music;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.bean.UserBean;
 import com.miss.imissyou.mycar.broadcastReceiver.JpushReceiver;
+import com.miss.imissyou.mycar.service.impl.MusicPlayService;
+import com.miss.imissyou.mycar.service.impl.MyBroadCastService;
 import com.miss.imissyou.mycar.ui.MissDialog;
 import com.miss.imissyou.mycar.ui.sidemenu.interfaces.Resourceble;
 import com.miss.imissyou.mycar.ui.sidemenu.interfaces.ScreenShotable;
 import com.miss.imissyou.mycar.ui.sidemenu.model.SlideMenuItem;
 import com.miss.imissyou.mycar.ui.sidemenu.util.ViewAnimator;
 import com.miss.imissyou.mycar.util.Constant;
+import com.miss.imissyou.mycar.util.FindSongs;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.util.SPUtils;
 import com.miss.imissyou.mycar.util.StringUtil;
+import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.view.BackHandledInterface;
 import com.miss.imissyou.mycar.view.activity.AboutActivity;
 import com.miss.imissyou.mycar.view.activity.AuthorActivity;
@@ -114,6 +122,13 @@ public class MainActivity extends ActionBarActivity
     private boolean resultTag = false;
     private BaseFragment mBaseFragment;
 
+    /**
+     * 添加开机自动播放音乐
+     */
+    private List<Music> mMusics;        //音乐列表
+    private int mPosition = 0;              //当前播放音乐列
+    private MyBroadCastService myBroad;     //音乐播放广播
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -158,6 +173,8 @@ public class MainActivity extends ActionBarActivity
         setUpView();
         viewAnimator = new ViewAnimator<>(this, list, contentFragment, drawerLayout, this);
         /**加载页面数据*/
+
+        startMusic();
     }
 
     /**
@@ -570,25 +587,19 @@ public class MainActivity extends ActionBarActivity
                 intent.setClass(this, SettingActivity.class);
                 startActivity(intent);
                 return true;
-            case R.id.action_author:
-                intent.setClass(this, AuthorActivity.class);
-                startActivity(intent);
-                return true;
-            case R.id.action_about:
-                intent.setClass(this, AboutActivity.class);
-                startActivity(intent);
-                return true;
-            case R.id.action_help:
-                intent.setClass(this, UserBaseActivity.class);
-                startActivity(intent);
-                return true;
-            case R.id.action_login:
-                intent.setClass(this, LoginActivity.class);
-                startActivity(intent);
+            case R.id.action_userinfo:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame,userInfoFragment)
+                        .commit();
+
                 return true;
             case R.id.action_unregister:
                 unRegister();
                 intent.setClass(this, LoginActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_about:
+                intent.setClass(this, AboutActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.action_meaasge:
@@ -612,6 +623,17 @@ public class MainActivity extends ActionBarActivity
     protected void onResume() {
         JPushInterface.onResume(this);
         super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        try {
+           unregisterReceiver(myBroad);
+        } catch (Exception e) {
+            LogUtils.d("该广播没有注册");
+        }
+        stopMusic();
+        super.onDestroy();
     }
 
     @Override
@@ -662,5 +684,98 @@ public class MainActivity extends ActionBarActivity
     @Override public void setSelectedFragment(BaseFragment selectedFragment) {
         this.mBaseFragment = selectedFragment;
     }
+
+    /**
+     * 开机启动音乐
+     */
+    private void startMusic() {
+        SPUtils.init(this);
+        Boolean musicState = SPUtils.getSp_set().getBoolean(Constant.MESSAGEMUSIC,true);            //默认开机自启
+        if (musicState) {
+            FindSongs songs = new FindSongs();
+
+            if (null != getContentResolver()) {
+                mMusics = songs.getSongInfo(getContentResolver());
+
+                LogUtils.d("获取到的音乐数量" + mMusics.size());
+                ToastUtil.asLong("获取到的音乐数量" + mMusics.size());
+            } else {
+                LogUtils.d("获取getActivity().getContentResolver()失败");
+                ToastUtil.asLong("获取getActivity().getContentResolver()失败");
+            }
+
+            //注册广播
+            myBroad = new MyBroadCastService();
+            IntentFilter fiter = new IntentFilter();
+            fiter.addAction(Constant.MUSIC_TIME);
+            registerReceiver(myBroad, fiter);
+
+            palyMusic(Constant.MUSIC_NEXT, mPosition);
+        } else {
+            LogUtils.d("不进行播放");
+        }
+    }
+
+    /**
+     * 退出关掉音乐
+     */
+    private void stopMusic() {
+        palyMusic(Constant.MUSIC_BUTTON_PAUSE,mPosition);
+    }
+
+    private void palyMusic(int type, int mPosition) {
+        LogUtils.w("当前播放音乐:" + mPosition);
+        LogUtils.w("总音乐数量:" + mMusics.size());
+        // TODO: 2016/6/13 添加显示当前音乐的
+
+        Music music = mMusics.get(mPosition);
+        Intent intent = new Intent(getApplicationContext(), MusicPlayService.class);
+        intent.putExtra("musicPath", music.getMusicPath());
+        intent.putExtra("musicName", music.getMusicName());
+        intent.putExtra("type", type);
+        startService(intent);
+    }
+
+    /**
+     * 广播在活动中设置UI参数
+     */
+    class MyBroadCastService extends BroadcastReceiver {
+        int EndTime = 0;
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int type = intent.getIntExtra("type", 0);
+            LogUtils.w("音乐播放的广播:" + type + "结束时间:" + EndTime);
+            switch (type) {
+                case 0:             //开始播放
+                    int endTime = intent.getIntExtra("time", 0);
+                    EndTime = endTime;
+                    String strTime = StringUtil.timeToString(endTime, "mm:ss");
+                    String musicName1 = intent.getStringExtra("name");
+                    break;
+                case 1:            //实时更新时间 bo
+                    int playTime = intent.getIntExtra("time", 0);
+                    LogUtils.w("当前播放时间:" + playTime);
+                    if (playTime >= EndTime - 1000) {
+                        LogUtils.w("自动播放下一首");
+                        if (mPosition == (mMusics.size() - 1)) {
+                            mPosition = 0;
+                        } else {
+                            mPosition++;
+                        }
+                        palyMusic(Constant.MUSIC_NEXT, mPosition);
+                    } else {
+
+                        String timeStr = StringUtil.timeToString(playTime, "mm:ss");
+                        LogUtils.d("播放时间" + timeStr);
+                    }
+                    break;
+                default:
+                    LogUtils.d("MusicFragment 并无该项操作");
+                    break;
+            }
+        }
+    }
+
 
 }

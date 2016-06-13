@@ -31,7 +31,6 @@ public class UserInfoPresenterImpl implements UserInfoPresenter{
     public void onSuccess(BaseBean resultBean) {
         mUserInfoView.hideProgress();
         mUserInfoView.showResultSuccess((ResultBean) resultBean);
-
     }
 
 //    @Override
@@ -56,6 +55,11 @@ public class UserInfoPresenterImpl implements UserInfoPresenter{
     @Override
     public void checkSafePassword(CharSequence safePasswordInput) {
         mUserInfoModel.checkSafePassword(safePasswordInput);
+    }
+
+    @Override
+    public void checkSafePasswordSuccess(ResultBean resultBean) {
+        mUserInfoView.showSafePasswordSucess(resultBean);
     }
 
     @Override

@@ -47,6 +47,7 @@ public class Constant {
     public static final String MESSAGEWARE = "WAREMESSAGE";
     public static final String MESSAGENOREAD = "NOREADMESSAGE";
     public static final String MESSAGEALL = "ALLMESSAGE";
+    public static final String MESSAGEMUSIC = "Music";
 
     public static final String CAR_ID = "car_Id";
     public static final String USER_ID = "user_Id";
@@ -108,4 +109,5 @@ public class Constant {
     public static final String  MAP_MAINTAIN = "MainTain";          //附近维修站
     public static final String MAP_GASSTATION = "GasStation";       //附近加油站
     public static final String MAP_PARK = "park";                   //附近停车场
+
 }
