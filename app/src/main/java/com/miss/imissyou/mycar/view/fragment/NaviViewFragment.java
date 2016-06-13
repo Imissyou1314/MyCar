@@ -66,7 +66,7 @@ import java.util.List;
  */
 public class NaviViewFragment extends BaseFragment implements View.OnClickListener,
         LocationSource, AMapLocationListener, PoiSearch.OnPoiSearchListener,
-        TextWatcher, AMap.OnMarkerClickListener, AMap.InfoWindowAdapter, NaviVieFragmentView {
+        TextWatcher, AMap.OnMarkerClickListener, AMap.InfoWindowAdapter{
 
 
     private TextView searchBtn;       //搜索按钮
@@ -138,28 +138,28 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void initData() {
-        mNaviViewPresenter = new NaviViewPresenterImpl(this);
-        if (null != getArguments()) {
-            String tag = getArguments().getString("Tag");
-            Double lat = getArguments().getDouble(Constant.endLatitude);
-            Double lon = getArguments().getDouble(Constant.endLongitude);
-            LatLng latlng = new LatLng(lat, lon);
-            if (null != tag && null != latlng) {
-                switch (tag) {
-                    case Constant.MAP_GASSTATION:
-                        mNaviViewPresenter.loadGasStation(latlng);
-                        break;
-                    case Constant.MAP_PARK:
-                        mNaviViewPresenter.loadPack(latlng);
-                        break;
-                    case Constant.MAP_MAINTAIN:
-                        mNaviViewPresenter.loadRepairShop(latlng);
-                        break;
-                }
-            }
-        } else {
-            LogUtils.d("正常进入");
-        }
+//        mNaviViewPresenter = new NaviViewPresenterImpl(this);
+//        if (null != getArguments()) {
+//            String tag = getArguments().getString("Tag");
+//            Double lat = getArguments().getDouble(Constant.endLatitude);
+//            Double lon = getArguments().getDouble(Constant.endLongitude);
+//            LatLng latlng = new LatLng(lat, lon);
+//            if (null != tag && null != latlng) {
+//                switch (tag) {
+//                    case Constant.MAP_GASSTATION:
+//                        mNaviViewPresenter.loadGasStation(latlng);
+//                        break;
+//                    case Constant.MAP_PARK:
+//                        mNaviViewPresenter.loadPack(latlng);
+//                        break;
+//                    case Constant.MAP_MAINTAIN:
+//                        mNaviViewPresenter.loadRepairShop(latlng);
+//                        break;
+//                }
+//            }
+//        } else {
+//            LogUtils.d("正常进入");
+//        }
 
 
     }
@@ -532,63 +532,63 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
         mMapView.onSaveInstanceState(outState);
     }
 
+//
+//    @Override
+//    public void loadFail(int errorNumber, String errMsg) {
+//        LogUtils.d("错误信息:" + errMsg + ">>>>>>>" + errorNumber);
+//        Toast.makeText(getActivity(), errMsg, Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @Override
+//    public void loadSucccessPark(ResultBean resultBean) {
+//        List<StopStation> stations = GsonUtils.getParams(resultBean, "park", StopStation.class);
+//        showInPage(stations);
+//    }
+//
+//    @Override
+//    public void loadSuccessRepairSHop(ResultBean resultBean) {
+//        List<StopStation> stations = GsonUtils.getParams(resultBean, "repairShop", StopStation.class);
+//        showInPage(stations);
+//    }
+//
+//
+//    @Override
+//    public void loadSuccessGasStation(ResultBean resultBean) {
+//
+//    }
 
-    @Override
-    public void loadFail(int errorNumber, String errMsg) {
-        LogUtils.d("错误信息:" + errMsg + ">>>>>>>" + errorNumber);
-        Toast.makeText(getActivity(), errMsg, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void loadSucccessPark(ResultBean resultBean) {
-        List<StopStation> stations = GsonUtils.getParams(resultBean, "park", StopStation.class);
-        showInPage(stations);
-    }
-
-    @Override
-    public void loadSuccessRepairSHop(ResultBean resultBean) {
-        List<StopStation> stations = GsonUtils.getParams(resultBean, "repairShop", StopStation.class);
-        showInPage(stations);
-    }
-
-
-    @Override
-    public void loadSuccessGasStation(ResultBean resultBean) {
-
-    }
-
-    /**
-     * 展现Marker列表
-     *
-     * @param stations 场地列表
-     */
-    private void showInPage(List<StopStation> stations) {
-
-        for (StopStation station : stations) {
-            Bitmap markIcon = getBtimap(station.getImg());
-            LatLng latLng = new LatLng(station.getLat(), station.getLot());
-            Marker marler = mAMap.addMarker(new MarkerOptions()
-                    .anchor(0.5f, 1)
-                    .position(latLng)
-                    .title(station.getName()).icon(BitmapDescriptorFactory.fromBitmap(markIcon)));
-        }
-    }
-
-    /**
-     * 获取封装后的图片
-     *
-     * @param urlStr 图片地址
-     * @return
-     */
-    private Bitmap getBtimap(String urlStr) {
-        View view = View.inflate(getActivity(), R.layout.marker_icon, null);
-        RoundImageView roundView = (RoundImageView) view.findViewById(R.id.marker_round_icon);
-        String url = Constant.SERVER_URL + urlStr;
-        Glide.with(this).load(url).into(roundView);
-        Bitmap bitmap = StringUtil.convertViewToBitmap(roundView);
-        //TODO添加默认图片
-        return null != bitmap ? bitmap : null;
-    }
+//    /**
+//     * 展现Marker列表
+//     *
+//     * @param stations 场地列表
+//     */
+//    private void showInPage(List<StopStation> stations) {
+//
+//        for (StopStation station : stations) {
+//            Bitmap markIcon = getBtimap(station.getImg());
+//            LatLng latLng = new LatLng(station.getLat(), station.getLot());
+//            Marker marler = mAMap.addMarker(new MarkerOptions()
+//                    .anchor(0.5f, 1)
+//                    .position(latLng)
+//                    .title(station.getName()).icon(BitmapDescriptorFactory.fromBitmap(markIcon)));
+//        }
+//    }
+//
+//    /**
+//     * 获取封装后的图片
+//     *
+//     * @param urlStr 图片地址
+//     * @return
+//     */
+//    private Bitmap getBtimap(String urlStr) {
+//        View view = View.inflate(getActivity(), R.layout.marker_icon, null);
+//        RoundImageView roundView = (RoundImageView) view.findViewById(R.id.marker_round_icon);
+//        String url = Constant.SERVER_URL + urlStr;
+//        Glide.with(this).load(url).into(roundView);
+//        Bitmap bitmap = StringUtil.convertViewToBitmap(roundView);
+//        //TODO添加默认图片
+//        return null != bitmap ? bitmap : null;
+//    }
 
 
 }

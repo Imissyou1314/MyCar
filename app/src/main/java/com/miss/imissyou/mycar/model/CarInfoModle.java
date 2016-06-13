@@ -39,4 +39,10 @@ public interface CarInfoModle {
      * @param userId  用户ID
      */
     void getUserCurrentCar(Long userId);
+
+    /****
+     * 控制车当前熄火状态
+     * @param carId 车Id
+     */
+    void changeCartoStop(Long carId);
 }

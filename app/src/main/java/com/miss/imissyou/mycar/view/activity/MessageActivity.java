@@ -29,6 +29,7 @@ import com.miss.imissyou.mycar.util.SPUtils;
 import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.view.MessageView;
 import com.miss.imissyou.mycar.view.fragment.NaviViewFragment;
+import com.miss.imissyou.mycar.view.fragment.StationMapViewFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -171,7 +172,7 @@ public class MessageActivity extends BaseActivity implements MessageView {
     private void goMapService(String mapType) {
         frame.setVisibility(View.VISIBLE);
         listView.setVisibility(View.GONE);
-        NaviViewFragment fragment = new NaviViewFragment();
+        StationMapViewFragment fragment = new StationMapViewFragment();
         Bundle bundle = new Bundle();
         if (mapType.equals(Constant.MAP_GASSTATION)) {
             bundle.putString("type", Constant.MAP_GASSTATION);

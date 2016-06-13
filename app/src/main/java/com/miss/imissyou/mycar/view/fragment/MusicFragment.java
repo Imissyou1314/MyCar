@@ -97,6 +97,8 @@ public class MusicFragment extends Fragment implements ScreenShotable {
             }
         };
         mListView.setAdapter(adapter);
+
+        changePlayIcon(flag);           //设置开始是的按钮状态
     }
 
     /**
@@ -175,16 +177,16 @@ public class MusicFragment extends Fragment implements ScreenShotable {
                 if (isfirstTouch) {
                     palyMusic(Constant.MUSIC_PREVIOUS, mPosition);
                     isfirstTouch = false;
-                    flag = !flag;
-                    changePlayIcon(flag);
+                    changePlayIcon(!flag);
                 } else {
                     Intent intent = new Intent(getActivity().getApplicationContext(), MusicPlayService.class);
-                    intent.putExtra("flag", flag);
+                    intent.putExtra("flag", flag);    //false 停止播放
                     intent.putExtra("type", Constant.MUSIC_BUTTON_PAUSE);
                     getActivity().startService(intent);
-                    flag = !flag;
                     changePlayIcon(flag);
                 }
+                LogUtils.d("当前状态:" + flag);
+                flag = !flag;
             }
         });
         /** 点击Item 播放*/

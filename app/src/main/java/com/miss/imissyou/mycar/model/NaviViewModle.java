@@ -15,9 +15,10 @@ public interface NaviViewModle {
 
     /**
      * 获取附近加油站信息
-     * @param latLng  经纬度
+     * @param lon  经纬度
+     * @param lat 经度
      */
-    void loadGasStation(LatLng latLng);
+    void loadGasStation(Double lon, Double lat);
 
     /**
      * 获取附近维修站信息

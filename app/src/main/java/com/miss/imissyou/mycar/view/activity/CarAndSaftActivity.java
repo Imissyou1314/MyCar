@@ -76,6 +76,9 @@ public class CarAndSaftActivity extends BaseActivity implements CarInfoView, Vie
         stopBtn.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
             @Override
             public void onToggle(boolean on) {
+                if(on) {
+                    mCarInfoPresenter.changeCarAlarmState(mCar.getId());
+                }
                 LogUtils.d("不做操作");
             }
         });
@@ -105,7 +108,8 @@ public class CarAndSaftActivity extends BaseActivity implements CarInfoView, Vie
         if (resultBean.isServiceResult()) {
             LogUtils.w("更改成功" + resultBean.getResultInfo());
         }
-        Toast.makeText(CarAndSaftActivity.this, resultBean.getResultInfo(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(CarAndSaftActivity.this, resultBean.getResultInfo().equals("")
+                ? "更改状态成功": resultBean.getResultInfo(), Toast.LENGTH_SHORT).show();
     }
 
     @Override

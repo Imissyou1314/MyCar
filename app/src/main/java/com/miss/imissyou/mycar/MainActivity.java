@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -35,7 +34,6 @@ import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.bean.UserBean;
 import com.miss.imissyou.mycar.broadcastReceiver.JpushReceiver;
 import com.miss.imissyou.mycar.service.impl.MusicPlayService;
-import com.miss.imissyou.mycar.service.impl.MyBroadCastService;
 import com.miss.imissyou.mycar.ui.MissDialog;
 import com.miss.imissyou.mycar.ui.sidemenu.interfaces.Resourceble;
 import com.miss.imissyou.mycar.ui.sidemenu.interfaces.ScreenShotable;
@@ -49,22 +47,15 @@ import com.miss.imissyou.mycar.util.StringUtil;
 import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.view.BackHandledInterface;
 import com.miss.imissyou.mycar.view.activity.AboutActivity;
-import com.miss.imissyou.mycar.view.activity.AuthorActivity;
-
-import com.miss.imissyou.mycar.view.activity.BaseActivity;
-import com.miss.imissyou.mycar.view.activity.HelpActivity;
 import com.miss.imissyou.mycar.view.activity.LoginActivity;
 import com.miss.imissyou.mycar.view.activity.MessageActivity;
 import com.miss.imissyou.mycar.view.activity.SettingActivity;
-import com.miss.imissyou.mycar.view.activity.UserBaseActivity;
 import com.miss.imissyou.mycar.view.fragment.BaseFragment;
 import com.miss.imissyou.mycar.view.fragment.CarInfoFragment;
 import com.miss.imissyou.mycar.view.fragment.FirstAddCarFragment;
-import com.miss.imissyou.mycar.view.fragment.SettingFragment;
 import com.miss.imissyou.mycar.view.fragment.CarListFragment;
 import com.miss.imissyou.mycar.view.fragment.ContentFragment;
 import com.miss.imissyou.mycar.view.fragment.GasStationFragment;
-import com.miss.imissyou.mycar.view.fragment.LocationMapFragment;
 import com.miss.imissyou.mycar.view.fragment.MusicFragment;
 import com.miss.imissyou.mycar.view.fragment.NaviViewFragment;
 import com.miss.imissyou.mycar.view.fragment.OrderFragment;
@@ -107,7 +98,7 @@ public class MainActivity extends ActionBarActivity
     private MusicFragment musicFragment;
     private WZCXFragment weiZhanChaXunFragment;
     private UserInfoFragment userInfoFragment;
-    private LocationMapFragment locationMapFragment;
+//    private LocationMapFragment locationMapFragment;
     private OrderFragment orderFragment;
     private GasStationFragment gasStationFragment;
     private NaviViewFragment naviViewFragment;
@@ -352,12 +343,12 @@ public class MainActivity extends ActionBarActivity
         list.add(menuItem4);
         SlideMenuItem menuItem5 = new SlideMenuItem(ContentFragment.OIL, R.mipmap.ic_gasstation_oil_icon);
         list.add(menuItem5);
-        SlideMenuItem menuItem8 = new SlideMenuItem(ContentFragment.USER, R.mipmap.ic_me_icon);
-        list.add(menuItem8);
+//        SlideMenuItem menuItem8 = new SlideMenuItem(ContentFragment.USER, R.mipmap.ic_me_icon);
+//        list.add(menuItem8);
         SlideMenuItem menuItem9 = new SlideMenuItem(ContentFragment.MUSIC, R.mipmap.ic_music_icon);
         list.add(menuItem9);
-        SlideMenuItem menuItem10 = new SlideMenuItem(ContentFragment.MAP, R.drawable.ic_action_name);
-        list.add(menuItem10);
+//        SlideMenuItem menuItem10 = new SlideMenuItem(ContentFragment.MAP, R.drawable.ic_action_name);
+//        list.add(menuItem10);
         SlideMenuItem menuItem11 = new SlideMenuItem(ContentFragment.NAVIGATION, R.mipmap.ic_guide_icon);
         list.add(menuItem11);
     }
@@ -411,7 +402,7 @@ public class MainActivity extends ActionBarActivity
         musicFragment = new MusicFragment();
         weiZhanChaXunFragment = new WZCXFragment();
         userInfoFragment = new UserInfoFragment();
-        locationMapFragment = new LocationMapFragment();
+//        locationMapFragment = new LocationMapFragment();
         orderFragment = new OrderFragment();
         naviViewFragment = new NaviViewFragment();
         gasStationFragment = new GasStationFragment();
@@ -488,12 +479,12 @@ public class MainActivity extends ActionBarActivity
                 startMainFragment();
                 return screenShotable;
                 //return replaceFragment(carInfoFragment, position, Constant.CarInfoFragment);
-            case ContentFragment.USER:
-                return replaceFragment(userInfoFragment, position, Constant.UserInfoFragment);
+//            case ContentFragment.USER:
+//                return replaceFragment(userInfoFragment, position, Constant.UserInfoFragment);
             case ContentFragment.MUSIC:
                 return replaceFragment(musicFragment, position, Constant.MusicFragment);
-            case ContentFragment.MAP:
-                return replaceFragment(locationMapFragment, position, Constant.LocationMapFragment);
+//            case ContentFragment.MAP:
+//                return replaceFragment(locationMapFragment, position, Constant.LocationMapFragment);
             case ContentFragment.NAVIGATION:
                 return replaceFragment(naviViewFragment, position, Constant.NaviViewFragment);
             default:

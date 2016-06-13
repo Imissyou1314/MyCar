@@ -30,6 +30,12 @@ public interface CarInfoPresenter extends MainPresenter<CarInfoView>{
     void changeCarState(Long carId);
 
     /**
+     * 对当前车辆进行熄火
+     * @param carId  车辆ID
+     */
+    void changeCarStop(Long carId);
+
+    /**
      * 设置为当前车辆
      * @param userId 用户Id
      * @param carId 车辆Id

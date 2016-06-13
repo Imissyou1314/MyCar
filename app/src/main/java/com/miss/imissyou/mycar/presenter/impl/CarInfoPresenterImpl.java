@@ -23,6 +23,11 @@ public class CarInfoPresenterImpl implements CarInfoPresenter {
     private CarInfoModle mCarInfoModle;
 
 
+    @Override
+    public void changeCarStop(Long carId) {
+        mCarInfoModle.changeCartoStop(carId);
+    }
+
     public CarInfoPresenterImpl(CarInfoView carInfoFragment) {
         attachView(carInfoFragment);
         mCarInfoModle =new CarInfoModleImpl(this);

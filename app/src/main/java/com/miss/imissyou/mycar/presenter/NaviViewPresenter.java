@@ -1,6 +1,7 @@
 package com.miss.imissyou.mycar.presenter;
 
 import com.amap.api.maps.model.LatLng;
+import com.miss.imissyou.mycar.bean.GasStationResultBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
 
 /**
@@ -15,6 +16,11 @@ public interface NaviViewPresenter {
      * @param resultBean   返回结果
      */
     void loadSuccess(String Tag, ResultBean resultBean);
+    /**
+     * 获取附近十公里内的加油站
+     * @param resultBean  放回结果
+     */
+    void loadSuccessGasStation(GasStationResultBean resultBean);
 
     /**
      * 获取失败
@@ -31,9 +37,10 @@ public interface NaviViewPresenter {
 
     /**
      * 获取附近加油站信息
-     * @param latLng  经纬度
+     * @param lon  经纬度
+     * @param  lat 纬度
      */
-    void loadGasStation(LatLng latLng);
+    void loadGasStation(Double lon, Double lat);
 
     /**
      * 获取附近维修站信息
