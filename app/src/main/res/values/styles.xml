@@ -14,22 +14,8 @@
     </style>
 
     <!--Home TextView 显示的样式-->
-    <style name="HomeTextViewStyle">
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">@dimen/FontSize</item>
-        <item name="android:textColor">@color/color_back_gui</item>
-        <item name="android:gravity">center_horizontal</item>
-    </style>
 
     <!--HomeLinerlayouStyle 显示的样式-->
-
-    <style name="HomeLinearLayou">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">50dp</item>
-        <item name="android:layout_marginBottom">5dp</item>
-        <item name="android:layout_marginTop">5dp</item>
-        <item name="android:orientation">horizontal</item>
-    </style>
 
     <style name="MissLineView">
         <item name="android:background">@color/colorBackFont</item>
@@ -94,35 +80,8 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="mProgress_horizontal">
-        <item name="android:indeterminateOnly">false</item>
-        <item name="android:progressDrawable">@drawable/progressbar_horizontal_1</item><!-- progress_horizontal -->
-        <item name="android:indeterminateDrawable">@android:drawable/progress_indeterminate_horizontal</item>
-        <item name="android:minHeight">20dip</item>
-        <item name="android:maxHeight">20dip</item>
-    </style>
-
     <!--车辆信息的输入框样式-->
-    <style name="addCarInput_noline">
-        <item name="android:textStyle">bold</item>
-        <item name="android:background">@null</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:hint">请输入</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:layout_marginLeft">3dp</item>
-        <item name="android:layout_marginRight">10dp</item>
-    </style>
     <!--车辆信息的显示框-->
-    <style name="addCarInput_text">
-        <item name="android:textSize">16sp</item>
-        <item name="android:gravity">center|right</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:textColor">@color/colorFont</item>
-        <item name="android:textStyle">bold</item>
-    </style>
 
     <!--车辆详细页面-->
     <style name="car_info_text">

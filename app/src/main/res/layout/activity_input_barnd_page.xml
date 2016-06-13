@@ -29,6 +29,7 @@
         <com.rey.material.widget.Spinner
             android:id="@+id/input_brand_page_selectZH"
             android:gravity="center"
+            android:background="#00FFFFFF"
             android:layout_width="80dp"
             app:rd_style="@style/Material.Drawable.Ripple.Wave"
             style="@style/Material.Widget.Spinner"
@@ -36,11 +37,14 @@
 
         <com.rey.material.widget.Spinner
             android:id="@+id/input_barnd_page_SelectEn"
+            android:layout_width="80dp"
             android:gravity="center"
+            android:background="#00FFFFFF"
             app:rd_style="@style/Material.Drawable.Ripple.Wave"
             style="@style/Material.Widget.Spinner"
-            android:layout_marginLeft="10dp"
-            android:layout_width="60dp"
+            android:layout_height="match_parent"/>
+        <View
+            android:layout_width="10dp"
             android:layout_height="match_parent"/>
 
         <EditText
@@ -48,13 +52,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginRight="15dp"
-            android:layout_marginLeft="15dp"
-            android:textSize="14sp"
+            android:textSize="16sp"
+            android:gravity="center|left"
+            android:background="@null"
+            android:inputType="number"
+            android:digits="^[A-Za-z0-9]+$"
             android:textColor="#000000"
             android:textColorHint="#bbbbbb"
             android:hint="五位车牌号"  />
-
-
     </LinearLayout>
 
 

@@ -52,7 +52,7 @@ public class ContentFragment extends Fragment implements ScreenShotable {
 
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.containerView = view.findViewById(R.id.container);
+        this.containerView = view.findViewById(R.id.container_frame);
     }
 
     @Override public void onCreate(Bundle savedInstanceState) {

@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
     <!--主题颜色-->
     <color name="colorMianTheme">#FFFFFF</color>
     <color name="color_activty_title">#11CBAC</color>
     <color name="color_carView_mainMesage">#11CBAC</color>
     <color name="color_boolean_true_text">#11CBAC</color>
     <color name="color_boolean_false_text">#d91912</color>
-    <color name="color_LinearLayout_background">#22c5B9</color>
-    <color name="color_cardView">#44B4C1</color>
-    <color name="color_carView_background">#828B23</color>
-    <color name="color_blue_dark">#31bff7</color>
     <color name="color_b">#bbbbbb</color>
 
 
@@ -24,31 +17,21 @@
     <color name="color_submit_button">#10a68c</color>
 
 
-    <color name="colorMianIndeicator">#acafdb</color>
-    <color name="colorFont">#fde203</color>
     <color name="colorBackFont">#999898</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorchuWhite">#c7ffffff</color>
     <!--dialog-->
-    <color name="color_dialog_foot">#875E92</color>
     <!--Button-->
-    <color name="color_Light_White">#FFFFFF</color>
     <color name="color_back_gui">#cfbebe</color>
     <color name="color_backgroud_gui">#eeeeee</color>
-    <color name="color_zi">#9e6dfc</color>
     <color name="button_shape_normal">#727272</color>
-    <color name="button_shape_pressed">#0df505</color>
     <color name="color_blue">#335569FF</color>
-    <color name="color_miniblue">#185569FF</color>
     <color name="color_background">#10cdb7b7</color>
-    <color name="color_Theme">#FF3A536C</color>
     <color name="color_back">#0e0e0e</color>
     <color name="color_miniBack">#5f0e0e0e</color>
     <color name="color_gui">#eeeeee</color>
     <color name="color_search_blue">#025391</color>
     <color name="color_select_route_title">#D2025391</color>
-
-    <color name="color_distance">#f1de5a5a</color>
 
 
     <color name="result_view">#b0000000</color>
@@ -61,7 +44,6 @@
 
     <!--透明的颜色-->
     <color name="color_carView_background_tran">#0FFFFFFF</color>
-    <color name="color_carView_background_White1">#11FFFFFF</color>
     <color name="color_carView_background_White2">#21FFFFFF</color>
     <color name="color_carView_background_zi1">#533557</color>
     <color name="color_carView_background_zi2">#B0533557</color>
@@ -74,54 +56,9 @@
     <!--车列表颜色-->
     <color name="color_blue_background">#8C32BCB6</color>
     <color name="color_red_background">#8BEE4256</color>
-    <color name="color_yellow_background">#8CFCB64B</color>
-    <color name="color_gree_background">#8C83EDB8</color>
 
     <!--加油站的主题颜色-->
-    <color name="color_blue_main">#2673d2</color>
 
     <!--Metarial-->
-
-    <color name="colorControlNormal">#FF78909C</color>
-    <color name="colorControlActivated">#FF03A9F4</color>
-    <color name="colorSwitchThumbNormal">#FF78909C</color>
-
-    <color name="colorPrimaryQuarter">#3303A9F4</color>
-    <color name="colorPrimaryHalf">#9003A9F4</color>
-    <color name="colorControlNormalHalf">#9078909C</color>
-    <color name="colorAccentQuarter">#3300E5FF</color>
-    <color name="colorAccentHalf">#9000E5FF</color>
-    <array name="progress_colors_light">
-        <item>#FF03A9F4</item>
-        <item>#FFD8433C</item>
-        <item>#FFF2AF3A</item>
-        <item>#FF279B5E</item>
-    </array>
-
-    <array name="progress_colors_dark">
-        <item>#FF00E5FF</item>
-        <item>#ffd81d5a</item>
-        <item>#fff27512</item>
-        <item>#ff63bc34</item>
-    </array>
-
-    <array name="in_colors_light">
-        <item>#4B03A9F4</item>
-        <item>#3303A9F4</item>
-        <item>#1903A9F4</item>
-    </array>
-
-    <array name="in_colors_dark">
-        <item>#4B00E5FF</item>
-        <item>#3300E5FF</item>
-        <item>#1900E5FF</item>
-    </array>
-
-    <color name="tpi_checked">#FFFFFFFF</color>
-    <color name="tpi_unchecked">#99FFFFFF</color>
-
-    <color name="et_divider_focused">@color/colorControlActivated</color>
-    <color name="et_divider_not_focused">#FF6D6D6D</color>
-    <color name="et_divider_disable">#FFC1C1C1</color>
 
 </resources>
