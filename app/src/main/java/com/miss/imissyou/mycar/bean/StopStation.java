@@ -13,7 +13,7 @@ public class StopStation extends Station {
     private String address;       //场地地址
     private String phoneNumber;   //联系方式
     private Double lat;           //经度
-    private Double lot;           //纬度
+    private Double lon;           //纬度
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -63,12 +63,12 @@ public class StopStation extends Station {
         this.lat = lat;
     }
 
-    public Double getLot() {
-        return lot;
+    public Double getLon() {
+        return lon;
     }
 
-    public void setLot(Double lot) {
-        this.lot = lot;
+    public void setLon(Double lon) {
+        this.lon = lon;
     }
 
     public String getName() {

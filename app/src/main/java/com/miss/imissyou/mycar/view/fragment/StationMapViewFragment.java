@@ -4,6 +4,7 @@ package com.miss.imissyou.mycar.view.fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -87,6 +88,7 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
     private String tag;   //标志
     private LatLng latlng;   //经纬度
     private Button shouList;            //展现列表
+    private List<StopStation> stations;    //场地
 
     @Nullable
     @Override
@@ -339,23 +341,49 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
 
         LogUtils.w("传过去的经度:" + mEndLat + "传过去的纬度：" + mEndLon);
         LogUtils.w("你点击的是哪个:" + marker.getTitle());
-        new MissDialog.Builder(getActivity()).setTitle(marker.getTitle()).setMessage(marker.getSnippet())
-                .setPositiveButton("到这里去", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                if (tag != Constant.MAP_GASSTATION) {
-                    toNaviMap(mStartLat, mStartLon, mEndLat, mEndLon);
-                } else {
-                    toGasStation(marker.getPeriod());
+        if (tag == Constant.MAP_GASSTATION) {
+            new MissDialog.Builder(getActivity()).setTitle(marker.getTitle()).setMessage(marker.getSnippet())
+                    .setPositiveButton("到这里去", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            if (tag != Constant.MAP_GASSTATION) {
+                                toNaviMap(mStartLat, mStartLon, mEndLat, mEndLon);
+                            } else {
+                                toGasStation(marker.getPeriod());
+                            }
+                        }
+                    }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
                 }
-            }
-        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        }).create().show();
+            }).create().show();
+        } else {
+            new MissDialog.Builder(getActivity()).setTitle(marker.getTitle()).setMessage(marker.getSnippet())
+                    .setPositiveButton("到这里去", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            toNaviMap(mStartLat, mStartLon, mEndLat, mEndLon);
+
+                        }
+                    }).setNegativeButton("电话", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    if (null != stations.get(marker.getPeriod()).getPhoneNumber()) {
+                        Intent intent = new Intent(Intent.ACTION_CALL,
+                                Uri.parse("tel:" + stations.get(marker.getPeriod()).getPhoneNumber() + ""));
+                        getActivity().startActivity(intent);
+                    } else {
+                        Toast.makeText(getActivity(), tag.equals(Constant.MAP_PARK) ? "没有该停车场的电话" : "没有该维修店的电话",
+                                Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            }).create().show();
+        }
         return false;
     }
 
@@ -395,13 +423,13 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
 
     @Override
     public void loadSucccessPark(ResultBean resultBean) {
-        List<StopStation> stations = GsonUtils.getParams(resultBean, "park", StopStation.class);
+        stations = GsonUtils.getParams(resultBean, "park", StopStation.class);
         showInPage(stations);
     }
 
     @Override
     public void loadSuccessRepairSHop(ResultBean resultBean) {
-        List<StopStation> stations = GsonUtils.getParams(resultBean, "repairShop", StopStation.class);
+       stations = GsonUtils.getParams(resultBean, "repairshop", StopStation.class);
         showInPage(stations);
     }
 
@@ -453,11 +481,18 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
 
         for (StopStation station : stations) {
             Bitmap markIcon = getBtimap(station.getImg());
-            LatLng latLng = new LatLng(station.getLat(), station.getLot());
-            Marker marler = mAMap.addMarker(new MarkerOptions()
-                    .anchor(0.5f, 1)
-                    .position(latLng)
-                    .title(station.getName()).icon(BitmapDescriptorFactory.fromBitmap(markIcon)));
+            if (null != station.getLat() && null != station.getLon() && null != station.getName()) {
+                LatLng latLng = new LatLng(station.getLat(), station.getLon());
+                mAMap.addMarker(new MarkerOptions()
+                        .anchor(0.5f, 1)
+                        .position(latLng)
+                        .title(station.getName())
+                        .snippet(station.getIntroduce())
+                        .icon(BitmapDescriptorFactory.fromBitmap(markIcon)));
+            } else {
+                LogUtils.d("错误信息经纬度为空");
+            }
+
         }
     }
 
@@ -471,9 +506,12 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
         View view = View.inflate(getActivity(), R.layout.marker_icon, null);
         RoundImageView roundView = (RoundImageView) view.findViewById(R.id.marker_round_icon);
         String url = Constant.SERVER_URL + urlStr;
+        LogUtils.d("请求图片地址" + url);
         Glide.with(this).load(url).into(roundView);
         Bitmap bitmap = StringUtil.convertViewToBitmap(roundView);
         //TODO添加默认图片
+        if (null != bitmap)
+            LogUtils.d("获取到图片了");
         return null != bitmap ? bitmap : null;
     }
 

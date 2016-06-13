@@ -28,11 +28,11 @@ public class GasStationModelImpl implements GasStationModle {
     @Override public void loadGasStationData(double lon, double lat, int r, int page, String key, int format) {
 
         HttpParams param = new HttpParams();
-       // param.put("lon",lon + "");
-        //param.put("lat",lat + "");
+        param.put("lon",lon + "");
+        param.put("lat",lat + "");
 
-        param.put("lon","121.538123");
-        param.put("lat","31.677123");
+//        param.put("lon","121.538123");
+//        param.put("lat","31.677123");
         param.put("r", + r);
         param.put("page", page);
         param.put("key", key);
