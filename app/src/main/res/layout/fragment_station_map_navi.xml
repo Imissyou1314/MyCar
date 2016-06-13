@@ -5,12 +5,20 @@
     android:layout_height="match_parent">
 
     <com.amap.api.maps.MapView
-        android:id="@+id/navi_mapView"
+        android:id="@+id/station_navi_mapView"
         android:clickable="true"
         android:layout_height="match_parent"
         android:layout_width="match_parent"/>
 
 
+    <Button
+        android:id="@+id/station_show_list"
+        android:textSize="16sp"
+        android:visibility="gone"
+        android:text="列表形式"
+        android:textColor="#bbbbbb"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
 
 
     <LinearLayout
@@ -20,14 +28,14 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/navi_View_goButton"
+            android:id="@+id/station_navi_View_goButton"
             android:text="到这里去"
             android:background="@color/login_cardView_background"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <Button
-            android:id="@+id/navi_View_BackButton"
+            android:id="@+id/station_navi_View_BackButton"
             android:text="从这里回"
             android:layout_weight="1"
             android:background="@color/login_cardView_background"

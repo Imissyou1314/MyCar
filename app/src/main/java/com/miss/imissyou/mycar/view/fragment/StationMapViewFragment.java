@@ -86,6 +86,7 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
     private List<GasStationBean> gasStationBeens;       //加油站的列表
     private String tag;   //标志
     private LatLng latlng;   //经纬度
+    private Button shouList;            //展现列表
 
     @Nullable
     @Override
@@ -105,17 +106,19 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
 
     @Override
     protected void initView(View view) {
-        mMapView = (MapView) view.findViewById(R.id.navi_mapView);
-
-
-        goHere = (Button) view.findViewById(R.id.navi_View_goButton);
-        formHere = (Button) view.findViewById(R.id.navi_View_BackButton);
+        mMapView = (MapView) view.findViewById(R.id.station_navi_mapView);
+        shouList = (Button) view.findViewById(R.id.station_show_list);
+        goHere = (Button) view.findViewById(R.id.station_navi_View_goButton);
+        formHere = (Button) view.findViewById(R.id.station_navi_View_BackButton);
     }
 
     @Override
     protected void initData() {
         mNaviViewPresenter = new NaviViewPresenterImpl(this);
         tag = getArguments().getString("type");
+        if (tag.equals(Constant.MAP_GASSTATION)) {
+            shouList.setVisibility(View.VISIBLE);
+        }
         LogUtils.w("获取到的类型:" + tag);
 //        if (0.0 != getArguments().getDouble(Constant.endLatitude )) {
 //            Double lat = getArguments().getDouble(Constant.endLatitude);
@@ -143,6 +146,7 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
 
         goHere.setOnClickListener(this);
         formHere.setOnClickListener(this);
+        shouList.setOnClickListener(this);
 
         mAMap.setMyLocationType(AMap.LOCATION_TYPE_MAP_ROTATE);
     }
@@ -156,11 +160,17 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.navi_View_goButton:
+            case R.id.station_navi_View_goButton:
                 toNaviMap(mStartLat, mStartLon, mEndLat, mEndLon);
                 break;
-            case R.id.navi_View_BackButton:
+            case R.id.station_navi_View_BackButton:
                 toNaviMap(mEndLat, mEndLon, mStartLat, mStartLon);
+                break;
+            case R.id.station_show_list:
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content_frame,new GasStationFragment())
+                        .commit();
                 break;
             default:
                 break;
@@ -221,6 +231,7 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
                 if (null != tag ) {
                     switch (tag) {
                         case Constant.MAP_GASSTATION:
+                            mlocationClient.stopLocation();
                             mNaviViewPresenter.loadGasStation(l.getLongitude(), l.getLatitude());
                             break;
                         case Constant.MAP_PARK:
@@ -255,7 +266,7 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
             mlocationClient.setLocationListener(this);
             //设置为高精度定位模式
             mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-            mLocationOption.setInterval(5000);
+            mLocationOption.setInterval(10000);
             //设置定位参数
             mlocationClient.setLocationOption(mLocationOption);
             mlocationClient.startLocation();
@@ -336,7 +347,7 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
                 if (tag != Constant.MAP_GASSTATION) {
                     toNaviMap(mStartLat, mStartLon, mEndLat, mEndLon);
                 } else {
-                    toGasStation(marker.getId());
+                    toGasStation(marker.getPeriod());
                 }
             }
         }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -410,13 +421,17 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
      * @param gasStationBeens
      */
     private void showGasStation(List<GasStationBean> gasStationBeens) {
+        LogUtils.d("车辆信息:" + gasStationBeens.size());
+        int i = 0;
         for (GasStationBean station : gasStationBeens) {
 
             LatLng latLng = setLatlng(station);
             mAMap.addMarker(new MarkerOptions()
                     .anchor(0.5f, 1)
-                    .position(latLng)
-                    .title(station.getName()));
+                    .position(latLng).snippet(station.getAddress())
+                    .title(station.getName())).setPeriod(i);
+            LogUtils.d("设置第几个" + i + "加油站信息:>>>" + station.getName());
+            i ++;
         }
     }
 
@@ -466,11 +481,12 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
      * 到加油站去
      * @param id
      */
-    private void toGasStation(String id) {
+    private void toGasStation(int id) {
         SumBitIndentFragment sumbitOrder = new SumBitIndentFragment();
-        LogUtils.d("获取到的ID 号是多少");
+        LogUtils.d("获取到的ID 号是多少" + id);
+        String jsonStr = GsonUtils.Instance().toJson(gasStationBeens.get(id));
         Bundle bundle = new Bundle();
-        bundle.putSerializable("gasStation",gasStationBeens.get(Integer.parseInt(id)));
+        bundle.putString("gasStation",jsonStr);
 
         sumbitOrder.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,sumbitOrder).commit();

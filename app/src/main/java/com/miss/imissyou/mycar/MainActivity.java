@@ -59,6 +59,7 @@ import com.miss.imissyou.mycar.view.fragment.GasStationFragment;
 import com.miss.imissyou.mycar.view.fragment.MusicFragment;
 import com.miss.imissyou.mycar.view.fragment.NaviViewFragment;
 import com.miss.imissyou.mycar.view.fragment.OrderFragment;
+import com.miss.imissyou.mycar.view.fragment.StationMapViewFragment;
 import com.miss.imissyou.mycar.view.fragment.UserInfoFragment;
 import com.miss.imissyou.mycar.view.fragment.WZCXFragment;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
@@ -100,10 +101,11 @@ public class MainActivity extends ActionBarActivity
     private UserInfoFragment userInfoFragment;
 //    private LocationMapFragment locationMapFragment;
     private OrderFragment orderFragment;
-    private GasStationFragment gasStationFragment;
+//    private GasStationFragment gasStationFragment;
     private NaviViewFragment naviViewFragment;
     private CarInfoFragment carInfoFragment;
     private FirstAddCarFragment firstAddCarFragment;
+    private StationMapViewFragment stationMapViewFrament;
 
     /**
      * 双击退出程序
@@ -119,6 +121,7 @@ public class MainActivity extends ActionBarActivity
     private List<Music> mMusics;        //音乐列表
     private int mPosition = 0;              //当前播放音乐列
     private MyBroadCastService myBroad;     //音乐播放广播
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -405,7 +408,9 @@ public class MainActivity extends ActionBarActivity
 //        locationMapFragment = new LocationMapFragment();
         orderFragment = new OrderFragment();
         naviViewFragment = new NaviViewFragment();
-        gasStationFragment = new GasStationFragment();
+        stationMapViewFrament = new StationMapViewFragment();
+
+//        gasStationFragment = new GasStationFragment();
         carInfoFragment = new CarInfoFragment();
         firstAddCarFragment = new FirstAddCarFragment();
         //编写自己的布
@@ -469,8 +474,11 @@ public class MainActivity extends ActionBarActivity
                 return replaceFragment(carListFragement, position, Constant.CarListFragment);
             case ContentFragment.OIL:
                 //加油菜单项
+                Bundle bundle = new Bundle();
+                bundle.putString("type",Constant.MAP_GASSTATION);
+                stationMapViewFrament.setArguments(bundle);
                 LogUtils.d("position :" + position);
-                return replaceFragment(gasStationFragment, position, Constant.GasStationFragmetn);
+                return replaceFragment(stationMapViewFrament, position, Constant.StationMapViewFragment);
             case ContentFragment.ORDER:
                 return replaceFragment(orderFragment, position, Constant.OrderFragment);
             case ContentFragment.BREAK:
