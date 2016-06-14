@@ -106,14 +106,14 @@ public class OrderInfoFragment extends BaseFragment implements OrderInfoView {
      */
     private void setupPage(OrderBean orderBean) {
 
-        orderPrice.setText(orderBean.getPrice() + "");
+        orderPrice.setText(orderBean.getAmounts() + "");
         orderState.setText(getOrderState(orderBean.getState()));
 
         oilType.setText(orderBean.getType());
         userName.setText(orderBean.getUserName());
         address.setText(orderBean.getStationName());
 
-        carBrand.setText(orderBean.getBrandName());
+        carBrand.setText(orderBean.getPlateNumber());
         orderId.setText(orderBean.getId() + "");
         orderTime.setText(orderBean.getAgreementTime());
 

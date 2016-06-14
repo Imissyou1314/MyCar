@@ -346,8 +346,8 @@ public class MainActivity extends ActionBarActivity
         list.add(menuItem4);
         SlideMenuItem menuItem5 = new SlideMenuItem(ContentFragment.OIL, R.mipmap.ic_gasstation_oil_icon);
         list.add(menuItem5);
-//        SlideMenuItem menuItem8 = new SlideMenuItem(ContentFragment.USER, R.mipmap.ic_me_icon);
-//        list.add(menuItem8);
+        SlideMenuItem menuItem8 = new SlideMenuItem(ContentFragment.PARK, R.mipmap.ic_park_icon);
+        list.add(menuItem8);
         SlideMenuItem menuItem9 = new SlideMenuItem(ContentFragment.MUSIC, R.mipmap.ic_music_icon);
         list.add(menuItem9);
 //        SlideMenuItem menuItem10 = new SlideMenuItem(ContentFragment.MAP, R.drawable.ic_action_name);
@@ -476,7 +476,17 @@ public class MainActivity extends ActionBarActivity
                 //加油菜单项
                 Bundle bundle = new Bundle();
                 bundle.putString("type",Constant.MAP_GASSTATION);
-                stationMapViewFrament.setArguments(bundle);
+                if (stationMapViewFrament.getArguments() == null) {
+                    stationMapViewFrament.setArguments(bundle);
+                }
+                LogUtils.d("position :" + position);
+                return replaceFragment(stationMapViewFrament, position, Constant.StationMapViewFragment);
+            case ContentFragment.PARK:          //Todo 添加停车场
+                Bundle bundlePark = new Bundle();
+                bundlePark.putString("type",Constant.MAP_PARK);
+                if (stationMapViewFrament.getArguments() == null) {
+                    stationMapViewFrament.setArguments(bundlePark);
+                }
                 LogUtils.d("position :" + position);
                 return replaceFragment(stationMapViewFrament, position, Constant.StationMapViewFragment);
             case ContentFragment.ORDER:
@@ -590,7 +600,6 @@ public class MainActivity extends ActionBarActivity
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_frame,userInfoFragment)
                         .commit();
-
                 return true;
             case R.id.action_unregister:
                 unRegister();
@@ -637,9 +646,9 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onBackPressed() {
-        if (mBaseFragment == null || !mBaseFragment.onBackPressed()){
-            if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
-                //双击退出
+//        if (mBaseFragment == null || !mBaseFragment.onBackPressed()){
+//            if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+//                //双击退出
                 if (!isQuit) {
                     isQuit = true;
                     Toast.makeText(getBaseContext(),
@@ -657,18 +666,17 @@ public class MainActivity extends ActionBarActivity
                     System.exit(0);
                     android.os.Process.killProcess(android.os.Process.myPid());
                 }
-            } else {
-                super.onBackPressed();
-                //退栈
-                getSupportFragmentManager().popBackStack();
             }
-        } else{
-            LogUtils.d("没有Fragment");
-            super.onBackPressed();
-        }
-
-
-    }
+//    else {
+//                super.onBackPressed();
+//                //退栈
+//                getSupportFragmentManager().popBackStack();
+//            }
+//        } else{
+//            LogUtils.d("没有Fragment");
+//            super.onBackPressed();
+//        }
+//    }
 
     /**
      * 注销登录

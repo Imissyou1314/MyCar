@@ -1,6 +1,7 @@
 package com.miss.imissyou.mycar.util;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.view.View;
 import android.widget.EditText;
 
@@ -139,12 +140,29 @@ public class StringUtil {
         view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
 
         view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
-
+        view.setDrawingCacheEnabled(true);
         view.buildDrawingCache();
-
         Bitmap bitmap = view.getDrawingCache();
 
         return bitmap;
 
+    }
+
+    /**
+     * 获取绘制的图片
+     * @param view  视图
+     * @return  bitmaps
+     */
+    public static Bitmap getBitmapFromView(View view) {
+        //调用下面这个方法非常重要，如果没有调用这个方法，得到的bitmap为null
+        view.measure(View.MeasureSpec.makeMeasureSpec(256, View.MeasureSpec.EXACTLY),
+                View.MeasureSpec.makeMeasureSpec(256, View.MeasureSpec.EXACTLY));
+        //这个方法也非常重要，设置布局的尺寸和位置
+        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(returnedBitmap);
+        view.layout(0, 0, view.getLayoutParams().width, view.getLayoutParams().height);
+        view.draw(canvas);
+
+        return returnedBitmap;
     }
 }

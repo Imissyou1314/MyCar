@@ -28,7 +28,7 @@ public class OrderBean extends BaseBean {
     /** 加油数量*/
     private Double number;
     /**定单总价*/
-    private int  amounts;
+    private Double  amounts;
     /** 订单状态*/
     private Integer state;
     /** 下单时间*/
@@ -86,11 +86,11 @@ public class OrderBean extends BaseBean {
         this.agreementTime = agreementTime;
     }
 
-    public int getAmounts() {
+    public Double getAmounts() {
         return amounts;
     }
 
-    public void setAmounts(int amounts) {
+    public void setAmounts(Double amounts) {
         this.amounts = amounts;
     }
 
@@ -101,8 +101,6 @@ public class OrderBean extends BaseBean {
     public void setBrandName(String brandName) {
         this.brandName = brandName;
     }
-
-
 
     public Double getNumber() {
         return number;

@@ -120,7 +120,7 @@ public class OrderFragment extends BaseFragment implements
                 LogUtils.d("获取的订单状态:" + orderBean.getState());
                 holder.setText(R.id.order_item_orderState, getOrderState(orderBean.getState()));
                 holder.setText(R.id.order_item_orderTime, orderBean.getAgreementTime());
-                holder.setText(R.id.order_item_orderTotalPrice, "￥ " + orderBean.getPrice());
+                holder.setText(R.id.order_item_orderTotalPrice, "￥ " + orderBean.getAmounts());
             }
         };
         orderListView.setAdapter(adapter);

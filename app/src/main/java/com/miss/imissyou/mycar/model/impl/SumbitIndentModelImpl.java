@@ -1,6 +1,5 @@
 package com.miss.imissyou.mycar.model.impl;
 
-import com.google.gson.Gson;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
@@ -39,7 +38,7 @@ public class SumbitIndentModelImpl implements SumbitIndentModel {
         params.put("units", orderBean.getUnits());
         params.put("price", orderBean.getPrice() + "");
         params.put("number", orderBean.getNumber() + "");
-        params.put("amounts", orderBean.getAmounts());
+        params.put("amounts", orderBean.getAmounts() + "");
         params.put("state", orderBean.getState());
         params.put("plateNumber",orderBean.getPlateNumber());
         params.put("agreementTime", orderBean.getAgreementTime());

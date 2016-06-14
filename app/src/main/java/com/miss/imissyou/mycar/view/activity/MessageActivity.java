@@ -1,6 +1,5 @@
 package com.miss.imissyou.mycar.view.activity;
 
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,20 +14,17 @@ import com.miss.imissyou.mycar.bean.MessageBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.presenter.MessagePresenter;
 import com.miss.imissyou.mycar.presenter.impl.MessagePresenterImpl;
-import com.miss.imissyou.mycar.ui.AnimatorView;
 import com.miss.imissyou.mycar.ui.MissDialog;
 import com.miss.imissyou.mycar.ui.MissSwipDismissListView;
 import com.miss.imissyou.mycar.ui.TitleFragment;
 import com.miss.imissyou.mycar.ui.adapterutils.CommonAdapter;
 import com.miss.imissyou.mycar.ui.adapterutils.ViewHolder;
-import com.miss.imissyou.mycar.ui.circleProgress.CircleProgress;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.FindViewById;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.util.SPUtils;
 import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.view.MessageView;
-import com.miss.imissyou.mycar.view.fragment.NaviViewFragment;
 import com.miss.imissyou.mycar.view.fragment.StationMapViewFragment;
 
 import java.util.ArrayList;

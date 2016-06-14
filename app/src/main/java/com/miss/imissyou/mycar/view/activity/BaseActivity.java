@@ -1,7 +1,6 @@
 package com.miss.imissyou.mycar.view.activity;
 
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 
 import com.lidroid.xutils.util.LogUtils;
@@ -145,18 +144,19 @@ public abstract class BaseActivity extends FragmentActivity
     }
 
     @Override public void onBackPressed() {
-        if (mBaseFragment == null || !mBaseFragment.onBackPressed()){
-            if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
-                LogUtils.d("只有一个fragment");
-                super.onBackPressed();
-            } else {
-                //退栈
-                LogUtils.d("退出当前的Fragment");
-                getSupportFragmentManager().popBackStack();
-            }
-        } else{
-            LogUtils.d("没有Fragment");
-            super.onBackPressed();
-        }
+//        if (mBaseFragment == null || !mBaseFragment.onBackPressed()){
+//            if (getSupportFragmentManager().getBackStackEntryCount() <= 1) {
+//                LogUtils.d("只有一个fragment");
+//                super.onBackPressed();
+//            } else {
+//                //退栈
+//                LogUtils.d("退出当前的Fragment");
+//                getSupportFragmentManager().popBackStack();
+//            }
+//        } else{
+//            LogUtils.d("没有Fragment");
+//            super.onBackPressed();
+//        }
+        super.onBackPressed();
     }
 }

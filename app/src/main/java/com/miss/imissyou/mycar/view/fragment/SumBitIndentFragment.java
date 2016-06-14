@@ -530,10 +530,11 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
 
             final String key = entry.getKey().toString();
             String tempkey = key;
+            String oilType = tempkey.replace("E","") + "#";
 
             tv1.setLayoutParams(lp);//设置布局参数
             tv1.setTag(entry.getKey());
-            tv1.setText(tempkey.replace("E","") + "#");
+            tv1.setText(oilType);
             tv1.setTextSize(20);
             tv1.setGravity(Gravity.CENTER);
             tv1.setTextColor(getActivity().getResources().getColor(R.color.color_back));
@@ -604,16 +605,14 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
         orderBean.setNumber(oilNumber);
         orderBean.setAddress(gasStation.getAddress());
         orderBean.setBrandName(gasStation.getBrandname());
-        orderBean.setAmounts((int) price);
+        orderBean.setAmounts(price);
 
-        // TODO: 2016-06-10 添加只提示一条信息
         /**检查用户是否登录*/
         if (null != Constant.userBean && null != Constant.userBean.getId()) {
             orderBean.setUserId(Constant.userBean.getId());
             orderBean.setUserName(Constant.userBean.getUsername());
         } else {
             Toast.makeText(getActivity(), "用户没登录不能下单", Toast.LENGTH_SHORT).show();
-            //ToastUtil.asLong("用户没登录不能下单");
             result = false;
             return result;
         }
@@ -623,7 +622,6 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
             orderBean.setPlateNumber(Constant.carBean.getPlateNumber());
         } else {
             Toast.makeText(getActivity(), "用户没有车辆，请去添加车辆", Toast.LENGTH_SHORT).show();
-            //ToastUtil.asLong("用户没有车辆，请去添加车辆");
             result = false;
             return result;
         }
@@ -631,10 +629,10 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
         if (null != oil && null != oil.getPrice() && null != oil.getOilType()) {
             orderBean.setUnits("1");
             orderBean.setPrice(Double.parseDouble(oil.getPrice()));
-            orderBean.setType(oil.getOilType());
+            orderBean.setType(oil.getOilType().replace("E","") + "#");
+            orderBean.setAmounts(Double.parseDouble(priceInput.getText().toString()));
         } else {
             Toast.makeText(getActivity(), "用户没有选择加油类型,不能下单", Toast.LENGTH_SHORT).show();
-            //ToastUtil.asLong("用户没有选择加油类型");
             result = false;
             return result;
         }
