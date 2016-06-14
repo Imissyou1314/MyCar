@@ -57,6 +57,7 @@ public class GasStationFragment extends BaseFragment
 
     private AMapLocationClient mlocationClient;
     private AMapLocationClientOption mLocationOption;
+    private JZLocationConverter.LatLng latLng;    //本地百度坐标经纬度
 
     @Nullable
     @Override
@@ -205,11 +206,12 @@ public class GasStationFragment extends BaseFragment
             LogUtils.w("获取城市编码：" + aMapLocation.getAdCode());
 
             //高德经纬度转百度经纬度
-            JZLocationConverter.LatLng latLng = new JZLocationConverter.LatLng(Constant.MyLatitude, Constant.MyLongitude);
-
-            latLng = JZLocationConverter.gcj02ToBd09(latLng);
+            JZLocationConverter.LatLng location = new JZLocationConverter
+                    .LatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude());
+            //转百度地图经纬度
+            latLng = JZLocationConverter.gcj02ToBd09(location);
             LogUtils.d("转换后的经纬度:" + latLng.getLatitude() + "::::" + latLng.getLongitude());
-            mGasStationPresenter.loadServiceData(latLng.getLatitude(), latLng.getLongitude(), Constant.GET_GASSTATION_R,
+            mGasStationPresenter.loadServiceData(latLng.getLongitude(),latLng.getLatitude(), Constant.GET_GASSTATION_R,
                     Constant.GET_GASSTATION_KEY, 1, 1);
         } else {
             // TODO: 2016-06-06 测试

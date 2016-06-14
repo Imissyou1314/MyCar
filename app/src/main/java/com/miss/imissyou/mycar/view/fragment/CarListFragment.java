@@ -47,7 +47,6 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
 
     private List<CarInfoBean> cars = new ArrayList<CarInfoBean>();                //所有车辆
     private DialogUtils dialog;
-    // TODO: 2016-06-11 添加长按删除
     MissPopWindows missPopWindows;                                      //底部弹框
     private int delectCarId;                                            //删除车辆Id
     private CommonAdapter<CarInfoBean> adapter;                         //adapter
@@ -195,7 +194,6 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
                 Glide.with(getActivity())
                         .load(Constant.SERVER_URL + car.getMark())
                         .into((ImageView) holder.getView(R.id.car_list_item_carImage));
-                // TODO: 2016/6/4  待测试的页面
                 /**设置背景色*/
                 //int nowList = holder.getmPosition();
                 //if (nowList % 4 == 0) {
@@ -218,7 +216,6 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
 
     @Override
     public void showDelectSuccess(ResultBean resultBean) {
-        // TODO: 2016-06-11 删除成功
         Toast.makeText(getActivity(), resultBean.getResultInfo(),
                 Toast.LENGTH_SHORT).show();
         cars.remove(delectCarId);

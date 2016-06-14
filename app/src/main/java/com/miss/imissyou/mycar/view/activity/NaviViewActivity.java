@@ -414,7 +414,6 @@ public class NaviViewActivity extends BaseActivity implements AMapNaviViewListen
     private void setNaviState() {
         boolean naviType = getIntent().getBooleanExtra(Constant.NO_START_NAVI, false);
         if (naviType) {
-            // TODO: 2016/6/6 无起点导航
             AMapNavi.getInstance(this).startGPS();
         } else {
             startLat = getIntent().getDoubleExtra(Constant.startLatitude, 21.150468);

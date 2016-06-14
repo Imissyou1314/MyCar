@@ -96,7 +96,6 @@ public class InputBrandPageActivity extends BaseActivity implements View.OnClick
         } else {
             LogUtils.d("提交的车牌号" + carBrand);
             carInfoBean.setPlateNumber(carBrand);
-            // TODO: 2016/6/5 打印车辆信息
             LogUtils.w("提交车辆的信息:" + GsonUtils.Instance().toJson(carInfoBean));
             mAddNewCarInputPresenter.sentCarInfoToService(carInfoBean);
         }

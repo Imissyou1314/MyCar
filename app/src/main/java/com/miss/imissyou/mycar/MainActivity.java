@@ -398,7 +398,7 @@ public class MainActivity extends ActionBarActivity
      * 初始化布局
      */
     private void setUpView() {
-        //TODO
+
         contentFragment = ContentFragment.newInstance(R.mipmap.content_music);
         //homeFragment = new HomeFragment();
         carListFragement = new CarListFragment();
@@ -725,7 +725,7 @@ public class MainActivity extends ActionBarActivity
     private void palyMusic(int type, int mPosition) {
         LogUtils.w("当前播放音乐:" + mPosition);
         LogUtils.w("总音乐数量:" + mMusics.size());
-        // TODO: 2016/6/13 添加显示当前音乐的
+        // TODO: 2016/6/13 添加显示播放音乐的
 
         Music music = mMusics.get(mPosition);
         Intent intent = new Intent(getApplicationContext(), MusicPlayService.class);

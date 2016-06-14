@@ -32,6 +32,7 @@ import com.miss.imissyou.mycar.util.MapChangeUtils;
 import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.view.SumbitIndentView;
 import com.miss.imissyou.mycar.view.activity.NaviViewActivity;
+import com.miss.imissyou.mycar.view.activity.PayActivity;
 import com.rey.material.app.DatePickerDialog;
 import com.rey.material.app.DialogFragment;
 import com.rey.material.app.TimePickerDialog;
@@ -375,7 +376,9 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
 
     // TODO: 2016/6/5  到付款页面
     private void goPlayPage() {
-
+        Intent intent = new Intent(getActivity(), PayActivity.class);
+        intent.putExtra("orderId",orderBean.getId());
+        getActivity().startActivity(intent);
     }
 
     /**

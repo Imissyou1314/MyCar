@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@mipmap/paybackground"
+    android:layout_height="match_parent">
+
+    <!--支付页面-->
+
+    <com.miss.imissyou.mycar.ui.TitleFragment
+        android:id="@+id/pay_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"/>
+
+    <!-- 支付宝支付 -->
+    <LinearLayout
+        android:id="@+id/pay_zhifubao_linear"
+        android:layout_width="fill_parent"
+        android:layout_marginTop="50dp"
+        android:layout_height="200dp"
+        android:orientation="vertical">
+
+        <com.miss.imissyou.mycar.ui.RoundImageView
+            android:id="@+id/pay_zhifubao_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:src="@mipmap/zhifubao"
+            android:layout_weight="5"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="14dp"
+            android:gravity="center_horizontal"
+            android:text="支付宝支付"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <!-- 微信支付 -->
+    <LinearLayout
+        android:id="@+id/pay_weixi_linear"
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        >
+        <com.miss.imissyou.mycar.ui.RoundImageView
+            android:id="@+id/pay_weixi_image"
+            android:layout_marginTop="50dp"
+            android:layout_width="100dp"
+            android:layout_gravity="center"
+            android:layout_height="100dp"
+            android:src="@mipmap/weixin"
+            android:layout_weight="5"/>
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="14dp"
+            android:text="微信支付"
+            android:textSize="20sp"
+            />
+    </LinearLayout>
+
+</LinearLayout>

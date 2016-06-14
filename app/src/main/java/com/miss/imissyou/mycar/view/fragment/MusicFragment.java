@@ -228,7 +228,6 @@ public class MusicFragment extends Fragment implements ScreenShotable {
     private void palyMusic(int type, int mPosition) {
         LogUtils.w("当前播放音乐:" + mPosition);
         LogUtils.w("总音乐数量:" + mMusics.size());
-        // TODO: 2016/6/13 添加显示当前音乐的
         mListView.setSelection(mPosition);
 
         Music music = mMusics.get(mPosition);

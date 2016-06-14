@@ -303,7 +303,6 @@ public class AddNewCarActivity extends BaseActivity implements SurfaceHolder.Cal
         inactivityTimer.onActivity();
         playBeepSoundAndVibrate();
         final String resultString = result.getText();
-        //TODO  Miss
         LogUtils.w(resultString);
         onResultHandler(resultString, barcode);
 
@@ -321,9 +320,6 @@ public class AddNewCarActivity extends BaseActivity implements SurfaceHolder.Cal
             Toast.makeText(AddNewCarActivity.this, "Scan failed!", Toast.LENGTH_SHORT).show();
             return;
         }
-        //TODO 跳转到下一页
-        //toVerifyAddCarActivity(resultString);
-
     }
 
     /**
@@ -419,7 +415,6 @@ public class AddNewCarActivity extends BaseActivity implements SurfaceHolder.Cal
         }
     }
 
-    //// TODO: 2016/5/29
     /**
      * When the beep has finished playing, rewind to queue up another one.
      */

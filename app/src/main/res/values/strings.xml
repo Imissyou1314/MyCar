@@ -11,10 +11,6 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
 
-    <!--Mian activity-->
-
-    <!-- TODO: Remove or change this placeholder text -->
-
 
     <!--Home String-->
     <string name="fragment_home_carName">宝马</string>

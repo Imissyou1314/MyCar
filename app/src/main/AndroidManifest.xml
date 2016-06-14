@@ -45,6 +45,37 @@
         <activity android:name=".view.activity.AddNewCarInputActivity" android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.InputBrandPageActivity" android:screenOrientation="portrait"/>
 
+
+        <!--Ping ++ 支付功能-->
+        <activity android:name=".view.activity.PayActivity" android:screenOrientation="portrait"/>
+        <!-- Ping++ SDK 注册 -->
+        <activity
+            android:name="com.pingplusplus.android.PaymentActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- 微信支付 -->
+        <activity-alias
+            android:name=".wxapi.WXPayEntryActivity"
+            android:screenOrientation="portrait"
+            android:exported="true"
+            android:targetActivity="com.pingplusplus.android.PaymentActivity" />
+
+        <!-- 支付宝 -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind" >
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind" >
+        </activity>
+
+
         <!--注册服务-->
         <service android:name=".service.impl.MusicPlayService"/>
         <service android:name=".service.impl.UpdateCarInfoService"/>
