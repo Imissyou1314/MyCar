@@ -71,9 +71,9 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
 
     private TextView searchBtn;       //搜索按钮
     private AutoCompleteTextView searchInput;// 输入搜索关键字
-    //    private EditText searchCityInput;  //搜索输入
     private Button goHere;        //到这里去
     private Button formHere;       //从这里来
+    private Button setStart;     //设置起点
 
     private String keyWord = "";
 
@@ -129,38 +129,15 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
         mMapView = (MapView) view.findViewById(R.id.navi_mapView);
 
         searchInput = (AutoCompleteTextView) view.findViewById(R.id.navi_mapView_keyWord);
-//        searchCityInput = (EditText) view.findViewById(R.id.navi_mapView_search_edit);
 
         searchBtn = (TextView) view.findViewById(R.id.navi_mapView_search_btn);
         goHere = (Button) view.findViewById(R.id.navi_View_goButton);
         formHere = (Button) view.findViewById(R.id.navi_View_BackButton);
+        setStart = (Button) view.findViewById(R.id.navi_view_startButton);
     }
 
     @Override
     protected void initData() {
-//        mNaviViewPresenter = new NaviViewPresenterImpl(this);
-//        if (null != getArguments()) {
-//            String tag = getArguments().getString("Tag");
-//            Double lat = getArguments().getDouble(Constant.endLatitude);
-//            Double lon = getArguments().getDouble(Constant.endLongitude);
-//            LatLng latlng = new LatLng(lat, lon);
-//            if (null != tag && null != latlng) {
-//                switch (tag) {
-//                    case Constant.MAP_GASSTATION:
-//                        mNaviViewPresenter.loadGasStation(latlng);
-//                        break;
-//                    case Constant.MAP_PARK:
-//                        mNaviViewPresenter.loadPack(latlng);
-//                        break;
-//                    case Constant.MAP_MAINTAIN:
-//                        mNaviViewPresenter.loadRepairShop(latlng);
-//                        break;
-//                }
-//            }
-//        } else {
-//            LogUtils.d("正常进入");
-//        }
-
 
     }
 
@@ -180,6 +157,7 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
         searchBtn.setOnClickListener(this);
         goHere.setOnClickListener(this);
         formHere.setOnClickListener(this);
+        setStart.setOnClickListener(this);
 
         mAMap.setOnMapLongClickListener(this);
 
@@ -204,9 +182,19 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
             case R.id.navi_View_BackButton:
                 toNaviMap(mEndLat, mEndLon, mStartLat, mStartLon);
                 break;
+            case R.id.navi_view_startButton:
+                setMapStart();
             default:
                 break;
         }
+    }
+
+    private void setMapStart() {
+        if (mAMap.getMapScreenMarkers().size() <= 0)
+            return ;
+        Marker marker = mAMap.getMapScreenMarkers().get(0);
+        mStartLat = marker.getPosition().latitude;
+        mStartLon = marker.getPosition().longitude;
     }
 
     /**
@@ -541,64 +529,6 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
         mAMap.clear();
         mAMap.addMarker(new MarkerOptions().anchor(0.5f, 1).position(latLng).draggable(true));
     }
-
-//
-//    @Override
-//    public void loadFail(int errorNumber, String errMsg) {
-//        LogUtils.d("错误信息:" + errMsg + ">>>>>>>" + errorNumber);
-//        Toast.makeText(getActivity(), errMsg, Toast.LENGTH_SHORT).show();
-//    }
-//
-//    @Override
-//    public void loadSucccessPark(ResultBean resultBean) {
-//        List<StopStation> stations = GsonUtils.getParams(resultBean, "park", StopStation.class);
-//        showInPage(stations);
-//    }
-//
-//    @Override
-//    public void loadSuccessRepairSHop(ResultBean resultBean) {
-//        List<StopStation> stations = GsonUtils.getParams(resultBean, "repairShop", StopStation.class);
-//        showInPage(stations);
-//    }
-//
-//
-//    @Override
-//    public void loadSuccessGasStation(ResultBean resultBean) {
-//
-//    }
-
-//    /**
-//     * 展现Marker列表
-//     *
-//     * @param stations 场地列表
-//     */
-//    private void showInPage(List<StopStation> stations) {
-//
-//        for (StopStation station : stations) {
-//            Bitmap markIcon = getBtimap(station.getImg());
-//            LatLng latLng = new LatLng(station.getLat(), station.getLot());
-//            Marker marler = mAMap.addMarker(new MarkerOptions()
-//                    .anchor(0.5f, 1)
-//                    .position(latLng)
-//                    .title(station.getName()).icon(BitmapDescriptorFactory.fromBitmap(markIcon)));
-//        }
-//    }
-//
-//    /**
-//     * 获取封装后的图片
-//     *
-//     * @param urlStr 图片地址
-//     * @return
-//     */
-//    private Bitmap getBtimap(String urlStr) {
-//        View view = View.inflate(getActivity(), R.layout.marker_icon, null);
-//        RoundImageView roundView = (RoundImageView) view.findViewById(R.id.marker_round_icon);
-//        String url = Constant.SERVER_URL + urlStr;
-//        Glide.with(this).load(url).into(roundView);
-//        Bitmap bitmap = StringUtil.convertViewToBitmap(roundView);
-//        //TODO添加默认图片
-//        return null != bitmap ? bitmap : null;
-//    }
 
 
 }

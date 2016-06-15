@@ -474,13 +474,11 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
      * @param stations 场地列表
      */
     private void showInPage(List<StopStation> stations) {
-        View view = View.inflate(getActivity(), R.layout.marker_icon, null);
         if (null != stations) {
 
             if (tag == Constant.MAP_PARK) {
                 Toast.makeText(getActivity(), "附近停车场数量:" + stations.size(), Toast.LENGTH_SHORT).show();
             } else{
-                view = View.inflate(getActivity(), R.layout.marker_fix_icon, null);
                 Toast.makeText(getActivity(), "附近维修站数量:" + stations.size(), Toast.LENGTH_SHORT).show();
             }
             LogUtils.e("获取数据为空");
@@ -488,26 +486,23 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
 
         LogUtils.d("订单列表:" + GsonUtils.Instance().toJson(stations));
         int i = 0;
-//        mAMap.clear();
-//        View view = View.inflate(getActivity(), R.layout.marker_icon, null);
-//        RoundImageView roundView = (RoundImageView) view.findViewById(R.id.marker_round_icon);
+//
         for (StopStation station : stations) {
+            View view = null;
             if (null != station.getLat() && null != station.getLon() && null != station.getName()) {
                 LatLng latLng = new LatLng(station.getLat(), station.getLon());
+                if (tag == Constant.MAP_PARK) {
+                   view = View.inflate(getActivity(), R.layout.marker_icon, null);
+                } else{
+                   view = View.inflate(getActivity(), R.layout.marker_fix_icon, null);
+                }
                 LogUtils.d("请求图片地址:" + Constant.SERVER_URL + station.getImg());
-//                Glide.with(this).load(Constant.SERVER_URL + station.getImg()).into(roundView).onStart();
                 mAMap.addMarker(new MarkerOptions()
                         .anchor(0.5f, 1)
                         .position(latLng)
                         .title(station.getName())
                         .snippet(station.getIntroduce())
                         .icon(BitmapDescriptorFactory.fromView(view))).setPeriod(i);
-//                mAMap.addMarker(new MarkerOptions()
-//                        .anchor(0.5f, 1)
-//                        .position(latLng)
-//                        .title(station.getName())
-//                        .snippet(station.getIntroduce())
-//                        .icon(BitmapDescriptorFactory.fromView(view))).setPeriod(i);
 
                 LogUtils.d("设置第几个" + i + "场地信息:>>>" + station.getName());
                 i ++;

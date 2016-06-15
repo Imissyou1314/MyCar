@@ -156,7 +156,7 @@ public class MessageActivity extends BaseActivity implements MessageView {
 
                 holder.setText(R.id.message_item_msg_text, "   " + messageBean.getContent());
                 LogUtils.d("信息的时间" + messageBean.getSystemData());
-                holder.setText(R.id.message_item_time_text, messageBean.getSystemData());
+                holder.setText(R.id.message_item_time_text, messageBean.getCreateTime());
                 holder.setText(R.id.message_item_title_text, messageBean.getTitle());
             }
         };

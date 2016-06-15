@@ -14,7 +14,7 @@ public class MessageBean extends BaseBean{
     private boolean state;     //消息是否阅读
     private String title;//消息标题
     private String content;  //消息的主消息
-    private String nowData;  //信息当前的信息
+    private String createTime;  //信息当前的信息
 
     public String getContent() {
         return content;
@@ -57,10 +57,18 @@ public class MessageBean extends BaseBean{
     }
 
     public String getSystemData() {
-        if (null == nowData) {
+        if (null == createTime) {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-            nowData = formatter.format(new Date(System.currentTimeMillis()));
+            createTime = formatter.format(new Date(System.currentTimeMillis()));
         }
-        return  nowData;
+        return  createTime;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 }
