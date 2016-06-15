@@ -6,14 +6,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,6 +27,7 @@ import com.miss.imissyou.mycar.bean.GasStationBean;
 
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.presenter.impl.GasStationPresenterImpl;
+import com.miss.imissyou.mycar.ui.TitleFragment;
 import com.miss.imissyou.mycar.ui.adapterutils.CommonAdapter;
 import com.miss.imissyou.mycar.ui.adapterutils.ViewHolder;
 import com.miss.imissyou.mycar.util.Constant;
@@ -52,6 +51,7 @@ public class GasStationFragment extends BaseFragment
 
     private static final String TAG = "GASSTATIONFRAGMENT";
     private ListView gasListView;       //加油站的列表
+//    private TitleFragment title;
     private GasStationPresenter mGasStationPresenter;
     private List<GasStationBean> gasStationBeens;       //加油站的列表
 
@@ -67,13 +67,24 @@ public class GasStationFragment extends BaseFragment
 
     @Override
     protected void initView(View view) {
+//        title = (TitleFragment) view.findViewById(R.id.gasStation_title) ;
         gasListView = (ListView) view.findViewById(R.id.gasStation_ListView);
         initLoactionClicent();
         mlocationClient.startLocation();
+
     }
 
     @Override
     protected void initData() {
+//        title.setTitleText("加油站列表");
+//        title.setBackOnClick(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (getActivity().getSupportFragmentManager()
+//
+//                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,stationFragment).commit();
+//            }
+//        });
         mGasStationPresenter = new GasStationPresenterImpl(this);
 //                double lat = MapChangeUtils.Convert_GCJ02_To_BD09_Lat(Constant.MyLatitude,Constant.MyLongitude);
 //                double lng = MapChangeUtils.Convert_GCJ02_To_BD09_Lng(Constant.MyLatitude,Constant.MyLongitude);
@@ -93,7 +104,7 @@ public class GasStationFragment extends BaseFragment
                 FragmentManager fm = getActivity().getSupportFragmentManager();
 
                 SumBitIndentFragment gasFragment = new SumBitIndentFragment();
-                GasStationBean gasStationBean = gasStationBeens.get(position);
+                GasStationBean gasStationBean = gasStationBeens.get(position + 1);
 
                 Bundle bundle = new Bundle();
                 LogUtils.d("加油站的信息" + GsonUtils.Instance().toJson(gasStationBean));

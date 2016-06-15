@@ -88,6 +88,8 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     private boolean isReadOrder = false;            //准备订单是否完成
     private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");           //时间格式
 
+    private int PayTage;                 //定单提交方式
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -272,7 +274,17 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     public void showResultSuccess(ResultBean resultBean) {
         if (resultBean.isServiceResult()) {
             OrderBean order = GsonUtils.getParam(resultBean,"order",OrderBean.class);
-            showDialog(order);
+
+            if (null == order) {
+                LogUtils.d("结束：");
+                return;
+            }
+
+            if (orderBean.getState() == 0) {
+                showDialog(order);
+            } else {
+                goPlayPage(order);
+            }
         } else {
             showResultError(0, resultBean.getResultInfo());
         }
@@ -306,7 +318,6 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
                 isReadOrder = initOrder(gasStation);
                 orderBean.setState(1);
                 sumbitOrder();
-                goPlayPage();
                 break;
             case R.id.sumbit_gastation_goNaiv:
                 intent.setClass(getActivity(), NaviViewActivity.class);
@@ -375,9 +386,9 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     }
 
     // TODO: 2016/6/5  到付款页面
-    private void goPlayPage() {
+    private void goPlayPage(OrderBean order) {
         Intent intent = new Intent(getActivity(), PayActivity.class);
-        intent.putExtra("orderId",orderBean.getId());
+        intent.putExtra("orderId",order.getId());
         getActivity().startActivity(intent);
     }
 

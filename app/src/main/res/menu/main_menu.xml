@@ -24,12 +24,12 @@
         android:orderInCategory="100"
         app:showAsAction="never"/>
 
-    <item
-        android:id="@+id/action_unregister"
-        android:title="注销"
-        android:background="@color/color_carView_mainMesage"
-        android:orderInCategory="100"
-        app:showAsAction="never"/>
+    <!--<item-->
+        <!--android:id="@+id/action_unregister"-->
+        <!--android:title="注销"-->
+        <!--android:background="@color/color_carView_mainMesage"-->
+        <!--android:orderInCategory="100"-->
+        <!--app:showAsAction="never"/>-->
 
     <item
         android:id="@+id/action_settings"

@@ -66,7 +66,7 @@ import java.util.List;
  */
 public class NaviViewFragment extends BaseFragment implements View.OnClickListener,
         LocationSource, AMapLocationListener, PoiSearch.OnPoiSearchListener,
-        TextWatcher, AMap.OnMarkerClickListener, AMap.InfoWindowAdapter{
+        TextWatcher, AMap.OnMarkerClickListener, AMap.InfoWindowAdapter, AMap.OnMapLongClickListener {
 
 
     private TextView searchBtn;       //搜索按钮
@@ -180,6 +180,8 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
         searchBtn.setOnClickListener(this);
         goHere.setOnClickListener(this);
         formHere.setOnClickListener(this);
+
+        mAMap.setOnMapLongClickListener(this);
 
         mAMap.setMyLocationType(AMap.LOCATION_TYPE_MAP_ROTATE);
     }
@@ -530,6 +532,14 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mMapView.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onMapLongClick(LatLng latLng) {
+        mEndLat = latLng.latitude;
+        mEndLon = latLng.longitude;
+        mAMap.clear();
+        mAMap.addMarker(new MarkerOptions().anchor(0.5f, 1).position(latLng).draggable(true));
     }
 
 //

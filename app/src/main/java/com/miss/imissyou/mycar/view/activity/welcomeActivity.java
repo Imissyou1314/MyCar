@@ -10,6 +10,8 @@ import android.view.WindowManager;
 import com.miss.imissyou.mycar.MainActivity;
 import com.miss.imissyou.mycar.R;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * 应用进入的首页
  * Created by Imissyou on 2016/6/14.
@@ -45,5 +47,17 @@ public class WelcomeActivity extends BaseActivity{
     @Override
     public void addListeners() {
 
+    }
+
+    @Override
+    protected void onPause() {
+        JPushInterface.onPause(this);
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        JPushInterface.onResume(this);
+        super.onResume();
     }
 }

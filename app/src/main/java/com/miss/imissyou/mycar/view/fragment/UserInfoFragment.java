@@ -26,9 +26,9 @@ import com.miss.imissyou.mycar.ui.RoundImageView;
 import com.miss.imissyou.mycar.util.BlurTransformation;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
-import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.view.UserInfoView;
 import com.miss.imissyou.mycar.view.activity.CarAndSaftActivity;
+import com.miss.imissyou.mycar.view.activity.CutImageActvity;
 import com.miss.imissyou.mycar.view.activity.LoginActivity;
 import com.miss.imissyou.mycar.view.activity.UserBaseActivity;
 
@@ -44,10 +44,11 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
     private LinearText userSaftCarInfo;             //用户车辆安全信息
     private Intent intent;                              //启动
     public final static int REQUEST_PHOTO = 2;          //页面photo
-    private String photo_path ="";                      //图片地址
+    private String photo_path = "";                      //图片地址
     private CharSequence safePasswordInput;             //用户输入的安全码
 
     private UserInfoPresenter mUserInfoPresenter;
+    public static final int CUT_IMAGE_PAGE = 3;
 
     @Nullable
     @Override
@@ -74,7 +75,8 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
         }
     }
 
-    @Override protected void initView(View view) {
+    @Override
+    protected void initView(View view) {
         mUserInfoPresenter = new UserInfoPresenterImpl(this);
 
         userHeadBackground = (ImageView) view.findViewById(R.id.user_info_userhendImage);
@@ -89,14 +91,14 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
         userBaseLinear.setTitle("基本信息").setTitleSize(16).setMessage("");
         userSaftCarInfo.setTitle("车辆与安全").setTitleSize(16).setMessage("");
 
-        LogUtils.w("图片地址：" + Constant.SERVER_URL +  Constant.userBean.getUserImg());
+        LogUtils.w("图片地址：" + Constant.SERVER_URL + Constant.userBean.getUserImg());
 
         if (null != Constant.userBean && null != Constant.userBean.getUserImg()) {
 
             Glide.with(this).load(Constant.SERVER_URL + Constant.userBean.getUserImg())
                     .transform(new BlurTransformation(getActivity(), 5.0f))
                     .into(userHeadBackground);
-            LogUtils.w("图片地址：" + Constant.SERVER_URL +  Constant.userBean.getUserImg());
+            LogUtils.w("图片地址：" + Constant.SERVER_URL + Constant.userBean.getUserImg());
             Glide.with(this).load(Constant.SERVER_URL + Constant.userBean.getUserImg()).into(userHeadRound);
         } else {
             LogUtils.w("用户没有图片");
@@ -138,14 +140,23 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
                     if (cursor.moveToFirst()) {
                         photo_path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
                         LogUtils.w("图片地址:" + photo_path);
-                        // TODO: 2016/6/11 图片上传
-                        if (!photo_path.equals("")) {
-                            mUserInfoPresenter.updataUserImage(photo_path);
-                        } else {
-                            Toast.makeText(getActivity(), "无法解析图片地址", Toast.LENGTH_SHORT).show();
-                        }
+                        Bundle bundle = new Bundle();
+                        bundle.putString("path",photo_path);
+                        startActivityForResult(new Intent(getActivity(), CutImageActvity.class).putExtra("path",photo_path),
+                                CUT_IMAGE_PAGE, bundle);
                     }
                     cursor.close();
+                    break;
+                case CUT_IMAGE_PAGE:
+                    // TODO: 2016/6/11 图片上传
+                    LogUtils.d("准备上传图片》》》》》》》》》》》》》》》》》》》》》》》》》");
+                    String path = data.getStringExtra("path");
+                    if (!path.equals("")) {
+                        mUserInfoPresenter.updataUserImage(path);
+                    } else {
+                        Toast.makeText(getActivity(), "无法解析图片地址", Toast.LENGTH_SHORT).show();
+                    }
+
                     break;
             }
         }
@@ -153,16 +164,21 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void onUpdateSuccess(String resultMessage) {
-        Toast.makeText(getActivity(), resultMessage.equals("")?"更新成功":resultMessage,
+        Toast.makeText(getActivity(), resultMessage.equals("") ? "更新成功" : resultMessage,
                 Toast.LENGTH_SHORT).show();
+
+        Glide.with(this).load(Constant.SERVER_URL + Constant.userBean.getUserImg())
+                .transform(new BlurTransformation(getActivity(), 5.0f))
+                .into(userHeadBackground);
+        LogUtils.w("图片地址：" + Constant.SERVER_URL + Constant.userBean.getUserImg());
+        Glide.with(this).load(Constant.SERVER_URL + Constant.userBean.getUserImg()).into(userHeadRound);
     }
 
 
     @Override
     public void showResultError(int errorNo, String errorMag) {
         LogUtils.w("错误信息:" + errorMag + "错误码:" + errorNo);
-
-        ToastUtil.asLong(errorMag);
+        Toast.makeText(getActivity(), errorMag, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -191,10 +207,10 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
      */
     private void toBasePage() {
         LogUtils.d("用户信息" + GsonUtils.Instance().toJson(Constant.userBean));
-        if (null == Constant.userBean  && null == Constant.userBean.getId()) {
+        if (null == Constant.userBean && null == Constant.userBean.getId()) {
             intent.setClass(getActivity(), LoginActivity.class);
-        }  else {
-            intent.setClass(getActivity(),UserBaseActivity.class);
+        } else {
+            intent.setClass(getActivity(), UserBaseActivity.class);
         }
         startActivity(intent);
     }
@@ -209,8 +225,8 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
         safePassword.setTextSize(20);
         safePassword.setTextColor(R.color.color_back);
         new MaterialDialog.Builder(getActivity()).title("请输入安全码").content("车辆安全码")
-                .inputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD|InputType.TYPE_CLASS_TEXT)
-                .input("请输入安全码","", new MaterialDialog.InputCallback() {
+                .inputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT)
+                .input("请输入安全码", "", new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
                         dialog.dismiss();
@@ -232,6 +248,4 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
         Intent wrapperIntent = Intent.createChooser(innerIntent, "选择二维码图片");
         this.startActivityForResult(wrapperIntent, REQUEST_PHOTO);
     }
-
-
 }

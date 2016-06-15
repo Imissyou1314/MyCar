@@ -1,12 +1,12 @@
 package com.miss.imissyou.mycar.util;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
 import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 import android.widget.Toast;
 import com.lidroid.xutils.util.LogUtils;
 
@@ -30,7 +30,7 @@ import cn.jpush.android.api.JPushInterface;
  * 获取系统Context
  * Created by Imissyou on 2016/3/23.
  */
-public class MissApplication extends Application implements Thread.UncaughtExceptionHandler{
+public class MissApplication extends MultiDexApplication implements Thread.UncaughtExceptionHandler{
 
     private static MissApplication INSTANCE;
     private static Context context;
@@ -56,7 +56,6 @@ public class MissApplication extends Application implements Thread.UncaughtExcep
         setContext(mContext);
        // Thread.setDefaultUncaughtExceptionHandler(this);
     }
-
 
     @Override
     protected void attachBaseContext(Context base) {

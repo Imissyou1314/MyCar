@@ -140,7 +140,6 @@ public class StringUtil {
         view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
 
         view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
-        view.setDrawingCacheEnabled(true);
         view.buildDrawingCache();
         Bitmap bitmap = view.getDrawingCache();
 

@@ -77,7 +77,7 @@ import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
 
 public class MainActivity extends ActionBarActivity
-        implements ViewAnimator.ViewAnimatorListener ,BackHandledInterface{
+        implements ViewAnimator.ViewAnimatorListener, BackHandledInterface {
     /**
      * 布局
      */
@@ -91,6 +91,8 @@ public class MainActivity extends ActionBarActivity
 
     private Intent intent;
 
+    private String Tag = "";
+
     /**
      * 导航栏的Item fragment
      */
@@ -99,9 +101,9 @@ public class MainActivity extends ActionBarActivity
     private MusicFragment musicFragment;
     private WZCXFragment weiZhanChaXunFragment;
     private UserInfoFragment userInfoFragment;
-//    private LocationMapFragment locationMapFragment;
+    //    private LocationMapFragment locationMapFragment;
     private OrderFragment orderFragment;
-//    private GasStationFragment gasStationFragment;
+    //    private GasStationFragment gasStationFragment;
     private NaviViewFragment naviViewFragment;
     private CarInfoFragment carInfoFragment;
     private FirstAddCarFragment firstAddCarFragment;
@@ -295,6 +297,7 @@ public class MainActivity extends ActionBarActivity
 
     /**
      * JPushInterface绑定别名
+     *
      * @param id
      */
     private void setAlias(Long id) {
@@ -348,10 +351,10 @@ public class MainActivity extends ActionBarActivity
         list.add(menuItem5);
         SlideMenuItem menuItem8 = new SlideMenuItem(ContentFragment.PARK, R.mipmap.ic_park_icon);
         list.add(menuItem8);
+        SlideMenuItem menuItem10 = new SlideMenuItem(ContentFragment.FIX, R.mipmap.ic_car_fix_icon);
+        list.add(menuItem10);
         SlideMenuItem menuItem9 = new SlideMenuItem(ContentFragment.MUSIC, R.mipmap.ic_music_icon);
         list.add(menuItem9);
-//        SlideMenuItem menuItem10 = new SlideMenuItem(ContentFragment.MAP, R.drawable.ic_action_name);
-//        list.add(menuItem10);
         SlideMenuItem menuItem11 = new SlideMenuItem(ContentFragment.NAVIGATION, R.mipmap.ic_guide_icon);
         list.add(menuItem11);
     }
@@ -400,30 +403,19 @@ public class MainActivity extends ActionBarActivity
     private void setUpView() {
 
         contentFragment = ContentFragment.newInstance(R.mipmap.content_music);
-        //homeFragment = new HomeFragment();
         carListFragement = new CarListFragment();
         musicFragment = new MusicFragment();
         weiZhanChaXunFragment = new WZCXFragment();
         userInfoFragment = new UserInfoFragment();
-//        locationMapFragment = new LocationMapFragment();
         orderFragment = new OrderFragment();
         naviViewFragment = new NaviViewFragment();
         stationMapViewFrament = new StationMapViewFragment();
 
-//        gasStationFragment = new GasStationFragment();
         carInfoFragment = new CarInfoFragment();
         firstAddCarFragment = new FirstAddCarFragment();
         //编写自己的布
 
         startMainFragment();
-//        if (null != Constant.carBean && null != Constant.carBean.getId()) {
-//
-//        } else {
-//            LogUtils.d("启动第一次添加车辆页面");
-//            getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.content_overlay, firstAddCarFragment)
-//                    .commit();
-//        }
     }
 
     /**
@@ -474,17 +466,30 @@ public class MainActivity extends ActionBarActivity
                 return replaceFragment(carListFragement, position, Constant.CarListFragment);
             case ContentFragment.OIL:
                 //加油菜单项
+
                 Bundle bundle = new Bundle();
-                bundle.putString("type",Constant.MAP_GASSTATION);
+                bundle.putString("type", Constant.MAP_GASSTATION);
                 if (stationMapViewFrament.getArguments() == null) {
                     stationMapViewFrament.setArguments(bundle);
+
+                } else {
+                    stationMapViewFrament.onDestroy();
+                    stationMapViewFrament = null;
+                    stationMapViewFrament = new StationMapViewFragment();
+                    stationMapViewFrament.setArguments(bundle);
+                    LogUtils.d("不做操作");
                 }
-                LogUtils.d("position :" + position);
                 return replaceFragment(stationMapViewFrament, position, Constant.StationMapViewFragment);
+
             case ContentFragment.PARK:          //Todo 添加停车场
                 Bundle bundlePark = new Bundle();
-                bundlePark.putString("type",Constant.MAP_PARK);
+                bundlePark.putString("type", Constant.MAP_PARK);
                 if (stationMapViewFrament.getArguments() == null) {
+                    stationMapViewFrament.setArguments(bundlePark);
+                } else {
+                    stationMapViewFrament.onDestroy();
+                    stationMapViewFrament = null;
+                    stationMapViewFrament = new StationMapViewFragment();
                     stationMapViewFrament.setArguments(bundlePark);
                 }
                 LogUtils.d("position :" + position);
@@ -496,13 +501,21 @@ public class MainActivity extends ActionBarActivity
             case ContentFragment.HOME:
                 startMainFragment();
                 return screenShotable;
-                //return replaceFragment(carInfoFragment, position, Constant.CarInfoFragment);
-//            case ContentFragment.USER:
-//                return replaceFragment(userInfoFragment, position, Constant.UserInfoFragment);
+            case ContentFragment.FIX:
+                Bundle bundlefix = new Bundle();
+                bundlefix.putString("type", Constant.MAP_MAINTAIN);
+                if (stationMapViewFrament.getArguments() == null) {
+                    stationMapViewFrament.setArguments(bundlefix);
+                } else {
+                    stationMapViewFrament.onDestroy();
+                    stationMapViewFrament = null;
+                    stationMapViewFrament = new StationMapViewFragment();
+                    stationMapViewFrament.setArguments(bundlefix);
+                }
+                LogUtils.d("position :" + position);
+                return replaceFragment(stationMapViewFrament, position, Constant.StationMapViewFragment);
             case ContentFragment.MUSIC:
                 return replaceFragment(musicFragment, position, Constant.MusicFragment);
-//            case ContentFragment.MAP:
-//                return replaceFragment(locationMapFragment, position, Constant.LocationMapFragment);
             case ContentFragment.NAVIGATION:
                 return replaceFragment(naviViewFragment, position, Constant.NaviViewFragment);
             default:
@@ -598,14 +611,14 @@ public class MainActivity extends ActionBarActivity
                 return true;
             case R.id.action_userinfo:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame,userInfoFragment)
+                        .replace(R.id.content_frame, userInfoFragment)
                         .commit();
                 return true;
-            case R.id.action_unregister:
-                unRegister();
-                intent.setClass(this, LoginActivity.class);
-                startActivity(intent);
-                return true;
+//            case R.id.action_unregister:
+//                unRegister();
+//                intent.setClass(this, LoginActivity.class);
+//                startActivity(intent);
+//                return true;
             case R.id.action_about:
                 intent.setClass(this, AboutActivity.class);
                 startActivity(intent);
@@ -618,7 +631,6 @@ public class MainActivity extends ActionBarActivity
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
 
     @Override
@@ -636,7 +648,7 @@ public class MainActivity extends ActionBarActivity
     @Override
     protected void onDestroy() {
         try {
-           unregisterReceiver(myBroad);
+            unregisterReceiver(myBroad);
         } catch (Exception e) {
             LogUtils.d("该广播没有注册");
         }
@@ -649,24 +661,24 @@ public class MainActivity extends ActionBarActivity
 //        if (mBaseFragment == null || !mBaseFragment.onBackPressed()){
 //            if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
 //                //双击退出
-                if (!isQuit) {
-                    isQuit = true;
-                    Toast.makeText(getBaseContext(),
-                            "再按一次返回键退出程序", Toast.LENGTH_SHORT).show();
-                    TimerTask task = null;
-                    task = new TimerTask() {
-                        @Override
-                        public void run() {
-                            isQuit = false;
-                        }
-                    };
-                    timer.schedule(task, 2000);
-                } else {
-                    finish();
-                    System.exit(0);
-                    android.os.Process.killProcess(android.os.Process.myPid());
+        if (!isQuit) {
+            isQuit = true;
+            Toast.makeText(getBaseContext(),
+                    "再按一次返回键退出程序", Toast.LENGTH_SHORT).show();
+            TimerTask task = null;
+            task = new TimerTask() {
+                @Override
+                public void run() {
+                    isQuit = false;
                 }
-            }
+            };
+            timer.schedule(task, 2000);
+        } else {
+            finish();
+            System.exit(0);
+            android.os.Process.killProcess(android.os.Process.myPid());
+        }
+    }
 //    else {
 //                super.onBackPressed();
 //                //退栈
@@ -678,17 +690,18 @@ public class MainActivity extends ActionBarActivity
 //        }
 //    }
 
-    /**
-     * 注销登录
-     */
-    private void unRegister() {
-        SPUtils.init(this);
-        SPUtils.ClearAllData();
-        Constant.userBean = null;
-        Constant.carBean = null;
-    }
+//    /**
+//     * 注销登录
+//     */
+//    private void unRegister() {
+//        SPUtils.init(this);
+//        SPUtils.ClearAllData();
+//        Constant.userBean = null;
+//        Constant.carBean = null;
+//    }
 
-    @Override public void setSelectedFragment(BaseFragment selectedFragment) {
+    @Override
+    public void setSelectedFragment(BaseFragment selectedFragment) {
         this.mBaseFragment = selectedFragment;
     }
 
@@ -697,7 +710,7 @@ public class MainActivity extends ActionBarActivity
      */
     private void startMusic() {
         SPUtils.init(this);
-        Boolean musicState = SPUtils.getSp_set().getBoolean(Constant.MESSAGEMUSIC,true);            //默认开机自启
+        Boolean musicState = SPUtils.getSp_set().getBoolean(Constant.MESSAGEMUSIC, true);            //默认开机自启
         if (musicState) {
             FindSongs songs = new FindSongs();
 
@@ -727,7 +740,7 @@ public class MainActivity extends ActionBarActivity
      * 退出关掉音乐
      */
     private void stopMusic() {
-        palyMusic(Constant.MUSIC_BUTTON_PAUSE,mPosition);
+        palyMusic(Constant.MUSIC_BUTTON_PAUSE, mPosition);
     }
 
     private void palyMusic(int type, int mPosition) {

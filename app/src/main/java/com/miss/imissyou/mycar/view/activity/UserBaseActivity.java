@@ -4,14 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.TextView;
 
 import com.lidroid.xutils.util.LogUtils;
+import com.miss.imissyou.mycar.MainActivity;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.UserBean;
 import com.miss.imissyou.mycar.ui.LinearText;
 import com.miss.imissyou.mycar.ui.TitleFragment;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.FindViewById;
+import com.miss.imissyou.mycar.util.SPUtils;
 
 import static com.miss.imissyou.mycar.R.id.userBase_info_relatedPhone;
 import static com.miss.imissyou.mycar.R.id.userBase_info_userRealeName;
@@ -40,6 +43,8 @@ public class UserBaseActivity extends BaseActivity implements View.OnClickListen
     private LinearText sentSaftPassword;    //设置安全码
     @FindViewById(id = R.id.userBase_info_changePassword)
     private LinearText changePassword;      //修改密码
+    @FindViewById(id = R.id.userBase_info_unregister)
+    private TextView nuregister;               //注销
 
     /**
      * 用户实体
@@ -84,6 +89,7 @@ public class UserBaseActivity extends BaseActivity implements View.OnClickListen
         relatedPhoneText.setOnClickListener(this);
         sentSaftPassword.setOnClickListener(this);
         changePassword.setOnClickListener(this);
+        nuregister.setOnClickListener(this);
     }
 
     @Override
@@ -107,6 +113,10 @@ public class UserBaseActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.userBase_info_changePassword:
                 changeUserPassword(ACCOUNT_PASSWOED);
+                break;
+            case R.id.userBase_info_unregister:
+                unRegister();
+                startActivity(new Intent(UserBaseActivity.this, LoginActivity.class));
                 break;
         }
     }
@@ -186,5 +196,15 @@ public class UserBaseActivity extends BaseActivity implements View.OnClickListen
         sentSaftPassword.setTitle("设置安全密码")
                 .setMessage(null != userBean.getSafePassword() ? "已设置" : "未设置");
         changePassword.setTitle("修改账户密码").setMessage("");
+    }
+
+    /**
+     * 注销登录
+     */
+    private void unRegister() {
+        SPUtils.init(this);
+        SPUtils.ClearAllData();
+        Constant.userBean = null;
+        Constant.carBean = null;
     }
 }

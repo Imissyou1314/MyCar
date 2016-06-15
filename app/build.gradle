@@ -11,24 +11,23 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
-
+        //高斯模糊
         renderscriptTargetApi 19
         renderscriptSupportModeEnabled true
-
         multiDexEnabled true
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+            assets.srcDirs = ['src/main/assets', 'src/main/assets/']
+        }
     }
 
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    sourceSets {
-        main {
-            assets.srcDirs = ['src/main/assets', 'src/main/assets/']
-            jniLibs.srcDirs = ['libs']
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), ' -rules.pro'
         }
     }
 
@@ -41,10 +40,10 @@ repositories {
     maven {
         url "https://jitpack.io"
     }
+    mavenCentral()
 }
 
 dependencies {
-    compile files('libs/xUtils-2.6.14.jar')
     compile('com.github.ozodrukh:CircularReveal:1.3.1@aar') {
         transitive = true;
     }
@@ -54,8 +53,6 @@ dependencies {
     compile 'com.kymjs.rxvolley:okhttp:1.0.9'
     compile 'com.kymjs.rxvolley:bitmapcore:1.0.9'
     compile 'com.android.support:support-v4:23.2.1'
-    //    compile files('libs/core.jar')
-    //Dialog  https://github.com/afollestad/material-dialogs#proguard
     compile('com.github.afollestad.material-dialogs:core:0.8.5.8@aar') {
         transitive = true
     }
@@ -63,27 +60,31 @@ dependencies {
     compile 'com.facebook.rebound:rebound:0.3.8'
     compile 'com.tumblr:backboard:0.1.0'
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
-    compile files('libs/gson-2.2.4.jar')
-    compile files('libs/weizhang_sdk.jar')
     //FAB Button
     compile 'com.github.shell-software:fab:1.1.2'
-    compile files('libs/jpush-android-2.1.3.jar')
-    compile files('libs/nineoldandroids-2.4.0.jar')
     //加载图片的Glide
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    //定位搜索导航
-    compile files('libs/Msc.jar')
-    compile files('libs/jaudiotagger-2.0.4.jar')
-    compile files('libs/AMap3DMap_3.3.2_AMapNavi_1.8.0_AMapSearch_3.2.1_AMapLocation_2.4.1_20160524.jar')
     //二维码扫描
     compile 'com.dlazaro66.qrcodereaderview:qrcodereaderview:1.0.0'
-    //compile files('libs/zxing.jar')
     //Material Design
     compile 'com.github.rey5137:material:1.2.4'
     compile 'org.jetbrains:annotations-java5:15.0'
-    //    compile 'com.google.android:multidex:0.1'
-    //    compile files('libs/core.jar')
-    compile files('libs/libammsdk.jar')
-    compile files('libs/alipaySdk-20160223.jar')
-    compile files('libs/libpingpp-2.1.3.jar')
+
+    compile 'com.android.support:multidex:1.0.1'
+
+    compile files('src/main/jniLibs/gson-2.2.4.jar')
+    //定位搜索导航
+    compile files('src/main/jniLibs/AMap3DMap_3.3.2_AMapNavi_1.8.0_AMapSearch_3.2.1_AMapLocation_2.4.1_20160524.jar')
+    compile files('src/main/jniLibs/alipaySdk-20160223.jar')
+    compile files('src/main/jniLibs/jaudiotagger-2.0.4.jar')
+    compile files('src/main/jniLibs/libpingpp-2.1.3.jar')
+    compile files('src/main/jniLibs/Msc.jar')
+    compile files('src/main/jniLibs/libammsdk.jar')
+    compile files('src/main/jniLibs/jpush-android-2.1.3.jar')
+    compile files('src/main/jniLibs/nineoldandroids-2.4.0.jar')
+    compile files('src/main/jniLibs/weizhang_sdk.jar')
+    compile files('src/main/jniLibs/xUtils-2.6.14.jar')
+
+    //自由裁剪
+    compile 'com.edmodo:cropper:1.0.1'
 }

@@ -3,6 +3,7 @@ package com.miss.imissyou.mycar.view.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.lidroid.xutils.util.LogUtils;
@@ -37,6 +38,13 @@ public class CarAndSaftActivity extends BaseActivity implements CarInfoView, Vie
     @FindViewById(id = R.id.car_and_saft_LocationCar)
     private LinearText goLocation;
 
+    @FindViewById(id = R.id.car_and_saft_back)
+    private LinearLayout back;
+    @FindViewById(id = R.id.car_and_saft_frame)
+    private LinearLayout frame;
+
+
+
     private CarInfoPresenter mCarInfoPresenter;
     private CarInfoBean mCar;      //当前车辆信息
 
@@ -52,8 +60,10 @@ public class CarAndSaftActivity extends BaseActivity implements CarInfoView, Vie
         goLocation.setTitle("定位当前车辆").setTitleSize(14).setMessage("");
 
         if (null == Constant.carBean) {
+            back.setVisibility(View.GONE);
+            frame.setVisibility(View.VISIBLE);
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.car_and_saft_back,new FirstAddNewCarFragment())
+                    .replace(R.id.car_and_saft_frame,new FirstAddNewCarFragment())
                     .commit();
         } else {
             mCar = Constant.carBean;
@@ -130,13 +140,15 @@ public class CarAndSaftActivity extends BaseActivity implements CarInfoView, Vie
             LocationMapFragment location = new LocationMapFragment();
             //给fragment进行传经纬度值
             Bundle bundle = new Bundle();
-            bundle.putDouble(Constant.endLatitude,Constant.carBean.getLat());
-            bundle.putDouble(Constant.endLongitude, Constant.carBean.getLon());
+            bundle.putDouble(Constant.startLatitude,Constant.carBean.getLat());
+            bundle.putDouble(Constant.startLongitude, Constant.carBean.getLon());
             location.setArguments(bundle);
 
+            back.setVisibility(View.GONE);
+            frame.setVisibility(View.VISIBLE);
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.car_and_saft_back,new LocationMapFragment())
+                    .replace(R.id.car_and_saft_frame,new LocationMapFragment())
                     .commit();
         }
 

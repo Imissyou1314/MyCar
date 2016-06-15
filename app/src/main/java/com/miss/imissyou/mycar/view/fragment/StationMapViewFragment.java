@@ -3,11 +3,11 @@ package com.miss.imissyou.mycar.view.fragment;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,9 +28,6 @@ import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
-import com.amap.api.services.core.PoiItem;
-import com.amap.api.services.core.SuggestionCity;
-import com.bumptech.glide.Glide;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.GasStationBean;
@@ -42,12 +39,9 @@ import com.miss.imissyou.mycar.presenter.impl.NaviViewPresenterImpl;
 import com.miss.imissyou.mycar.ui.MissDialog;
 import com.miss.imissyou.mycar.ui.RoundImageView;
 import com.miss.imissyou.mycar.util.Constant;
-import com.miss.imissyou.mycar.util.DialogUtils;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.util.JZLocationConverter;
 import com.miss.imissyou.mycar.util.MapChangeUtils;
-import com.miss.imissyou.mycar.util.StringUtil;
-import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.view.NaviVieFragmentView;
 import com.miss.imissyou.mycar.view.activity.NaviViewActivity;
 
@@ -62,8 +56,8 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
 
 
 
-    private Button formHere;       //从这里来
-    private Button goHere;          //到这里去
+//    private Button formHere;       //从这里来
+//    private Button goHere;          //到这里去
 
     // 起点终点的经纬度
     private double mStartLat;
@@ -110,8 +104,8 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
     protected void initView(View view) {
         mMapView = (MapView) view.findViewById(R.id.station_navi_mapView);
         shouList = (Button) view.findViewById(R.id.station_show_list);
-        goHere = (Button) view.findViewById(R.id.station_navi_View_goButton);
-        formHere = (Button) view.findViewById(R.id.station_navi_View_BackButton);
+//        goHere = (Button) view.findViewById(R.id.station_navi_View_goButton);
+//        formHere = (Button) view.findViewById(R.id.station_navi_View_BackButton);
     }
 
     @Override
@@ -146,8 +140,8 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
         mAMap.setOnMarkerClickListener(this);
 
 
-        goHere.setOnClickListener(this);
-        formHere.setOnClickListener(this);
+//        goHere.setOnClickListener(this);
+//        formHere.setOnClickListener(this);
         shouList.setOnClickListener(this);
 
         mAMap.setMyLocationType(AMap.LOCATION_TYPE_MAP_ROTATE);
@@ -162,12 +156,12 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.station_navi_View_goButton:
-                toNaviMap(mStartLat, mStartLon, mEndLat, mEndLon);
-                break;
-            case R.id.station_navi_View_BackButton:
-                toNaviMap(mEndLat, mEndLon, mStartLat, mStartLon);
-                break;
+//            case R.id.station_navi_View_goButton:
+//                toNaviMap(mStartLat, mStartLon, mEndLat, mEndLon);
+//                break;
+//            case R.id.station_navi_View_BackButton:
+//                toNaviMap(mEndLat, mEndLon, mStartLat, mStartLon);
+//                break;
             case R.id.station_show_list:
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
@@ -393,8 +387,10 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
-        mMapView.onDestroy();
+        if (null != this) {
+            super.onDestroy();
+            mMapView.onDestroy();
+        }
     }
 
     @Override
@@ -456,11 +452,14 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
         for (GasStationBean station : gasStationBeens) {
 
             LatLng latLng = setLatlng(station);
+            View view = View.inflate(getActivity(), R.layout.marker_oil_icon, null);
             mAMap.addMarker(new MarkerOptions()
                     .anchor(0.5f, 1)
                     .position(latLng)
+                    .title(station.getName())
                     .snippet(station.getAddress())
-                    .title(station.getName())).setPeriod(i);
+                    .icon(BitmapDescriptorFactory.fromView(view)))
+                    .setPeriod(i);
             LogUtils.d("设置第几个" + i + "加油站信息:>>>" + station.getName());
             i ++;
         }
@@ -472,59 +471,78 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
      * @param stations 场地列表
      */
     private void showInPage(List<StopStation> stations) {
+        View view = View.inflate(getActivity(), R.layout.marker_icon, null);
+        if (null != stations) {
 
-        if (null == stations) {
             if (tag == Constant.MAP_PARK) {
-                Toast.makeText(getActivity(), "附近没有停车场", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "附近停车场数量:" + stations.size(), Toast.LENGTH_SHORT).show();
             } else{
-                Toast.makeText(getActivity(), "附近没有维修站", Toast.LENGTH_SHORT).show();
+                view = View.inflate(getActivity(), R.layout.marker_fix_icon, null);
+                Toast.makeText(getActivity(), "附近维修站数量:" + stations.size(), Toast.LENGTH_SHORT).show();
             }
             LogUtils.e("获取数据为空");
         }
 
         LogUtils.d("订单列表:" + GsonUtils.Instance().toJson(stations));
         int i = 0;
-        mAMap.clear();
+//        mAMap.clear();
+//        View view = View.inflate(getActivity(), R.layout.marker_icon, null);
+//        RoundImageView roundView = (RoundImageView) view.findViewById(R.id.marker_round_icon);
         for (StopStation station : stations) {
-            Bitmap markIcon = getBtimap(station.getImg());
-
             if (null != station.getLat() && null != station.getLon() && null != station.getName()) {
                 LatLng latLng = new LatLng(station.getLat(), station.getLon());
-
+                LogUtils.d("请求图片地址:" + Constant.SERVER_URL + station.getImg());
+//                Glide.with(this).load(Constant.SERVER_URL + station.getImg()).into(roundView).onStart();
                 mAMap.addMarker(new MarkerOptions()
                         .anchor(0.5f, 1)
                         .position(latLng)
                         .title(station.getName())
                         .snippet(station.getIntroduce())
-                        .icon(BitmapDescriptorFactory.fromBitmap(markIcon))).setPeriod(i);
+                        .icon(BitmapDescriptorFactory.fromView(view))).setPeriod(i);
+//                mAMap.addMarker(new MarkerOptions()
+//                        .anchor(0.5f, 1)
+//                        .position(latLng)
+//                        .title(station.getName())
+//                        .snippet(station.getIntroduce())
+//                        .icon(BitmapDescriptorFactory.fromView(view))).setPeriod(i);
 
                 LogUtils.d("设置第几个" + i + "场地信息:>>>" + station.getName());
                 i ++;
             } else {
                 LogUtils.d("错误信息经纬度为空");
             }
-
         }
     }
 
-    /**
-     * 获取封装后的图片
-     *
-     * @param urlStr 图片地址
-     * @return
-     */
-    private Bitmap getBtimap(String urlStr) {
-        View view = View.inflate(getActivity(), R.layout.marker_icon, null);
-        RoundImageView roundView = (RoundImageView) view.findViewById(R.id.marker_round_icon);
-        String url = Constant.SERVER_URL + urlStr;
-        LogUtils.d("请求图片地址:" + url);
-        Glide.with(this).load(url).into(roundView);
-        Bitmap bitmap = StringUtil.getBitmapFromView(roundView);
-        //TODO添加默认图片
-        if (null != bitmap)
-            LogUtils.d("获取到图片了");
-        return null != bitmap ? bitmap : null;
-    }
+//    /**
+//     * 获取封装后的图片
+//     *
+//     * @param urlStr 图片地址
+//     * @return
+//     */
+//    private Bitmap getBtimap(String urlStr) {
+//        View view = View.inflate(getActivity(), R.layout.marker_icon, null);
+//        RoundImageView roundView = (RoundImageView) view.findViewById(R.id.marker_round_icon);
+//        String url = Constant.SERVER_URL + urlStr;
+//        LogUtils.d("请求图片地址:" + url);
+//        Glide.with(this).load(url).into(roundView);
+//        Bitmap bitmap = StringUtil.convertViewToBitmap(roundView);
+//        //TODO添加默认图片
+//        if (null != bitmap)
+//            LogUtils.d("获取到图片了");
+//        return null != bitmap ? bitmap : null;
+//    }
+
+//    public Bitmap getBitmap() {
+//        Resources res = getActivity().getResources();
+//        Bitmap bitmap = null;
+//        if(tag == Constant.MAP_PARK) {
+//            bitmap = android.graphics.BitmapFactory.decodeResource(res, R.mipmap.ic_map_park_icon);
+//        } else if (Constant.MAP_MAINTAIN == tag) {
+//            bitmap = android.graphics.BitmapFactory.decodeResource(res, R.mipmap.ic_map_fix_icon);
+//        }
+//        return bitmap;
+//    }
 
     /**
      * 到加油站去

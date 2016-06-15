@@ -52,7 +52,7 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
     private String ordersId = "";
 
     private static final int REQUEST_CODE_PAYMENT = 1;
-    private static final String url = Constant.SERVER_URL + "order/pay";   //TODO 等待接口
+    private static final String url = Constant.SERVER_URL + "order/payOrder";   //TODO 等待接口
 
     /**
      * 微信支付渠道
@@ -114,23 +114,23 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
     /**
      * 调用Ping++ 的SDK
      */
-    public void onDataReturn(String taskTag, BaseResult result, String json) {
-        if(null==json){
-            Toast.makeText(this, "支付失败...", Toast.LENGTH_LONG).show();
-            showMsg("请求出错", "请检查URL", "URL无法获取charge");
-            return;
-        }
-        /**
-         * 获得服务端的charge ==>json，调用ping++ sdk。
-         */
-        int start = json.indexOf("charge");
-        String charge =(String) json.subSequence(start + 8, json.length() -2);
-        Log.v("test===>", charge);
-
-        Intent intent = new Intent(this, PaymentActivity.class);
-        intent.putExtra(PaymentActivity.EXTRA_CHARGE, charge);
-        startActivityForResult(intent, REQUEST_CODE_PAYMENT);
-    }
+//    public void onDataReturn(String taskTag, BaseResult result, String json) {
+//        if(null==json){
+//            Toast.makeText(this, "支付失败...", Toast.LENGTH_LONG).show();
+//            showMsg("请求出错", "请检查URL", "URL无法获取charge");
+//            return;
+//        }
+//        /**
+//         * 获得服务端的charge ==>json，调用ping++ sdk。
+//         */
+//        int start = json.indexOf("charge");
+//        String charge =(String) json.subSequence(start + 8, json.length() -2);
+//        Log.v("test===>", charge);
+//
+//        Intent intent = new Intent(this, PaymentActivity.class);
+//        intent.putExtra(PaymentActivity.EXTRA_CHARGE, charge);
+//        startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+//    }
 
     HttpCallback callback = new HttpCallback() {
         @Override

@@ -12,6 +12,8 @@ import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.util.StringUtil;
 
+import java.io.File;
+
 /**
  *
  * 获取用户数据
@@ -68,11 +70,14 @@ public class UserInfoModelImpl implements UserInfoModel{
         LogUtils.d("请求路径" + url);
 
         HttpParams params = new HttpParams();
+
         if (Constant.userBean == null || null == Constant.userBean.getId()) {
             return;
         }
-        params.put("id",Constant.userBean.getId() + "");
 
+        LogUtils.d("上传图片地址:" + ImagePath);
+        params.put("id",Constant.userBean.getId() + "");
+        params.put("userfile", new File(ImagePath));
         HttpCallback callback = new HttpCallback() {
             @Override public void onFailure(int errorNo, String strMsg) {
                 mUserInfoPresenter.onFailure(errorNo, strMsg);

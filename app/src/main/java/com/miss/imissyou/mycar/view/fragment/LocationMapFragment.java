@@ -19,11 +19,13 @@ import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MarkerOptions;
+import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.OilBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.bean.ServiceStation;
 import com.miss.imissyou.mycar.bean.StopStation;
+import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.view.LocationView;
 
@@ -44,6 +46,8 @@ public class LocationMapFragment extends BaseFragment implements LocationView, A
     private AMapLocationClient locationClient = null;
     private AMapLocationClientOption locationOption = null;
     private LatLng locLatlng;
+    private Double lat;
+    private Double lon;
 
     @Nullable
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,7 +63,7 @@ public class LocationMapFragment extends BaseFragment implements LocationView, A
         locationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
         // 设置定位监听
         locationClient.setLocationListener(this);
-        locationClient.startLocation();
+//        locationClient.startLocation();
     }
 
     @Override
@@ -72,6 +76,13 @@ public class LocationMapFragment extends BaseFragment implements LocationView, A
     }
 
     @Override protected void initData() {
+
+        if (null != getArguments()) {
+            lat = getArguments().getDouble(Constant.startLatitude);
+            lon = getArguments().getDouble(Constant.startLongitude);
+            LogUtils.d("经纬度:" + lat + ">>>" + lon);
+            addLocationMarker();
+        }
         if (null == aMap) {
             aMap = mapView.getMap();
         }
@@ -156,12 +167,13 @@ public class LocationMapFragment extends BaseFragment implements LocationView, A
         if (locLatlng != null) {
             aMap.clear();
         } else {
-            locLatlng = new LatLng(110.364977,21.274898);
+            locLatlng = new LatLng(lat,lon);
         }
 
+        View view = View.inflate(getActivity(), R.layout.marker_car_icon, null);
             aMap.addMarker(new MarkerOptions().position(locLatlng).icon(
                     BitmapDescriptorFactory
-                            .fromResource(R.mipmap.user_icon)));
+                            .fromView(view)));
             aMap.moveCamera(CameraUpdateFactory.newLatLng(locLatlng));
             aMap.moveCamera(CameraUpdateFactory.zoomTo(16));
     }

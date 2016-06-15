@@ -177,16 +177,18 @@ public class MusicFragment extends Fragment implements ScreenShotable {
                 if (isfirstTouch) {
                     palyMusic(Constant.MUSIC_PREVIOUS, mPosition);
                     isfirstTouch = false;
-                    changePlayIcon(!flag);
+                    changePlayIcon(true);
+                    flag = false;
                 } else {
                     Intent intent = new Intent(getActivity().getApplicationContext(), MusicPlayService.class);
                     intent.putExtra("flag", flag);    //false 停止播放
                     intent.putExtra("type", Constant.MUSIC_BUTTON_PAUSE);
                     getActivity().startService(intent);
+                    flag = !flag;
                     changePlayIcon(flag);
                 }
                 LogUtils.d("当前状态:" + flag);
-                flag = !flag;
+
             }
         });
         /** 点击Item 播放*/
@@ -194,8 +196,9 @@ public class MusicFragment extends Fragment implements ScreenShotable {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 palyMusic(Constant.MUSIC_CLICK_START, position);
-                flag = true;
-                changePlayIcon(flag);
+
+                changePlayIcon(true);
+                flag = false;
                 mPosition = position;
             }
         });
@@ -229,6 +232,7 @@ public class MusicFragment extends Fragment implements ScreenShotable {
         LogUtils.w("当前播放音乐:" + mPosition);
         LogUtils.w("总音乐数量:" + mMusics.size());
         mListView.setSelection(mPosition);
+        adapter.notifyDataSetChanged();
 
         Music music = mMusics.get(mPosition);
         Intent intent = new Intent(getActivity().getApplicationContext(), MusicPlayService.class);
