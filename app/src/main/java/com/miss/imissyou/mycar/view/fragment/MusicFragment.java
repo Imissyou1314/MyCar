@@ -184,9 +184,9 @@ public class MusicFragment extends Fragment implements ScreenShotable {
                     intent.putExtra("flag", flag);    //false 停止播放
                     intent.putExtra("type", Constant.MUSIC_BUTTON_PAUSE);
                     getActivity().startService(intent);
-                    flag = !flag;
                     changePlayIcon(flag);
                 }
+                flag = !flag;
                 LogUtils.d("当前状态:" + flag);
 
             }

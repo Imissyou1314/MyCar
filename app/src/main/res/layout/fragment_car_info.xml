@@ -44,7 +44,7 @@
                     android:src="@mipmap/bz" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:orientation="vertical">
@@ -75,8 +75,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:layout_weight="1"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
                         android:orientation="horizontal">
 
                         <TextView
@@ -85,12 +86,16 @@
                             android:layout_height="match_parent"
                             android:text="车牌号:  " />
 
-                        <TextView
+                        <EditText
                             android:id="@+id/carInfo_carplatName_input"
                             style="@style/car_info_input_text"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:enabled="false"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:text="未知" />
+
                     </LinearLayout>
                     <!--发动机号-->
                     <LinearLayout

@@ -63,7 +63,7 @@ public class LocationMapFragment extends BaseFragment implements LocationView, A
         locationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
         // 设置定位监听
         locationClient.setLocationListener(this);
-//        locationClient.startLocation();
+        locationClient.startLocation();
     }
 
     @Override

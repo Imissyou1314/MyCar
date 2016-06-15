@@ -1,6 +1,5 @@
 package com.miss.imissyou.mycar.presenter.impl;
 
-import com.google.gson.Gson;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.bean.BaseBean;
 import com.miss.imissyou.mycar.bean.CarInfoBean;
@@ -10,7 +9,6 @@ import com.miss.imissyou.mycar.model.impl.CarInfoModleImpl;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.view.CarInfoView;
-import com.miss.imissyou.mycar.view.MainView;
 import com.miss.imissyou.mycar.presenter.CarInfoPresenter;
 
 /**或者更新车辆状态
@@ -105,5 +103,10 @@ public class CarInfoPresenterImpl implements CarInfoPresenter {
     @Override
     public void getCurrentCar(Long userId) {
         mCarInfoModle.getUserCurrentCar(userId);
+    }
+
+    @Override
+    public void changeCarPlatNumber(CarInfoBean carInfoBean) {
+        mCarInfoModle.changeCarPlatNumber(carInfoBean);
     }
 }

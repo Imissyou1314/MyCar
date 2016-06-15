@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ import com.miss.imissyou.mycar.presenter.impl.CarInfoPresenterImpl;
 //import com.miss.imissyou.mycar.ui.circleProgress.CircleProgress;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.DialogUtils;
+import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.view.CarInfoView;
 
@@ -30,7 +32,7 @@ import com.miss.imissyou.mycar.view.CarInfoView;
  * Created by Imissyou on 2016/5/3.
  */
 public class CarInfoChangeStateFragment extends BaseFragment
-        implements CarInfoView, View.OnClickListener {
+        implements CarInfoView, View.OnClickListener, View.OnFocusChangeListener {
 
     //private CircleProgress progress;
 
@@ -44,7 +46,8 @@ public class CarInfoChangeStateFragment extends BaseFragment
     private TextView carVin;                       //车架号
     private TextView carRand;                      //车身等级
     private TextView carEngineNumber;             //车发动机号
-    private TextView carPlatNumber;               //车牌号
+    private EditText carPlatNumber;               //车牌号
+    private TextView carPlatNumBerBtn;              //输入车牌号的地方
 
     /**
      * 车辆信息
@@ -82,10 +85,11 @@ public class CarInfoChangeStateFragment extends BaseFragment
         /**车辆描述*/
         carImage = (ImageView) view.findViewById(R.id.car_info_change_carBrand_image);
         carBrand = (TextView) view.findViewById(R.id.car_info_change_carBrand_input);
-        carPlatNumber = (TextView) view.findViewById(R.id.car_info_change_carPlatNumber_input);
+        carPlatNumber = (EditText) view.findViewById(R.id.car_info_change_carPlatNumber_input);
         carEngineNumber = (TextView) view.findViewById(R.id.car_info_change_carEngineNumber_input);
         carRand = (TextView) view.findViewById(R.id.car_info_change_carRank_input);
         carVin = (TextView) view.findViewById(R.id.car_info_change_carVin_input);
+        carPlatNumBerBtn = (TextView) view.findViewById(R.id.car_info_carPlatName_input_btn);
 
         /**车辆信息*/
         carOil = (TextView) view.findViewById(R.id.car_info_change_carOil_input);
@@ -114,6 +118,8 @@ public class CarInfoChangeStateFragment extends BaseFragment
     }
 
     @Override protected void addViewsListener() {
+        carPlatNumBerBtn.setOnClickListener(this);
+        carPlatNumber.setOnFocusChangeListener(this);
         mCarInfoPresenter = new CarInfoPresenterImpl(this);
         changeStateBtn.setOnClickListener(this);
     }
@@ -166,6 +172,9 @@ public class CarInfoChangeStateFragment extends BaseFragment
             LogUtils.d("更改为当前车辆");
             mCarInfoPresenter.setCuurentCar(Constant.userBean.getId(), mCarId);
             setSumbitState(changeStateBtn, true); //防止提交两次
+        } else if (v.getId() == R.id.car_info_carPlatName_input_btn){
+            carPlatNumber.setFocusable(true);
+            carPlatNumber.setEnabled(true);
         }
 
     }
@@ -288,6 +297,23 @@ public class CarInfoChangeStateFragment extends BaseFragment
         if (state) {
             sumbit.setEnabled(false);
             sumbit.setBackgroundResource(R.color.color_gui);
+        }
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        LogUtils.d("状态改变");
+        if (!hasFocus) {
+            LogUtils.d("更改车牌号");
+            String nowPlathNumber = carPlatNumber.getText().toString();
+            if (null == nowPlathNumber && nowPlathNumber.equals(""))
+                return;
+            carBean.setPlateNumber(nowPlathNumber);
+            LogUtils.d("更新车牌号:" + GsonUtils.Instance().toJson(carBean));
+            mCarInfoPresenter.changeCarPlatNumber(carBean);
+            carPlatNumber.setEnabled(false);
+            carPlatNumber.setText(nowPlathNumber);
+
         }
     }
 

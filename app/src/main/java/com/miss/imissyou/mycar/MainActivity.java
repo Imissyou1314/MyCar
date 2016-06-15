@@ -50,6 +50,7 @@ import com.miss.imissyou.mycar.view.activity.AboutActivity;
 import com.miss.imissyou.mycar.view.activity.LoginActivity;
 import com.miss.imissyou.mycar.view.activity.MessageActivity;
 import com.miss.imissyou.mycar.view.activity.SettingActivity;
+import com.miss.imissyou.mycar.view.activity.WeiZhangChaXunActivity;
 import com.miss.imissyou.mycar.view.fragment.BaseFragment;
 import com.miss.imissyou.mycar.view.fragment.CarInfoFragment;
 import com.miss.imissyou.mycar.view.fragment.FirstAddCarFragment;
@@ -62,6 +63,7 @@ import com.miss.imissyou.mycar.view.fragment.OrderFragment;
 import com.miss.imissyou.mycar.view.fragment.StationMapViewFragment;
 import com.miss.imissyou.mycar.view.fragment.UserInfoFragment;
 import com.miss.imissyou.mycar.view.fragment.WZCXFragment;
+import com.miss.imissyou.mycar.view.fragment.WeiZhangChaXunFragment;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.util.ArrayList;
@@ -101,13 +103,12 @@ public class MainActivity extends ActionBarActivity
     private MusicFragment musicFragment;
     private WZCXFragment weiZhanChaXunFragment;
     private UserInfoFragment userInfoFragment;
-    //    private LocationMapFragment locationMapFragment;
     private OrderFragment orderFragment;
-    //    private GasStationFragment gasStationFragment;
     private NaviViewFragment naviViewFragment;
     private CarInfoFragment carInfoFragment;
     private FirstAddCarFragment firstAddCarFragment;
     private StationMapViewFragment stationMapViewFrament;
+    private WeiZhangChaXunFragment weiZhangChaXunFragment;
 
     /**
      * 双击退出程序
@@ -343,16 +344,16 @@ public class MainActivity extends ActionBarActivity
         list.add(menuItem1);
         SlideMenuItem menuItem2 = new SlideMenuItem(ContentFragment.CAR, R.mipmap.ic_car_icon);
         list.add(menuItem2);
-        SlideMenuItem menuItem3 = new SlideMenuItem(ContentFragment.ORDER, R.mipmap.ic_order_icon);
-        list.add(menuItem3);
-        SlideMenuItem menuItem4 = new SlideMenuItem(ContentFragment.BREAK, R.mipmap.ic_break_icon);
-        list.add(menuItem4);
         SlideMenuItem menuItem5 = new SlideMenuItem(ContentFragment.OIL, R.mipmap.ic_gasstation_oil_icon);
         list.add(menuItem5);
         SlideMenuItem menuItem8 = new SlideMenuItem(ContentFragment.PARK, R.mipmap.ic_park_icon);
         list.add(menuItem8);
         SlideMenuItem menuItem10 = new SlideMenuItem(ContentFragment.FIX, R.mipmap.ic_car_fix_icon);
         list.add(menuItem10);
+        SlideMenuItem menuItem3 = new SlideMenuItem(ContentFragment.ORDER, R.mipmap.ic_order_icon);
+        list.add(menuItem3);
+        SlideMenuItem menuItem4 = new SlideMenuItem(ContentFragment.BREAK, R.mipmap.ic_break_icon);
+        list.add(menuItem4);
         SlideMenuItem menuItem9 = new SlideMenuItem(ContentFragment.MUSIC, R.mipmap.ic_music_icon);
         list.add(menuItem9);
         SlideMenuItem menuItem11 = new SlideMenuItem(ContentFragment.NAVIGATION, R.mipmap.ic_guide_icon);
@@ -410,7 +411,7 @@ public class MainActivity extends ActionBarActivity
         orderFragment = new OrderFragment();
         naviViewFragment = new NaviViewFragment();
         stationMapViewFrament = new StationMapViewFragment();
-
+        weiZhangChaXunFragment = new  WeiZhangChaXunFragment();
         carInfoFragment = new CarInfoFragment();
         firstAddCarFragment = new FirstAddCarFragment();
         //编写自己的布
@@ -497,7 +498,8 @@ public class MainActivity extends ActionBarActivity
             case ContentFragment.ORDER:
                 return replaceFragment(orderFragment, position, Constant.OrderFragment);
             case ContentFragment.BREAK:
-                return replaceFragment(weiZhanChaXunFragment, position, Constant.WeiZhanChaXunFragment);
+                startActivity(new Intent(MainActivity.this, WeiZhangChaXunActivity.class));
+                return screenShotable;
             case ContentFragment.HOME:
                 startMainFragment();
                 return screenShotable;

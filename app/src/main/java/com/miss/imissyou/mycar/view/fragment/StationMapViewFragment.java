@@ -452,6 +452,9 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
         for (GasStationBean station : gasStationBeens) {
 
             LatLng latLng = setLatlng(station);
+            if(getActivity() == null) {
+                return;
+            }
             View view = View.inflate(getActivity(), R.layout.marker_oil_icon, null);
             mAMap.addMarker(new MarkerOptions()
                     .anchor(0.5f, 1)

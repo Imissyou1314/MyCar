@@ -87,6 +87,13 @@
             android:screenOrientation="behind" >
         </activity>
 
+        <!--违章查询-->
+        <activity android:name=".view.activity.WeiZhangChaXunActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.CityList" android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.ProvinceList" android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.ShortNameList" android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.WeizhangResult" android:screenOrientation="portrait"/>
+
 
         <!--注册服务-->
         <service android:name=".service.impl.MusicPlayService"/>

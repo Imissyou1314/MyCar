@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
@@ -31,9 +32,8 @@ import com.miss.imissyou.mycar.presenter.CarInfoPresenter;
  * 单架车的具体信息
  * Created by Imissyou on 2016/5/3.
  */
-public class CarInfoFragment extends BaseFragment implements CarInfoView, MissScrollView.OnScrollToBottomListener {
+public class CarInfoFragment extends BaseFragment implements CarInfoView, MissScrollView.OnScrollToBottomListener{
 
-    //private CircleProgress progress;
 
     private CarInfoPresenter mCarInfoPresenter;
 
@@ -45,7 +45,9 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView, MissSc
     private TextView carVin;                       //车架号
     private TextView carRand;                      //车身等级
     private TextView carEngineNumber;             //车发动机号
-    private TextView carPlatNumber;                //车牌号
+    private EditText carPlatNumber;                //车牌号
+
+
 
     /**
      * 车辆信息
@@ -91,7 +93,7 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView, MissSc
         /**车辆描述*/
         carImage = (ImageView) view.findViewById(R.id.car_info_carBrand_image);
         carBrand = (TextView) view.findViewById(R.id.carInfo_carBrand_input);
-        carPlatNumber = ( TextView) view.findViewById(R.id.carInfo_carplatName_input);
+        carPlatNumber = (EditText) view.findViewById(R.id.carInfo_carplatName_input);
         carEngineNumber = (TextView) view.findViewById(R.id.carInfo_carEngineNumber_input);
         carRand = (TextView) view.findViewById(R.id.carInfo_carRank_input);
         carVin = (TextView) view.findViewById(R.id.carInfo_carVin_input);
@@ -285,6 +287,4 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView, MissSc
         LogUtils.w("加载图片地址:" + imageUrl);
         Glide.with(this).load(Constant.SERVER_URL + imageUrl).asBitmap().into(carImage);
     }
-
-
 }

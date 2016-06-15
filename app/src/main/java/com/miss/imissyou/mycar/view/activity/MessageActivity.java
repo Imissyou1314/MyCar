@@ -136,7 +136,7 @@ public class MessageActivity extends BaseActivity implements MessageView {
 
                 //// TODO: 2016/6/12 添加到附近加油站和维修站
 
-                if (messageBean.getType() == 0) {
+                if (messageBean.getType() == 2) {
                     holder.setText(R.id.message_item_stateTask,"附近维修站");
                     holder.setOnClickListener(R.id.message_item_stateTask, new View.OnClickListener() {
                         @Override
@@ -144,7 +144,8 @@ public class MessageActivity extends BaseActivity implements MessageView {
                             goMapService(Constant.MAP_MAINTAIN);           //到附近维修站
                         }
                     });
-                } else{
+                } else if(messageBean.getType() == 1){
+                    holder.setText(R.id.message_item_stateTask,"附近加油站");
                     holder.setOnClickListener(R.id.message_item_stateTask, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -154,6 +155,7 @@ public class MessageActivity extends BaseActivity implements MessageView {
                 }
 
                 holder.setText(R.id.message_item_msg_text, "   " + messageBean.getContent());
+                LogUtils.d("信息的时间" + messageBean.getSystemData());
                 holder.setText(R.id.message_item_time_text, messageBean.getSystemData());
                 holder.setText(R.id.message_item_title_text, messageBean.getTitle());
             }

@@ -1,5 +1,6 @@
 package com.miss.imissyou.mycar.presenter;
 
+import com.miss.imissyou.mycar.bean.CarInfoBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.view.CarInfoView;
 import com.miss.imissyou.mycar.view.MainView;
@@ -53,4 +54,10 @@ public interface CarInfoPresenter extends MainPresenter<CarInfoView>{
      * @param userId  用户ID
      */
     void getCurrentCar(Long userId);
+
+    /**
+     * 更改车辆车牌号信息
+     * @param carInfoBean
+     */
+    void changeCarPlatNumber(CarInfoBean carInfoBean);
 }

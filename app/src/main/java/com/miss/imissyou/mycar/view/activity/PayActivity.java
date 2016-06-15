@@ -49,7 +49,7 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
     private ImageView weixiImage;
 
     private String channel = "";
-    private String ordersId = "";
+    private Long ordersId;
 
     private static final int REQUEST_CODE_PAYMENT = 1;
     private static final String url = Constant.SERVER_URL + "order/payOrder";   //TODO 等待接口
@@ -70,7 +70,7 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
     protected void initData() {
         title.setTitleText("订单支付");
         Intent intent = getIntent();
-        ordersId = intent.getStringExtra("orderId");
+        ordersId = intent.getLongExtra("orderId",0);
     }
 
     @Override
@@ -101,7 +101,7 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
         // TODO: 2016/6/14 等待下一步
             HttpParams params = new HttpParams();
             LogUtils.d("请求参数:" + ordersId + "::::" + channel);
-            params.put("orderId", ordersId);
+            params.put("orderId", ordersId + "");
             params.put("channel", channel);
 
             LogUtils.d("请求路径:" + url);
@@ -135,7 +135,7 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
     HttpCallback callback = new HttpCallback() {
         @Override
         public void onSuccess(String t) {
-            LogUtils.d("t");
+            LogUtils.d("t" + t);
             ResultBean resultBean = GsonUtils.getResultBean(t);
             if (resultBean.isServiceResult()) {
                 //TODO 获取charge
@@ -156,9 +156,10 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
      * @param resultParm
      */
     private void goPayActivity(Map<String, Object> resultParm) {
-        String json = GsonUtils.Instance().toJson(resultParm.get("charge"));
-        int start = json.indexOf("charge");
-        String charge =(String) json.subSequence(start + 8, json.length() -2);
+
+        String charge = resultParm.get("charge") != null ?
+                resultParm.get("charge").toString() : "";
+
         Log.v("test===>", charge);
 
         Intent intent = new Intent(PayActivity.this, PaymentActivity.class);

@@ -13,6 +13,7 @@ import com.miss.imissyou.mycar.bean.CarInfoBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.presenter.AddNewCarInputPresenter;
 import com.miss.imissyou.mycar.presenter.impl.AddNewCarInputPresenterImpl;
+import com.miss.imissyou.mycar.ui.TitleFragment;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.DialogUtils;
 import com.miss.imissyou.mycar.util.FindViewById;
@@ -36,6 +37,9 @@ public class InputBrandPageActivity extends BaseActivity implements View.OnClick
     @FindViewById(id = R.id.input_brand_page_selectZH)
     private Spinner selectCH;      //选择中文
 
+    @FindViewById(id = R.id.input_barnd_page_title)
+    private TitleFragment title;
+
     private AddNewCarInputPresenter mAddNewCarInputPresenter;
     private CarInfoBean carInfoBean;            //获取上一页面传进来的对象
 
@@ -53,6 +57,8 @@ public class InputBrandPageActivity extends BaseActivity implements View.OnClick
 
     @Override
     protected void initData() {
+
+        title.setTitleText("输入车牌号");
         mAddNewCarInputPresenter = new AddNewCarInputPresenterImpl(this);
         Bundle bundle = getIntent().getBundleExtra("carInfoBean");
         carInfoBean = (CarInfoBean) bundle.getSerializable("carInfo");
@@ -64,6 +70,9 @@ public class InputBrandPageActivity extends BaseActivity implements View.OnClick
         ArrayAdapter<String> cityEnAdapter = new ArrayAdapter<String>(this, R.layout.row_spn, cityEn);
         cityEnAdapter.setDropDownViewResource(R.layout.row_spn_dropdown);
         selectEn.setAdapter(cityEnAdapter);
+
+        brandCityName = cityName[0];
+        brandEnName = cityEn[0];
     }
 
     @Override

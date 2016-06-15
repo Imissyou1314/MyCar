@@ -199,62 +199,6 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
             }
         });
 
-
-        /**
-         * 提交订单
-         */
-//        sumBitOrder.setOnClickListener(new View.OnClickListener() {
-//            @Override public void onClick(View v) {
-//                if (null == Constant.userBean.getId()) {
-//                    showResultError(0, "用户没登录,请去登录");
-//                } else if (null == Constant.carBean.getId()) {
-//                    showResultError(0, "请添加车辆");
-//                } else {
-//                    orderBean.setUserId(Constant.userBean.getId());
-//                    orderBean.setCarId(Constant.carBean.getId());
-//
-//                    orderBean.setStationName(gasStation.getName());
-//                    orderBean.setAddress(gasStation.getAddress());
-//                    orderBean.setBrandName(gasStation.getBrandname());
-//
-//                    if (null == oil) {
-//                        showResultError(0, "请选择油类型先");
-//                    } else {
-//                        orderBean.setType(oil.getOilType());
-//                        orderBean.setPrice(Float.parseFloat(oil.getPrice()));
-//                        orderBean.setUnits(oil.getPrice());
-//                        if (price != 0 && oilNumber != 0) {
-//                            orderBean.setAmounts((int) price);
-//                            orderBean.setNumber((int) oilNumber);
-//                            //进行加油订单的提交
-//                            mSumbitIndentPresenter.loadServiceData(orderBean);
-//                        } else {
-//                            showResultError(0, "请输入加油数量");
-//                        }
-//                    }
-//                }
-//            }
-//        });
-
-        /**
-         * 选择油的类型
-         */
-//        oilTypeSelect.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view,
-//                                       int position, long id) {
-//                oil = oilBeans.get(position);
-//                oilTypePrice.setText(oil.getPrice() + "$/升");
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//                new DialogUtils(getActivity())
-//                        .errorMessage("警告", "你没有选择油性")
-//                        .show();
-//            }
-//        });
-
     }
 
     @Override
@@ -339,9 +283,10 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
             LogUtils.d(priceInput.getText().toString());
             price = Double.parseDouble(priceInput.getText().toString());
             oilNumber = getoilNumber(price);
-
-            doubleformat.format(oilNumber);
-            oilNumberInput.setText(oilNumber + "");
+            String tempNumber = (oilNumber + "");
+            String Number = tempNumber.substring(0, tempNumber.indexOf(".") + 2);
+           doubleformat.format(oilNumber);
+            oilNumberInput.setText(Number);
         }
     }
 
@@ -356,8 +301,10 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
             oilNumber = Double.parseDouble(oilNumberInput.getText().toString());
             price = getPrice(oilNumber);
 
+            String tempPrice = (price + "");
+            String allPrice = tempPrice.substring(0, tempPrice.indexOf(".") + 2);
             doubleformat.format(price);
-            priceInput.setText(price + "");
+            priceInput.setText(allPrice);
         }
     }
 
@@ -388,6 +335,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     // TODO: 2016/6/5  到付款页面
     private void goPlayPage(OrderBean order) {
         Intent intent = new Intent(getActivity(), PayActivity.class);
+        LogUtils.d("获取订单ID:" + order.getId());
         intent.putExtra("orderId",order.getId());
         getActivity().startActivity(intent);
     }

@@ -4,6 +4,7 @@ import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.lidroid.xutils.util.LogUtils;
+import com.miss.imissyou.mycar.bean.CarInfoBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.model.CarInfoModle;
 import com.miss.imissyou.mycar.util.Constant;
@@ -161,6 +162,32 @@ public class CarInfoModleImpl implements CarInfoModle {
         String url = Constant.SERVER_URL + "car/updateCarState"   ;
         HttpParams params = new HttpParams();
         params.put("id",carId + "");
+
+        LogUtils.w("请求路径:" + url);
+
+        RxVolley.post(url, params, new HttpCallback() {
+            @Override public void onFailure(int errorNo, String strMsg) {
+                mCarInfoPresenter.onFailure(errorNo, strMsg);
+            }
+
+            @Override public void onSuccess(String t) {
+                LogUtils.w(t);
+                ResultBean resultBean = GsonUtils.getResultBean(t);
+                if (!resultBean.isServiceResult()) {
+                    onFailure(0, resultBean.getResultInfo());
+                } else {
+                    mCarInfoPresenter.onSuccess(resultBean);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void changeCarPlatNumber(CarInfoBean carInfoBean) {
+        String url = Constant.SERVER_URL + "car/update"   ;
+        HttpParams params = new HttpParams();
+        params.put("id", carInfoBean.getId() + "");
+        params.put("plateNumber",carInfoBean.getPlateNumber());
 
         LogUtils.w("请求路径:" + url);
 

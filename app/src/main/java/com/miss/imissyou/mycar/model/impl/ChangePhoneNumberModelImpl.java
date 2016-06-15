@@ -48,16 +48,14 @@ public class ChangePhoneNumberModelImpl implements ChangePhoneNumberModle {
         HttpParams params = new HttpParams();
         params.putHeaders("cookie", Constant.COOKIE);
         params.put("id", Constant.userBean.getId() + "");
-        params.put("newPhone", phoneNumber);
+        params.put("phone", phoneNumber);
         params.put("verifyCode", code);
         if (null != Constant.userBean.getUsername())
             params.put("username",Constant.userBean.getUsername());
         if (null != Constant.userBean.getRealName())
-            params.put("username",Constant.userBean.getRealName());
-        if (null != Constant.userBean.getPassword())
-            params.put("username",Constant.userBean.getPassword());
+            params.put("realName",Constant.userBean.getRealName());
         if (null != Constant.userBean.getSafePassword())
-            params.put("username",Constant.userBean.getSafePassword());
+            params.put("safePassword",Constant.userBean.getSafePassword());
 
         submit(phoneNumber, code, url,params);
     }
