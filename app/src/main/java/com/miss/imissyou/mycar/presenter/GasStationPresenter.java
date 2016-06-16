@@ -9,6 +9,7 @@ import com.miss.imissyou.mycar.view.GasStationView;
 public interface GasStationPresenter extends MainPresenter<GasStationView> {
 
     /**
+     * ===> Model
      * 加载服务器数据或者缓存数据
      * @param lon  经纬(如:121.538123)
      * @param lat  纬度(如：31.677132)

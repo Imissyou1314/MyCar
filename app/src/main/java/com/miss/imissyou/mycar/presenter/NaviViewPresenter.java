@@ -11,6 +11,7 @@ import com.miss.imissyou.mycar.bean.ResultBean;
 public interface NaviViewPresenter {
 
     /**
+     * View <===
      *  获取成功
      * @param Tag   标准信息
      * @param resultBean   返回结果
@@ -23,6 +24,7 @@ public interface NaviViewPresenter {
     void loadSuccessGasStation(GasStationResultBean resultBean);
 
     /**
+     * View <===
      * 获取失败
      * @param errorNumber   错误码
      * @param errMsg      错误信息
@@ -30,12 +32,14 @@ public interface NaviViewPresenter {
     void loadFail(int errorNumber, String errMsg);
 
     /**
+     * ===>Model
      * 获取附近停车场信息
      * @param latLng   经纬度
      */
     void loadPack(LatLng latLng);
 
     /**
+     * ===>model
      * 获取附近加油站信息
      * @param lon  经纬度
      * @param  lat 纬度
@@ -43,8 +47,9 @@ public interface NaviViewPresenter {
     void loadGasStation(Double lon, Double lat);
 
     /**
+     * ===>model
      * 获取附近维修站信息
-     * @param latLng
+     * @param latLng  坐标点
      */
     void loadRepairShop(LatLng latLng);
 }

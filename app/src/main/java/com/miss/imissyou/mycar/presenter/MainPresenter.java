@@ -11,26 +11,23 @@ import com.miss.imissyou.mycar.bean.BaseBean;
 public interface  MainPresenter<V> {
 
     /**
+     * View <===
      * 加载失败
-     * @param errorNo
-     * @param strMsg
+     * @param errorNo  错误码
+     * @param strMsg   错误消息
      */
     void onFailure(int errorNo, String strMsg);
 
     /**
+     * View <===
      * 加载成功
-     * @param resultBean
+     * @param resultBean  响应信息实体
      */
     void onSuccess(BaseBean resultBean);
 
-//    /**
-//     * 加载服务器数据或者缓存数据
-//     */
-//    void loadServiceData(BaseBean useBean);
-
     /**
      * 装载View
-     * @param view
+     * @param view  视图
      */
     void attachView(V view);
 

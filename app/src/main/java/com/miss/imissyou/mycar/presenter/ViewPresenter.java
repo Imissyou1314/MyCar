@@ -8,7 +8,7 @@ public interface ViewPresenter<V> {
 
     /**
      * 装载View
-     * @param view
+     * @param view 视图
      */
     void attachView(V view);
 
