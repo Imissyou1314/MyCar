@@ -29,7 +29,7 @@ public interface CarInfoFragmentView<T> {
 
     /**
      * 提示请求成功信息
-     * @param cars
+     * @param cars  车辆列表
      */
     void showResultSuccess(List<CarInfoBean> cars);
 }

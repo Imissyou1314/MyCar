@@ -9,6 +9,10 @@ import com.miss.imissyou.mycar.bean.CarInfoBean;
  */
 public interface CarInfoView extends MainView{
 
+    /**
+     * 展现车轮下实体
+     * @param resultBean   车辆实体
+     */
     void showResultSuccess(CarInfoBean resultBean);
 
 }

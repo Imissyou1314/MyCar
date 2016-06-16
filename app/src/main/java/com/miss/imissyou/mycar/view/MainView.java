@@ -1,8 +1,6 @@
 package com.miss.imissyou.mycar.view;
 
-import com.miss.imissyou.mycar.bean.BaseBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
-import com.miss.imissyou.mycar.bean.UserBean;
 
 /**
  * 处理业务需要的那些方法

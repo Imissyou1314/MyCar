@@ -4,7 +4,7 @@ import com.miss.imissyou.mycar.bean.GasStationResultBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
 
 /**
- * 导航页面的页面接口
+ * 导航页面的页面视图
  * Created by Imissyou on 2016/6/12.
  */
 public interface NaviVieFragmentView {
