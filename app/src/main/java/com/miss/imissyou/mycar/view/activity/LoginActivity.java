@@ -23,6 +23,7 @@ import com.miss.imissyou.mycar.ui.RoundImageView;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.FindViewById;
 import com.miss.imissyou.mycar.util.GsonUtils;
+import com.miss.imissyou.mycar.util.RxVolleyUtils;
 import com.miss.imissyou.mycar.util.SPUtils;
 import com.miss.imissyou.mycar.util.StringUtil;
 import com.miss.imissyou.mycar.util.zxing.camera.LoadImageView;
@@ -189,7 +190,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             params.put("cookie", Constant.COOKIE);
         //服务器URL
         String url = Constant.SERVER_URL + "users/doLogin";
-        RxVolley.post(url, params, new HttpCallback() {
+        RxVolleyUtils.getInstance().post(url, params, new HttpCallback() {
             @Override
             public void onFailure(int errorNo, String strMsg) {
                 super.onFailure(errorNo, strMsg);
@@ -210,22 +211,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 ResultBean resultBean = GsonUtils.Instance().fromJson(StringUtil.bytesToString(t), ResultBean.class);
                 LogUtils.d("收到的数据::" + StringUtil.bytesToString(t));
                 if (resultBean.isServiceResult()) {
-                    Constant.COOKIE = headers.get("Set-Cookie");
+                    Constant.COOKIE = headers.get("cookie");
                     Constant.userBean = GsonUtils.getParam(resultBean, "user", UserBean.class);
-                    //savePassWord(password, account, GsonUtils.Instance().toJson(Constant.userBean));
                     setAlias(Constant.userBean.getId());
                     toMainView();
                 } else {
-                    builder.setTitle("登录出错")
-                            .setMessage(resultBean.getResultInfo())
-                            .setSingleButton(true)
-                            .setNegativeButton("确定", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                    builder.create().show();
+                    if (resultBean.getResultInfo().equals(Constant.FileCOOKIE)) {
+                        RxVolleyUtils.getInstance().restartLogin();
+                    } else {
+                        builder.setTitle("登录出错")
+                                .setMessage(resultBean.getResultInfo())
+                                .setSingleButton(true)
+                                .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                        builder.create().show();
+                    }
                 }
 
             }

@@ -122,7 +122,7 @@ public class NaviViewModleImpl implements NaviViewModle {
             }
         };
 
-        RxVolleyUtils.getInstance().get(url ,null ,callback);
+        RxVolleyUtils.getInstance().get(url ,params ,callback);
 
 //        new RxVolley.Builder()
 //                .params(params)

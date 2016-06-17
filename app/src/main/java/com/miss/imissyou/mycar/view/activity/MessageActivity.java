@@ -169,23 +169,13 @@ public class MessageActivity extends BaseActivity implements MessageView {
         frame.setVisibility(View.VISIBLE);
         listView.setVisibility(View.GONE);
         StationMapViewFragment fragment = new StationMapViewFragment();
-        Bundle bundle = new Bundle();
         if (mapType.equals(Constant.MAP_GASSTATION)) {
-            bundle.putString("type", Constant.MAP_GASSTATION);
+            fragment.setType(Constant.MAP_GASSTATION);
         } else {
-            bundle.putString("type", Constant.MAP_MAINTAIN);
+            fragment.setType(Constant.MAP_MAINTAIN);
         }
-        fragment.setArguments(bundle);
+
         getSupportFragmentManager().beginTransaction().replace(R.id.message_over,fragment).commit();
-    }
-
-    /**
-     * 改变状态
-     */
-    private void changeStateToService() {
-
-        if (null != Constant.userBean && 0 !=  Constant.userBean.getId())
-            mMessagePresenter.changeStateToService(Constant.userBean.getId());
     }
 
     @Override public void showProgress() {

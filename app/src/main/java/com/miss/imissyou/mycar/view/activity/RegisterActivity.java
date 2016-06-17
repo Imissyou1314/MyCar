@@ -2,6 +2,7 @@ package com.miss.imissyou.mycar.view.activity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,8 +19,11 @@ import com.miss.imissyou.mycar.ui.TitleFragment;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.FindViewById;
 import com.miss.imissyou.mycar.util.GsonUtils;
+import com.miss.imissyou.mycar.util.RxVolleyUtils;
 import com.miss.imissyou.mycar.util.StringUtil;
 import com.miss.imissyou.mycar.util.ToastUtil;
+
+import java.util.Map;
 
 /**
  * 注册页面
@@ -86,11 +90,17 @@ public class RegisterActivity extends BaseActivity {
             params.put("loginid",account);
 
             String url = Constant.SERVER_URL + "users/register";
-            RxVolley.post(url, params, new HttpCallback() {
+            RxVolleyUtils.getInstance().post(url, params, new HttpCallback() {
                 @Override
                 public void onFailure(int errorNo, String strMsg) {
                     LogUtils.d("错误码::" + errorNo);
                     LogUtils.d("错误信息::" + strMsg);
+                }
+
+                @Override
+                public void onSuccess(Map<String, String> headers, byte[] t) {
+                    Constant.COOKIE = headers.get("cookie");
+                    LogUtils.d(Constant.COOKIE);
                 }
 
                 @Override
@@ -101,7 +111,11 @@ public class RegisterActivity extends BaseActivity {
                         ToastUtil.asLong("注册成功");
                         toLogin();
                     } else {
-                        propmtError("注册失败" + resultBean.getResultInfo());
+                        if (resultBean.getResultInfo().equals(Constant.FileCOOKIE)) {
+                            RxVolleyUtils.getInstance().restartLogin();
+                        } else {
+                            propmtError("注册失败" + resultBean.getResultInfo());
+                        }
                     }
                 }
             });

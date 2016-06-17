@@ -1,6 +1,5 @@
 package com.miss.imissyou.mycar.view.activity;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.widget.Button;
 
 import com.edmodo.cropper.CropImageView;
 import com.lidroid.xutils.util.LogUtils;
-import com.miss.imissyou.mycar.MainActivity;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.presenter.UserInfoPresenter;

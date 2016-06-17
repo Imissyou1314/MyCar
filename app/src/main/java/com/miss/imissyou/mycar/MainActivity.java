@@ -478,32 +478,34 @@ public class MainActivity extends ActionBarActivity
             case ContentFragment.OIL:
                 //加油菜单项
 
-                Bundle bundle = new Bundle();
-                bundle.putString("type", Constant.MAP_GASSTATION);
-                if (stationMapViewFrament.getArguments() == null) {
-                    stationMapViewFrament.setArguments(bundle);
-
-                } else {
-                    stationMapViewFrament.onDestroy();
-                    stationMapViewFrament = null;
-                    stationMapViewFrament = new StationMapViewFragment();
-                    stationMapViewFrament.setArguments(bundle);
-                    LogUtils.d("不做操作");
-                }
+//                Bundle bundle = new Bundle();
+//                bundle.putString("type", Constant.MAP_GASSTATION);
+//                if (stationMapViewFrament.getArguments() == null) {
+//                    stationMapViewFrament.setArguments(bundle);
+//
+//                } else {
+//                    stationMapViewFrament.onDestroy();
+//                    stationMapViewFrament = null;
+//                    stationMapViewFrament = new StationMapViewFragment();
+//                    stationMapViewFrament.setArguments(bundle);
+//                    LogUtils.d("不做操作");
+//                }
+                stationMapViewFrament.setType(Constant.MAP_GASSTATION);
                 return replaceFragment(stationMapViewFrament, position, Constant.StationMapViewFragment);
 
             case ContentFragment.PARK:          //Todo 添加停车场
-                Bundle bundlePark = new Bundle();
-                bundlePark.putString("type", Constant.MAP_PARK);
-                if (stationMapViewFrament.getArguments() == null) {
-                    stationMapViewFrament.setArguments(bundlePark);
-                } else {
-                    stationMapViewFrament.onDestroy();
-                    stationMapViewFrament = null;
-                    stationMapViewFrament = new StationMapViewFragment();
-                    stationMapViewFrament.setArguments(bundlePark);
-                }
-                LogUtils.d("position :" + position);
+//                Bundle bundlePark = new Bundle();
+//                bundlePark.putString("type", Constant.MAP_PARK);
+//                if (stationMapViewFrament.getArguments() == null) {
+//                    stationMapViewFrament.setArguments(bundlePark);
+//                } else {
+//                    stationMapViewFrament.onDestroy();
+//                    stationMapViewFrament = null;
+//                    stationMapViewFrament = new StationMapViewFragment();
+//                    stationMapViewFrament.setArguments(bundlePark);
+//                }
+//                LogUtils.d("position :" + position);
+                stationMapViewFrament.setType(Constant.MAP_PARK);
                 return replaceFragment(stationMapViewFrament, position, Constant.StationMapViewFragment);
             case ContentFragment.ORDER:
                 return replaceFragment(orderFragment, position, Constant.OrderFragment);
@@ -514,16 +516,17 @@ public class MainActivity extends ActionBarActivity
                 startMainFragment();
                 return screenShotable;
             case ContentFragment.FIX:
-                Bundle bundlefix = new Bundle();
-                bundlefix.putString("type", Constant.MAP_MAINTAIN);
-                if (stationMapViewFrament.getArguments() == null) {
-                    stationMapViewFrament.setArguments(bundlefix);
-                } else {
-                    stationMapViewFrament.onDestroy();
-                    stationMapViewFrament = null;
-                    stationMapViewFrament = new StationMapViewFragment();
-                    stationMapViewFrament.setArguments(bundlefix);
-                }
+//                Bundle bundlefix = new Bundle();
+//                bundlefix.putString("type", Constant.MAP_MAINTAIN);
+//                if (stationMapViewFrament.getArguments() == null) {
+//                    stationMapViewFrament.setArguments(bundlefix);
+//                } else {
+//                    stationMapViewFrament.onDestroy();
+//                    stationMapViewFrament = null;
+//                    stationMapViewFrament = new StationMapViewFragment();
+//                    stationMapViewFrament.setArguments(bundlefix);
+//                }
+                stationMapViewFrament.setType(Constant.MAP_MAINTAIN);
                 LogUtils.d("position :" + position);
                 return replaceFragment(stationMapViewFrament, position, Constant.StationMapViewFragment);
             case ContentFragment.MUSIC:

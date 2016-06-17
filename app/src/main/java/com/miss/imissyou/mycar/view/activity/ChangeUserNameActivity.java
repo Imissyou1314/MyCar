@@ -18,6 +18,9 @@ import com.miss.imissyou.mycar.ui.TitleFragment;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.FindViewById;
 import com.miss.imissyou.mycar.util.GsonUtils;
+import com.miss.imissyou.mycar.util.RxVolleyUtils;
+
+import java.util.Map;
 
 /**
  * 更改用户名
@@ -75,7 +78,7 @@ public class ChangeUserNameActivity extends BaseActivity {
         if (null == params)
             return;
 
-        RxVolley.post(url, params, new HttpCallback() {
+        RxVolleyUtils.getInstance().post(url, params, new HttpCallback() {
             @Override
             public void onFailure(int errorNo, String strMsg) {
                 LogUtils.d("错误码是:" + errorNo + ">>>>错误信息:" + strMsg);
@@ -83,6 +86,10 @@ public class ChangeUserNameActivity extends BaseActivity {
                         Toast.LENGTH_SHORT).show();
             }
 
+            @Override
+            public void onSuccess(Map<String, String> headers, byte[] t) {
+                Constant.COOKIE = headers.get("cookie");
+            }
 
             @Override
             public void onSuccess(String t) {
@@ -90,12 +97,15 @@ public class ChangeUserNameActivity extends BaseActivity {
                 ResultBean resultBean = GsonUtils.getResultBean(t);
 
                 if (resultBean.isServiceResult()) {
-                   // Toast.makeText(ChangeUserNameActivity.this,
-                     //       resultBean.getResultInfo(), Toast.LENGTH_SHORT).show();
                     goBack();
                 } else {
-                    Toast.makeText(ChangeUserNameActivity.this,
-                            resultBean.getResultInfo(), Toast.LENGTH_LONG).show();
+                    if (resultBean.getResultInfo().equals(Constant.FileCOOKIE)) {
+                        RxVolleyUtils.getInstance().restartLogin();
+                    } else {
+                        Toast.makeText(ChangeUserNameActivity.this,
+                                resultBean.getResultInfo(), Toast.LENGTH_LONG).show();
+                    }
+
                 }
             }
 

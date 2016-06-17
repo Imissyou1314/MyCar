@@ -20,7 +20,10 @@ import com.miss.imissyou.mycar.ui.TitleFragment;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.FindViewById;
 import com.miss.imissyou.mycar.util.GsonUtils;
+import com.miss.imissyou.mycar.util.RxVolleyUtils;
 import com.miss.imissyou.mycar.util.StringUtil;
+
+import java.util.Map;
 
 /**
  * 更改用户密码和安全码
@@ -118,12 +121,20 @@ public class ChangePasswordActivity extends BaseActivity{
 
                 if (resultBean.isServiceResult()) {
                     goBack();
-//                    Toast.makeText(ChangePasswordActivity.this,
-//                            resultBean.getResultInfo(), Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(ChangePasswordActivity.this,
-                            resultBean.getResultInfo(), Toast.LENGTH_SHORT).show();
+                    if (resultBean.getResultInfo().equals(Constant.FileCOOKIE)) {
+                        RxVolleyUtils.getInstance().restartLogin();
+                    } else {
+                        Toast.makeText(ChangePasswordActivity.this,
+                                resultBean.getResultInfo(), Toast.LENGTH_SHORT).show();
+                    }
+
                 }
+            }
+
+            @Override
+            public void onSuccess(Map<String, String> headers, byte[] t) {
+                Constant.COOKIE = headers.get("cookie");
             }
 
             @Override
@@ -131,7 +142,7 @@ public class ChangePasswordActivity extends BaseActivity{
                 LogUtils.d("错误码:" + errorNo + ":::>>>" + strMsg);
             }
         };
-        RxVolley.post(url,params,callBack);
+        RxVolleyUtils.getInstance().post(url,params,callBack);
     }
 
     /**

@@ -42,6 +42,7 @@ import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.util.JZLocationConverter;
 import com.miss.imissyou.mycar.util.MapChangeUtils;
+import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.view.NaviVieFragmentView;
 import com.miss.imissyou.mycar.view.activity.NaviViewActivity;
 
@@ -54,10 +55,6 @@ import java.util.List;
 public class StationMapViewFragment extends BaseFragment implements View.OnClickListener,
         LocationSource, AMapLocationListener, AMap.OnMarkerClickListener, AMap.InfoWindowAdapter, NaviVieFragmentView {
 
-
-
-//    private Button formHere;       //从这里来
-//    private Button goHere;          //到这里去
 
     // 起点终点的经纬度
     private double mStartLat;
@@ -79,10 +76,12 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
     private NaviViewPresenter mNaviViewPresenter;               //导航控制类
 
     private List<GasStationBean> gasStationBeens;       //加油站的列表
-    private String tag;   //标志
+
+    private String type;       // 标志
     private LatLng latlng;   //经纬度
     private Button shouList;            //展现列表
     private List<StopStation> stations;    //场地
+    private JZLocationConverter.LatLng  baiduLatlng; //百度经纬度
 
     @Nullable
     @Override
@@ -104,26 +103,17 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
     protected void initView(View view) {
         mMapView = (MapView) view.findViewById(R.id.station_navi_mapView);
         shouList = (Button) view.findViewById(R.id.station_show_list);
-//        goHere = (Button) view.findViewById(R.id.station_navi_View_goButton);
-//        formHere = (Button) view.findViewById(R.id.station_navi_View_BackButton);
     }
 
     @Override
     protected void initData() {
         mNaviViewPresenter = new NaviViewPresenterImpl(this);
-        tag = getArguments().getString("type");
-        if (tag.equals(Constant.MAP_GASSTATION)) {
+//        tag = getArguments().getString("type");
+
+        if (type.equals(Constant.MAP_GASSTATION)) {
             shouList.setVisibility(View.VISIBLE);
         }
-        LogUtils.w("获取到的类型:" + tag);
-//        if (0.0 != getArguments().getDouble(Constant.endLatitude )) {
-//            Double lat = getArguments().getDouble(Constant.endLatitude);
-//            Double lon = getArguments().getDouble(Constant.endLongitude);
-//            latlng = new LatLng(lat,lon);
-//        } else {
-//            LogUtils.d("正常进入");
-//        }
-
+        LogUtils.w("获取到的类型:" + type);
 
     }
 
@@ -138,10 +128,6 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
         //跟随模式
         mAMap.setMyLocationType(AMap.LOCATION_TYPE_MAP_FOLLOW);
         mAMap.setOnMarkerClickListener(this);
-
-
-//        goHere.setOnClickListener(this);
-//        formHere.setOnClickListener(this);
         shouList.setOnClickListener(this);
 
         mAMap.setMyLocationType(AMap.LOCATION_TYPE_MAP_ROTATE);
@@ -204,6 +190,10 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
     public void onLocationChanged(AMapLocation aMapLocation) {
 
         if (null != aMapLocation && null != mLocation) {
+
+            mlocationClient.stopLocation(); //停止定位
+            mAMap.clear();              //清除地图上标的点
+
             if (null != aMapLocation && 0 == aMapLocation.getErrorCode()) {
                 //获取开始的经纬度
                 mStartLon = aMapLocation.getLongitude();
@@ -218,30 +208,13 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
                 mLocation.onLocationChanged(aMapLocation);      //显示系统小蓝点
                 JZLocationConverter.LatLng location = new JZLocationConverter.LatLng(mStartLat,mStartLon);
                 //转百度地图经纬度
-                JZLocationConverter.LatLng l = JZLocationConverter.gcj02ToBd09(location);
+                baiduLatlng = JZLocationConverter.gcj02ToBd09(location);
 
                 latlng = new LatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude());
 
 
-                LogUtils.w("返回类型" + tag);
-                if (null != tag ) {
-                    mlocationClient.stopLocation();
-                    switch (tag) {
-
-                        case Constant.MAP_GASSTATION:
-
-                            mNaviViewPresenter.loadGasStation(l.getLongitude(), l.getLatitude());
-                            break;
-                        case Constant.MAP_PARK:
-                            LogUtils.d("加载停车场");
-                            mNaviViewPresenter.loadPack(latlng);
-                            break;
-                        case Constant.MAP_MAINTAIN:
-                            LogUtils.d("加载维修站信息");
-                            mNaviViewPresenter.loadRepairShop(latlng);
-                            break;
-                    }
-                }
+                LogUtils.w("返回类型" + type);
+                loadMapData();
             } else {
                 LogUtils.w("定位失败" + aMapLocation.getErrorCode() + ":" + aMapLocation.getErrorCode());
             }
@@ -336,7 +309,7 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
 
         LogUtils.w("传过去的经度:" + mEndLat + "传过去的纬度：" + mEndLon);
         LogUtils.w("你点击的是哪个:" + marker.getTitle());
-        if (tag == Constant.MAP_GASSTATION) {
+        if (type == Constant.MAP_GASSTATION) {
             new MissDialog.Builder(getActivity()).setTitle(marker.getTitle()).setMessage(marker.getSnippet())
                     .setPositiveButton("到这里去", new DialogInterface.OnClickListener() {
                         @Override
@@ -348,7 +321,7 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
-                    if (tag != Constant.MAP_GASSTATION) {
+                    if (type != Constant.MAP_GASSTATION) {
                         toNaviMap(mStartLat, mStartLon, mEndLat, mEndLon);
                     } else {
                         toGasStation(marker.getPeriod());
@@ -373,7 +346,7 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
                                 Uri.parse("tel:" + stations.get(marker.getPeriod()).getPhoneNumber() + ""));
                         getActivity().startActivity(intent);
                     } else {
-                        Toast.makeText(getActivity(), tag.equals(Constant.MAP_PARK) ? "没有该停车场的电话" : "没有该维修店的电话",
+                        Toast.makeText(getActivity(), type.equals(Constant.MAP_PARK) ? "没有该停车场的电话" : "没有该维修店的电话",
                                 Toast.LENGTH_SHORT).show();
                     }
 
@@ -382,8 +355,6 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
         }
         return false;
     }
-
-
 
     @Override
     public void onDestroy() {
@@ -474,27 +445,30 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
      * @param stations 场地列表
      */
     private void showInPage(List<StopStation> stations) {
-        if (null != stations) {
 
-            if (tag == Constant.MAP_PARK) {
+        if (null != stations) {
+            if (type == Constant.MAP_PARK) {
                 Toast.makeText(getActivity(), "附近停车场数量:" + stations.size(), Toast.LENGTH_SHORT).show();
-            } else{
+            } else {
                 Toast.makeText(getActivity(), "附近维修站数量:" + stations.size(), Toast.LENGTH_SHORT).show();
             }
             LogUtils.e("获取数据为空");
+        } else {
+            Toast.makeText(getActivity(),"没有数据",Toast.LENGTH_LONG).show();
+            return;
         }
 
         LogUtils.d("订单列表:" + GsonUtils.Instance().toJson(stations));
         int i = 0;
-//
+
         for (StopStation station : stations) {
             View view = null;
             if (null != station.getLat() && null != station.getLon() && null != station.getName()) {
                 LatLng latLng = new LatLng(station.getLat(), station.getLon());
-                if (tag == Constant.MAP_PARK) {
-                   view = View.inflate(getActivity(), R.layout.marker_icon, null);
-                } else{
-                   view = View.inflate(getActivity(), R.layout.marker_fix_icon, null);
+                if (type == Constant.MAP_PARK) {
+                    view = View.inflate(getActivity(), R.layout.marker_icon, null);
+                } else {
+                    view = View.inflate(getActivity(), R.layout.marker_fix_icon, null);
                 }
                 LogUtils.d("请求图片地址:" + Constant.SERVER_URL + station.getImg());
                 mAMap.addMarker(new MarkerOptions()
@@ -505,42 +479,12 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
                         .icon(BitmapDescriptorFactory.fromView(view))).setPeriod(i);
 
                 LogUtils.d("设置第几个" + i + "场地信息:>>>" + station.getName());
-                i ++;
+                i++;
             } else {
                 LogUtils.d("错误信息经纬度为空");
             }
         }
     }
-
-//    /**
-//     * 获取封装后的图片
-//     *
-//     * @param urlStr 图片地址
-//     * @return
-//     */
-//    private Bitmap getBtimap(String urlStr) {
-//        View view = View.inflate(getActivity(), R.layout.marker_icon, null);
-//        RoundImageView roundView = (RoundImageView) view.findViewById(R.id.marker_round_icon);
-//        String url = Constant.SERVER_URL + urlStr;
-//        LogUtils.d("请求图片地址:" + url);
-//        Glide.with(this).load(url).into(roundView);
-//        Bitmap bitmap = StringUtil.convertViewToBitmap(roundView);
-//        //TODO添加默认图片
-//        if (null != bitmap)
-//            LogUtils.d("获取到图片了");
-//        return null != bitmap ? bitmap : null;
-//    }
-
-//    public Bitmap getBitmap() {
-//        Resources res = getActivity().getResources();
-//        Bitmap bitmap = null;
-//        if(tag == Constant.MAP_PARK) {
-//            bitmap = android.graphics.BitmapFactory.decodeResource(res, R.mipmap.ic_map_park_icon);
-//        } else if (Constant.MAP_MAINTAIN == tag) {
-//            bitmap = android.graphics.BitmapFactory.decodeResource(res, R.mipmap.ic_map_fix_icon);
-//        }
-//        return bitmap;
-//    }
 
     /**
      * 到加油站去
@@ -559,6 +503,27 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
     }
 
     /**
+     * 加载地图页面
+     */
+    private void loadMapData() {
+        if (null != type ) {
+            switch (type) {
+                case Constant.MAP_GASSTATION:
+                    mNaviViewPresenter.loadGasStation(baiduLatlng.getLongitude(), baiduLatlng.getLatitude());
+                    break;
+                case Constant.MAP_PARK:
+                    LogUtils.d("加载停车场");
+                    mNaviViewPresenter.loadPack(latlng);
+                    break;
+                case Constant.MAP_MAINTAIN:
+                    LogUtils.d("加载维修站信息");
+                    mNaviViewPresenter.loadRepairShop(latlng);
+                    break;
+            }
+        }
+    }
+
+    /**
     * 装载经纬度
     *
     * @param gasStation 加油站
@@ -568,6 +533,24 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
                 .Convert_BD0911_TO_GCJ02(gasStation.getLat(),
                         gasStation.getLon(), getActivity());
         return latLng;
+    }
+
+    /**
+     * 类型传入
+     * @param type  类型
+     */
+    public void setType(String type) {
+        this.type = type;
+
+        //显示列表
+        if (type.equals(Constant.MAP_GASSTATION))
+            shouList.setVisibility(View.VISIBLE);
+
+        // 定位后自动 刷新页面
+       if (null != mlocationClient){
+            mlocationClient.startLocation();
+           LogUtils.d("重新进入地图页面");
+        }
     }
 }
 
