@@ -17,15 +17,12 @@ import com.miss.imissyou.mycar.util.SPUtils;
  */
 public class SettingFragment extends BaseFragment{
 
-    private ToggleButton allMessageBtn;
-    private ToggleButton errorMessageBtn;
-    private ToggleButton wareMessageBtn;
+    private ToggleButton allMessageBtn;         //获取所有信息
+    private ToggleButton errorMessageBtn;       //获取错误信息
+    private ToggleButton wareMessageBtn;        //获取警报信息
 
-    private ToggleButton noReadMessageBtn;
-    private ToggleButton startMusic;
-
-//    private LinearLayout goMyHome;
-//    private LinearLayout setSavePassword;
+    private ToggleButton noReadMessageBtn;      //获取未读信息
+    private ToggleButton startMusic;            //是否播放音乐
 
     private boolean allMessageState;
     private boolean errorMessageState;
@@ -71,43 +68,9 @@ public class SettingFragment extends BaseFragment{
 
     @Override
     protected void addViewsListener() {
-        /**跳转到设置用户信息的主页*/
-//        goMyHome.setOnClickListener(new View.OnClickListener() {
-//            @Override public void onClick(View v) {
-//                toUserHome();
-//            }
-//        });
-
-        /**设置安全码*/
-//        setSavePassword.setOnClickListener(new View.OnClickListener() {
-//            @Override public void onClick(View v) {
-//                toSetSavePassword();
-//            }
-//        });
 
     }
 
-    /**
-     * 到设置安全码界面
-     */
-    private void toSetSavePassword() {
-        getActivity()
-                .getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.setting_page, new SafePasswordFragment())
-                .commit();
-    }
-
-    /**
-     * 到用户主页
-     */
-    private void toUserHome() {
-        getActivity()
-                .getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.setting_page,new UserInfoFragment())
-                .commit();
-    }
 
     /**
      * 离开这个页面时保存数据

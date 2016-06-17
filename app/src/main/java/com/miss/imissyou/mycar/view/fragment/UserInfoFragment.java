@@ -2,6 +2,7 @@ package com.miss.imissyou.mycar.view.fragment;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,6 +18,8 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
@@ -27,6 +30,7 @@ import com.miss.imissyou.mycar.ui.LinearText;
 import com.miss.imissyou.mycar.ui.RoundImageView;
 import com.miss.imissyou.mycar.util.BlurTransformation;
 import com.miss.imissyou.mycar.util.Constant;
+import com.miss.imissyou.mycar.util.FastBlur;
 import com.miss.imissyou.mycar.util.FastBulrTransformation;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.view.UserInfoView;
@@ -98,18 +102,15 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
 
         if (null != Constant.userBean && null != Constant.userBean.getUserImg()) {
 
-//            Glide.with(this).load(Constant.SERVER_URL + Constant.userBean.getUserImg())
-//                    .transform(new FastBulrTransformation(getActivity(), 20,
-//                            userHeadBackground.getMeasuredWidth(), userHeadBackground.getMeasuredHeight()))
-//                    .into(userHeadBackground);
-            Glide.with(this).load(Constant.SERVER_URL + Constant.userBean.getUserImg()).into(userHeadBackground).getSize(new SizeReadyCallback() {
+            Glide.with(this).load(Constant.SERVER_URL + Constant.userBean.getUserImg()).asBitmap().into(new SimpleTarget<Bitmap>() {
                 @Override
-                public void onSizeReady(int width, int height) {
-                    LogUtils.d("宽高比" + width + "..:::" + height);
+                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                    userHeadBackground.setImageBitmap(FastBlur.doBlur(resource,20,true));
+                    userHeadBackground.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 }
             });
             LogUtils.w("图片地址：" + Constant.SERVER_URL + Constant.userBean.getUserImg());
-//            Glide.with(this).load(Constant.SERVER_URL + Constant.userBean.getUserImg()).into(userHeadRound);
+            Glide.with(this).load(Constant.SERVER_URL + Constant.userBean.getUserImg()).into(userHeadRound);
         } else {
             LogUtils.w("用户没有图片");
         }
