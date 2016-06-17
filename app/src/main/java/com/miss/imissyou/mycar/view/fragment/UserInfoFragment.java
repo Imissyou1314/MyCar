@@ -148,16 +148,19 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
                 case REQUEST_PHOTO:
                     //获取选中图片的路径
                     String[] projection = {MediaStore.Images.Media.DATA};
+                    String mpath = data.getData().getPath();
+                    LogUtils.d("图片地址" + mpath);
+                    if (null != mpath) {
+                        toCutPage(mpath);
+                        return;
+                    }
+
                     Cursor cursor = getActivity().getContentResolver().query(data.getData(), projection, null, null, null);
-                    if (cursor == null )
+                    if (cursor == null)
                         return;
                     if (cursor.moveToFirst()) {
                         photo_path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-                        LogUtils.w("图片地址:" + photo_path);
-                        Bundle bundle = new Bundle();
-                        bundle.putString("path",photo_path);
-                        startActivityForResult(new Intent(getActivity(), CutImageActvity.class).putExtra("path",photo_path),
-                                CUT_IMAGE_PAGE, bundle);
+                        toCutPage(photo_path);
                     }
                     cursor.close();
                     break;
@@ -174,6 +177,15 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
                     break;
             }
         }
+    }
+
+    private void toCutPage(String path) {
+
+        LogUtils.w("图片地址:" + path);
+        Bundle bundle = new Bundle();
+        bundle.putString("path",path);
+        startActivityForResult(new Intent(getActivity(), CutImageActvity.class).putExtra("path",path),
+                CUT_IMAGE_PAGE, bundle);
     }
 
     @Override

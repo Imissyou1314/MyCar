@@ -4,10 +4,10 @@
     android:layout_height="match_parent">
 
 
-    <!--<com.miss.imissyou.mycar.ui.TitleFragment-->
-        <!--android:id="@+id/gasStation_title"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/title_height"/>-->
+    <com.miss.imissyou.mycar.ui.TitleFragment
+        android:id="@+id/gasStation_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"/>
     <!--加油站的所有信息-->
     <ListView
         android:id="@+id/gasStation_ListView"

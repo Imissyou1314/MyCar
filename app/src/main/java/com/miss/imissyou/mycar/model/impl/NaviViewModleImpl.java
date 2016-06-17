@@ -16,6 +16,8 @@ import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.util.RxVolleyUtils;
 
+import java.util.Map;
+
 /**
  * Created by Imissyou on 2016/6/12.
  */
@@ -107,8 +109,13 @@ public class NaviViewModleImpl implements NaviViewModle {
             }
 
             @Override
+            public void onSuccess(Map<String, String> headers, byte[] t) {
+                Constant.COOKIE = headers.get("cookie");
+            }
+
+            @Override
             public void onSuccess(String t) {
-                LogUtils.d("获取到的数据是:" + t);
+                LogUtils.w("获取到的数据是:" + t);
                 ResultBean result = GsonUtils.getResultBean(t);
                 if (result.isServiceResult()) {
                     mNaviViewPressenter.loadSuccess(Tag, result);

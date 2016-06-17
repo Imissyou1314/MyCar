@@ -12,8 +12,8 @@ public class Constant {
     /**
      * 服务器URL
      */
-//    public static String SERVER_URL = "http://192.168.1.106:8080/";
-    public static String SERVER_URL = "http://www.earltech.cn:8084/";
+    public static String SERVER_URL = "http://192.168.1.106:8080/";
+//    public static String SERVER_URL = "http://www.earltech.cn:8084/";
     public static final int HTTP_OK = 200;
 
 

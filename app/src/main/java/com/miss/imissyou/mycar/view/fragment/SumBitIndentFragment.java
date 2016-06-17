@@ -25,6 +25,7 @@ import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.presenter.SumbitIndentPresenter;
 import com.miss.imissyou.mycar.presenter.impl.SumbitIndentPresenterImpl;
 import com.miss.imissyou.mycar.ui.MissDialog;
+import com.miss.imissyou.mycar.ui.TitleFragment;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.DialogUtils;
 import com.miss.imissyou.mycar.util.GsonUtils;
@@ -52,6 +53,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     public static final String TAG = "SUMBITINDENTFRAGMENT";
 
 
+    private TitleFragment title;             //标题
     private TextView gastationName;         //加油站名字
     private TextView gastationAddres;       //加油站地址
     private TextView gastationDistance;     //加油站距离
@@ -100,6 +102,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     @Override
     protected void initView(View view) {
 
+        title = (TitleFragment) view.findViewById(R.id.sumbitlndent_title);
         gastationName = (TextView) view.findViewById(R.id.sumbit_gastation_gastationName);
         gastationAddres = (TextView) view.findViewById(R.id.sumbit_gastation_address);
         gastationDistance = (TextView) view.findViewById(R.id.sumbit_gastation_gastationDistance);
@@ -122,32 +125,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
 
     @Override
     protected void initData() {
-        //获取到的价格不为空
-//        if (null != gasStation.getPrice() && null != gasStation.getGastprice()) {
-//            oilBeans = new ArrayList<OilBean>();
-//            oilType = new ArrayList<String>();
-//            Map<String, String> oilTypeBean;
-//
-//            /**
-//             * 默认的是该加油站提供的信息
-//             */
-//            if (null != gasStation.getGastprice()) {
-//                oilTypeBean = gasStation.getGastprice();
-//            } else {
-//                oilTypeBean = gasStation.getPrice();
-//            }
-//            //设置加油站有的所有的油类型
-//            for (String key : oilTypeBean.keySet()) {
-//                OilBean tempBean = new OilBean();
-//                oilType.add(key);
-//                tempBean.setOilType(key);
-//                tempBean.setPrice(oilTypeBean.get(key));
-//                oilBeans.add(tempBean);
-//            }
-//
-//        } else {
-//            showResultError(0, "加油站的价格为空");
-//        }
+        title.setTitleText("填写订单");
     }
 
     @Override
@@ -623,7 +601,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
         if (null != gasStation && null != gasStation.getPrice()) {
             setLatlng(gasStation);          //装载经纬度
             gastationName.setText(gasStation.getName());
-            gastationType.setText(gasStation.getBrandname() + "加油站");
+            gastationType.setText(gasStation.getBrandname().equals("不详")? "": gasStation.getBrandname() + "加油站");
             gastationAddres.setText(gasStation.getAddress());
             gastationOrderTime.setText(formatter.format(new Date()));       //显示当前时间
             gastationDistance.setText((Integer.parseInt(gasStation.getDistance()) / 1000) + "公里");
