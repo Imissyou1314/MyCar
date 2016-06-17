@@ -12,7 +12,10 @@ import com.miss.imissyou.mycar.model.AddNewCarInputModel;
 import com.miss.imissyou.mycar.presenter.AddNewCarInputPresenter;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
+import com.miss.imissyou.mycar.util.RxVolleyUtils;
 import com.miss.imissyou.mycar.util.SPUtils;
+
+import java.util.Map;
 
 /**
  * 扫描车辆信息
@@ -29,27 +32,6 @@ public class AddNewCarInputModelImpl implements AddNewCarInputModel {
     @Override public void sentToService(CarInfoBean carInfoBean) {
 
         HttpParams params = new HttpParams();
-//        params.put("id", carInfoBean.getId());
-//        params.put("userId",carInfoBean.getUserId()+"");
-//        params.put("brand", carInfoBean.getBrand());
-//        params.put("models",carInfoBean.getModles());
-//        params.put("plateNumber",carInfoBean.getPlateNumber());
-//        params.put("engineNumber", carInfoBean.getEngineNumber());
-//        params.put("enginProperty", carInfoBean.isEnginProperty());
-//        params.put("rank", carInfoBean.getRank());
-//        params.put("vin", carInfoBean.getVin());
-//        params.put("mark", carInfoBean.getMark());
-//        params.put("mileage",carInfoBean.getMilleage() + "");
-//        params.put("oilBox", carInfoBean.getOilBox() + "");
-//        params.put("oil",carInfoBean.getOil() + "");
-//        params.put("temperature", carInfoBean.getTemperature() + "");
-//        params.put("transmission", carInfoBean.getTransmission());
-//        params.put("carLight", carInfoBean.getCarLight());
-//        params.put("carState", carInfoBean.getCarState());
-//        params.put("carAlarm", carInfoBean.getCarAlarm());
-
-//        params.put("lat", carInfoBean.getLat() + "");
-//        params.put("lon", carInfoBean.getLon() + "");
         params.putJsonParams(GsonUtils.Instance().toJson(carInfoBean));
 
         LogUtils.w("newCar:" + GsonUtils.Instance().toJson(carInfoBean));
@@ -60,21 +42,39 @@ public class AddNewCarInputModelImpl implements AddNewCarInputModel {
             @Override public void onFailure(int errorNo, String strMsg) {
                 addNewCarInputPresenter.onFailure(errorNo,strMsg);
             }
+
+            @Override
+            public void onSuccess(Map<String, String> headers, byte[] t) {
+                Constant.COOKIE = headers.get("cookie");
+            }
+
             @Override public void onSuccess(String t) {
                 LogUtils.d("收到的数据"  + t);
-                addNewCarInputPresenter.onAddCarSuccess(t);
+
+                ResultBean resultBean = GsonUtils.getResultBean(t);
+                if (resultBean.isServiceResult()) {
+                    addNewCarInputPresenter.onAddCarSuccess(t);
+                } else {
+                    if (resultBean.getResultInfo().equals(Constant.FileCOOKIE)) {
+                        RxVolleyUtils.getInstance().restartLogin();
+                    } else {
+                        onFailure(0, resultBean.getResultInfo());
+                    }
+                }
             }
         };
 
-        new RxVolley.Builder()
-                .contentType(RxVolley.ContentType.JSON)
-                .httpMethod(RxVolley.Method.POST)
-                .encoding("utf-8")
-                .url(url)
-                .timeout(6000)
-                .params(params)
-                .callback(callback)
-                .doTask();
+        RxVolleyUtils.getInstance().post(url,params,callback);
+
+//        new RxVolley.Builder()
+//                .contentType(RxVolley.ContentType.JSON)
+//                .httpMethod(RxVolley.Method.POST)
+//                .encoding("utf-8")
+//                .url(url)
+//                .timeout(6000)
+//                .params(params)
+//                .callback(callback)
+//                .doTask();
     }
 
     @Override public void saveToSPU(BaseBean baseBean, String key) {
@@ -96,19 +96,35 @@ public class AddNewCarInputModelImpl implements AddNewCarInputModel {
             }
 
             @Override
+            public void onSuccess(Map<String, String> headers, byte[] t) {
+                Constant.COOKIE = headers.get("cookie");
+            }
+
+            @Override
             public void onSuccess(String t) {
 
                             LogUtils.w("返回结果："+t);
-                addNewCarInputPresenter.onSuccess(t);
+                ResultBean resultBean = GsonUtils.getResultBean(t);
+                if (resultBean.isServiceResult()) {
+                    addNewCarInputPresenter.onSuccess(t);
+                } else {
+                    if (resultBean.getResultInfo().equals(Constant.FileCOOKIE)) {
+                        RxVolleyUtils.getInstance().restartLogin();
+                    } else {
+                        onFailure(0,resultBean.getResultInfo());
+                    }
+                }
             }
         };
 
-        new RxVolley.Builder()
-                .shouldCache(false)
-                .cacheTime(0)
-                .url(url)
-                .callback(httpCallback)
-                .httpMethod(RxVolley.Method.GET)
-                .doTask();
+        RxVolleyUtils.getInstance().get(url,null, httpCallback);
+
+//        new RxVolley.Builder()
+//                .shouldCache(false)
+//                .cacheTime(0)
+//                .url(url)
+//                .callback(httpCallback)
+//                .httpMethod(RxVolley.Method.GET)
+//                .doTask();
     }
 }

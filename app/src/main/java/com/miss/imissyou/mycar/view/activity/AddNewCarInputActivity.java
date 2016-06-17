@@ -53,8 +53,6 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
     private TextView engineNumberEdit;      //发动机号
     @FindViewById(id = R.id.activity_add_newCar_rank_input)
     private TextView rankEdit;              //车身等级
-//    @FindViewById(id = R.id.activity_add_newCar_plateNumber_input)
-//    private EditText plateNumber;           //车牌
 
     @FindViewById(id = R.id.activity_add_newCar_enginProperty_message)
     private TextView enginPropertyMessage;         //发动机性能
@@ -105,10 +103,6 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
             public void onClick(View v) {
 
                 LogUtils.w("提交数据");
-//                doInput();
-//                resultBean.setAlarmMessage(alarmMessage.getToggleOn());
-//                resultBean.setPropertyMessage(propertyMessage.getToggleOn());
-//                resultBean.setStateMessage(stateMessage.getToggleOn());
 
                 if (resultBean == null) {
                     LogUtils.d("车辆实体为空");
@@ -122,7 +116,6 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
                     LogUtils.w("用户Id:" + Constant.userBean.getId() + "");
                     resultBean.setUserId(Constant.userBean.getId());
                     gotoInputBrandPage(resultBean);
-//                    mAddAddNewCarInputPresenter.sentCarInfoToService(resultBean);
                 }
             }
         });
@@ -130,7 +123,7 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
 
     /**
      * 跳转到输入页面
-     * @param resultBean
+     * @param resultBean  回调响应信息
      */
     private void gotoInputBrandPage(CarInfoBean resultBean) {
         Intent intent = new Intent();
@@ -142,21 +135,6 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
         this.finish();
 
     }
-
-//    /**
-//     * 获取输入
-//     */
-//    private void doInput() {
-//        if (null == resultBean) {
-//            resultBean = new CarInfoBean();
-//        }
-//        resultBean.setPlateNumber(plateNumber.getText().toString() + "");
-//        resultBean.setBrand(brandEdit.getText().toString());
-//        resultBean.setModles(modelsEdit.getText().toString());
-//        resultBean.setVin(vinEdit.getText().toString());
-//        resultBean.setEngineNumber(engineNumberEdit.getText().toString());
-//        resultBean.setRank(rankEdit.getText().toString());
-//    }
 
     @Override
     protected void onResume() {
@@ -210,7 +188,7 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
         if (resultUrl != null) {
             String url = Constant.SERVER_URL + resultUrl;
             LogUtils.d("请求路径:" + url);
-            Toast.makeText(getApplicationContext(), "url", Toast.LENGTH_LONG).show();
+
             mAddAddNewCarInputPresenter.loadCar(url);
         } else if (null != resultBean && null != resultBean.getId()) {
             showResultSuccess(resultBean);
@@ -263,22 +241,14 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
         if (null != resultBean.getMark()) {
             String url = Constant.SERVER_URL + resultBean.getMark();
             LogUtils.d("加载图片的URL:" + url);
-
-            //// TODO: 2016/5/29
             loadImage(carBrandImage, resultBean.getMark());
-//            Glide.with(this).load(url).into(userHeadImage);
         }
-//        modelsEdit.setText(resultBean.getModles());
 
         brandEdit.setText(resultBean.getBrand());
         vinEdit.setText(resultBean.getVin());
         engineNumberEdit.setText(resultBean.getEngineNumber() + "");
         rankEdit.setText(resultBean.getRank());
 
-
-//                enginPropertyEdit.setText(isGood(resultBean.isEnginProperty()));
-//                transmissionEdit.setText(isGood(resultBean.isTransmission()));
-//                carLightEdit.setText(isGood(resultBean.isCarLight()));
         setState(carLightMessage, resultBean.isCarLight());
         setState(enginPropertyMessage, resultBean.isEngineProperty());
         setState(transmissionMessage, resultBean.isTransmission());
@@ -294,15 +264,14 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
 
         setProgress(oilLink,resultBean.getOil(),resultBean.getOilBox());
 
-
         LogUtils.d("回调的信息" + GsonUtils.Instance().toJson(resultBean));
     }
 
     /**
      * 设置状态信息  良好和损坏
      *
-     * @param text
-     * @param state
+     * @param text  TextView
+     * @param state  状态
      */
     private void setState(TextView text, boolean state) {
         if (state) {
@@ -333,9 +302,9 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
     /**
      * 设置油量进度条
      *
-     * @param carOilProgress
-     * @param oil
-     * @param oilBox
+     * @param carOilProgress  油量进度条
+     * @param oil            油量
+     * @param oilBox      油箱
      */
     private void setProgress(ProgressBar carOilProgress, double oil, double oilBox) {
         int nowOil = ((int) oil * 100) / ((int) oilBox);
@@ -353,22 +322,18 @@ public class AddNewCarInputActivity extends BaseActivity implements AddNewCarInp
                     .getDrawable(R.drawable.progress_yellow_background));
         } else if (carOilProgress.getProgress() >= 50) {
             oilInput.setTextColor(getResources().getColor(R.color.color_progress_greed));
-            //carOilProgress.setBackgroundResource(R.color.color_progress_greed);
             carOilProgress.setProgressDrawable(getResources()
                     .getDrawable(R.drawable.progress_gree_background));
         } else {
             oilInput.setTextColor(getResources().getColor(R.color.color_progress_red));
-            //carOilProgress.setBackgroundResource(R.color.color_progress_red);
             carOilProgress.setProgressDrawable(getResources().getDrawable(R.drawable.progress_red_background));
         }
-       // carOilProgress.setProgressDrawable(color);
     }
 
     /**
      * 加载图片
-     *
-     * @param carImage
-     * @param imageUrl
+     * @param carImage ImageView
+     * @param imageUrl 连接地址
      */
     private void loadImage(ImageView carImage, String imageUrl) {
         LogUtils.w("加载图片地址:" + imageUrl);

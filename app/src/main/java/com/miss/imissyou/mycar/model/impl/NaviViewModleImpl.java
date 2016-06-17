@@ -14,6 +14,7 @@ import com.miss.imissyou.mycar.presenter.NaviViewPresenter;
 import com.miss.imissyou.mycar.presenter.impl.NaviViewPresenterImpl;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
+import com.miss.imissyou.mycar.util.RxVolleyUtils;
 
 /**
  * Created by Imissyou on 2016/6/12.
@@ -112,19 +113,25 @@ public class NaviViewModleImpl implements NaviViewModle {
                 if (result.isServiceResult()) {
                     mNaviViewPressenter.loadSuccess(Tag, result);
                 } else {
-                    onFailure(0,result.getResultInfo().equals("") ? "没有数据": result.getResultInfo());
+                    if (result.getResultInfo().equals(Constant.FileCOOKIE)) {
+                        RxVolleyUtils.getInstance().restartLogin();
+                    } else {
+                        onFailure(0, result.getResultInfo().equals("") ? "没有数据" : result.getResultInfo());
+                    }
                 }
             }
         };
 
-        new RxVolley.Builder()
-                .params(params)
-                .url(url)
-                .httpMethod(RxVolley.Method.GET)
-                .shouldCache(false)
-                .callback(callback)
-                .cacheTime(0)
-                .doTask();
+        RxVolleyUtils.getInstance().get(url ,null ,callback);
+
+//        new RxVolley.Builder()
+//                .params(params)
+//                .url(url)
+//                .httpMethod(RxVolley.Method.GET)
+//                .shouldCache(false)
+//                .callback(callback)
+//                .cacheTime(0)
+//                .doTask();
     }
 
 }

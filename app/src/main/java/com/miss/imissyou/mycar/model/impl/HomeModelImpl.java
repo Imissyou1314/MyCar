@@ -10,6 +10,9 @@ import com.miss.imissyou.mycar.presenter.HomePresenter;
 import com.miss.imissyou.mycar.presenter.impl.HomePresenterImpl;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
+import com.miss.imissyou.mycar.util.RxVolleyUtils;
+
+import java.util.Map;
 
 /**
  * Created by Imissyou on 2016/5/14.
@@ -30,7 +33,19 @@ public class HomeModelImpl implements HomeModel {
             @Override public void onSuccess(String t) {
                 LogUtils.d("接受的数据:" + t);
                 ResultBean resultBean = GsonUtils.getResultBean(t);
-                homePresenter.onSuccess(resultBean);
+                if (resultBean.isServiceResult()) {
+                    homePresenter.onSuccess(resultBean);
+                } else {
+                    if (resultBean.getResultInfo().equals(Constant.FileCOOKIE)) {
+                        RxVolleyUtils.getInstance().restartLogin();
+                    } else {
+                        onFailure(0,resultBean.getResultInfo());
+                    }
+                }
+            }
+            @Override
+            public void onSuccess(Map<String, String> headers, byte[] t) {
+                Constant.COOKIE = headers.get("cookie");
             }
 
             @Override public void onFailure(int errorNo, String strMsg) {
@@ -40,13 +55,15 @@ public class HomeModelImpl implements HomeModel {
             }
         };
 
-        new RxVolley.Builder()
-                .url(url)
-                .shouldCache(false)
-                .callback(callback)
-                .timeout(3000)
-                .httpMethod(RxVolley.Method.GET)
-                .doTask();
+        RxVolleyUtils.getInstance().get(url, null, callback);
+
+//        new RxVolley.Builder()
+//                .url(url)
+//                .shouldCache(false)
+//                .callback(callback)
+//                .timeout(3000)
+//                .httpMethod(RxVolley.Method.GET)
+//                .doTask();
     }
 
 }

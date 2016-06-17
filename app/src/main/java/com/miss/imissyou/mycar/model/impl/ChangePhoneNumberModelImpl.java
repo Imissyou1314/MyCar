@@ -9,6 +9,9 @@ import com.miss.imissyou.mycar.model.ChangePhoneNumberModle;
 import com.miss.imissyou.mycar.presenter.ChangePhoneNumberPresenter;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
+import com.miss.imissyou.mycar.util.RxVolleyUtils;
+
+import java.util.Map;
 
 /**
  * Created by Imissyou on 2016/5/5.
@@ -29,13 +32,22 @@ public class ChangePhoneNumberModelImpl implements ChangePhoneNumberModle {
                 mChangePhoneNumberPresenter.onFailure(errorNo, strMsg);
             }
 
+            @Override
+            public void onSuccess(Map<String, String> headers, byte[] t) {
+                Constant.COOKIE = headers.get("cookie");
+            }
+
             @Override public void onSuccess(String t) {
                 LogUtils.d(t);
                 ResultBean resultBean = GsonUtils.Instance().fromJson(t, ResultBean.class);
                 if (resultBean.isServiceResult()) {
                     mChangePhoneNumberPresenter.onSuccess(resultBean);
                 } else {
-                    onFailure(Constant.WARE_ERROR, resultBean.getResultInfo());
+                    if (resultBean.getResultInfo().equals(Constant.FileCOOKIE)) {
+                        RxVolleyUtils.getInstance().restartLogin();
+                    } else {
+                        onFailure(Constant.WARE_ERROR, resultBean.getResultInfo());
+                    }
                 }
             }
         });
@@ -77,10 +89,15 @@ public class ChangePhoneNumberModelImpl implements ChangePhoneNumberModle {
 
 
        LogUtils.w(url);
-        RxVolley.post(url, params, new HttpCallback() {
+        RxVolleyUtils.getInstance().post(url, params, new HttpCallback() {
             @Override public void onFailure(int errorNo, String strMsg) {
                 LogUtils.w("错误码:" + errorNo + ">>>::错误信息:" + strMsg);
                 mChangePhoneNumberPresenter.onFailure(errorNo, strMsg);
+            }
+
+            @Override
+            public void onSuccess(Map<String, String> headers, byte[] t) {
+                Constant.COOKIE = headers.get("cookie");
             }
 
             @Override public void onSuccess(String t) {
@@ -89,9 +106,12 @@ public class ChangePhoneNumberModelImpl implements ChangePhoneNumberModle {
                 if (resultBean.isServiceResult()) {
                     mChangePhoneNumberPresenter.onSuccess(resultBean);
                 } else {
-                    onFailure(Constant.WARE_ERROR, resultBean.getResultInfo());
+                    if (resultBean.getResultInfo().equals(Constant.FileCOOKIE)) {
+                        RxVolleyUtils.getInstance().restartLogin();
+                    } else {
+                        onFailure(Constant.WARE_ERROR, resultBean.getResultInfo());
+                    }
                 }
-
             }
         });
     }

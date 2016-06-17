@@ -1,6 +1,5 @@
 package com.miss.imissyou.mycar.model.impl;
 
-import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.lidroid.xutils.util.LogUtils;
@@ -10,6 +9,9 @@ import com.miss.imissyou.mycar.model.SumbitIndentModel;
 import com.miss.imissyou.mycar.presenter.SumbitIndentPresenter;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
+import com.miss.imissyou.mycar.util.RxVolleyUtils;
+
+import java.util.Map;
 
 /**
  * 向服务器递交订单
@@ -26,8 +28,8 @@ public class SumbitIndentModelImpl implements SumbitIndentModel {
     @Override public void sentIndentToService(OrderBean orderBean) {
         //TODO
         LogUtils.d("传进来的参数:" + GsonUtils.Instance().toJson(orderBean));
-        String url = Constant.SERVER_URL + "order/saveOrder";
-        HttpParams params = new HttpParams();
+        final String url = Constant.SERVER_URL + "order/saveOrder";
+        final HttpParams params = new HttpParams();
         params.put("userId", orderBean.getUserId() + "");
         //params.put("carId", orderBean.getCarId() + "");
         params.put("stationName", orderBean.getStationName());
@@ -44,10 +46,15 @@ public class SumbitIndentModelImpl implements SumbitIndentModel {
         params.put("agreementTime", orderBean.getAgreementTime());
 
         LogUtils.d("提交订单的URL:" + url);
-        RxVolley.post(url, params, new HttpCallback() {
+        final HttpCallback callback =  new HttpCallback() {
             @Override public void onFailure(int errorNo, String strMsg) {
                 LogUtils.d("错误信息:" + strMsg + errorNo);
                 mSumbitIndentPresenter.onFailure(errorNo, strMsg);
+            }
+
+            @Override
+            public void onSuccess(Map<String, String> headers, byte[] t) {
+                Constant.COOKIE = headers.get("cookie");
             }
 
             @Override public void onSuccess(String t) {
@@ -57,13 +64,20 @@ public class SumbitIndentModelImpl implements SumbitIndentModel {
                     if (resultBean.isServiceResult()) {
                         mSumbitIndentPresenter.onSuccess(resultBean);
                     } else {
-                        onFailure(0, resultBean.getResultInfo());
+                        if (resultBean.getResultInfo().equals(Constant.FileCOOKIE)) {
+                            RxVolleyUtils.getInstance().restartLogin();
+                        } else {
+                            onFailure(0, resultBean.getResultInfo());
+                        }
+
                     }
                 } else {
                     mSumbitIndentPresenter.onFailure(0, "获取数据失败");
                 }
             }
-        });
+        };
+
+        RxVolleyUtils.getInstance().post(url,params, callback);
     }
 
     @Override public void deleteOrder(int userId, int orderId) {
@@ -73,11 +87,16 @@ public class SumbitIndentModelImpl implements SumbitIndentModel {
         HttpParams params = new HttpParams();
         params.put("id", orderId);
 
-        RxVolley.post(url, params, new HttpCallback() {
+        RxVolleyUtils.getInstance().post(url, params, new HttpCallback() {
             @Override public void onFailure(int errorNo, String strMsg) {
                 if (errorNo == Constant.NETWORK_STATE)
                     strMsg = Constant.NOTNETWORK;
                 mSumbitIndentPresenter.onFailure(errorNo, strMsg);
+            }
+
+            @Override
+            public void onSuccess(Map<String, String> headers, byte[] t) {
+                Constant.COOKIE = headers.get("cookie");
             }
 
             @Override public void onSuccess(String t) {
@@ -85,7 +104,11 @@ public class SumbitIndentModelImpl implements SumbitIndentModel {
                 if (resultBean.isServiceResult()) {
                     mSumbitIndentPresenter.onSuccess(resultBean);
                 } else {
-                    onFailure(0, resultBean.getResultInfo());
+                    if (resultBean.getResultInfo().equals(Constant.FileCOOKIE)) {
+                        RxVolleyUtils.getInstance().restartLogin();
+                    } else {
+                        onFailure(0, resultBean.getResultInfo());
+                    }
                 }
             }
         });

@@ -4,7 +4,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
@@ -22,8 +21,6 @@ public class MusicPlayService extends Service{
 
     /**声明媒体播放器*/
     private MediaPlayer musicPlay;
-    /**声明播放进度*/
-    private boolean flag;           //标志位
     private String musicName;       //音乐名
 
     private String musicPath;
@@ -36,7 +33,9 @@ public class MusicPlayService extends Service{
 
     @Override public int onStartCommand(Intent intent, int flags, int startId) {
         LogUtils.d("进入音乐播放");
-        int type = intent.getIntExtra("type", Constant.MUSIC_CLICK_START);
+        int type = Constant.MUSIC_CLICK_START;
+        if (null != intent)
+            type = intent.getIntExtra("type", Constant.MUSIC_CLICK_START);
         switch (type) {
             case Constant.MUSIC_CLICK_START :
                 startMusic(intent);
@@ -65,7 +64,7 @@ public class MusicPlayService extends Service{
 
     /**
      * 设置播放进度播放
-     * @param intent
+     * @param intent   状态
      */
     private void seekToProgress(Intent intent) {
         int progress = intent.getIntExtra("progress",0);
@@ -82,7 +81,8 @@ public class MusicPlayService extends Service{
      */
     private void pauseMusic(Intent intent) {
         LogUtils.d("停止音乐播放");
-        flag = intent.getBooleanExtra("flag",false);
+        /*声明播放进度*/
+        boolean flag = intent.getBooleanExtra("flag", false);
 
         if (!flag) {
             //涨停音乐播放    线程关闭
@@ -104,6 +104,10 @@ public class MusicPlayService extends Service{
      */
     private void startMusic(Intent intent) {
         LogUtils.d("开始音乐播放");
+        //退出时报错的问题
+        if (null == intent)
+            return;
+
         musicPath = intent.getStringExtra("musicPath");      //获取音乐播放地址
         musicName = intent.getStringExtra("musicName");
 

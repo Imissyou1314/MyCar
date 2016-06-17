@@ -67,6 +67,9 @@ public class CarAndSaftActivity extends BaseActivity implements CarInfoView, Vie
                     .commit();
         } else {
             mCar = Constant.carBean;
+            startBtn.setToggleSate(mCar.isCarState());
+            stopBtn.setToggleSate(!mCar.isCarState());
+            wareBtn.setToggleSate(mCar.isCarAlarm());
         }
     }
 
@@ -79,6 +82,7 @@ public class CarAndSaftActivity extends BaseActivity implements CarInfoView, Vie
             public void onToggle(boolean on) {
                 if (on) {
                     mCarInfoPresenter.changeCarState(mCar.getId());
+                    stopBtn.setToggleSate(false);
                 }
             }
         });
@@ -87,7 +91,8 @@ public class CarAndSaftActivity extends BaseActivity implements CarInfoView, Vie
             @Override
             public void onToggle(boolean on) {
                 if(on) {
-                    mCarInfoPresenter.changeCarAlarmState(mCar.getId());
+                    mCarInfoPresenter.changeCarStop(mCar.getId());
+                    startBtn.setToggleSate(false);
                 }
                 LogUtils.d("不做操作");
             }

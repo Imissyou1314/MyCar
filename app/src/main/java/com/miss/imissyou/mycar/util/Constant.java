@@ -16,8 +16,6 @@ public class Constant {
     public static String SERVER_URL = "http://www.earltech.cn:8084/";
     public static final int HTTP_OK = 200;
 
-    public static final String GASSTION_BRAND_ZHONGSHIYOU = "中石油";
-    public static final String GASSTION_BRAND_ZHONGSHIHUAN = "中石化";
 
     public static UserBean userBean = new UserBean();        //用户实体类对象
     public static CarInfoBean carBean = new CarInfoBean();   //用户的车辆实体
@@ -36,6 +34,7 @@ public class Constant {
     /**
      * 进行储存用户数据的
      */
+    public static String FileCOOKIE = "用户未登录";
     public static String COOKIE = null;
     public static final String UserPassID = "MissYourPass";
     public static final String UserAccountID = "MissYourAccountID";
@@ -111,6 +110,7 @@ public class Constant {
     public static final String  MAP_MAINTAIN = "MainTain";          //附近维修站
     public static final String MAP_GASSTATION = "GasStation";       //附近加油站
     public static final String MAP_PARK = "park";                   //附近停车场
+
 
 
 }

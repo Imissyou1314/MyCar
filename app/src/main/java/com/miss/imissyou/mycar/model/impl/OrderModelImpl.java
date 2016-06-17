@@ -1,18 +1,17 @@
 package com.miss.imissyou.mycar.model.impl;
 
-import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.bean.BaseBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
-import com.miss.imissyou.mycar.bean.UserBean;
 import com.miss.imissyou.mycar.model.OrderModel;
 import com.miss.imissyou.mycar.presenter.OrderPresenter;
-import com.miss.imissyou.mycar.presenter.impl.OrderPresenterImpl;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
-import com.miss.imissyou.mycar.view.MainView;
+import com.miss.imissyou.mycar.util.RxVolleyUtils;
+
+import java.util.Map;
 
 /**
  * Created by Imissyou on 2016/4/20.
@@ -27,7 +26,7 @@ public class OrderModelImpl implements OrderModel {
         HttpParams params = new HttpParams();
         params.put("id",orderId + "");
         LogUtils.w("请求地址");
-        RxVolley.post(url, params, new HttpCallback() {
+        RxVolleyUtils.getInstance().post(url, params, new HttpCallback() {
             @Override
             public void onFailure(int errorNo, String strMsg) {
 
@@ -37,12 +36,21 @@ public class OrderModelImpl implements OrderModel {
             }
 
             @Override
+            public void onSuccess(Map<String, String> headers, byte[] t) {
+                Constant.COOKIE = headers.get("cookie");
+            }
+
+            @Override
             public void onSuccess(String t) {
                 ResultBean resultBean = GsonUtils.getResultBean(t);
                 if (resultBean.isServiceResult()) {
                     mOrderPresenter.delectOrderSuccess(resultBean);
                 } else {
-                    mOrderPresenter.onFailure(0,resultBean.getResultInfo());
+                    if (resultBean.getResultInfo().equals(Constant.FileCOOKIE)) {
+                        RxVolleyUtils.getInstance().restartLogin();         //刷新Cookie
+                    } else {
+                        mOrderPresenter.onFailure(0, resultBean.getResultInfo());
+                    }
                 }
             }
 
@@ -65,20 +73,35 @@ public class OrderModelImpl implements OrderModel {
                 }
 
                 @Override
+                public void onSuccess(Map<String, String> headers, byte[] t) {
+                    Constant.COOKIE = headers.get("cookie");
+                }
+
+                @Override
                 public void onSuccess(String t) {
                     LogUtils.d("获取到的数据" + t);
                     ResultBean resultBean = GsonUtils.Instance().fromJson(t, ResultBean.class);
-                    mOrderPresenter.onSuccess(resultBean);
+                    if (resultBean.isServiceResult()) {
+                        mOrderPresenter.onSuccess(resultBean);
+                    } else {
+                        if (resultBean.getResultInfo() == Constant.FileCOOKIE) {
+                            RxVolleyUtils.getInstance().restartLogin();         //刷新Cookie
+                        } else {
+                            mOrderPresenter.onFailure(0,resultBean.getResultInfo());
+                        }
+                    }
+
                 }
             };
 
-            new RxVolley.Builder()
-                    .cacheTime(0)
-                    .shouldCache(false)
-                    .httpMethod(RxVolley.Method.GET)
-                    .callback(callback)
-                    .url(url)
-                    .doTask();
+//            new RxVolley.Builder()
+//                    .cacheTime(0)
+//                    .shouldCache(false)
+//                    .httpMethod(RxVolley.Method.GET)
+//                    .callback(callback)
+//                    .url(url)
+//                    .doTask();
+            RxVolleyUtils.getInstance().get(url,null,callback);
 
         } else {
             mOrderPresenter.onFailure(0,"用户没有登录");

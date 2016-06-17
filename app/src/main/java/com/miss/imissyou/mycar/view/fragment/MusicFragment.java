@@ -113,7 +113,7 @@ public class MusicFragment extends Fragment implements ScreenShotable {
         mBtnNextMusic = (CheckBox) view.findViewById(R.id.btn_next_music);
         mBtnPauseMusic = (CheckBox) view.findViewById(R.id.btn_pause_music);
 
-        mListView = (ListView) view.findViewById(R.id.listview);
+        mListView = (ListView) view.findViewById(R.id.music_list_listview);
         mSeekBar = (SeekBar) view.findViewById(R.id.seekbar);
         mTextViewAllTime = (TextView) view.findViewById(R.id.textview_all_time);
         mTextViewMusicName = (TextView) view.findViewById(R.id.music_title_text);
@@ -147,6 +147,19 @@ public class MusicFragment extends Fragment implements ScreenShotable {
      * 添加页面触发事件
      */
     public void addViewListener() {
+        mListView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (null != view)
+                    view.setBackgroundColor(R.color.color_back_gui);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         mBtnNextMusic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -231,8 +244,11 @@ public class MusicFragment extends Fragment implements ScreenShotable {
     private void palyMusic(int type, int mPosition) {
         LogUtils.w("当前播放音乐:" + mPosition);
         LogUtils.w("总音乐数量:" + mMusics.size());
+        mListView.requestFocus();
+        mListView.setItemChecked(mPosition,true);
+
         mListView.setSelection(mPosition);
-        adapter.notifyDataSetChanged();
+        mListView.smoothScrollToPosition(mPosition);
 
         Music music = mMusics.get(mPosition);
         Intent intent = new Intent(getActivity().getApplicationContext(), MusicPlayService.class);
@@ -260,6 +276,7 @@ public class MusicFragment extends Fragment implements ScreenShotable {
 
         @Override
         public void onReceive(Context context, Intent intent) {
+
             int type = intent.getIntExtra("type", 0);
             LogUtils.w("音乐播放的广播:" + type + "结束时间:" + EndTime);
             switch (type) {

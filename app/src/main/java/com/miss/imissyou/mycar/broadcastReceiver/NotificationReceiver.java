@@ -25,7 +25,7 @@ public class NotificationReceiver extends BroadcastReceiver {
             //但Task栈已经空了，比如用户点击Back键退出应用，但进程还没有被系统回收，如果直接启动
             //MessageActivity,再按Back键就不会返回MainActivity了。所以在启动
             //MessageActivity，要先启动MainActivity。
-            LogUtils.i("NotificationReceiver the app process is alive");
+            LogUtils.i("当前应还存活着NotificationReceiver the app process is alive");
             Intent mainIntent = new Intent(context, MainActivity.class);
             //将MainAtivity的launchMode设置成SingleTask, 或者在下面flag中加上Intent.FLAG_CLEAR_TOP,
             //如果Task栈中有MainActivity的实例，就会把它移到栈顶，把在它之上的Activity都清理出栈，

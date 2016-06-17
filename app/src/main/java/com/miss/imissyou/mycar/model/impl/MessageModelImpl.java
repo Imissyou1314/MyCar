@@ -13,6 +13,9 @@ import com.miss.imissyou.mycar.presenter.MessagePresenter;
 import com.miss.imissyou.mycar.presenter.impl.MessagePresenterImpl;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
+import com.miss.imissyou.mycar.util.RxVolleyUtils;
+
+import java.util.Map;
 
 /**
  * 消息获取的实现层
@@ -31,7 +34,20 @@ public class MessageModelImpl implements MessageModle {
 
             @Override public void onSuccess(String t) {
                 ResultBean resultBean = GsonUtils.getResultBean(t);
-                mMessagePresenter.onSuccess(resultBean);
+                if (resultBean.isServiceResult()) {
+                    mMessagePresenter.onSuccess(resultBean);
+                } else {
+                    if (resultBean.getResultInfo().equals(Constant.FileCOOKIE)) {
+                        RxVolleyUtils.getInstance().restartLogin();
+                    } else {
+                        onFailure(0,resultBean.getResultInfo());
+                    }
+                }
+            }
+
+            @Override
+            public void onSuccess(Map<String, String> headers, byte[] t) {
+                Constant.COOKIE = headers.get("cookie");
             }
 
             @Override public void onFailure(int errorNo, String strMsg) {
@@ -41,13 +57,15 @@ public class MessageModelImpl implements MessageModle {
             }
         };
 
-        new RxVolley.Builder()
-                .shouldCache(false)
-                .cacheTime(0)
-                .url(url)
-                .callback(callback)
-                .httpMethod(RxVolley.Method.GET)
-                .doTask();
+        RxVolleyUtils.getInstance().get(url, null, callback);
+
+//        new RxVolley.Builder()
+//                .shouldCache(false)
+//                .cacheTime(0)
+//                .url(url)
+//                .callback(callback)
+//                .httpMethod(RxVolley.Method.GET)
+//                .doTask();
     }
 
     /**
@@ -67,9 +85,21 @@ public class MessageModelImpl implements MessageModle {
 
             @Override public void onSuccess(String t) {
                 ResultBean resultBean = GsonUtils.getResultBean(t);
-                if (resultBean != null)
+                if (resultBean.isServiceResult()) {
                     LogUtils.d(t);
-//                    mMessagePresenter.onSuccess(resultBean);
+                    mMessagePresenter.onSuccess(resultBean);
+                } else {
+                    if (resultBean.getResultInfo().equals(Constant.FileCOOKIE)){
+                        RxVolleyUtils.getInstance().restartLogin();
+                    } else {
+                        onFailure(0, resultBean.getResultInfo());
+                    }
+                }
+            }
+
+            @Override
+            public void onSuccess(Map<String, String> headers, byte[] t) {
+                Constant.COOKIE = headers.get("cookie");
             }
 
             @Override public void onFailure(int errorNo, String strMsg) {
@@ -98,6 +128,11 @@ public class MessageModelImpl implements MessageModle {
                 LogUtils.d("更新信息状态成功");
             }
 
+            @Override
+            public void onSuccess(Map<String, String> headers, byte[] t) {
+                Constant.COOKIE = headers.get("cookie");
+            }
+
             @Override public void onFailure(int errorNo, String strMsg) {
                 mMessagePresenter.onFailure(errorNo, strMsg);
             }
@@ -117,6 +152,11 @@ public class MessageModelImpl implements MessageModle {
                 mMessagePresenter.onFailure(errorNo, strMsg);
             }
 
+           @Override
+           public void onSuccess(Map<String, String> headers, byte[] t) {
+               Constant.COOKIE = headers.get("cookie");
+           }
+
             @Override
             public void onSuccess(String t) {
                 LogUtils.d(t);
@@ -124,19 +164,25 @@ public class MessageModelImpl implements MessageModle {
                 if (resultBean.isServiceResult()) {
                     mMessagePresenter.onSuccess(resultBean);
                 } else {
-                    onFailure(2 , resultBean.getResultInfo());
+                    if (resultBean.getResultInfo().equals(Constant.FileCOOKIE)) {
+                        RxVolleyUtils.getInstance().restartLogin();
+                    } else {
+                        onFailure(2, resultBean.getResultInfo());
+                    }
                 }
             }
         };
 
-        new RxVolley.Builder()
-                .shouldCache(false)
-                .cacheTime(0)
-                .url(url)
-                .timeout(5000)
-                .callback(callback)
-                .httpMethod(RxVolley.Method.GET)
-                .doTask();
+        RxVolleyUtils.getInstance().get(url,null,callback);
+
+//        new RxVolley.Builder()
+//                .shouldCache(false)
+//                .cacheTime(0)
+//                .url(url)
+//                .timeout(5000)
+//                .callback(callback)
+//                .httpMethod(RxVolley.Method.GET)
+//                .doTask();
     }
 
     public MessageModelImpl(MessagePresenterImpl messagePresenter) {

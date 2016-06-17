@@ -1,6 +1,5 @@
 package com.miss.imissyou.mycar.model.impl;
 
-import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.bean.ResultBean;
@@ -9,6 +8,9 @@ import com.miss.imissyou.mycar.presenter.OrderInfoPresenter;
 import com.miss.imissyou.mycar.presenter.impl.OrderInfoPresenterImpl;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
+import com.miss.imissyou.mycar.util.RxVolleyUtils;
+
+import java.util.Map;
 
 /**
  * 请求服务器获取订单信息
@@ -34,6 +36,11 @@ public class OrderInfoModelImpl implements OrderInfoModel {
             }
 
             @Override
+            public void onSuccess(Map<String, String> headers, byte[] t) {
+                Constant.COOKIE = headers.get("cookie");
+            }
+
+            @Override
             public void onSuccess(String t) {
 
                 LogUtils.d("获取到的数据" + t);
@@ -41,18 +48,24 @@ public class OrderInfoModelImpl implements OrderInfoModel {
                 if (resultBean.isServiceResult()) {
                     mOrderInfoPresenter.onSuccess(resultBean);
                 } else {
-                    mOrderInfoPresenter.onFailure(0,resultBean.getResultInfo());
+                    if (resultBean.getResultInfo().equals(Constant.FileCOOKIE)) {
+                        RxVolleyUtils.getInstance().restartLogin();
+                    } else {
+                        mOrderInfoPresenter.onFailure(0, resultBean.getResultInfo());
+                    }
                 }
             }
         };
 
-        new RxVolley.Builder()
-                .shouldCache(false)
-                .url(url)
-                .callback(callback)
-                .httpMethod(RxVolley.Method.GET)
-                .cacheTime(0)
-                .doTask();
+        RxVolleyUtils.getInstance().get(url, null, callback);
+
+//        new RxVolley.Builder()
+//                .shouldCache(false)
+//                .url(url)
+//                .callback(callback)
+//                .httpMethod(RxVolley.Method.GET)
+//                .cacheTime(0)
+//                .doTask();
 
     }
 }

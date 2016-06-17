@@ -42,8 +42,6 @@ public class MessageActivity extends BaseActivity implements MessageView {
     private MissSwipDismissListView listView;          //消息列
     @FindViewById(id = R.id.message_over)
     FrameLayout frame;
-    //@FindViewById(id = R.id.laod_message_progress)
-    //private CircleProgress progress;   //加载视图
 
 
     private MessagePresenter mMessagePresenter;
@@ -113,6 +111,7 @@ public class MessageActivity extends BaseActivity implements MessageView {
     @Override public void showResultSuccess(ResultBean resultBean) {
             this.messages.addAll(GsonUtils.getParams(resultBean, "message", MessageBean.class));
             if (messages.size() > 0) {
+
                 setListData(messages);
             } else {
                 ToastUtil.asLong("没有信息提示");
@@ -133,9 +132,7 @@ public class MessageActivity extends BaseActivity implements MessageView {
                     holder.setBackGround(R.color.color_blue);
                 }
 
-
-                //// TODO: 2016/6/12 添加到附近加油站和维修站
-
+                //设置到附近维修站
                 if (messageBean.getType() == 2) {
                     holder.setText(R.id.message_item_stateTask,"附近维修站");
                     holder.setOnClickListener(R.id.message_item_stateTask, new View.OnClickListener() {
@@ -144,6 +141,7 @@ public class MessageActivity extends BaseActivity implements MessageView {
                             goMapService(Constant.MAP_MAINTAIN);           //到附近维修站
                         }
                     });
+                    //设置到附近加油站
                 } else if(messageBean.getType() == 1){
                     holder.setText(R.id.message_item_stateTask,"附近加油站");
                     holder.setOnClickListener(R.id.message_item_stateTask, new View.OnClickListener() {
@@ -191,26 +189,11 @@ public class MessageActivity extends BaseActivity implements MessageView {
     }
 
     @Override public void showProgress() {
-//        progress.startAnim();
-//        progress.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-//            @Override
-//            public void onLayoutChange(View v, int left, int top, int right,
-//                                       int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-//                v.removeOnLayoutChangeListener(this);
-//                AnimatorView.showView(progress);
-//            }
-//        });
+
     }
 
     @Override public void hideProgress() {
-//        progress.stopAnim();
-//        progress.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-//            @Override public void onLayoutChange(View v, int left, int top, int right, int bottom,
-//                                       int oldLeft, int oldTop, int oldRight, int oldBottom) {
-//                v.removeOnLayoutChangeListener(this);
-//                AnimatorView.disShowView(progress);
-//            }
-//        });
+
     }
 
     @Override protected void onDestroy() {
@@ -221,6 +204,11 @@ public class MessageActivity extends BaseActivity implements MessageView {
     @Override public void deleteSucces(String resultMessage) {
         LogUtils.d("删除成功");
         Toast.makeText(MessageActivity.this, "删除成功", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void updateMessageList() {
+        LogUtils.d("刷新Message列表");
     }
 
     /**

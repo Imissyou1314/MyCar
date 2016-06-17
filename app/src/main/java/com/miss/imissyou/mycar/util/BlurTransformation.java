@@ -7,10 +7,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.support.v8.renderscript.Allocation;
-import android.support.v8.renderscript.Element;
-import android.support.v8.renderscript.RenderScript;
-import android.support.v8.renderscript.ScriptIntrinsicBlur;
+//import android.support.v8.renderscript.Allocation;
+//import android.support.v8.renderscript.Element;
+//import android.support.v8.renderscript.RenderScript;
+//import android.support.v8.renderscript.ScriptIntrinsicBlur;
 import android.support.annotation.FloatRange;
 
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
@@ -154,19 +154,19 @@ public class BlurTransformation extends BitmapTransformation{
 // TIPS: Glide will take care of returning our original Bitmap to the BitmapPool for us,
 // we needn't to recycle it.
 //        toTransform.recycle();  <--- Just for tips. by Ligboy
+//
+//        RenderScript rs = RenderScript.create(mContext);
+//        Allocation input = Allocation.createFromBitmap(rs, bitmap, Allocation.MipmapControl.MIPMAP_NONE,
+//                Allocation.USAGE_SCRIPT);
+//        Allocation output = Allocation.createTyped(rs, input.getType());
+//        ScriptIntrinsicBlur blur = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
+//
+//        blur.setInput(input);
+//        blur.setRadius(mRadius);
+//        blur.forEach(output);
+//        output.copyTo(bitmap);
 
-        RenderScript rs = RenderScript.create(mContext);
-        Allocation input = Allocation.createFromBitmap(rs, bitmap, Allocation.MipmapControl.MIPMAP_NONE,
-                Allocation.USAGE_SCRIPT);
-        Allocation output = Allocation.createTyped(rs, input.getType());
-        ScriptIntrinsicBlur blur = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
-
-        blur.setInput(input);
-        blur.setRadius(mRadius);
-        blur.forEach(output);
-        output.copyTo(bitmap);
-
-        rs.destroy();
+//        rs.destroy();
 
         if (needScaled) {
             return bitmap;

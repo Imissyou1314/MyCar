@@ -12,8 +12,8 @@ android {
         versionCode 1
         versionName "1.0"
         //高斯模糊
-        renderscriptTargetApi 19
-        renderscriptSupportModeEnabled true
+//        renderscriptTargetApi 19
+//        renderscriptSupportModeEnabled true
         multiDexEnabled true
     }
 
@@ -87,4 +87,5 @@ dependencies {
 
     //自由裁剪
     compile 'com.edmodo:cropper:1.0.1'
+    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
 }

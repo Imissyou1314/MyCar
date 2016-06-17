@@ -10,9 +10,11 @@ import com.miss.imissyou.mycar.presenter.UserInfoPresenter;
 import com.miss.imissyou.mycar.model.UserInfoModel;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
+import com.miss.imissyou.mycar.util.RxVolleyUtils;
 import com.miss.imissyou.mycar.util.StringUtil;
 
 import java.io.File;
+import java.util.Map;
 
 /**
  *
@@ -43,25 +45,38 @@ public class UserInfoModelImpl implements UserInfoModel{
                 mUserInfoPresenter.onFailure(errorNo, strMsg);
             }
 
+            @Override
+            public void onSuccess(Map<String, String> headers, byte[] t) {
+                Constant.COOKIE = headers.get("cookie");
+            }
+
             @Override public void onSuccess(String t) {
                 LogUtils.d("获取到的数据" + t);
                 ResultBean resultBean = GsonUtils.getResultBean(t);
                 if (resultBean.isServiceResult()) {
                     mUserInfoPresenter.checkSafePasswordSuccess(resultBean);
                 } else {
-                    onFailure(0, resultBean.getResultInfo());
+                    if (resultBean.getResultInfo().equals(Constant.FileCOOKIE)) {
+                        RxVolleyUtils.getInstance().restartLogin();
+                    } else {
+                        onFailure(0, resultBean.getResultInfo());
+                    }
                 }
             }
         };
 
-        new RxVolley.Builder()
-                .shouldCache(false)
-                .httpMethod(RxVolley.Method.POST)
-                .cacheTime(0)
-                .url(url)
-                .params(params)
-                .callback(callBack)
-                .doTask();
+
+
+        RxVolleyUtils.getInstance().post(url,params,callBack);
+
+//        new RxVolley.Builder()
+//                .shouldCache(false)
+//                .httpMethod(RxVolley.Method.POST)
+//                .cacheTime(0)
+//                .url(url)
+//                .params(params)
+//                .callback(callBack)
+//                .doTask();
 
     }
 
@@ -83,23 +98,34 @@ public class UserInfoModelImpl implements UserInfoModel{
                 mUserInfoPresenter.onFailure(errorNo, strMsg);
             }
 
+            @Override
+            public void onSuccess(Map<String, String> headers, byte[] t) {
+                Constant.COOKIE = headers.get("cookie");
+            }
+
             @Override public void onSuccess(String t) {
                 LogUtils.d(t);
                 ResultBean resultBean = GsonUtils.getResultBean(t);
                 if (resultBean.isServiceResult()) {
                     mUserInfoPresenter.onUpdateSuccess(resultBean);
                 } else {
-                    onFailure(Constant.WARE_ERROR, resultBean.getResultInfo());
+                    if (resultBean.getResultInfo().equals(Constant.FileCOOKIE)) {
+                        RxVolleyUtils.getInstance().restartLogin();
+                    } else {
+                        onFailure(Constant.WARE_ERROR, resultBean.getResultInfo());
+                    }
                 }
             }
         };
 
-        new RxVolley.Builder()
-                .url(url)
-                .httpMethod(RxVolley.Method.POST)
-                .params(params)
-                .callback(callback)
-                .doTask();
+        RxVolleyUtils.getInstance().post(url,params,callback);
+
+//        new RxVolley.Builder()
+//                .url(url)
+//                .httpMethod(RxVolley.Method.POST)
+//                .params(params)
+//                .callback(callback)
+//                .doTask();
     }
 
 }

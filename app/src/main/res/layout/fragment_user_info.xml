@@ -11,6 +11,8 @@
 
         <ImageView
             android:id="@+id/user_info_userhendImage"
+            android:scaleType="centerInside"
+            android:background="@color/color_carView_mainMesage"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

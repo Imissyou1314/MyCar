@@ -12,4 +12,10 @@ public interface MessageView extends MainView{
      * @param resultMessage  回调信息
      */
     void deleteSucces(String resultMessage);
+
+    /**
+     * View <===
+     * 刷新Message列表
+     */
+    void updateMessageList();
 }

@@ -2,6 +2,7 @@ package com.miss.imissyou.mycar.view.fragment;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.ResultBean;
@@ -25,6 +27,7 @@ import com.miss.imissyou.mycar.ui.LinearText;
 import com.miss.imissyou.mycar.ui.RoundImageView;
 import com.miss.imissyou.mycar.util.BlurTransformation;
 import com.miss.imissyou.mycar.util.Constant;
+import com.miss.imissyou.mycar.util.FastBulrTransformation;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.view.UserInfoView;
 import com.miss.imissyou.mycar.view.activity.CarAndSaftActivity;
@@ -95,11 +98,18 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
 
         if (null != Constant.userBean && null != Constant.userBean.getUserImg()) {
 
-            Glide.with(this).load(Constant.SERVER_URL + Constant.userBean.getUserImg())
-                    .transform(new BlurTransformation(getActivity(), 5.0f))
-                    .into(userHeadBackground);
+//            Glide.with(this).load(Constant.SERVER_URL + Constant.userBean.getUserImg())
+//                    .transform(new FastBulrTransformation(getActivity(), 20,
+//                            userHeadBackground.getMeasuredWidth(), userHeadBackground.getMeasuredHeight()))
+//                    .into(userHeadBackground);
+            Glide.with(this).load(Constant.SERVER_URL + Constant.userBean.getUserImg()).into(userHeadBackground).getSize(new SizeReadyCallback() {
+                @Override
+                public void onSizeReady(int width, int height) {
+                    LogUtils.d("宽高比" + width + "..:::" + height);
+                }
+            });
             LogUtils.w("图片地址：" + Constant.SERVER_URL + Constant.userBean.getUserImg());
-            Glide.with(this).load(Constant.SERVER_URL + Constant.userBean.getUserImg()).into(userHeadRound);
+//            Glide.with(this).load(Constant.SERVER_URL + Constant.userBean.getUserImg()).into(userHeadRound);
         } else {
             LogUtils.w("用户没有图片");
         }
@@ -136,7 +146,10 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
             switch (requestCode) {
                 case REQUEST_PHOTO:
                     //获取选中图片的路径
-                    Cursor cursor = getActivity().getContentResolver().query(data.getData(), null, null, null, null);
+                    String[] projection = {MediaStore.Images.Media.DATA};
+                    Cursor cursor = getActivity().getContentResolver().query(data.getData(), projection, null, null, null);
+                    if (cursor == null )
+                        return;
                     if (cursor.moveToFirst()) {
                         photo_path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
                         LogUtils.w("图片地址:" + photo_path);
@@ -242,10 +255,13 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
      */
     private void toSelectPhoto() {
         //直接调用相册的图片
-        Intent innerIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        //"android.intent.action.GET_CONTENT"
-        innerIntent.setType("image/*");
-        Intent wrapperIntent = Intent.createChooser(innerIntent, "选择二维码图片");
-        this.startActivityForResult(wrapperIntent, REQUEST_PHOTO);
+//        Intent innerIntent = new Intent(Intent.ACTION_GET_CONTENT);
+//        //"android.intent.action.GET_CONTENT"
+//        innerIntent.setType("image/*");
+//        Intent wrapperIntent = Intent.createChooser(innerIntent, "选择二维码图片");
+        Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
+//        startActivityForResult(intent, CHOOSE_PICTURE);
+        this.startActivityForResult(intent, REQUEST_PHOTO);
     }
 }

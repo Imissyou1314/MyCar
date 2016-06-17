@@ -11,10 +11,9 @@ import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.lidroid.xutils.util.LogUtils;
-import com.miss.imissyou.mycar.util.GsonUtils;
 
 /**
- * 负者网络请求
+ * 负责网络请求
  * Created by Imissyou on 2016/4/24.
  */
 public class GasStationModelImpl implements GasStationModle {

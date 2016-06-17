@@ -9,7 +9,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Process;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -24,6 +26,9 @@ import android.view.animation.AccelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
@@ -98,7 +103,6 @@ public class MainActivity extends ActionBarActivity
     /**
      * 导航栏的Item fragment
      */
-    //private HomeFragment homeFragment;
     private CarListFragment carListFragement;
     private MusicFragment musicFragment;
     private WZCXFragment weiZhanChaXunFragment;
@@ -108,7 +112,6 @@ public class MainActivity extends ActionBarActivity
     private CarInfoFragment carInfoFragment;
     private FirstAddCarFragment firstAddCarFragment;
     private StationMapViewFragment stationMapViewFrament;
-    private WeiZhangChaXunFragment weiZhangChaXunFragment;
 
     /**
      * 双击退出程序
@@ -124,6 +127,11 @@ public class MainActivity extends ActionBarActivity
     private List<Music> mMusics;        //音乐列表
     private int mPosition = 0;              //当前播放音乐列
     private MyBroadCastService myBroad;     //音乐播放广播
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
 
     @Override
@@ -172,6 +180,9 @@ public class MainActivity extends ActionBarActivity
         /**加载页面数据*/
 
         startMusic();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     /**
@@ -411,7 +422,6 @@ public class MainActivity extends ActionBarActivity
         orderFragment = new OrderFragment();
         naviViewFragment = new NaviViewFragment();
         stationMapViewFrament = new StationMapViewFragment();
-        weiZhangChaXunFragment = new  WeiZhangChaXunFragment();
         carInfoFragment = new CarInfoFragment();
         firstAddCarFragment = new FirstAddCarFragment();
         //编写自己的布
@@ -588,7 +598,6 @@ public class MainActivity extends ActionBarActivity
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         //设置OptionsMenu 菜单的选项
-
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
@@ -616,11 +625,6 @@ public class MainActivity extends ActionBarActivity
                         .replace(R.id.content_frame, userInfoFragment)
                         .commit();
                 return true;
-//            case R.id.action_unregister:
-//                unRegister();
-//                intent.setClass(this, LoginActivity.class);
-//                startActivity(intent);
-//                return true;
             case R.id.action_about:
                 intent.setClass(this, AboutActivity.class);
                 startActivity(intent);
@@ -678,7 +682,7 @@ public class MainActivity extends ActionBarActivity
         } else {
             finish();
             System.exit(0);
-            android.os.Process.killProcess(android.os.Process.myPid());
+            Process.killProcess(Process.myPid());
         }
     }
 //    else {
@@ -758,6 +762,46 @@ public class MainActivity extends ActionBarActivity
         startService(intent);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Main Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://com.miss.imissyou.mycar/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Main Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://com.miss.imissyou.mycar/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
+    }
+
     /**
      * 广播在活动中设置UI参数
      */
@@ -772,10 +816,8 @@ public class MainActivity extends ActionBarActivity
                 case 0:             //开始播放
                     int endTime = intent.getIntExtra("time", 0);
                     EndTime = endTime;
-                    String strTime = StringUtil.timeToString(endTime, "mm:ss");
-                    String musicName1 = intent.getStringExtra("name");
                     break;
-                case 1:            //实时更新时间 bo
+                case 1:            //实时更新时间
                     int playTime = intent.getIntExtra("time", 0);
                     LogUtils.w("当前播放时间:" + playTime);
                     if (playTime >= EndTime - 1000) {
