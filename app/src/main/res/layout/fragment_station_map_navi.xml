@@ -14,10 +14,10 @@
     <Button
         android:id="@+id/station_show_list"
         android:textSize="16sp"
-        android:visibility="gone"
+
         android:text="列表形式"
         android:textColor="#bbbbbb"
-        android:background="#02ffffff"
+        android:background="#30ffffff"
         android:layout_width="match_parent"
         android:layout_height="50dp" />
 

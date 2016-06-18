@@ -14,7 +14,9 @@ import com.miss.imissyou.mycar.R;
 
 import com.miss.imissyou.mycar.bean.MessageBean;
 import com.miss.imissyou.mycar.bean.NotificationMessage;
+import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
+import com.miss.imissyou.mycar.util.SystemUtils;
 import com.miss.imissyou.mycar.view.activity.MessageActivity;
 
 import cn.jpush.android.api.JPushInterface;
@@ -70,16 +72,26 @@ public class JpushReceiver extends BroadcastReceiver {
 
                 builder.setContentTitle(bundle.getString(JPushInterface.EXTRA_TITLE))
                         .setTicker(JPushInterface.EXTRA_MESSAGE)
+                        .setContentText(JPushInterface.EXTRA_MESSAGE)
                         .setContentIntent(pendingIntent)
                         .setSmallIcon(R.mipmap.ic_launcher);
 
             } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
                 System.out.println("用户点击打开了通知");
                 // 在这里可以自己写代码去定义用户点击后的行为
-                Intent i = new Intent(context, MessageActivity.class);  //自定义打开的界面
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtras(bundle);
-                context.startActivity(i);
+
+                //TODO 刷新页面
+                if (SystemUtils.isForeground(context, "com.miss.imissyou.mycar.view.activity.MessageActivity")) {
+                    LogUtils.d("只进行刷新页面+++++++++++++++++++++++++++====================>");
+
+
+                } else {            //不在当前页面进行跳转
+                    LogUtils.d("重新加载页面+++++++++++++++++++++++++++====================>");
+                    Intent i = new Intent(context, MessageActivity.class);  //自定义打开的界面
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtras(bundle);
+                    context.startActivity(i);
+                }
             } else {
                 LogUtils.d("Unhandled intent - " + intent.getAction());
             }

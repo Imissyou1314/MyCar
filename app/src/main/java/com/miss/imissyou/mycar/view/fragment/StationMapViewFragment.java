@@ -70,18 +70,18 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
     private AMapLocationClientOption mLocationOption;
 
 
-    private String cityName;            //城市名称
-    private String cityCode;            //城市编码
+    private String cityName;                            //城市名称
+    private String cityCode;                            //城市编码
 
-    private NaviViewPresenter mNaviViewPresenter;               //导航控制类
+    private NaviViewPresenter mNaviViewPresenter;       //导航控制类
 
     private List<GasStationBean> gasStationBeens;       //加油站的列表
 
-    private String type;       // 标志
-    private LatLng latlng;   //经纬度
-    private Button shouList;            //展现列表
-    private List<StopStation> stations;    //场地
-    private JZLocationConverter.LatLng  baiduLatlng; //百度经纬度
+    private String type;                                // 标志
+    private LatLng latlng;                              //经纬度
+    private Button shouList;                            //展现列表
+    private List<StopStation> stations;                 //场地
+    private JZLocationConverter.LatLng  baiduLatlng;    //百度经纬度
 
     @Nullable
     @Override
@@ -108,9 +108,8 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
     @Override
     protected void initData() {
         mNaviViewPresenter = new NaviViewPresenterImpl(this);
-//        tag = getArguments().getString("type");
 
-        if (type.equals(Constant.MAP_GASSTATION)) {
+        if (Constant.MAP_GASSTATION.equals(type)) {
             shouList.setVisibility(View.VISIBLE);
         }
         LogUtils.w("获取到的类型:" + type);
@@ -356,13 +355,14 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
             super.onDestroy();
             mMapView.onDestroy();
         }
+        deactivate();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         mMapView.onPause();
-        deactivate();
+
     }
 
     @Override
@@ -540,6 +540,7 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
 
         // 定位后自动 刷新页面
        if (null != mlocationClient){
+//           onCreate(null);
             mlocationClient.startLocation();
            LogUtils.d("重新进入地图页面");
         }

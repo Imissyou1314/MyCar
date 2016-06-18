@@ -31,6 +31,7 @@ public class Constant {
     public static final int MUSIC_NEXT = 5;
     public static final int MUSIC_PREVIOUS = 4;
     public static final String MUSIC_TIME = "com.missyou.music";
+    public static final String Message = "com.missyou.message";
 
     /**
      * 进行储存用户数据的

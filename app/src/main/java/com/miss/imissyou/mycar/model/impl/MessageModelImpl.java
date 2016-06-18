@@ -74,7 +74,7 @@ public class MessageModelImpl implements MessageModle {
                 ResultBean resultBean = GsonUtils.getResultBean(t);
                 if (resultBean.isServiceResult()) {
                     LogUtils.d(t);
-                    mMessagePresenter.onSuccess(resultBean);
+                    mMessagePresenter.deteleSuccess(resultBean);
                 } else {
                     if (resultBean.getResultInfo().equals(Constant.FileCOOKIE)){
                         RxVolleyUtils.getInstance().restartLogin();

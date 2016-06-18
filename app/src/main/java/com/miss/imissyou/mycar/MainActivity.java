@@ -202,12 +202,6 @@ public class MainActivity extends ActionBarActivity
             }
 
             @Override
-            public void onSuccess(Map<String, String> headers, byte[] t) {
-                LogUtils.d("header===>" + GsonUtils.Instance().toJson(headers));
-                Constant.COOKIE = headers.get("Set-Cookie");
-            }
-
-            @Override
             public void onSuccess(String t) {
                 LogUtils.d("收到的数据===>" + t);
                 ResultBean resultBean = GsonUtils.getResultBean(t);

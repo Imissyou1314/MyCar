@@ -4,18 +4,22 @@
     android:versionCode="1"
     android:versionName="1.0">
 
-    <uses-sdk android:minSdkVersion="17" android:targetSdkVersion="23" />
+    <uses-sdk
+        android:minSdkVersion="17"
+        android:targetSdkVersion="23" />
 
     <application
+        android:name="android.support.multidex.MultiDexApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:name="android.support.multidex.MultiDexApplication"
         android:theme="@style/AppTheme">
 
         <!--欢迎界面-->
-        <activity android:name=".view.activity.WelcomeActivity" android:screenOrientation="portrait">
+        <activity
+            android:name=".view.activity.WelcomeActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -23,43 +27,82 @@
         </activity>
 
 
-
-        <activity android:name=".MainActivity" android:screenOrientation="portrait">
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
 
         <!--Activity-->
-        <activity android:name=".view.activity.SettingActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.CutImageActvity" android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.AboutActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.AuthorActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.HelpActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.MessageActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.NaviViewActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.ChangePhoneNumberActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.CutImageActvity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.AboutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.AuthorActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.HelpActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.MessageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.NaviViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.ChangePhoneNumberActivity"
+            android:screenOrientation="portrait" />
 
         <!---用户模块-->
-        <activity android:name=".view.activity.UserBaseActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.ChangePasswordActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.ChangeUserNameActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.CarAndSaftActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.UserBaseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.ChangePasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.ChangeUserNameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.CarAndSaftActivity"
+            android:screenOrientation="portrait" />
 
         <!--用户登录-->
-        <activity android:name=".view.activity.FindPasswordActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.LoginActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.RegisterActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.FindPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.RegisterActivity"
+            android:screenOrientation="portrait" />
 
         <!--扫描二维码添加车辆-->
-        <activity android:name=".view.activity.AddNewCarActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.AddNewCarInputActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.InputBrandPageActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.AddNewCarActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.AddNewCarInputActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.InputBrandPageActivity"
+            android:screenOrientation="portrait" />
 
 
         <!--Ping ++ 支付功能-->
-        <activity android:name=".view.activity.PayActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.PayActivity"
+            android:screenOrientation="portrait" />
         <!-- Ping++ SDK 注册 -->
         <activity
             android:name="com.pingplusplus.android.PaymentActivity"
@@ -69,8 +112,8 @@
         <!-- 微信支付 -->
         <activity-alias
             android:name=".wxapi.WXPayEntryActivity"
-            android:screenOrientation="portrait"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:targetActivity="com.pingplusplus.android.PaymentActivity" />
 
         <!-- 支付宝 -->
@@ -78,27 +121,35 @@
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
-            android:screenOrientation="behind" >
-        </activity>
+            android:screenOrientation="behind"></activity>
         <activity
             android:name="com.alipay.sdk.auth.AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
-            android:screenOrientation="behind" >
-        </activity>
+            android:screenOrientation="behind"></activity>
 
         <!--违章查询-->
-        <activity android:name=".view.activity.WeiZhangChaXunActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.CityList" android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.ProvinceList" android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.ShortNameList" android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.WeizhangResult" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.WeiZhangChaXunActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.CityList"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.ProvinceList"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.ShortNameList"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.WeizhangResult"
+            android:screenOrientation="portrait" />
 
 
         <!--注册服务-->
-        <service android:name=".service.impl.MusicPlayService"/>
-        <service android:name=".service.impl.UpdateCarInfoService"/>
-        <service android:name=".service.impl.PollService"/>
+        <service android:name=".service.impl.MusicPlayService" />
+        <service android:name=".service.impl.UpdateCarInfoService" />
+        <service android:name=".service.impl.PollService" />
 
         <!--车违章查询-->
         <service android:name="com.cheshouye.api.client.WeizhangIntentService" />
@@ -108,8 +159,7 @@
         <service
             android:name="cn.jpush.android.service.DownloadService"
             android:enabled="true"
-            android:exported="false" >
-        </service>
+            android:exported="false"></service>
 
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
         <service
@@ -152,17 +202,17 @@
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
                 <data android:scheme="package" />
             </intent-filter>
 
         </receiver>
 
-
         <!-- User defined.  For test only  用户自定义的广播接收器-->
         <receiver
             android:name=".broadcastReceiver.JpushReceiver"
-            android:exported="false"
-            android:enabled="true">
+            android:enabled="true"
+            android:exported="false">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!--Required  用户注册SDK的intent-->
                 <action android:name="cn.jpush.android.intent.UNREGISTRATION" />
@@ -181,9 +231,10 @@
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="cn.jpush.android.ui.PushActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="com.miss.imissyou.mycar" />
             </intent-filter>
@@ -192,20 +243,27 @@
         <service
             android:name="cn.jpush.android.service.DownloadService"
             android:enabled="true"
-            android:exported="false" >
-        </service>
+            android:exported="false"></service>
         <!-- Required SDK核心功能-->
         <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
 
-        <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
-        <meta-data android:name="JPUSH_APPKEY" android:value="434549c4fd934c2af57ef4e1" /> <!--  </>值来自开发者平台取得的AppKey-->
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" />
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="434549c4fd934c2af57ef4e1" /> <!--  </>值来自开发者平台取得的AppKey-->
 
         <!--高德地图API-->
-        <meta-data android:name="com.amap.api.v2.apikey" android:value="b9ea926a1a00afb44896fc2cafd07aa2"/>
-        <service android:name="com.amap.api.location.APSService"/>
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="b9ea926a1a00afb44896fc2cafd07aa2" />
+        <service android:name="com.amap.api.location.APSService" />
 
         <!--Glide-->
-        <meta-data android:name="com.miss.imissyou.mycar.util.GlideConfiguration" android:value="GlideModule"/><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+        <meta-data
+            android:name="com.miss.imissyou.mycar.util.GlideConfiguration"
+            android:value="GlideModule" /><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data
             android:name="com.google.android.gms.version"
@@ -245,7 +303,10 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
 
     <!--极光推送-->
-    <permission android:name="com.miss.imissyou.mycar.permission.JPUSH_MESSAGE" android:protectionLevel="signature" />
+    <permission
+        android:name="com.miss.imissyou.mycar.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" />
+
     <uses-permission android:name="com.miss.imissyou.mycar.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -259,6 +320,7 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <!--打电话-->
     <uses-permission android:name="android.permission.CALL_PHONE" />

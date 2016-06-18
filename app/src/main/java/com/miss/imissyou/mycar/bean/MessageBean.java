@@ -1,8 +1,5 @@
 package com.miss.imissyou.mycar.bean;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 /**
  * 消息类的属性
  * Created by Imissyou on 2016/5/2.
@@ -56,13 +53,13 @@ public class MessageBean extends BaseBean{
         this.state = state;
     }
 
-    public String getSystemData() {
-        if (null == createTime) {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-            createTime = formatter.format(new Date(System.currentTimeMillis()));
-        }
-        return  createTime;
-    }
+//    public String getSystemData() {
+//        if (null == createTime) {
+//            SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+//            createTime = formatter.format(new Date(System.currentTimeMillis()));
+//        }
+//        return  createTime;
+//    }
 
     public String getCreateTime() {
         return createTime;

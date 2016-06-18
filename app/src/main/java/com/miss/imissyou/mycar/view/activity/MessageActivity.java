@@ -1,6 +1,10 @@
 package com.miss.imissyou.mycar.view.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -23,6 +27,8 @@ import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.FindViewById;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.util.SPUtils;
+import com.miss.imissyou.mycar.util.StringUtil;
+import com.miss.imissyou.mycar.util.SystemUtils;
 import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.view.MessageView;
 import com.miss.imissyou.mycar.view.fragment.StationMapViewFragment;
@@ -30,6 +36,8 @@ import com.miss.imissyou.mycar.view.fragment.StationMapViewFragment;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * 消息页面
@@ -47,16 +55,20 @@ public class MessageActivity extends BaseActivity implements MessageView {
 
     private MessagePresenter mMessagePresenter;
     List<MessageBean> messages = new ArrayList<MessageBean>();
+    private MyMessageCastReceiver receiver;             //本地广播
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_message);
+
     }
 
     /**
      * 加载数据
      */
     @Override public void initData() {
-        mMessagePresenter = new MessagePresenterImpl(this);
+        if (null == mMessagePresenter) {
+            mMessagePresenter = new MessagePresenterImpl(this);
+        }
         frame.setVisibility(View.GONE);
         SPUtils.init(this);
         if (SPUtils.getSp_set().getBoolean(Constant.MESSAGEALL, false)) {
@@ -70,6 +82,7 @@ public class MessageActivity extends BaseActivity implements MessageView {
     }
 
     @Override public void addListeners() {
+
         titleView.setTitleText("我的信息");         //设置标题
 
         listView.setOnDismissCallback(new MissSwipDismissListView.OnDismissCallback() {
@@ -80,6 +93,13 @@ public class MessageActivity extends BaseActivity implements MessageView {
                 removeMessage(dismissPosition);
             }
         });
+
+        //动态注册广播
+        receiver = new MyMessageCastReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("cn.jpush.android.intent.NOTIFICATION_OPENED");
+        filter.addCategory("com.miss.imissyou.mycar");
+        this.registerReceiver(receiver,filter);
     }
 
 
@@ -112,7 +132,6 @@ public class MessageActivity extends BaseActivity implements MessageView {
     @Override public void showResultSuccess(ResultBean resultBean) {
             this.messages.addAll(GsonUtils.getParams(resultBean, "message", MessageBean.class));
             if (messages.size() > 0) {
-
                 setListData(messages);
             } else {
                 ToastUtil.asLong("没有信息提示");
@@ -158,7 +177,7 @@ public class MessageActivity extends BaseActivity implements MessageView {
                 }
 
                 holder.setText(R.id.message_item_msg_text, "   " + messageBean.getContent());
-                LogUtils.d("信息的时间" + messageBean.getSystemData());
+                LogUtils.d("信息的时间==>" + messageBean.getCreateTime());
                 holder.setText(R.id.message_item_time_text, messageBean.getCreateTime());
                 holder.setText(R.id.message_item_title_text, messageBean.getTitle());
             }
@@ -191,9 +210,13 @@ public class MessageActivity extends BaseActivity implements MessageView {
 
     }
 
+
+
     @Override protected void onDestroy() {
         super.onDestroy();
         mMessagePresenter.detchView();
+       if (null != receiver)
+           this.unregisterReceiver(receiver);
     }
 
     @Override public void deleteSucces(String resultMessage) {
@@ -212,5 +235,32 @@ public class MessageActivity extends BaseActivity implements MessageView {
      */
     private void removeMessage(int dismissPosition) {
         this.messages.remove(dismissPosition);
+    }
+
+    /**
+     * 广播在活动中设置UI参数
+     */
+    public class MyMessageCastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            LogUtils.w("MyMessageCastReceiver " + intent.getAction());
+
+            if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
+                System.out.println("用户点击打开了通知");
+                // 在这里可以自己写代码去定义用户点击后的行为
+
+                //TODO 刷新页面
+                if (SystemUtils.isForeground(context, "com.miss.imissyou.mycar.view.activity.MessageActivity")) {
+                    LogUtils.d("只进Message行刷新页面+++++++++++++++++++++++++++====================>");
+                    if (null != mMessagePresenter) {
+                        mMessagePresenter.getUserAllMessage();
+                    } else {
+                        LogUtils.d("没初始化号===>数据为空");
+                    }
+                }
+            }
+        }
     }
 }
