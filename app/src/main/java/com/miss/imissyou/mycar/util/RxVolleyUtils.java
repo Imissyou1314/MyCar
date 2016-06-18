@@ -54,9 +54,10 @@ public class RxVolleyUtils {
         this.callback = callback;
 
         //设置Cookie
-        params.putHeaders("cookie",Constant.COOKIE);
+        params.putHeaders("Set-Cookie",Constant.COOKIE);
+        LogUtils.d("携带的Cookie===>" + Constant.COOKIE);
 
-            new RxVolley
+        new RxVolley
                     .Builder()
                     .params(params)
                     .url(url)
@@ -86,7 +87,8 @@ public class RxVolleyUtils {
         this.callback = callback;
 
         //设置Cookie
-        params.putHeaders("cookie",Constant.COOKIE);
+        params.putHeaders("Set-Cookie",Constant.COOKIE);
+        LogUtils.d("携带的Cookie===>" + Constant.COOKIE);
         new RxVolley
                 .Builder()
                 .params(params)
@@ -117,7 +119,8 @@ public class RxVolleyUtils {
         this.callback = callback;
 
         //设置Cookie
-        params.putHeaders("cookie",Constant.COOKIE);
+        params.putHeaders("Set-Cookie",Constant.COOKIE);
+        LogUtils.d("携带的Cookie===>" + Constant.COOKIE);
         new RxVolley
                 .Builder()
                 .params(params)
@@ -144,7 +147,7 @@ public class RxVolleyUtils {
         HttpCallback logincallback = new HttpCallback() {
             @Override
             public void onSuccess(Map<String, String> headers, byte[] t) {
-                Constant.COOKIE = headers.get("cookie");
+                Constant.COOKIE = headers.get("Set-Cookie");
 //                重新请求
                 Log.d("RxVolleyTools===>resute", "重新请求" + url);
                 post(url,params,callback);

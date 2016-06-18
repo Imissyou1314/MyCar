@@ -34,8 +34,6 @@ public class NaviViewModleImpl implements NaviViewModle {
          param.put("lon",lon + "");
         param.put("lat",lat + "");
 
-//        param.put("lon","121.538123");
-//        param.put("lat","31.677123");
         param.put("r", + Constant.GET_GASSTATION_R);
         param.put("page", 1);
         param.put("key", Constant.GET_GASSTATION_KEY);
@@ -109,11 +107,6 @@ public class NaviViewModleImpl implements NaviViewModle {
             }
 
             @Override
-            public void onSuccess(Map<String, String> headers, byte[] t) {
-                Constant.COOKIE = headers.get("cookie");
-            }
-
-            @Override
             public void onSuccess(String t) {
                 LogUtils.w("获取到的数据是:" + t);
                 ResultBean result = GsonUtils.getResultBean(t);
@@ -130,15 +123,6 @@ public class NaviViewModleImpl implements NaviViewModle {
         };
 
         RxVolleyUtils.getInstance().get(url ,params ,callback);
-
-//        new RxVolley.Builder()
-//                .params(params)
-//                .url(url)
-//                .httpMethod(RxVolley.Method.GET)
-//                .shouldCache(false)
-//                .callback(callback)
-//                .cacheTime(0)
-//                .doTask();
     }
 
 }

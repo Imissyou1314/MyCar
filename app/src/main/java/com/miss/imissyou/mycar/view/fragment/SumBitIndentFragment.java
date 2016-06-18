@@ -24,8 +24,8 @@ import com.miss.imissyou.mycar.bean.OrderBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.presenter.SumbitIndentPresenter;
 import com.miss.imissyou.mycar.presenter.impl.SumbitIndentPresenterImpl;
+import com.miss.imissyou.mycar.ui.FragmentTitleFragment;
 import com.miss.imissyou.mycar.ui.MissDialog;
-import com.miss.imissyou.mycar.ui.TitleFragment;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.DialogUtils;
 import com.miss.imissyou.mycar.util.GsonUtils;
@@ -53,7 +53,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     public static final String TAG = "SUMBITINDENTFRAGMENT";
 
 
-    private TitleFragment title;             //标题
+    private FragmentTitleFragment title;             //标题
     private TextView gastationName;         //加油站名字
     private TextView gastationAddres;       //加油站地址
     private TextView gastationDistance;     //加油站距离
@@ -102,7 +102,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     @Override
     protected void initView(View view) {
 
-        title = (TitleFragment) view.findViewById(R.id.sumbitlndent_title);
+        title = (FragmentTitleFragment) view.findViewById(R.id.sumbitlndent_title);
         gastationName = (TextView) view.findViewById(R.id.sumbit_gastation_gastationName);
         gastationAddres = (TextView) view.findViewById(R.id.sumbit_gastation_address);
         gastationDistance = (TextView) view.findViewById(R.id.sumbit_gastation_gastationDistance);
@@ -130,6 +130,19 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
 
     @Override
     protected void addViewsListener() {
+
+        //TODO 添加title的放回事件
+        title.setBackOnClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GasStationFragment fragment = (GasStationFragment) getActivity().getSupportFragmentManager()
+                        .findFragmentByTag(Constant.GasStationFragmetn);
+                if (null == fragment) {
+                    fragment = new GasStationFragment();
+                }
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_frame,fragment).commit();
+            }
+        });
 
         goNavi.setOnClickListener(this);
         gastationTimeSelect.setOnClickListener(this);
@@ -601,7 +614,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
         if (null != gasStation && null != gasStation.getPrice()) {
             setLatlng(gasStation);          //装载经纬度
             gastationName.setText(gasStation.getName());
-            gastationType.setText(gasStation.getBrandname().equals("不详")? "": gasStation.getBrandname() + "加油站");
+            gastationType.setText(gasStation.getBrandname().equals("不详")? "民营加油站": gasStation.getBrandname() + "加油站");
             gastationAddres.setText(gasStation.getAddress());
             gastationOrderTime.setText(formatter.format(new Date()));       //显示当前时间
             gastationDistance.setText((Integer.parseInt(gasStation.getDistance()) / 1000) + "公里");

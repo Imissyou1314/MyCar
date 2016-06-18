@@ -133,11 +133,6 @@ public class ChangePasswordActivity extends BaseActivity{
             }
 
             @Override
-            public void onSuccess(Map<String, String> headers, byte[] t) {
-                Constant.COOKIE = headers.get("cookie");
-            }
-
-            @Override
             public void onFailure(int errorNo, String strMsg) {
                 LogUtils.d("错误码:" + errorNo + ":::>>>" + strMsg);
             }

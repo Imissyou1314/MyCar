@@ -43,10 +43,6 @@ public class HomeModelImpl implements HomeModel {
                     }
                 }
             }
-            @Override
-            public void onSuccess(Map<String, String> headers, byte[] t) {
-                Constant.COOKIE = headers.get("cookie");
-            }
 
             @Override public void onFailure(int errorNo, String strMsg) {
                 if (errorNo == Constant.NETWORK_STATE)
@@ -56,14 +52,6 @@ public class HomeModelImpl implements HomeModel {
         };
 
         RxVolleyUtils.getInstance().get(url, null, callback);
-
-//        new RxVolley.Builder()
-//                .url(url)
-//                .shouldCache(false)
-//                .callback(callback)
-//                .timeout(3000)
-//                .httpMethod(RxVolley.Method.GET)
-//                .doTask();
     }
 
 }

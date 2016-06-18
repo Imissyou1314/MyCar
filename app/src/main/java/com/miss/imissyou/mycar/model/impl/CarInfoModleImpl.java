@@ -34,11 +34,6 @@ public class CarInfoModleImpl implements CarInfoModle {
                 mCarInfoPresenter.onFailure(errorNo, strMsg);
             }
 
-            @Override
-            public void onSuccess(Map<String, String> headers, byte[] t) {
-                Constant.COOKIE = headers.get("cookie");
-            }
-
             @Override public void onSuccess(String t) {
                 LogUtils.w(t);
                 ResultBean resultBean = GsonUtils.Instance().fromJson(t, ResultBean.class);
@@ -80,11 +75,6 @@ public class CarInfoModleImpl implements CarInfoModle {
                 mCarInfoPresenter.onFailure(errorNo, strMsg);
             }
 
-            @Override
-            public void onSuccess(Map<String, String> headers, byte[] t) {
-                Constant.COOKIE = headers.get("cookie");
-            }
-
             @Override public void onSuccess(String t) {
                 LogUtils.w(t);
                 ResultBean resultBean = GsonUtils.getResultBean(t);
@@ -113,11 +103,6 @@ public class CarInfoModleImpl implements CarInfoModle {
         RxVolleyUtils.getInstance().post(url, params, new HttpCallback() {
             @Override public void onFailure(int errorNo, String strMsg) {
                 mCarInfoPresenter.onFailure(errorNo, strMsg);
-            }
-
-            @Override
-            public void onSuccess(Map<String, String> headers, byte[] t) {
-                Constant.COOKIE = headers.get("cookie");
             }
 
             @Override public void onSuccess(String t) {
@@ -153,11 +138,6 @@ public class CarInfoModleImpl implements CarInfoModle {
                 mCarInfoPresenter.onFailure(errorNo,strMsg);
             }
 
-            @Override
-            public void onSuccess(Map<String, String> headers, byte[] t) {
-                Constant.COOKIE = headers.get("cookie");
-            }
-
             @Override public void onSuccess(String t) {
                 LogUtils.d("获取到的数据" + t  + "车辆信息");
                 ResultBean resultBean = GsonUtils.getResultBean(t);
@@ -181,11 +161,6 @@ public class CarInfoModleImpl implements CarInfoModle {
                 mCarInfoPresenter.onFailure(errorNo, strMsg);
             }
 
-            @Override
-            public void onSuccess(Map<String, String> headers, byte[] t) {
-                Constant.COOKIE = headers.get("cookie");
-            }
-
             @Override public void onSuccess(String t) {
                 LogUtils.w(t);
                 ResultBean resultBean = GsonUtils.Instance().fromJson(t, ResultBean.class);
@@ -204,15 +179,6 @@ public class CarInfoModleImpl implements CarInfoModle {
 
         LogUtils.w("请求路径:" + url);
         RxVolleyUtils.getInstance().get(url, null, callback);
-//        new RxVolley.Builder()
-//                .httpMethod(RxVolley.Method.GET)
-//                .encoding("utf-8")
-//                .url(url)
-//                .callback(callback)
-//                .timeout(5000)
-//                .shouldCache(false)
-//                .cacheTime(0)
-//                .doTask();
     }
 
     @Override
@@ -226,10 +192,6 @@ public class CarInfoModleImpl implements CarInfoModle {
         RxVolleyUtils.getInstance().post(url, params, new HttpCallback() {
             @Override public void onFailure(int errorNo, String strMsg) {
                 mCarInfoPresenter.onFailure(errorNo, strMsg);
-            }
-            @Override
-            public void onSuccess(Map<String, String> headers, byte[] t) {
-                Constant.COOKIE = headers.get("cookie");
             }
 
             @Override public void onSuccess(String t) {
@@ -256,11 +218,6 @@ public class CarInfoModleImpl implements CarInfoModle {
         RxVolleyUtils.getInstance().post(url, params, new HttpCallback() {
             @Override public void onFailure(int errorNo, String strMsg) {
                 mCarInfoPresenter.onFailure(errorNo, strMsg);
-            }
-
-            @Override
-            public void onSuccess(Map<String, String> headers, byte[] t) {
-                Constant.COOKIE = headers.get("cookie");
             }
 
             @Override public void onSuccess(String t) {

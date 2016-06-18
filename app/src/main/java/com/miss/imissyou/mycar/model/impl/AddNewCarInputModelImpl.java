@@ -43,11 +43,6 @@ public class AddNewCarInputModelImpl implements AddNewCarInputModel {
                 addNewCarInputPresenter.onFailure(errorNo,strMsg);
             }
 
-            @Override
-            public void onSuccess(Map<String, String> headers, byte[] t) {
-                Constant.COOKIE = headers.get("cookie");
-            }
-
             @Override public void onSuccess(String t) {
                 LogUtils.d("收到的数据"  + t);
 
@@ -66,15 +61,6 @@ public class AddNewCarInputModelImpl implements AddNewCarInputModel {
 
         RxVolleyUtils.getInstance().post(url,params,callback);
 
-//        new RxVolley.Builder()
-//                .contentType(RxVolley.ContentType.JSON)
-//                .httpMethod(RxVolley.Method.POST)
-//                .encoding("utf-8")
-//                .url(url)
-//                .timeout(6000)
-//                .params(params)
-//                .callback(callback)
-//                .doTask();
     }
 
     @Override public void saveToSPU(BaseBean baseBean, String key) {
@@ -96,11 +82,6 @@ public class AddNewCarInputModelImpl implements AddNewCarInputModel {
             }
 
             @Override
-            public void onSuccess(Map<String, String> headers, byte[] t) {
-                Constant.COOKIE = headers.get("cookie");
-            }
-
-            @Override
             public void onSuccess(String t) {
 
                             LogUtils.w("返回结果："+t);
@@ -119,12 +100,5 @@ public class AddNewCarInputModelImpl implements AddNewCarInputModel {
 
         RxVolleyUtils.getInstance().get(url,null, httpCallback);
 
-//        new RxVolley.Builder()
-//                .shouldCache(false)
-//                .cacheTime(0)
-//                .url(url)
-//                .callback(httpCallback)
-//                .httpMethod(RxVolley.Method.GET)
-//                .doTask();
     }
 }

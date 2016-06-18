@@ -98,12 +98,6 @@ public class RegisterActivity extends BaseActivity {
                 }
 
                 @Override
-                public void onSuccess(Map<String, String> headers, byte[] t) {
-                    Constant.COOKIE = headers.get("cookie");
-                    LogUtils.d(Constant.COOKIE);
-                }
-
-                @Override
                 public void onSuccess(String t) {
                     LogUtils.d("注册成功::" + t);
                     ResultBean resultBean = GsonUtils.Instance().fromJson(t, ResultBean.class);

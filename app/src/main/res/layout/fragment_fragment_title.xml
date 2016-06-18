@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:gravity="center"
+    android:paddingLeft="10dp"
+    android:background="@color/color_toolbar_background"
+    android:layout_height="55dp">
+
+    <LinearLayout
+        android:id="@+id/fragment_title_back"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <TextView
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:background="@mipmap/ic_go_left_white_icon"
+            android:layout_width="26dp"
+            android:layout_marginLeft="10dp"
+            android:layout_height="23dp" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/fragment_title"
+        android:text="Miss"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_weight="1"
+        android:layout_marginRight="60dp"
+        style="@style/title_back_textView" />
+</LinearLayout>

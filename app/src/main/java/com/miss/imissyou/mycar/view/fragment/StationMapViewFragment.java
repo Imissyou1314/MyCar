@@ -142,16 +142,10 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
     public void onClick(View v) {
 
         switch (v.getId()) {
-//            case R.id.station_navi_View_goButton:
-//                toNaviMap(mStartLat, mStartLon, mEndLat, mEndLon);
-//                break;
-//            case R.id.station_navi_View_BackButton:
-//                toNaviMap(mEndLat, mEndLon, mStartLat, mStartLon);
-//                break;
             case R.id.station_show_list:
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.content_frame,new GasStationFragment())
+                        .replace(R.id.container_frame,new GasStationFragment(),Constant.GasStationFragmetn)
                         .commit();
                 break;
             default:
@@ -420,6 +414,7 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
     private void showGasStation(List<GasStationBean> gasStationBeens) {
         LogUtils.d("车辆信息:" + gasStationBeens.size());
         int i = 0;
+        shouList.setVisibility(View.VISIBLE);
         for (GasStationBean station : gasStationBeens) {
 
             LatLng latLng = setLatlng(station);
@@ -461,6 +456,7 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
         LogUtils.d("订单列表:" + GsonUtils.Instance().toJson(stations));
         int i = 0;
 
+        shouList.setVisibility(View.GONE);
         for (StopStation station : stations) {
             View view = null;
             if (null != station.getLat() && null != station.getLon() && null != station.getName()) {
@@ -541,10 +537,6 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
      */
     public void setType(String type) {
         this.type = type;
-
-        //显示列表
-        if (type.equals(Constant.MAP_GASSTATION))
-            shouList.setVisibility(View.VISIBLE);
 
         // 定位后自动 刷新页面
        if (null != mlocationClient){

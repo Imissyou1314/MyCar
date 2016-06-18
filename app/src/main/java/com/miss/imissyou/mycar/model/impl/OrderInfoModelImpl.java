@@ -35,10 +35,6 @@ public class OrderInfoModelImpl implements OrderInfoModel {
                 mOrderInfoPresenter.onFailure(errorNo, strMsg);
             }
 
-            @Override
-            public void onSuccess(Map<String, String> headers, byte[] t) {
-                Constant.COOKIE = headers.get("cookie");
-            }
 
             @Override
             public void onSuccess(String t) {
@@ -58,14 +54,5 @@ public class OrderInfoModelImpl implements OrderInfoModel {
         };
 
         RxVolleyUtils.getInstance().get(url, null, callback);
-
-//        new RxVolley.Builder()
-//                .shouldCache(false)
-//                .url(url)
-//                .callback(callback)
-//                .httpMethod(RxVolley.Method.GET)
-//                .cacheTime(0)
-//                .doTask();
-
     }
 }

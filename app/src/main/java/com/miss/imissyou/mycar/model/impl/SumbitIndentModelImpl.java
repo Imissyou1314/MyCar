@@ -52,11 +52,6 @@ public class SumbitIndentModelImpl implements SumbitIndentModel {
                 mSumbitIndentPresenter.onFailure(errorNo, strMsg);
             }
 
-            @Override
-            public void onSuccess(Map<String, String> headers, byte[] t) {
-                Constant.COOKIE = headers.get("cookie");
-            }
-
             @Override public void onSuccess(String t) {
                 LogUtils.d("获取的数据:" + t);
                 ResultBean resultBean = GsonUtils.Instance().fromJson(t, ResultBean.class);
@@ -92,11 +87,6 @@ public class SumbitIndentModelImpl implements SumbitIndentModel {
                 if (errorNo == Constant.NETWORK_STATE)
                     strMsg = Constant.NOTNETWORK;
                 mSumbitIndentPresenter.onFailure(errorNo, strMsg);
-            }
-
-            @Override
-            public void onSuccess(Map<String, String> headers, byte[] t) {
-                Constant.COOKIE = headers.get("cookie");
             }
 
             @Override public void onSuccess(String t) {

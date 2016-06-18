@@ -28,6 +28,7 @@ import com.miss.imissyou.mycar.view.MessageView;
 import com.miss.imissyou.mycar.view.fragment.StationMapViewFragment;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -124,6 +125,10 @@ public class MessageActivity extends BaseActivity implements MessageView {
      */
     private void setListData(final List<MessageBean> messages) {
         LogUtils.d("获取到的订单列表:" + GsonUtils.Instance().toJson(messages));
+
+        //对数据进行倒叙
+        Collections.reverse(messages);
+
         CommonAdapter adapter = new CommonAdapter<MessageBean>(this, messages,
                 R.layout.item_message) {
             @Override public void convert(ViewHolder holder, final MessageBean messageBean) {

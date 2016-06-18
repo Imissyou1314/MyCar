@@ -47,6 +47,7 @@ import com.miss.imissyou.mycar.ui.sidemenu.util.ViewAnimator;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.FindSongs;
 import com.miss.imissyou.mycar.util.GsonUtils;
+import com.miss.imissyou.mycar.util.RxVolleyUtils;
 import com.miss.imissyou.mycar.util.SPUtils;
 import com.miss.imissyou.mycar.util.StringUtil;
 import com.miss.imissyou.mycar.util.ToastUtil;
@@ -201,8 +202,14 @@ public class MainActivity extends ActionBarActivity
             }
 
             @Override
+            public void onSuccess(Map<String, String> headers, byte[] t) {
+                LogUtils.d("header===>" + GsonUtils.Instance().toJson(headers));
+                Constant.COOKIE = headers.get("Set-Cookie");
+            }
+
+            @Override
             public void onSuccess(String t) {
-                LogUtils.w(t);
+                LogUtils.d("收到的数据===>" + t);
                 ResultBean resultBean = GsonUtils.getResultBean(t);
                 CarInfoBean carInfoBean = GsonUtils.getParam(resultBean, "car", CarInfoBean.class);
                 if (null != carInfoBean && null != carInfoBean.getId()) {
@@ -210,20 +217,17 @@ public class MainActivity extends ActionBarActivity
                     startMainFragment();
                     resultTag = true;
                 } else {
-                    Constant.carBean = null;
-                    resultTag = false;
+                    if (resultBean.getResultInfo().equals(Constant.FileCOOKIE)){
+                        RxVolleyUtils.getInstance().restartLogin();
+                    } else {
+                        Constant.carBean = null;
+                        resultTag = false;
+                    }
                 }
             }
         };
 
-        new RxVolley.Builder()
-                .url(url)
-                .shouldCache(false)
-                .cacheTime(0)
-                .httpMethod(RxVolley.Method.GET)
-                .callback(callback)
-                .doTask();
-
+        RxVolleyUtils.getInstance().get(url,null,callback);
         return resultTag;
     }
 
@@ -252,12 +256,9 @@ public class MainActivity extends ActionBarActivity
             HttpParams params = new HttpParams();
             params.put("password", password);
             params.put("loginid", account);
-            if (null != Constant.COOKIE)
-                params.put("cookie", Constant.COOKIE);
-            //服务器URL
             String url = Constant.SERVER_URL + "users/doLogin";
             LogUtils.d("登录: " + url);
-            RxVolley.post(url, params, new HttpCallback() {
+            RxVolleyUtils.getInstance().post(url, params, new HttpCallback() {
                 @Override
                 public void onFailure(int errorNo, String strMsg) {
                     if (errorNo == Constant.NETWORK_STATE)
@@ -279,8 +280,9 @@ public class MainActivity extends ActionBarActivity
                     //设置COOKIE
                     Constant.COOKIE = headers.get("Set-Cookie");
                     ResultBean resultBean = GsonUtils.Instance().fromJson(StringUtil.bytesToString(t), ResultBean.class);
+                    LogUtils.d("header===>" + GsonUtils.Instance().toJson(headers));
                     LogUtils.d("收到的数据::" + StringUtil.bytesToString(t));
-                    LogUtils.d(">>>Cookie===" + headers.get("Set-Cookie"));
+                    LogUtils.d("Cookie===>" + headers.get("Set-Cookie"));
                     if (resultBean.isServiceResult()) {
                         Constant.userBean = GsonUtils.getParam(resultBean, "user", UserBean.class);
                         setAlias(Constant.userBean.getId());
@@ -289,18 +291,21 @@ public class MainActivity extends ActionBarActivity
                             LogUtils.d("当前用户没有车辆");
                         }
                     } else {
-                        builder.setTitle("登录出错")
-                                .setMessage(resultBean.getResultInfo())
-                                .setSingleButton(true)
-                                .setNegativeButton("确定", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                        toDoLogin();
-                                    }
-                                });
-                        builder.create().show();
-
+                        if (resultBean.getResultInfo().equals(Constant.FileCOOKIE)){
+                            RxVolleyUtils.getInstance().restartLogin();
+                        } else {
+                            builder.setTitle("登录出错")
+                                    .setMessage(resultBean.getResultInfo())
+                                    .setSingleButton(true)
+                                    .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                            toDoLogin();
+                                        }
+                                    });
+                            builder.create().show();
+                        }
                     }
                 }
             });
@@ -477,34 +482,11 @@ public class MainActivity extends ActionBarActivity
                 return replaceFragment(carListFragement, position, Constant.CarListFragment);
             case ContentFragment.OIL:
                 //加油菜单项
-
-//                Bundle bundle = new Bundle();
-//                bundle.putString("type", Constant.MAP_GASSTATION);
-//                if (stationMapViewFrament.getArguments() == null) {
-//                    stationMapViewFrament.setArguments(bundle);
-//
-//                } else {
-//                    stationMapViewFrament.onDestroy();
-//                    stationMapViewFrament = null;
-//                    stationMapViewFrament = new StationMapViewFragment();
-//                    stationMapViewFrament.setArguments(bundle);
-//                    LogUtils.d("不做操作");
-//                }
                 stationMapViewFrament.setType(Constant.MAP_GASSTATION);
                 return replaceFragment(stationMapViewFrament, position, Constant.StationMapViewFragment);
 
             case ContentFragment.PARK:          //Todo 添加停车场
-//                Bundle bundlePark = new Bundle();
-//                bundlePark.putString("type", Constant.MAP_PARK);
-//                if (stationMapViewFrament.getArguments() == null) {
-//                    stationMapViewFrament.setArguments(bundlePark);
-//                } else {
-//                    stationMapViewFrament.onDestroy();
-//                    stationMapViewFrament = null;
-//                    stationMapViewFrament = new StationMapViewFragment();
-//                    stationMapViewFrament.setArguments(bundlePark);
-//                }
-//                LogUtils.d("position :" + position);
+//
                 stationMapViewFrament.setType(Constant.MAP_PARK);
                 return replaceFragment(stationMapViewFrament, position, Constant.StationMapViewFragment);
             case ContentFragment.ORDER:

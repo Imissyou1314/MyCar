@@ -27,7 +27,7 @@ import com.miss.imissyou.mycar.bean.GasStationBean;
 
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.presenter.impl.GasStationPresenterImpl;
-import com.miss.imissyou.mycar.ui.TitleFragment;
+import com.miss.imissyou.mycar.ui.FragmentTitleFragment;
 import com.miss.imissyou.mycar.ui.adapterutils.CommonAdapter;
 import com.miss.imissyou.mycar.ui.adapterutils.ViewHolder;
 import com.miss.imissyou.mycar.util.Constant;
@@ -51,7 +51,8 @@ public class GasStationFragment extends BaseFragment
 
     private static final String TAG = "GASSTATIONFRAGMENT";
     private ListView gasListView;       //加油站的列表
-    private TitleFragment title;
+
+    private FragmentTitleFragment fragmentTitle;
     private GasStationPresenter mGasStationPresenter;
     private List<GasStationBean> gasStationBeens;       //加油站的列表
 
@@ -67,7 +68,8 @@ public class GasStationFragment extends BaseFragment
 
     @Override
     protected void initView(View view) {
-        title = (TitleFragment) view.findViewById(R.id.gasStation_title) ;
+        fragmentTitle = (FragmentTitleFragment) view.findViewById(R.id.gasStation_fragment_title) ;
+
         gasListView = (ListView) view.findViewById(R.id.gasStation_ListView);
         initLoactionClicent();
         mlocationClient.startLocation();
@@ -80,6 +82,23 @@ public class GasStationFragment extends BaseFragment
     }
 
     @Override protected void addViewsListener() {
+
+        //TODO 添加返回地图监听事件
+        fragmentTitle.setTitleText("加油站列表");
+        fragmentTitle.setBackOnClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StationMapViewFragment fragment = (StationMapViewFragment) getActivity()
+                        .getSupportFragmentManager()
+                        .findFragmentByTag(Constant.StationMapViewFragment);
+                if (null == fragment) {
+                    fragment = new StationMapViewFragment();
+                }
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame,fragment).commit();
+            }
+        });
+
         gasListView.addHeaderView(getTitleView());
         gasListView.addFooterView(getFooterView());
         gasListView.setDividerHeight(10);           //TODO 添加Item的距离

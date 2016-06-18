@@ -1,7 +1,6 @@
 package com.miss.imissyou.mycar.model.impl;
 
 
-import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.lidroid.xutils.util.LogUtils;
@@ -14,7 +13,6 @@ import com.miss.imissyou.mycar.util.RxVolleyUtils;
 import com.miss.imissyou.mycar.util.StringUtil;
 
 import java.io.File;
-import java.util.Map;
 
 /**
  *
@@ -45,11 +43,6 @@ public class UserInfoModelImpl implements UserInfoModel{
                 mUserInfoPresenter.onFailure(errorNo, strMsg);
             }
 
-            @Override
-            public void onSuccess(Map<String, String> headers, byte[] t) {
-                Constant.COOKIE = headers.get("cookie");
-            }
-
             @Override public void onSuccess(String t) {
                 LogUtils.d("获取到的数据" + t);
                 ResultBean resultBean = GsonUtils.getResultBean(t);
@@ -65,18 +58,7 @@ public class UserInfoModelImpl implements UserInfoModel{
             }
         };
 
-
-
         RxVolleyUtils.getInstance().post(url,params,callBack);
-
-//        new RxVolley.Builder()
-//                .shouldCache(false)
-//                .httpMethod(RxVolley.Method.POST)
-//                .cacheTime(0)
-//                .url(url)
-//                .params(params)
-//                .callback(callBack)
-//                .doTask();
 
     }
 
@@ -98,11 +80,6 @@ public class UserInfoModelImpl implements UserInfoModel{
                 mUserInfoPresenter.onFailure(errorNo, strMsg);
             }
 
-            @Override
-            public void onSuccess(Map<String, String> headers, byte[] t) {
-                Constant.COOKIE = headers.get("cookie");
-            }
-
             @Override public void onSuccess(String t) {
                 LogUtils.d(t);
                 ResultBean resultBean = GsonUtils.getResultBean(t);
@@ -120,12 +97,6 @@ public class UserInfoModelImpl implements UserInfoModel{
 
         RxVolleyUtils.getInstance().post(url,params,callback);
 
-//        new RxVolley.Builder()
-//                .url(url)
-//                .httpMethod(RxVolley.Method.POST)
-//                .params(params)
-//                .callback(callback)
-//                .doTask();
     }
 
 }

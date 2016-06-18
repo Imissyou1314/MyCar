@@ -36,11 +36,6 @@ public class OrderModelImpl implements OrderModel {
             }
 
             @Override
-            public void onSuccess(Map<String, String> headers, byte[] t) {
-                Constant.COOKIE = headers.get("cookie");
-            }
-
-            @Override
             public void onSuccess(String t) {
                 ResultBean resultBean = GsonUtils.getResultBean(t);
                 if (resultBean.isServiceResult()) {
@@ -73,11 +68,6 @@ public class OrderModelImpl implements OrderModel {
                 }
 
                 @Override
-                public void onSuccess(Map<String, String> headers, byte[] t) {
-                    Constant.COOKIE = headers.get("cookie");
-                }
-
-                @Override
                 public void onSuccess(String t) {
                     LogUtils.d("获取到的数据" + t);
                     ResultBean resultBean = GsonUtils.Instance().fromJson(t, ResultBean.class);
@@ -94,13 +84,6 @@ public class OrderModelImpl implements OrderModel {
                 }
             };
 
-//            new RxVolley.Builder()
-//                    .cacheTime(0)
-//                    .shouldCache(false)
-//                    .httpMethod(RxVolley.Method.GET)
-//                    .callback(callback)
-//                    .url(url)
-//                    .doTask();
             RxVolleyUtils.getInstance().get(url,null,callback);
 
         } else {

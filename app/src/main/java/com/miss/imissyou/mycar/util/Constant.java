@@ -9,13 +9,14 @@ import com.miss.imissyou.mycar.bean.UserBean;
  */
 public class Constant {
 
+
+
     /**
      * 服务器URL
      */
-    public static String SERVER_URL = "http://192.168.1.106:8080/";
-//    public static String SERVER_URL = "http://www.earltech.cn:8084/";
+//    public static String SERVER_URL = "http://192.168.1.106:8080/";
+    public static String SERVER_URL = "http://www.earltech.cn:8084/";
     public static final int HTTP_OK = 200;
-
 
     public static UserBean userBean = new UserBean();        //用户实体类对象
     public static CarInfoBean carBean = new CarInfoBean();   //用户的车辆实体
@@ -95,14 +96,16 @@ public class Constant {
     public static String GASSTION_PHONE = "13763012723";
 
     //设置Fragment的Tag
-    public final static String FirstAddCarFragment = "FirstAddCarFragment";
-    public final static String CarInfoFragment = "CarInfoFragment";
-    public final static String CarListFragment = "CarListFragment";
-    public final static String NaviViewFragment = "NaviViewFragment";
+    public final static String FirstAddCarFragment = "FirstAddCarFragment";              //第一次进入页面
+    public final static String CarInfoFragment = "CarInfoFragment";                     //车辆信息
+    public final static String CarListFragment = "CarListFragment";                     //车辆列表
+    public final static String NaviViewFragment = "NaviViewFragment";                   //导航页面
     public final static String LocationMapFragment ="LocationMapFragment";
-    public final static String MusicFragment = "MusicFragment";
+    public final static String MusicFragment = "MusicFragment";                         //音乐播放页面
     public final static String UserInfoFragment = "UserInfoFragment";
     public final static String WeiZhanChaXunFragment = "WeiZhanChaXunFragment";
+    public static final String MAP_GASSTATION_FRAGMENT = "MAP_GASSTATION_FRAGMENT";     //加油站列表表
+    public static final String STATION_MAP_FRAGMENT = "STATION_MAP_FRAGMENT";           //站点信息
     public final static String OrderFragment = "OrderFragment";
     public final static String GasStationFragmetn = "GasStationFragmetn";
     public static String StationMapViewFragment = "StationMapViewFragment";

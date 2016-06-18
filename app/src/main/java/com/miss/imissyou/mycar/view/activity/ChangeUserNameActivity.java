@@ -87,11 +87,6 @@ public class ChangeUserNameActivity extends BaseActivity {
             }
 
             @Override
-            public void onSuccess(Map<String, String> headers, byte[] t) {
-                Constant.COOKIE = headers.get("cookie");
-            }
-
-            @Override
             public void onSuccess(String t) {
                 LogUtils.w("getData ：" + t);
                 ResultBean resultBean = GsonUtils.getResultBean(t);

@@ -32,11 +32,6 @@ public class ChangePhoneNumberModelImpl implements ChangePhoneNumberModle {
                 mChangePhoneNumberPresenter.onFailure(errorNo, strMsg);
             }
 
-            @Override
-            public void onSuccess(Map<String, String> headers, byte[] t) {
-                Constant.COOKIE = headers.get("cookie");
-            }
-
             @Override public void onSuccess(String t) {
                 LogUtils.d(t);
                 ResultBean resultBean = GsonUtils.Instance().fromJson(t, ResultBean.class);
@@ -58,7 +53,7 @@ public class ChangePhoneNumberModelImpl implements ChangePhoneNumberModle {
         String url = Constant.SERVER_URL + "users/update";
 
         HttpParams params = new HttpParams();
-        params.putHeaders("cookie", Constant.COOKIE);
+        params.putHeaders("Set-Cookie", Constant.COOKIE);
         params.put("id", Constant.userBean.getId() + "");
         params.put("phone", phoneNumber);
         params.put("verifyCode", code);
@@ -76,7 +71,7 @@ public class ChangePhoneNumberModelImpl implements ChangePhoneNumberModle {
         String url = Constant.SERVER_URL + "users/changeRelatedPhone";
 
         HttpParams params = new HttpParams();
-        params.putHeaders("cookie", Constant.COOKIE);
+        params.putHeaders("Set-Cookie", Constant.COOKIE);
         params.put("id", Constant.userBean.getId() + "");
         params.put("newPhone", phoneNumber);
         params.put("verifyCode", code);
@@ -93,11 +88,6 @@ public class ChangePhoneNumberModelImpl implements ChangePhoneNumberModle {
             @Override public void onFailure(int errorNo, String strMsg) {
                 LogUtils.w("错误码:" + errorNo + ">>>::错误信息:" + strMsg);
                 mChangePhoneNumberPresenter.onFailure(errorNo, strMsg);
-            }
-
-            @Override
-            public void onSuccess(Map<String, String> headers, byte[] t) {
-                Constant.COOKIE = headers.get("cookie");
             }
 
             @Override public void onSuccess(String t) {

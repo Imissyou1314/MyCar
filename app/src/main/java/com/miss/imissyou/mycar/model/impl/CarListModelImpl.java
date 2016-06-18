@@ -38,11 +38,6 @@ public class CarListModelImpl implements CarListModel {
             }
 
             @Override
-            public void onSuccess(Map<String, String> headers, byte[] t) {
-                Constant.COOKIE = headers.get("cookie");
-            }
-
-            @Override
             public void onSuccess(String t) {
 
                 LogUtils.w(t);
@@ -60,16 +55,6 @@ public class CarListModelImpl implements CarListModel {
         };
         LogUtils.w("请求路径:" + url);
         RxVolleyUtils.getInstance().get(url, null, callback);
-
-//        new RxVolley.Builder()
-//                .httpMethod(RxVolley.Method.GET)
-//                .encoding("utf-8")
-//                .url(url)
-//                .callback(callback)
-//                .timeout(5000)
-//                .shouldCache(false)
-//                .cacheTime(0)
-//                .doTask();
     }
 
     @Override public void delectCar(Long carId) {
@@ -87,10 +72,6 @@ public class CarListModelImpl implements CarListModel {
                 mCarListPresenter.onFailure(errorNo,strMsg);
             }
 
-            @Override
-            public void onSuccess(Map<String, String> headers, byte[] t) {
-                Constant.COOKIE = headers.get("cookie");
-            }
 
             @Override
             public void onSuccess(String t) {

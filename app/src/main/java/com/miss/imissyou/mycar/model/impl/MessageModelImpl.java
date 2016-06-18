@@ -45,11 +45,6 @@ public class MessageModelImpl implements MessageModle {
                 }
             }
 
-            @Override
-            public void onSuccess(Map<String, String> headers, byte[] t) {
-                Constant.COOKIE = headers.get("cookie");
-            }
-
             @Override public void onFailure(int errorNo, String strMsg) {
                 if (errorNo == Constant.NETWORK_STATE)
                     strMsg = Constant.NOTNETWORK;
@@ -58,14 +53,6 @@ public class MessageModelImpl implements MessageModle {
         };
 
         RxVolleyUtils.getInstance().get(url, null, callback);
-
-//        new RxVolley.Builder()
-//                .shouldCache(false)
-//                .cacheTime(0)
-//                .url(url)
-//                .callback(callback)
-//                .httpMethod(RxVolley.Method.GET)
-//                .doTask();
     }
 
     /**
@@ -75,7 +62,7 @@ public class MessageModelImpl implements MessageModle {
     @Override public void deleteMessage(@NonNull int id) {
 
         HttpParams params = new HttpParams();
-        params.putHeaders("cookie", Constant.COOKIE);
+        params.putHeaders("Set-Cookie", Constant.COOKIE);
         params.put("id", id);
         String url = Constant.SERVER_URL + "message/delete";
 
@@ -95,11 +82,6 @@ public class MessageModelImpl implements MessageModle {
                         onFailure(0, resultBean.getResultInfo());
                     }
                 }
-            }
-
-            @Override
-            public void onSuccess(Map<String, String> headers, byte[] t) {
-                Constant.COOKIE = headers.get("cookie");
             }
 
             @Override public void onFailure(int errorNo, String strMsg) {
@@ -128,11 +110,6 @@ public class MessageModelImpl implements MessageModle {
                 LogUtils.d("更新信息状态成功");
             }
 
-            @Override
-            public void onSuccess(Map<String, String> headers, byte[] t) {
-                Constant.COOKIE = headers.get("cookie");
-            }
-
             @Override public void onFailure(int errorNo, String strMsg) {
                 mMessagePresenter.onFailure(errorNo, strMsg);
             }
@@ -152,11 +129,6 @@ public class MessageModelImpl implements MessageModle {
                 mMessagePresenter.onFailure(errorNo, strMsg);
             }
 
-           @Override
-           public void onSuccess(Map<String, String> headers, byte[] t) {
-               Constant.COOKIE = headers.get("cookie");
-           }
-
             @Override
             public void onSuccess(String t) {
                 LogUtils.d(t);
@@ -174,15 +146,6 @@ public class MessageModelImpl implements MessageModle {
         };
 
         RxVolleyUtils.getInstance().get(url,null,callback);
-
-//        new RxVolley.Builder()
-//                .shouldCache(false)
-//                .cacheTime(0)
-//                .url(url)
-//                .timeout(5000)
-//                .callback(callback)
-//                .httpMethod(RxVolley.Method.GET)
-//                .doTask();
     }
 
     public MessageModelImpl(MessagePresenterImpl messagePresenter) {
