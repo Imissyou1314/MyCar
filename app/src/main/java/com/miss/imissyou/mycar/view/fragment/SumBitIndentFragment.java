@@ -53,7 +53,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     public static final String TAG = "SUMBITINDENTFRAGMENT";
 
 
-    private FragmentTitleFragment title;             //标题
+//    private FragmentTitleFragment title;             //标题
     private TextView gastationName;         //加油站名字
     private TextView gastationAddres;       //加油站地址
     private TextView gastationDistance;     //加油站距离
@@ -104,7 +104,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     @Override
     protected void initView(View view) {
 
-        title = (FragmentTitleFragment) view.findViewById(R.id.sumbitlndent_title);
+//        title = (FragmentTitleFragment) view.findViewById(R.id.sumbitlndent_title);
         gastationName = (TextView) view.findViewById(R.id.sumbit_gastation_gastationName);
         gastationAddres = (TextView) view.findViewById(R.id.sumbit_gastation_address);
         gastationDistance = (TextView) view.findViewById(R.id.sumbit_gastation_gastationDistance);
@@ -127,30 +127,30 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
 
     @Override
     protected void initData() {
-        title.setTitleText("填写订单");
-    }
+//        title.setTitleText("填写订单");
+   }
 
     @Override
     protected void addViewsListener() {
 
-        //TODO 添加title的放回事件
-        title.setBackOnClick(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if ("list".equals(goBack)) {
-
-                    GasStationFragment fragment = (GasStationFragment) getActivity().getSupportFragmentManager()
-                            .findFragmentByTag(Constant.GasStationFragmetn);
-                    if (null == fragment) {
-                        fragment = new GasStationFragment();
-                    }
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_frame, fragment).commit();
-                } else {
-                    LogUtils.d("从地图进入的");
-                }
-            }
-        });
+//        //TODO 添加title的放回事件
+//        title.setBackOnClick(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                if ("list".equals(goBack)) {
+//
+//                    GasStationFragment fragment = (GasStationFragment) getActivity().getSupportFragmentManager()
+//                            .findFragmentByTag(Constant.GasStationFragmetn);
+//                    if (null == fragment) {
+//                        fragment = new GasStationFragment();
+//                    }
+//                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
+//                } else {
+//                    LogUtils.d("从地图进入的");
+//                }
+//            }
+//        });
 
         goNavi.setOnClickListener(this);
         gastationTimeSelect.setOnClickListener(this);

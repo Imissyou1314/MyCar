@@ -53,7 +53,7 @@ public class GasStationFragment extends BaseFragment
     private static final String TAG = "GASSTATIONFRAGMENT";
     private ListView gasListView;       //加油站的列表
 
-    private FragmentTitleFragment fragmentTitle;
+//    private FragmentTitleFragment fragmentTitle;
     private GasStationPresenter mGasStationPresenter;
     private List<GasStationBean> gasStationBeens;       //加油站的列表
 
@@ -69,7 +69,7 @@ public class GasStationFragment extends BaseFragment
 
     @Override
     protected void initView(View view) {
-        fragmentTitle = (FragmentTitleFragment) view.findViewById(R.id.gasStation_fragment_title) ;
+//        fragmentTitle = (FragmentTitleFragment) view.findViewById(R.id.gasStation_fragment_title) ;
 
         gasListView = (ListView) view.findViewById(R.id.gasStation_ListView);
         initLoactionClicent();
@@ -85,21 +85,21 @@ public class GasStationFragment extends BaseFragment
     @Override protected void addViewsListener() {
 
         //TODO 添加返回地图监听事件
-        fragmentTitle.setTitleText("加油站列表");
-        fragmentTitle.setBackOnClick(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                StationMapViewFragment fragment = (StationMapViewFragment) getActivity()
-                        .getSupportFragmentManager()
-                        .findFragmentByTag(Constant.StationMapViewFragment);
-                if (null == fragment) {
-                    fragment = new StationMapViewFragment();
-                }
-                //改为隐藏
-                onDestroyView();            //销毁视图
-//                getActivity().getSupportFragmentManager().beginTransaction().show(fragment).commit();
-            }
-        });
+//        fragmentTitle.setTitleText("加油站列表");
+//        fragmentTitle.setBackOnClick(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                StationMapViewFragment fragment = (StationMapViewFragment) getActivity()
+//                        .getSupportFragmentManager()
+//                        .findFragmentByTag(Constant.StationMapViewFragment);
+//                if (null == fragment) {
+//                    fragment = new StationMapViewFragment();
+//                }
+//                //改为隐藏
+//                onDestroyView();            //销毁视图
+////                getActivity().getSupportFragmentManager().beginTransaction().show(fragment).commit();
+//            }
+//        });
 
         gasListView.addHeaderView(getTitleView());
         gasListView.addFooterView(getFooterView());
@@ -121,7 +121,7 @@ public class GasStationFragment extends BaseFragment
 
                 fm.beginTransaction()
                         .addToBackStack(Constant.GasStationFragmetn)
-                        .replace(R.id.container_frame, gasFragment, SumBitIndentFragment.TAG)
+                        .replace(R.id.content_frame, gasFragment, SumBitIndentFragment.TAG)
                         .commit();
             }
         });

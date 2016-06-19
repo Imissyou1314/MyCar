@@ -5,10 +5,10 @@
     android:orientation="vertical"
     android:background="#eeeeee">
 
-    <com.miss.imissyou.mycar.ui.FragmentTitleFragment
-        android:id="@+id/sumbitlndent_title"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/title_height"/>
+    <!--<com.miss.imissyou.mycar.ui.FragmentTitleFragment-->
+        <!--android:id="@+id/sumbitlndent_title"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/title_height"/>-->
 
     <ScrollView
         android:layout_width="match_parent"

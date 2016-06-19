@@ -144,7 +144,7 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
             case R.id.station_show_list:
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.container_frame,new GasStationFragment(),Constant.GasStationFragmetn)
+                        .replace(R.id.content_frame,new GasStationFragment(),Constant.GasStationFragmetn)
                         .commit();
                 break;
             default:
