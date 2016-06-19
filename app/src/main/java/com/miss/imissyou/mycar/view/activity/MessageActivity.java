@@ -78,7 +78,6 @@ public class MessageActivity extends BaseActivity implements MessageView {
             LogUtils.w("获取用户所有未读信息");
             mMessagePresenter.getUserUnReadMessage();
         }
-        //changeStateToService();
     }
 
     @Override public void addListeners() {
@@ -97,6 +96,7 @@ public class MessageActivity extends BaseActivity implements MessageView {
         //动态注册广播
         receiver = new MyMessageCastReceiver();
         IntentFilter filter = new IntentFilter();
+        filter.addAction("cn.jpush.android.intent.NOTIFICATION_RECEIVED");
         filter.addAction("cn.jpush.android.intent.NOTIFICATION_OPENED");
         filter.addCategory("com.miss.imissyou.mycar");
         this.registerReceiver(receiver,filter);
@@ -247,13 +247,12 @@ public class MessageActivity extends BaseActivity implements MessageView {
 
             LogUtils.w("MyMessageCastReceiver " + intent.getAction());
 
-            if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
-                System.out.println("用户点击打开了通知");
-                // 在这里可以自己写代码去定义用户点击后的行为
-
-                //TODO 刷新页面
-                if (SystemUtils.isForeground(context, "com.miss.imissyou.mycar.view.activity.MessageActivity")) {
-                    LogUtils.d("只进Message行刷新页面+++++++++++++++++++++++++++====================>");
+            //接收到Jpush后自动刷新页面
+            if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
+                System.out.println("用户接收到Jpush通知");
+                if (SystemUtils.isForeground(context,
+                        "com.miss.imissyou.mycar.view.activity.MessageActivity")) {
+                    LogUtils.d("只进Message行刷新页面====================>");
                     if (null != mMessagePresenter) {
                         mMessagePresenter.getUserAllMessage();
                     } else {

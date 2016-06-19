@@ -40,6 +40,7 @@ import com.miss.imissyou.mycar.view.GasStationView;
 import com.miss.imissyou.mycar.presenter.GasStationPresenter;
 import com.miss.imissyou.mycar.view.activity.NaviViewActivity;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -126,6 +127,9 @@ public class GasStationFragment extends BaseFragment
 
 
     @Override public void showResultSuccess(List<GasStationBean> resultBeans) {
+        //对加油站进行倒叙
+        Collections.reverse(resultBeans);
+
         this.gasStationBeens = resultBeans;
 
         gasListView.setAdapter(new CommonAdapter<GasStationBean>(getActivity(), resultBeans, R.layout.item_gasstionlist) {

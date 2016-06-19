@@ -59,8 +59,10 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(R.layout.fragment_user_info, inflater, container, savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        return super.onCreateView(R.layout.fragment_user_info, inflater,
+                container, savedInstanceState);
     }
 
 
@@ -105,7 +107,7 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
             Glide.with(this).load(Constant.SERVER_URL + Constant.userBean.getUserImg()).asBitmap().into(new SimpleTarget<Bitmap>() {
                 @Override
                 public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                    userHeadBackground.setImageBitmap(FastBlur.doBlur(resource,20,true));
+                    userHeadBackground.setImageBitmap(FastBlur.doBlur(resource,3,true));               //设置毛玻璃效果
                     userHeadBackground.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 }
             });
@@ -148,12 +150,6 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
                 case REQUEST_PHOTO:
                     //获取选中图片的路径
                     String[] projection = {MediaStore.Images.Media.DATA};
-                    String mpath = data.getData().getPath();
-                    LogUtils.d("图片地址" + mpath);
-                    if (null != mpath) {
-                        toCutPage(mpath);
-                        return;
-                    }
 
                     Cursor cursor = getActivity().getContentResolver().query(data.getData(), projection, null, null, null);
                     if (cursor == null)

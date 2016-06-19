@@ -127,7 +127,7 @@ public class RxVolleyUtils {
                 .httpMethod(RxVolley.Method.POST)
                 .url(url)
                 .callback(callback)
-                .shouldCache(true)
+                .shouldCache(false)
                 .timeout(5000)
                 .doTask();
     }

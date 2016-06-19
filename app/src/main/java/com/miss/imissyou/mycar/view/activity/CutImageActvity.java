@@ -73,6 +73,7 @@ public class CutImageActvity extends BaseActivity implements UserInfoView {
             @Override
             public void onClick(View v) {
                 sumbit.setEnabled(false);
+                sumbit.setBackgroundColor(R.color.md_btn_selected);
                 setOnResult();
             }
         });
@@ -125,8 +126,6 @@ public class CutImageActvity extends BaseActivity implements UserInfoView {
     @Override
     public void onUpdateSuccess(String resultMessage) {
         LogUtils.d("更新成功" + resultMessage);
-//        Intent asIntent = new Intent(CutImageActvity.this, MainActivity.class);
-//        startActivity(asIntent);
         finish();
     }
 
