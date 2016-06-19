@@ -95,8 +95,9 @@ public class GasStationFragment extends BaseFragment
                 if (null == fragment) {
                     fragment = new StationMapViewFragment();
                 }
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame,fragment).commit();
+                //改为隐藏
+                onDestroyView();            //销毁视图
+//                getActivity().getSupportFragmentManager().beginTransaction().show(fragment).commit();
             }
         });
 
@@ -106,15 +107,16 @@ public class GasStationFragment extends BaseFragment
         gasListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                LogUtils.d("点击了那个" + position);
+                LogUtils.d("点击了那个" + (position -1 ));
                 FragmentManager fm = getActivity().getSupportFragmentManager();
 
                 SumBitIndentFragment gasFragment = new SumBitIndentFragment();
-                GasStationBean gasStationBean = gasStationBeens.get(position + 1);
+                GasStationBean gasStationBean = gasStationBeens.get(position - 1);
 
                 Bundle bundle = new Bundle();
                 LogUtils.d("加油站的信息" + GsonUtils.Instance().toJson(gasStationBean));
                 bundle.putString("gasStation", GsonUtils.Instance().toJson(gasStationBean));
+                bundle.putString("goback","list");
                 gasFragment.setArguments(bundle);
 
                 fm.beginTransaction()
@@ -127,9 +129,6 @@ public class GasStationFragment extends BaseFragment
 
 
     @Override public void showResultSuccess(List<GasStationBean> resultBeans) {
-        //对加油站进行倒叙
-        Collections.reverse(resultBeans);
-
         this.gasStationBeens = resultBeans;
 
         gasListView.setAdapter(new CommonAdapter<GasStationBean>(getActivity(), resultBeans, R.layout.item_gasstionlist) {

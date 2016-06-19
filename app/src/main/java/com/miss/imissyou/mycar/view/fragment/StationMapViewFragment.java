@@ -492,9 +492,11 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
         String jsonStr = GsonUtils.Instance().toJson(gasStationBeens.get(id));
         Bundle bundle = new Bundle();
         bundle.putString("gasStation",jsonStr);
+        bundle.putString("goback","map");       //设置识别标让填写订单哪里能返回到这里
 
         sumbitOrder.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,sumbitOrder).commit();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_frame,sumbitOrder).commit();
 
     }
 

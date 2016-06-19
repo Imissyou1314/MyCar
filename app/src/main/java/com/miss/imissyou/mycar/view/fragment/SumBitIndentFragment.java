@@ -92,6 +92,8 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
 
     private int PayTage;                 //定单提交方式
 
+    private String goBack;              //记录上一次进来的页面
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -135,12 +137,18 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
         title.setBackOnClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GasStationFragment fragment = (GasStationFragment) getActivity().getSupportFragmentManager()
-                        .findFragmentByTag(Constant.GasStationFragmetn);
-                if (null == fragment) {
-                    fragment = new GasStationFragment();
+
+                if ("list".equals(goBack)) {
+
+                    GasStationFragment fragment = (GasStationFragment) getActivity().getSupportFragmentManager()
+                            .findFragmentByTag(Constant.GasStationFragmetn);
+                    if (null == fragment) {
+                        fragment = new GasStationFragment();
+                    }
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_frame, fragment).commit();
+                } else {
+                    LogUtils.d("从地图进入的");
                 }
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_frame,fragment).commit();
             }
         });
 
@@ -608,6 +616,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     private void initSetUpPageView() {
         mSumbitIndentPresenter = new SumbitIndentPresenterImpl(this);
         LogUtils.d(getArguments().getString("gasStation"));
+        goBack = getArguments().getString("goback");
         gasStation = GsonUtils.Instance()
                 .fromJson(getArguments().getString("gasStation"), GasStationBean.class);
 
