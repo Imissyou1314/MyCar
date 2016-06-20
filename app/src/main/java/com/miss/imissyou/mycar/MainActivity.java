@@ -492,16 +492,6 @@ public class MainActivity extends ActionBarActivity
                 startMainFragment();
                 return screenShotable;
             case ContentFragment.FIX:
-//                Bundle bundlefix = new Bundle();
-//                bundlefix.putString("type", Constant.MAP_MAINTAIN);
-//                if (stationMapViewFrament.getArguments() == null) {
-//                    stationMapViewFrament.setArguments(bundlefix);
-//                } else {
-//                    stationMapViewFrament.onDestroy();
-//                    stationMapViewFrament = null;
-//                    stationMapViewFrament = new StationMapViewFragment();
-//                    stationMapViewFrament.setArguments(bundlefix);
-//                }
                 stationMapViewFrament.setType(Constant.MAP_MAINTAIN);
                 LogUtils.d("position :" + position);
                 return replaceFragment(stationMapViewFrament, position, Constant.StationMapViewFragment);
@@ -643,9 +633,7 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onBackPressed() {
-//        if (mBaseFragment == null || !mBaseFragment.onBackPressed()){
-//            if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
-//                //双击退出
+
         if (!isQuit) {
             isQuit = true;
             Toast.makeText(getBaseContext(),
@@ -673,16 +661,6 @@ public class MainActivity extends ActionBarActivity
 //            LogUtils.d("没有Fragment");
 //            super.onBackPressed();
 //        }
-//    }
-
-//    /**
-//     * 注销登录
-//     */
-//    private void unRegister() {
-//        SPUtils.init(this);
-//        SPUtils.ClearAllData();
-//        Constant.userBean = null;
-//        Constant.carBean = null;
 //    }
 
     @Override

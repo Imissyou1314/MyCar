@@ -133,6 +133,37 @@ public class RxVolleyUtils {
     }
 
     /**
+     *Post  Json请求
+     * @param url  请求路径
+     * @param params  请求参数
+     * @param callback  回调函数
+     */
+    public void postJson(String url, HttpParams params, HttpCallback callback) {
+
+        LogUtils.d("请求路径:===>" + url);
+
+        if (null == params) {
+            params = new HttpParams();
+        }
+        this.url = url;
+        this.params = params;
+        this.callback = callback;
+
+        //设置Cookie
+        params.putHeaders("Set-Cookie",Constant.COOKIE);
+        LogUtils.d("携带的Cookie===>" + Constant.COOKIE);
+        new RxVolley
+                .Builder()
+                .params(params)
+                .httpMethod(RxVolley.Method.POST)
+                .url(url).contentType(RxVolley.ContentType.JSON)
+                .callback(callback)
+                .shouldCache(false)
+                .timeout(5000)
+                .doTask();
+    }
+
+    /**
      * 重新登录
      * 刷新Cookie
      * 重新请求

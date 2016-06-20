@@ -84,29 +84,16 @@ public class GasStationFragment extends BaseFragment
 
     @Override protected void addViewsListener() {
 
-        //TODO 添加返回地图监听事件
-//        fragmentTitle.setTitleText("加油站列表");
-//        fragmentTitle.setBackOnClick(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                StationMapViewFragment fragment = (StationMapViewFragment) getActivity()
-//                        .getSupportFragmentManager()
-//                        .findFragmentByTag(Constant.StationMapViewFragment);
-//                if (null == fragment) {
-//                    fragment = new StationMapViewFragment();
-//                }
-//                //改为隐藏
-//                onDestroyView();            //销毁视图
-////                getActivity().getSupportFragmentManager().beginTransaction().show(fragment).commit();
-//            }
-//        });
-
         gasListView.addHeaderView(getTitleView());
         gasListView.addFooterView(getFooterView());
         gasListView.setDividerHeight(10);           //TODO 添加Item的距离
         gasListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position == 0)
+                    return;
+
                 LogUtils.d("点击了那个" + (position -1 ));
                 FragmentManager fm = getActivity().getSupportFragmentManager();
 
