@@ -1,7 +1,6 @@
 package com.miss.imissyou.mycar.model.impl;
 
 
-import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.lidroid.xutils.util.LogUtils;
@@ -15,7 +14,6 @@ import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.util.RxVolleyUtils;
 import com.miss.imissyou.mycar.util.SPUtils;
 
-import java.util.Map;
 
 /**
  * 扫描车辆信息

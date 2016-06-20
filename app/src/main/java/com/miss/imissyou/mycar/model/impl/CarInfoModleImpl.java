@@ -52,16 +52,6 @@ public class CarInfoModleImpl implements CarInfoModle {
 
         LogUtils.w("请求路径:" + url);
         RxVolleyUtils.getInstance().get(url, null, callback);
-
-//        new RxVolley.Builder()
-//                .httpMethod(RxVolley.Method.GET)
-//                .encoding("utf-8")
-//                .url(url)
-//                .callback(callback)
-//                .timeout(5000)
-//                .shouldCache(false)
-//                .cacheTime(0)
-//                .doTask();
     }
 
     @Override public void changeCarAlarmState(int state, Long carId) {
@@ -90,7 +80,6 @@ public class CarInfoModleImpl implements CarInfoModle {
 
             }
         });
-
     }
 
     @Override public void changeCarState(int state, Long carId) {
@@ -121,7 +110,6 @@ public class CarInfoModleImpl implements CarInfoModle {
         });
 
     }
-
 
     @Override public void setCurrentCar(Long userId, Long carId) {
         LogUtils.d("用户更改车辆Id:" + userId + ":::::" + carId);

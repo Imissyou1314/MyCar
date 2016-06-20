@@ -31,8 +31,8 @@ public class CarAndSaftActivity extends BaseActivity implements CarInfoView, Vie
     private TitleFragment title;
     @FindViewById(id = R.id.car_and_saft_startBtn)
     private ToggleButton startBtn;
-    @FindViewById(id = R.id.car_and_saft_stopBtn)
-    private ToggleButton stopBtn;
+//    @FindViewById(id = R.id.car_and_saft_stopBtn)
+//    private ToggleButton stopBtn;
     @FindViewById(id = R.id.car_and_saft_wareBtn)
     private ToggleButton wareBtn;
     @FindViewById(id = R.id.car_and_saft_LocationCar)
@@ -56,7 +56,7 @@ public class CarAndSaftActivity extends BaseActivity implements CarInfoView, Vie
 
     @Override
     protected void initData() {
-        title.setTitleText("车辆与安全");
+        title.setTitleText("当前车辆与安全");
         goLocation.setTitle("定位当前车辆").setTitleSize(14).setMessage("");
 
         if (null == Constant.carBean) {
@@ -68,7 +68,7 @@ public class CarAndSaftActivity extends BaseActivity implements CarInfoView, Vie
         } else {
             mCar = Constant.carBean;
             startBtn.setToggleSate(mCar.isCarState());
-            stopBtn.setToggleSate(!mCar.isCarState());
+//            stopBtn.setToggleSate(!mCar.isCarState());
             wareBtn.setToggleSate(mCar.isCarAlarm());
         }
     }
@@ -82,21 +82,12 @@ public class CarAndSaftActivity extends BaseActivity implements CarInfoView, Vie
             public void onToggle(boolean on) {
                 if (on) {
                     mCarInfoPresenter.changeCarState(mCar.getId());
-                    stopBtn.setToggleSate(false);
-                }
-            }
-        });
-        //车辆熄火
-        stopBtn.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
-            @Override
-            public void onToggle(boolean on) {
-                if(on) {
+                } else {
                     mCarInfoPresenter.changeCarStop(mCar.getId());
-                    startBtn.setToggleSate(false);
                 }
-                LogUtils.d("不做操作");
             }
         });
+
         //警报状态
         wareBtn.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
             @Override

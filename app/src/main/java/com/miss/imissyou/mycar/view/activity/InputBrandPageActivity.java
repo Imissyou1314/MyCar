@@ -130,12 +130,7 @@ public class InputBrandPageActivity extends BaseActivity implements View.OnClick
     public void showResultSuccess(ResultBean resultBean) {
         LogUtils.d("添加车辆成功" + GsonUtils.Instance().toJson(resultBean));
         if (resultBean.isServiceResult()) {
-            // TODO: 2016/6/5 提示添加车辆成功
-            //new DialogUtils(this).showSucces(resultBean.getResultInfo(),
-               //     Constant.SUCCESS_TITLE, MainActivity.class);\
-            //Intent intent = new Intent();
-            //intent.setClass(this,MainActivity.class);
-           // startActivity(intent);
+            Constant.carBean = carInfoBean;
             this.finish();
         } else {
             showResultError(0, resultBean.getResultInfo());

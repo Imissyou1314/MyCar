@@ -149,16 +149,16 @@ public class ChangePasswordActivity extends BaseActivity{
             case 0 :
                 url = url + "users/changePassword";
                 passwordInput1.setHint("请输入旧密码");
-                passwordInput2.setHint("亲输入新密码");
+                passwordInput2.setHint("请输入新密码");
                 break;
             case 1:
                 url = url + "users/changeSafePassword";
-                passwordInput1.setHint("请输入旧安全码");
-                passwordInput2.setHint("亲输入新安全码");
+                passwordInput1.setHint("请输入旧安全密码");
+                passwordInput2.setHint("请输入新安全密码");
                 break;
             case 2:
                 url = url + "users/changeSafePassword";
-                passwordInput1.setHint("请输入安全码");
+                passwordInput1.setHint("请输入安全密码");
                 passwordInput2.setVisibility(View.GONE);
                 break;
         }
