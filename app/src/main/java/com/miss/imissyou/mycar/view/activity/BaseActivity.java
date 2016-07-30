@@ -3,6 +3,7 @@ package com.miss.imissyou.mycar.view.activity;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
+import com.github.ikidou.fragmentBackHandler.BackHandlerHelper;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.util.FindViewById;
 import com.miss.imissyou.mycar.view.BackHandledInterface;
@@ -10,6 +11,7 @@ import com.miss.imissyou.mycar.view.fragment.BaseFragment;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -20,8 +22,7 @@ import java.lang.reflect.Method;
  * 所有的Activity都继承的基类
  * Created by Imissyou on 2016/3/23.
  */
-public abstract class BaseActivity extends FragmentActivity
-        implements BackHandledInterface{
+public abstract class BaseActivity extends FragmentActivity {
 
     private static String TAG = "BaseActivity";
     private Class<?> clazz;
@@ -29,13 +30,14 @@ public abstract class BaseActivity extends FragmentActivity
     private BaseFragment mBaseFragment;
     private boolean hadIntercept;
 
+    private long lastBackPress;
+
     /**
      * 调用onFinish 返回上一个页面
      */
     public void onFinish(View v){
         this.finish();
     }
-
 
     protected void onCreate(Bundle savedInstanceState,int layoutResID) {
         super.onCreate(savedInstanceState);
@@ -49,7 +51,6 @@ public abstract class BaseActivity extends FragmentActivity
         initData();
         addListeners();         //控件监听事件接口
     }
-
 
     private void byIdContentView() {
         // TODO 自动生成的方法存根
@@ -137,11 +138,14 @@ public abstract class BaseActivity extends FragmentActivity
      */
     public abstract void  addListeners();
 
-    @Override public void setSelectedFragment(BaseFragment selectedFragment) {
-        this.mBaseFragment = selectedFragment;
-    }
-
     @Override public void onBackPressed() {
-        super.onBackPressed();
+        //如果Fragment没有消费OnBackPressed事件，交由Activity处理
+        if (!BackHandlerHelper.handleBackPress(this))
+            if (System.currentTimeMillis() - lastBackPress < 2000) {
+                super.onBackPressed();
+            } else {
+                lastBackPress = System.currentTimeMillis();
+                Toast.makeText(BaseActivity.this, "再按一次退出", Toast.LENGTH_SHORT).show();
+            }
     }
 }

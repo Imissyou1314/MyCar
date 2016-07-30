@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amap.api.maps.model.LatLng;
+import com.github.ikidou.fragmentBackHandler.BackHandlerHelper;
+import com.github.ikidou.fragmentBackHandler.FragmentBackHandler;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.GasStationBean;
@@ -24,7 +26,6 @@ import com.miss.imissyou.mycar.bean.OrderBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.presenter.SumbitIndentPresenter;
 import com.miss.imissyou.mycar.presenter.impl.SumbitIndentPresenterImpl;
-import com.miss.imissyou.mycar.ui.FragmentTitleFragment;
 import com.miss.imissyou.mycar.ui.MissDialog;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.DialogUtils;
@@ -38,6 +39,7 @@ import com.rey.material.app.DatePickerDialog;
 import com.rey.material.app.DialogFragment;
 import com.rey.material.app.TimePickerDialog;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -48,12 +50,11 @@ import java.util.Map;
  * 加油订单提交的Fragment
  * Created by Imissyou on 2016/4/24.
  */
-public class SumBitIndentFragment extends BaseFragment implements SumbitIndentView, View.OnClickListener {
+public class SumBitIndentFragment extends BaseFragment implements SumbitIndentView,
+        View.OnClickListener,FragmentBackHandler {
 
     public static final String TAG = "SUMBITINDENTFRAGMENT";
 
-
-//    private FragmentTitleFragment title;             //标题
     private TextView gastationName;         //加油站名字
     private TextView gastationAddres;       //加油站地址
     private TextView gastationDistance;     //加油站距离
@@ -89,10 +90,12 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     private String time;           //时间
     private boolean isReadOrder = false;            //准备订单是否完成
     private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");           //时间格式
+    BigDecimal number = new BigDecimal(1);                      //TODO 价格和数量校正格式
 
     private int PayTage;                 //定单提交方式
 
     private String goBack;              //记录上一次进来的页面
+    private boolean handleBackPressed = true;       //是否消费返回键
 
     @Nullable
     @Override
@@ -104,7 +107,6 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     @Override
     protected void initView(View view) {
 
-//        title = (FragmentTitleFragment) view.findViewById(R.id.sumbitlndent_title);
         gastationName = (TextView) view.findViewById(R.id.sumbit_gastation_gastationName);
         gastationAddres = (TextView) view.findViewById(R.id.sumbit_gastation_address);
         gastationDistance = (TextView) view.findViewById(R.id.sumbit_gastation_gastationDistance);
@@ -127,30 +129,10 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
 
     @Override
     protected void initData() {
-//        title.setTitleText("填写订单");
    }
 
     @Override
     protected void addViewsListener() {
-
-//        //TODO 添加title的放回事件
-//        title.setBackOnClick(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                if ("list".equals(goBack)) {
-//
-//                    GasStationFragment fragment = (GasStationFragment) getActivity().getSupportFragmentManager()
-//                            .findFragmentByTag(Constant.GasStationFragmetn);
-//                    if (null == fragment) {
-//                        fragment = new GasStationFragment();
-//                    }
-//                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
-//                } else {
-//                    LogUtils.d("从地图进入的");
-//                }
-//            }
-//        });
 
         goNavi.setOnClickListener(this);
         gastationTimeSelect.setOnClickListener(this);
@@ -169,7 +151,6 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
                     setOilText();
                     LogUtils.d("价格输入失去焦点");
                 }
-
             }
         });
 
@@ -194,7 +175,6 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
                     setPriceText();
                     LogUtils.d("油量输入失去焦点");
                 }
-
             }
         });
 
@@ -222,7 +202,6 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
                 LogUtils.d("结束：");
                 return;
             }
-
             if (orderBean.getState() == 0) {
                 showDialog(order);
             } else {
@@ -316,7 +295,9 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     private double getoilNumber(double price) {
         if (price <= 0 || oil == null)
             return 0;
-        return price / Double.parseDouble(oil.getPrice());
+        //TODO 添加数据Double截取后两位并使用四车五人法
+        return new BigDecimal(price / Double.parseDouble(oil.getPrice()))
+                .divide(number,2,BigDecimal.ROUND_CEILING).doubleValue();
     }
 
     /**
@@ -328,7 +309,10 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     private double getPrice(double oilNumber) {
         if (oilNumber <= 0 || oil == null)
             return 0;
-        return (oilNumber * Double.parseDouble(oil.getPrice()));
+        //TODO 添加数据Double截取后两位并使用四车五人法
+        return new BigDecimal(oilNumber * Double.parseDouble(oil.getPrice()))
+                .divide(number,2,BigDecimal.ROUND_CEILING).doubleValue();
+
     }
 
     // TODO: 2016/6/5  到付款页面
@@ -458,11 +442,6 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
 
         LogUtils.d("传过去的经纬度:" + lat + ":::" + lot);
         getActivity().startActivity(intent);
-    }
-
-    @Override
-    public boolean onBackPressed() {
-        return true;
     }
 
     /**
@@ -623,12 +602,28 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
         if (null != gasStation && null != gasStation.getPrice()) {
             setLatlng(gasStation);          //装载经纬度
             gastationName.setText(gasStation.getName());
-            gastationType.setText(gasStation.getBrandname().equals("不详")? "民营加油站": gasStation.getBrandname() + "加油站");
+            gastationType.setText(gasStation.getBrandname().equals("不详")?
+                    "民营加油站": gasStation.getBrandname() + "加油站");
             gastationAddres.setText(gasStation.getAddress());
             gastationOrderTime.setText(formatter.format(new Date()));       //显示当前时间
             gastationDistance.setText((Integer.parseInt(gasStation.getDistance()) / 1000) + "公里");
             addItemView(gasStation.getPrice());
+        }
+    }
 
+    @Override
+    public boolean onBackPressed() {
+        if (handleBackPressed) {
+            //外理返回键
+            getActivity().getSupportFragmentManager().popBackStack(Constant.SumbitOrderFragment,0);
+            return true;
+        } else {
+            // 如果不包含子Fragment
+            // 或子Fragment没有外理back需求
+            // 可如直接 return false;
+            // 注：如果Fragment/Activity 中可以使用ViewPager 代替 this
+            //
+            return BackHandlerHelper.handleBackPress(this);
         }
     }
 }

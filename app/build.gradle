@@ -88,4 +88,7 @@ dependencies {
     //自由裁剪
     compile 'com.edmodo:cropper:1.0.1'
     compile 'com.google.android.gms:play-services-appindexing:8.1.0'
+
+    //Fragment监听返回键事件
+    compile 'com.github.ikidou:FragmentBackHandler:2.1'
 }

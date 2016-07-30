@@ -21,8 +21,6 @@ public class CarInfoModleImpl implements CarInfoModle {
 
     private CarInfoPresenter mCarInfoPresenter;
 
-
-
     public CarInfoModleImpl(CarInfoPresenter carInfoPresenter) {
         this.mCarInfoPresenter = carInfoPresenter;
     }

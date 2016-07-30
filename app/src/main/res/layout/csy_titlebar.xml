@@ -20,8 +20,7 @@
  	    android:gravity="center_vertical"
  	    android:textColor="@android:color/white"
  	    android:textSize="14.0sp"
- 	    android:text="返回"
- 	    android:visibility="gone" />
+ 	    android:text="返回" />
     
     <TextView
         android:id="@+id/txtTitle"

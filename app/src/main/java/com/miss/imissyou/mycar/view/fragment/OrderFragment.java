@@ -1,7 +1,6 @@
 package com.miss.imissyou.mycar.view.fragment;
 
 
-import android.graphics.Bitmap;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,9 +12,9 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.ikidou.fragmentBackHandler.FragmentBackHandler;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.OrderBean;
@@ -35,7 +34,8 @@ import java.util.List;
  * Created by Imissyou on 2016/4/20.
  */
 public class OrderFragment extends BaseFragment implements
-        OrderListView, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
+        OrderListView, AdapterView.OnItemClickListener,
+        AdapterView.OnItemLongClickListener, FragmentBackHandler {
 
     private OrderPresenter mOrderPresenter;
     private List<OrderBean> orders;         //定单列表
@@ -44,15 +44,12 @@ public class OrderFragment extends BaseFragment implements
     MissPopWindows missPopWindows;                                      //底部弹框
     private int delectOrderId;                                            //删除订单Id
     private CommonAdapter<OrderBean> adapter;
+    private boolean handleBackPressed = true;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return super.onCreateView(R.layout.fragment_order_list,inflater, container, savedInstanceState);
-    }
-
-    @Override public boolean onBackPressed() {
-        return false;
     }
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,13 +58,7 @@ public class OrderFragment extends BaseFragment implements
 
     @Override protected void initView(View view) {
         orderListView = (ListView) view.findViewById(R.id.order_listView);
-        //orderListView.addHeaderView(getListTitle());
         orderListView.addFooterView(getFooterView());
-//        orderListView.setDividerHeight(30);
-//        orderListView.setDivider(getActivity()
-//                .getResources()
-//                .getDrawable(R.color.color_gui));
-
     }
 
     @Override protected void initData() {
@@ -204,5 +195,18 @@ public class OrderFragment extends BaseFragment implements
      */
     private void delectOrder() {
         mOrderPresenter.delectOrder(orders.get(delectOrderId).getId());
+    }
+
+    /**
+     * 监控返回键的触发事件
+     * @return
+     */
+    @Override public boolean onBackPressed() {
+        if (handleBackPressed) {
+
+            return true;
+        } else {
+            return false;
+        }
     }
 }

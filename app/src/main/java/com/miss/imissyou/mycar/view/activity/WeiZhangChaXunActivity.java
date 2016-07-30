@@ -36,6 +36,7 @@ public class WeiZhangChaXunActivity extends Activity {
     private TextView query_city;
     private View btn_cpsz;
     private Button btn_query;
+    private Button btn_goBack;          //Title go Back Btton
 
     private EditText chepai_number;
     private EditText chejia_number;
@@ -76,6 +77,14 @@ public class WeiZhangChaXunActivity extends Activity {
 
         btn_cpsz = (View) findViewById(R.id.btn_cpsz);
         btn_query = (Button) findViewById(R.id.btn_query);
+        btn_goBack = (Button) findViewById(R.id.btnBack);
+
+        btn_goBack.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBack();
+            }
+        });
 
         btn_cpsz.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
@@ -93,6 +102,8 @@ public class WeiZhangChaXunActivity extends Activity {
                 startActivityForResult(intent, 1);
             }
         });
+
+
 
         btn_query.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
@@ -151,6 +162,13 @@ public class WeiZhangChaXunActivity extends Activity {
         popXSZ = (View) findViewById(R.id.popXSZ);
         popXSZ.setOnTouchListener(new popOnTouchListener());
         hideShowXSZ();
+    }
+
+    /**
+     * 放回上一层
+     */
+    private void goBack() {
+        this.finish();
     }
 
     @Override

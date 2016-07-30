@@ -68,7 +68,7 @@ public class MessagePresenterImpl implements MessagePresenter {
 
     @Override public void getUserUnReadMessage() {
 
-        if (null != Constant.class && null != Constant.userBean && 0 != Constant.userBean.getId()) {
+        if (null != Constant.userBean && 0 != Constant.userBean.getId()) {
             mMessageModle.getUserUnReadMessage(Constant.userBean.getId());
         } else {
             mMessageView.showResultError(1, "用户没登录");

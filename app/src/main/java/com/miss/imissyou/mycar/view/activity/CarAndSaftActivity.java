@@ -1,5 +1,9 @@
 package com.miss.imissyou.mycar.view.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -17,9 +21,12 @@ import com.miss.imissyou.mycar.ui.TitleFragment;
 import com.miss.imissyou.mycar.ui.ToggleButton;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.FindViewById;
+import com.miss.imissyou.mycar.util.SystemUtils;
 import com.miss.imissyou.mycar.view.CarInfoView;
 import com.miss.imissyou.mycar.view.fragment.FirstAddNewCarFragment;
 import com.miss.imissyou.mycar.view.fragment.LocationMapFragment;
+
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * 车辆与安全
@@ -47,6 +54,7 @@ public class CarAndSaftActivity extends BaseActivity implements CarInfoView, Vie
 
     private CarInfoPresenter mCarInfoPresenter;
     private CarInfoBean mCar;      //当前车辆信息
+    private MyCarAndSafeReceiver receiver;          //设置广播
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,10 +88,13 @@ public class CarAndSaftActivity extends BaseActivity implements CarInfoView, Vie
         startBtn.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
             @Override
             public void onToggle(boolean on) {
+
                 if (on) {
                     mCarInfoPresenter.changeCarState(mCar.getId());
+                    Constant.carBean.setCarState(true);
                 } else {
                     mCarInfoPresenter.changeCarStop(mCar.getId());
+                    Constant.carBean.setCarState(false);
                 }
             }
         });
@@ -94,9 +105,19 @@ public class CarAndSaftActivity extends BaseActivity implements CarInfoView, Vie
             public void onToggle(boolean on) {
                 if (on) {
                     mCarInfoPresenter.changeCarAlarmState(mCar.getId());
+                    Constant.carBean.setCarAlarm(true);
                 }
+                Constant.carBean.setCarAlarm(false);
             }
         });
+
+        //动态注册广播
+        receiver = new MyCarAndSafeReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("cn.jpush.android.intent.NOTIFICATION_RECEIVED");
+        filter.addAction("cn.jpush.android.intent.NOTIFICATION_OPENED");
+        filter.addCategory("com.miss.imissyou.mycar");
+        this.registerReceiver(receiver,filter);
     }
 
     @Override
@@ -129,6 +150,12 @@ public class CarAndSaftActivity extends BaseActivity implements CarInfoView, Vie
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
+    }
+
+    @Override
     public void onClick(View v) {
         //启动定位页面
         if (null != Constant.carBean && 0 != Constant.carBean.getLat()
@@ -148,6 +175,25 @@ public class CarAndSaftActivity extends BaseActivity implements CarInfoView, Vie
                     .commit();
         }
 
+    }
+
+    public class MyCarAndSafeReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            LogUtils.w("MyCarAndSafe" + intent.getAction());
+
+            //接收到Jpush后自动刷新页面
+            if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
+                System.out.println("用户接收到Jpush通知");
+                if (SystemUtils.isForeground(context,
+                        "com.miss.imissyou.mycar.view.activity.MessageActivity")) {
+                    LogUtils.d("只进Message行刷新页面====================>");
+
+                }
+            }
+        }
     }
 
 }

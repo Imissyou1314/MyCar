@@ -11,8 +11,6 @@ import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.util.RxVolleyUtils;
 
-import java.util.Map;
-
 /**
  * 向服务器递交订单
  * Created by Imissyou on 2016/4/25.
@@ -31,7 +29,6 @@ public class SumbitIndentModelImpl implements SumbitIndentModel {
         final String url = Constant.SERVER_URL + "order/saveOrder";
         final HttpParams params = new HttpParams();
         params.put("userId", orderBean.getUserId() + "");
-        //params.put("carId", orderBean.getCarId() + "");
         params.put("stationName", orderBean.getStationName());
         params.put("address", orderBean.getAddress());
         params.put("brandName", orderBean.getBrandName());

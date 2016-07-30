@@ -101,7 +101,6 @@ public class FindSongs {
      * @param filePath
      * @return
      */
-
     public static Music getMp3InfoByFile(String filePath) {
         File sourceFile = new File(filePath);
         if (!sourceFile.exists())
@@ -149,7 +148,6 @@ public class FindSongs {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return music;
     }
 

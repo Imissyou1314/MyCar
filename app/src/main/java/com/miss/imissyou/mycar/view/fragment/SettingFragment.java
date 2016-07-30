@@ -15,7 +15,7 @@ import com.miss.imissyou.mycar.util.SPUtils;
 /**
  * Created by Imissyou on 2016/3/23.
  */
-public class SettingFragment extends BaseFragment{
+public class SettingFragment extends BaseFragment {
 
     private ToggleButton allMessageBtn;         //获取所有信息
     private ToggleButton errorMessageBtn;       //获取错误信息
@@ -49,7 +49,6 @@ public class SettingFragment extends BaseFragment{
         errorMessageBtn = (ToggleButton) view.findViewById(R.id.setting_errorMessage_button);
         wareMessageBtn = (ToggleButton) view.findViewById(R.id.setting_wareMessage_button);
         startMusic = (ToggleButton) view.findViewById(R.id.setting_startMusic_button);
-
     }
 
     @Override protected void initData() {
@@ -69,6 +68,41 @@ public class SettingFragment extends BaseFragment{
     @Override
     protected void addViewsListener() {
 
+        allMessageBtn.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
+            @Override
+            public void onToggle(boolean on) {
+                if (on) {
+
+                }
+            }
+        });
+
+        errorMessageBtn.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
+            @Override
+            public void onToggle(boolean on) {
+                if (on) {
+
+                }
+            }
+        });
+
+        wareMessageBtn.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
+            @Override
+            public void onToggle(boolean on) {
+                if (on) {
+
+                }
+            }
+        });
+
+        noReadMessageBtn.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
+            @Override
+            public void onToggle(boolean on) {
+                if (on) {
+
+                }
+            }
+        });
     }
 
 
@@ -89,4 +123,5 @@ public class SettingFragment extends BaseFragment{
         SPUtils.putSetData(Constant.MESSAGEMUSIC, stratMusicState);
         super.onPause();
     }
+
 }
