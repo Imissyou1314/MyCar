@@ -482,8 +482,6 @@ public class MainActivity extends ActionBarActivity
             case ContentFragment.NAVIGATION:
                 return replaceFragment(naviViewFragment, position, Constant.NaviViewFragment);
             default:
-                //更换菜单项
-                LogUtils.d("position :" + position);
                 return screenShotable;
         }
     }
@@ -634,16 +632,6 @@ public class MainActivity extends ActionBarActivity
             Process.killProcess(Process.myPid());
         }
     }
-//    else {
-//                super.onBackPressed();
-//                //退栈
-//                getSupportFragmentManager().popBackStack();
-//            }
-//        } else{
-//            LogUtils.d("没有Fragment");
-//            super.onBackPressed();
-//        }
-//    }
 
     @Override
     public void setSelectedFragment(BaseFragment selectedFragment) {
@@ -779,6 +767,4 @@ public class MainActivity extends ActionBarActivity
             }
         }
     }
-
-
 }
