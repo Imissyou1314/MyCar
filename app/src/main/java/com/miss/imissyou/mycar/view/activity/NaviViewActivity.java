@@ -86,11 +86,6 @@ public class NaviViewActivity extends BaseActivity implements AMapNaviViewListen
     @Override
     protected void initData() {
 
-        // TODO: 2016-06-07 获取传进来的经纬度
-        //endLat = getIntent().getDoubleExtra(Constant.endLatitude,0);
-        //endLon = getIntent().getDoubleExtra(Constant.endLongitude,0);
-
-
         // 设置模拟速度
         AMapNavi.getInstance(this).setEmulatorNaviSpeed(100);
         // 开启模拟导航
@@ -129,7 +124,6 @@ public class NaviViewActivity extends BaseActivity implements AMapNaviViewListen
         LogUtils.w("测试导航功能:");
         Log.w("miss", "getLocationLatLng:测试导航功能: ");
     }
-
 
     @Override
     public void addListeners() {

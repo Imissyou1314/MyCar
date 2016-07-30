@@ -14,7 +14,6 @@
     <Button
         android:id="@+id/station_show_list"
         android:textSize="16sp"
-
         android:text="列表形式"
         android:textColor="#bbbbbb"
         android:background="#30ffffff"

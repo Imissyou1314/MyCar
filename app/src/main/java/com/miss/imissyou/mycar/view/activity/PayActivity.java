@@ -114,23 +114,6 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
     /**
      * 调用Ping++ 的SDK
      */
-//    public void onDataReturn(String taskTag, BaseResult result, String json) {
-//        if(null==json){
-//            Toast.makeText(this, "支付失败...", Toast.LENGTH_LONG).show();
-//            showMsg("请求出错", "请检查URL", "URL无法获取charge");
-//            return;
-//        }
-//        /**
-//         * 获得服务端的charge ==>json，调用ping++ sdk。
-//         */
-//        int start = json.indexOf("charge");
-//        String charge =(String) json.subSequence(start + 8, json.length() -2);
-//        Log.v("test===>", charge);
-//
-//        Intent intent = new Intent(this, PaymentActivity.class);
-//        intent.putExtra(PaymentActivity.EXTRA_CHARGE, charge);
-//        startActivityForResult(intent, REQUEST_CODE_PAYMENT);
-//    }
 
     HttpCallback callback = new HttpCallback() {
         @Override

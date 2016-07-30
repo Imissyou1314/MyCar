@@ -2,10 +2,13 @@ package com.miss.imissyou.mycar.view.activity;
 
 import android.os.Bundle;
 
+import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.ui.TitleFragment;
 import com.miss.imissyou.mycar.util.FindViewById;
 import com.miss.imissyou.mycar.util.SPUtils;
+import com.miss.imissyou.mycar.view.BackHandledInterface;
+import com.miss.imissyou.mycar.view.fragment.BaseFragment;
 import com.miss.imissyou.mycar.view.fragment.SettingFragment;
 
 import java.util.Timer;
@@ -15,7 +18,7 @@ import java.util.TimerTask;
  * 设置页面
  * Created by Imissyou on 2016/5/22.
  */
-public class SettingActivity extends BaseActivity {
+public class SettingActivity extends BaseActivity implements BackHandledInterface {
 
     @FindViewById(id = R.id.stting_title)
     private TitleFragment titleView;
@@ -59,5 +62,11 @@ public class SettingActivity extends BaseActivity {
             finish();
         }
 
+    }
+
+    @Override
+    public void setSelectedFragment(BaseFragment selectedFragment) {
+        //Todo
+        LogUtils.d("================>");
     }
 }

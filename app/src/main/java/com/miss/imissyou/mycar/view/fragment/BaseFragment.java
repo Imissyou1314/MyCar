@@ -32,7 +32,8 @@ public abstract class BaseFragment extends Fragment implements ScreenShotable {
         super.onCreate(savedInstanceState);
         if (!(getActivity() instanceof BackHandledInterface)) {
             throw new ClassCastException("你没有实现BackHandledInterface接口"
-                    + getActivity().getPackageName().toString() + ":::>>>" + getActivity().getComponentName());
+                    + getActivity().getPackageName().toString() + ":::>>>"
+                    + getActivity().getComponentName());
         } else {
             this.mBackHandledInterface = (BackHandledInterface) getActivity();
         }

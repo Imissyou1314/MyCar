@@ -99,8 +99,6 @@ public class MainActivity extends ActionBarActivity
 
     private Intent intent;
 
-    private String Tag = "";
-
     /**
      * 导航栏的Item fragment
      */
@@ -189,16 +187,19 @@ public class MainActivity extends ActionBarActivity
     /**
      * 检查用户是否拥有车辆
      *
-     * @param id
-     * @return
+     * @param id 用户Id
+     * @return boolean
+     *         true 用户有车辆
+     *         false 用户没有车辆
      */
     private boolean checkUserHasCar(Long id) {
-//       boolean resultTag = false;
+
         String url = Constant.SERVER_URL + "car/currentCar=" + id;
         HttpCallback callback = new HttpCallback() {
             @Override
             public void onFailure(int errorNo, String strMsg) {
-                super.onFailure(errorNo, strMsg);
+                LogUtils.d("====> 获取当前车辆失败");
+                resultTag = false;
             }
 
             @Override
@@ -206,21 +207,10 @@ public class MainActivity extends ActionBarActivity
                 LogUtils.d("收到的数据===>" + t);
                 ResultBean resultBean = GsonUtils.getResultBean(t);
                 CarInfoBean carInfoBean = GsonUtils.getParam(resultBean, "car", CarInfoBean.class);
-                if (null != carInfoBean && null != carInfoBean.getId()) {
-                    Constant.carBean = carInfoBean;
-                    startMainFragment();
-                    resultTag = true;
-                } else {
-                    if (resultBean.getResultInfo().equals(Constant.FileCOOKIE)){
-                        RxVolleyUtils.getInstance().restartLogin();
-                    } else {
-                        Constant.carBean = null;
-                        resultTag = false;
-                    }
-                }
+                Constant.carBean = carInfoBean;
+                resultTag = true;
             }
         };
-
         RxVolleyUtils.getInstance().get(url,null,callback);
         return resultTag;
     }
@@ -424,7 +414,6 @@ public class MainActivity extends ActionBarActivity
         carInfoFragment = new CarInfoFragment();
         firstAddCarFragment = new FirstAddCarFragment();
         //编写自己的布
-
         startMainFragment();
     }
 
@@ -433,10 +422,9 @@ public class MainActivity extends ActionBarActivity
      */
     private void startMainFragment() {
         if (null != Constant.carBean && null != Constant.carBean.getId()) {
-
             if (!carInfoFragment.isAdded()) {
                 Bundle bundle = new Bundle();
-                LogUtils.w("启动车辆信息页面");
+                LogUtils.w("<======================启动车辆信息页面======================>");
                 bundle.putLong(Constant.USER_ID, Constant.userBean.getId());
                 bundle.putLong(Constant.CAR_ID, Constant.carBean.getId());
                 carInfoFragment.setArguments(bundle);
@@ -445,13 +433,12 @@ public class MainActivity extends ActionBarActivity
                     .replace(R.id.content_frame, carInfoFragment, Constant.CarInfoFragment)
                     .commit();
         } else {
-            LogUtils.w("启动第一次添加车辆页面");
+            LogUtils.w("<========================启动第一次添加车辆页面=====================>");
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, firstAddCarFragment)
                     .commit();
         }
     }
-
 
     /**
      * 左边菜单项的选择和处理
@@ -466,21 +453,17 @@ public class MainActivity extends ActionBarActivity
                                    ScreenShotable screenShotable, int position) {
         //TODO 更新Fragment
         switch (slideMenuItem.getName()) {
-
             case ContentFragment.CLOSE:
                 //关掉菜单项
                 return screenShotable;
             case ContentFragment.CAR:
                 //关掉菜单项
-                LogUtils.d("position :" + position);
                 return replaceFragment(carListFragement, position, Constant.CarListFragment);
             case ContentFragment.OIL:
                 //加油菜单项
                 stationMapViewFrament.setType(Constant.MAP_GASSTATION);
                 return replaceFragment(stationMapViewFrament, position, Constant.StationMapViewFragment);
-
-            case ContentFragment.PARK:          //Todo 添加停车场
-//
+            case ContentFragment.PARK:
                 stationMapViewFrament.setType(Constant.MAP_PARK);
                 return replaceFragment(stationMapViewFrament, position, Constant.StationMapViewFragment);
             case ContentFragment.ORDER:
@@ -493,7 +476,6 @@ public class MainActivity extends ActionBarActivity
                 return screenShotable;
             case ContentFragment.FIX:
                 stationMapViewFrament.setType(Constant.MAP_MAINTAIN);
-                LogUtils.d("position :" + position);
                 return replaceFragment(stationMapViewFrament, position, Constant.StationMapViewFragment);
             case ContentFragment.MUSIC:
                 return replaceFragment(musicFragment, position, Constant.MusicFragment);

@@ -105,8 +105,6 @@ public class CityList extends Activity {
 			model.setTextName(cityName);
 			list.add(model);
 		}
-
 		return list;
 	}
-	
 }

@@ -53,7 +53,8 @@ import java.util.List;
  * Created by Imissyou on 2016/5/2.
  */
 public class StationMapViewFragment extends BaseFragment implements View.OnClickListener,
-        LocationSource, AMapLocationListener, AMap.OnMarkerClickListener, AMap.InfoWindowAdapter, NaviVieFragmentView {
+        LocationSource, AMapLocationListener, AMap.OnMarkerClickListener,
+        AMap.InfoWindowAdapter, NaviVieFragmentView {
 
 
     // 起点终点的经纬度
@@ -69,7 +70,6 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
     private AMapLocationClient mlocationClient;
     private AMapLocationClientOption mLocationOption;
 
-
     private String cityName;                            //城市名称
     private String cityCode;                            //城市编码
 
@@ -79,7 +79,7 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
 
     private String type;                                // 标志
     private LatLng latlng;                              //经纬度
-    private Button shouList;                            //展现列表
+    private Button showList;                            //展现列表
     private List<StopStation> stations;                 //场地
     private JZLocationConverter.LatLng  baiduLatlng;    //百度经纬度
 
@@ -102,7 +102,7 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
     @Override
     protected void initView(View view) {
         mMapView = (MapView) view.findViewById(R.id.station_navi_mapView);
-        shouList = (Button) view.findViewById(R.id.station_show_list);
+        showList = (Button) view.findViewById(R.id.station_show_list);
     }
 
     @Override
@@ -110,7 +110,7 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
         mNaviViewPresenter = new NaviViewPresenterImpl(this);
 
         if (Constant.MAP_GASSTATION.equals(type)) {
-            shouList.setVisibility(View.VISIBLE);
+            showList.setVisibility(View.VISIBLE);
         }
         LogUtils.w("获取到的类型:" + type);
 
@@ -127,7 +127,7 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
         //跟随模式
         mAMap.setMyLocationType(AMap.LOCATION_TYPE_MAP_FOLLOW);
         mAMap.setOnMarkerClickListener(this);
-        shouList.setOnClickListener(this);
+        showList.setOnClickListener(this);
 
         mAMap.setMyLocationType(AMap.LOCATION_TYPE_MAP_ROTATE);
     }
@@ -400,6 +400,7 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
     @Override
     public void loadSuccessGasStation(GasStationResultBean resultBean) {
         if (resultBean.getResultcode() == Constant.HTTP_OK) {
+            showList.setVisibility(View.VISIBLE);
             gasStationBeens = resultBean.getResult().getData();
             LogUtils.d("加油站的数量" + gasStationBeens.size());
             showGasStation(gasStationBeens);            //展示地图上的加油站
@@ -414,7 +415,7 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
     private void showGasStation(List<GasStationBean> gasStationBeens) {
         LogUtils.d("车辆信息:" + gasStationBeens.size());
         int i = 0;
-        shouList.setVisibility(View.VISIBLE);
+        showList.setVisibility(View.VISIBLE);
         for (GasStationBean station : gasStationBeens) {
 
             LatLng latLng = setLatlng(station);
@@ -456,7 +457,7 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
         LogUtils.d("订单列表:" + GsonUtils.Instance().toJson(stations));
         int i = 0;
 
-        shouList.setVisibility(View.GONE);
+        showList.setVisibility(View.GONE);
         for (StopStation station : stations) {
             View view = null;
             if (null != station.getLat() && null != station.getLon() && null != station.getName()) {
@@ -507,6 +508,7 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
         if (null != type ) {
             switch (type) {
                 case Constant.MAP_GASSTATION:
+                    //TODO 显示可点击的列表
                     mNaviViewPresenter.loadGasStation(baiduLatlng.getLongitude(), baiduLatlng.getLatitude());
                     break;
                 case Constant.MAP_PARK:
