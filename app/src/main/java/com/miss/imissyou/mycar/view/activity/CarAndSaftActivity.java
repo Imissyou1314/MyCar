@@ -38,8 +38,6 @@ public class CarAndSaftActivity extends BaseActivity implements CarInfoView, Vie
     private TitleFragment title;
     @FindViewById(id = R.id.car_and_saft_startBtn)
     private ToggleButton startBtn;
-//    @FindViewById(id = R.id.car_and_saft_stopBtn)
-//    private ToggleButton stopBtn;
     @FindViewById(id = R.id.car_and_saft_wareBtn)
     private ToggleButton wareBtn;
     @FindViewById(id = R.id.car_and_saft_LocationCar)
@@ -76,7 +74,6 @@ public class CarAndSaftActivity extends BaseActivity implements CarInfoView, Vie
         } else {
             mCar = Constant.carBean;
             startBtn.setToggleSate(mCar.isCarState());
-//            stopBtn.setToggleSate(!mCar.isCarState());
             wareBtn.setToggleSate(mCar.isCarAlarm());
         }
     }
@@ -90,11 +87,11 @@ public class CarAndSaftActivity extends BaseActivity implements CarInfoView, Vie
             public void onToggle(boolean on) {
 
                 if (on) {
-                    mCarInfoPresenter.changeCarState(mCar.getId());
                     Constant.carBean.setCarState(true);
+                    mCarInfoPresenter.changeCarState(mCar.getId());
                 } else {
-                    mCarInfoPresenter.changeCarStop(mCar.getId());
                     Constant.carBean.setCarState(false);
+                    mCarInfoPresenter.changeCarStop(mCar.getId());
                 }
             }
         });
@@ -104,10 +101,11 @@ public class CarAndSaftActivity extends BaseActivity implements CarInfoView, Vie
             @Override
             public void onToggle(boolean on) {
                 if (on) {
-                    mCarInfoPresenter.changeCarAlarmState(mCar.getId());
                     Constant.carBean.setCarAlarm(true);
+                    mCarInfoPresenter.changeCarAlarmState(mCar.getId());
+                } else {
+                    Constant.carBean.setCarAlarm(false);
                 }
-                Constant.carBean.setCarAlarm(false);
             }
         });
 

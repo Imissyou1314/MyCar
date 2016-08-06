@@ -123,7 +123,7 @@ public class MainActivity extends ActionBarActivity
     /**
      * 添加开机自动播放音乐
      */
-    private List<Music> mMusics;        //音乐列表
+    private List<Music> mMusics;            //音乐列表
     private int mPosition = 0;              //当前播放音乐列
     private MyBroadCastService myBroad;     //音乐播放广播
     /**
@@ -299,7 +299,7 @@ public class MainActivity extends ActionBarActivity
     /**
      * JPushInterface绑定别名
      *
-     * @param id
+     * @param id  用户ID
      */
     private void setAlias(Long id) {
         LogUtils.d("设置别名:");
@@ -507,6 +507,10 @@ public class MainActivity extends ActionBarActivity
 
     /**
      * 更换Fragment
+     * @param screenShotable
+     * @param topPosition  点击的第几个
+     * @param Tag          标签
+     * @return
      */
     private ScreenShotable replaceFragment(ScreenShotable screenShotable, int topPosition, String Tag) {
         //更改页面布局
@@ -586,7 +590,6 @@ public class MainActivity extends ActionBarActivity
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
     @Override
     protected void onPause() {
@@ -676,6 +679,11 @@ public class MainActivity extends ActionBarActivity
         palyMusic(Constant.MUSIC_BUTTON_PAUSE, mPosition);
     }
 
+    /**
+     *  播放音乐
+     * @param type
+     * @param mPosition
+     */
     private void palyMusic(int type, int mPosition) {
         LogUtils.w("当前播放音乐:" + mPosition);
         LogUtils.w("总音乐数量:" + mMusics.size());

@@ -1,6 +1,5 @@
 package com.miss.imissyou.mycar.model;
 
-import com.cheshouye.api.client.json.CarInfo;
 import com.miss.imissyou.mycar.bean.CarInfoBean;
 
 /**
@@ -48,6 +47,12 @@ public interface CarInfoModle {
      * @param carId 车Id
      */
     void changeCartoStop(Long carId);
+
+    /**
+     * 控制当前车辆启动
+     * @param carId  当汽车辆Id
+     */
+    void changeCarToStart(Long carId);
 
     /**
      * 更改车牌号

@@ -16,6 +16,7 @@ import com.kymjs.rxvolley.client.HttpParams;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.MainActivity;
 import com.miss.imissyou.mycar.R;
+import com.miss.imissyou.mycar.bean.CarInfoBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.bean.UserBean;
 import com.miss.imissyou.mycar.ui.MissDialog;
@@ -108,8 +109,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         } else {
             LogUtils.d("用户为新用户");
         }
-
-
     }
 
     @Override
@@ -267,9 +266,35 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
      * 跳转到主页面
      */
     private void toMainView() {
+        //TODO 添加请求车辆信息链接
+
+        getUserCar(Constant.userBean.getId());
         Intent intent = new Intent();
         intent.setClass(this, MainActivity.class);
         startActivity(intent);
+    }
+
+    /**
+     * 获取用户当前车辆
+     * @param userId 用户ID
+     */
+    private void getUserCar(Long userId) {
+        String url = Constant.SERVER_URL + "car/currentCar=" + userId;
+        HttpCallback callback = new HttpCallback() {
+            @Override
+            public void onFailure(int errorNo, String strMsg) {
+                LogUtils.d("====> 获取当前车辆失败");
+            }
+
+            @Override
+            public void onSuccess(String t) {
+                LogUtils.d("收到的数据===>" + t);
+                ResultBean resultBean = GsonUtils.getResultBean(t);
+                CarInfoBean carInfoBean = GsonUtils.getParam(resultBean, "car", CarInfoBean.class);
+                Constant.carBean = carInfoBean;
+            }
+        };
+        RxVolleyUtils.getInstance().get(url,null,callback);
     }
 
     /**
