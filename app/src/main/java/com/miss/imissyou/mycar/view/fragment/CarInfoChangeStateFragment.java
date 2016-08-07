@@ -41,19 +41,19 @@ public class CarInfoChangeStateFragment extends BaseFragment
     /**
      * 车辆描述
      */
-    private ImageView carImage;         //车辆图标图片
-    private TextView carBrand;                    //车辆品牌
-    private TextView carVin;                       //车架号
-    private TextView carRand;                      //车身等级
-    private TextView carEngineNumber;             //车发动机号
-    private EditText carPlatNumber;               //车牌号
+    private ImageView carImage;                     //车辆图标图片
+    private TextView carBrand;                      //车辆品牌
+    private TextView carVin;                        //车架号
+    private TextView carRand;                       //车身等级
+    private TextView carEngineNumber;               //车发动机号
+    private EditText carPlatNumber;                 //车牌号
     private TextView carPlatNumBerBtn;              //输入车牌号的地方
 
     /**
      * 车辆信息
      */
     private TextView carOil;                    //车的油量
-    private ProgressBar carOilProgress;        //车辆的油量进度条
+    private ProgressBar carOilProgress;         //车辆的油量进度条
     private TextView carOilBox;                 //车辆的油容量
     private TextView carMileage;                //车辆的里程数
     private TextView carTemperature;            //车辆的温度
@@ -62,15 +62,15 @@ public class CarInfoChangeStateFragment extends BaseFragment
      * 车辆状态
      */
     private TextView carLight;                 //车灯性能
-    private TextView carState;                //车状态
-    private TextView carAlarm;                //车警报
-    private TextView carEnginProperty;       //发动机性能
-    private TextView carTransmission;        //变速器性能
-    private TextView carSRS;                  //安全气囊
+    private TextView carState;                 //车状态
+    private TextView carAlarm;                 //车警报
+    private TextView carEnginProperty;         //发动机性能
+    private TextView carTransmission;          //变速器性能
+    private TextView carSRS;                   //安全气囊
 
-    private Long mCarId;
-    private Button changeStateBtn;          //设置为当前车辆
-    private CarInfoBean carBean;            //车辆实体
+    private Long mCarId;                      //当前车辆Id
+    private Button changeStateBtn;           //设置为当前车辆
+    private CarInfoBean carBean;             //车辆实体
 
     @Nullable
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -79,8 +79,6 @@ public class CarInfoChangeStateFragment extends BaseFragment
     }
 
     @Override protected void initView(View view) {
-
-        //progress = (CircleProgress) view.findViewById(R.id.car_info_change_progress) ;
 
         /**车辆描述*/
         carImage = (ImageView) view.findViewById(R.id.car_info_change_carBrand_image);
@@ -137,7 +135,7 @@ public class CarInfoChangeStateFragment extends BaseFragment
 
     @Override public void showResultSuccess(ResultBean resultBean) {
         if (resultBean.isServiceResult()) {
-            Constant.carBean = carBean;
+            Constant.carBean = carBean;             //更改当前车辆为该车辆
             Constant.carBean.setCurrentCar(true);
             Toast.makeText(getActivity(),resultBean.getResultInfo(), Toast.LENGTH_SHORT).show();
 
@@ -145,16 +143,13 @@ public class CarInfoChangeStateFragment extends BaseFragment
         } else {
             LogUtils.d("获取到的数据:" + resultBean.getResultInfo());
             ToastUtil.asLong(resultBean.getResultInfo());
-            //showPage((CarInfoBean) GsonUtils.getParam(resultBean, "car", CarInfoBean.class));
         }
     }
 
     @Override public void showProgress() {
-        //progress.startAnim();
     }
 
     @Override public void hideProgress() {
-        //progress.stopAnim();
     }
 
     @Override public void onDestroy() {
@@ -268,12 +263,10 @@ public class CarInfoChangeStateFragment extends BaseFragment
                     .getDrawable(R.drawable.progress_yellow_background));
         } else if (carOilProgress.getProgress() >= 50) {
             carOil.setTextColor(getActivity().getResources().getColor(R.color.color_progress_greed));
-            //carOilProgress.setBackgroundResource(R.color.color_progress_greed);
             carOilProgress.setProgressDrawable(getActivity().getResources()
                     .getDrawable(R.drawable.progress_gree_background));
         } else {
             carOil.setTextColor(getActivity().getResources().getColor(R.color.color_progress_red));
-            //carOilProgress.setBackgroundResource(R.color.color_progress_red);
             carOilProgress.setProgressDrawable(getActivity().getResources().getDrawable(R.drawable.progress_red_background));
         }
     }
@@ -313,9 +306,6 @@ public class CarInfoChangeStateFragment extends BaseFragment
             mCarInfoPresenter.changeCarPlatNumber(carBean);
             carPlatNumber.setEnabled(false);
             carPlatNumber.setText(nowPlathNumber);
-
         }
     }
-
-
 }

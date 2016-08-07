@@ -40,20 +40,18 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView, MissSc
     /**
      * 车辆描述
      */
-    private ImageView carImage;         //车辆图标图片
+    private ImageView carImage;                   //车辆图标图片
     private TextView carBrand;                    //车辆品牌
-    private TextView carVin;                       //车架号
-    private TextView carRand;                      //车身等级
+    private TextView carVin;                      //车架号
+    private TextView carRand;                     //车身等级
     private TextView carEngineNumber;             //车发动机号
-    private EditText carPlatNumber;                //车牌号
-
-
+    private EditText carPlatNumber;               //车牌号
 
     /**
      * 车辆信息
      */
     private TextView carOil;                    //车的油量
-    private ProgressBar carOilProgress;        //车辆的油量进度条
+    private ProgressBar carOilProgress;         //车辆的油量进度条
     private TextView carOilBox;                 //车辆的油容量
     private TextView carMileage;                //车辆的里程数
     private TextView carTemperature;            //车辆的温度
@@ -62,13 +60,13 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView, MissSc
      * 车辆状态
      */
     private TextView carLight;                 //车灯性能
-    private TextView carState;                //车状态
-    private TextView carAlarm;                //车警报
-    private TextView carEnginProperty;       //发动机性能
-    private TextView carTransmission;        //变速器性能
-    private TextView carSRS;                  //安全气囊
+    private TextView carState;                 //车状态
+    private TextView carAlarm;                 //车警报
+    private TextView carEnginProperty;         //发动机性能
+    private TextView carTransmission;          //变速器性能
+    private TextView carSRS;                   //安全气囊
 
-    private MissScrollView mcarScrollView;         //设置滑动刷新
+    private MissScrollView mcarScrollView;     //设置滑动刷新
 
     private Long mCarId;
     private Long mUserId;
@@ -88,7 +86,6 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView, MissSc
     @Override
     protected void initView(View view) {
 
-        //progress = (CircleProgress) view.findViewById(R.id.load_carInfo_progress);
         mcarScrollView = (MissScrollView) view.findViewById(R.id.car_info_scrollview);
         /**车辆描述*/
         carImage = (ImageView) view.findViewById(R.id.car_info_carBrand_image);
@@ -115,13 +112,27 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView, MissSc
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        //TODO 添加回显是该变车辆状态
+        if (null != Constant.carBean) {
+            showPage(Constant.carBean);
+        }
+    }
+
+    @Override
     protected void initData() {
         if (null != getArguments()) {
             Long userId = getArguments().getLong(Constant.USER_ID);
             Long carId = getArguments().getLong(Constant.CAR_ID);
             this.mUserId = userId;
             this.mCarId = carId;
-            mCarInfoPresenter.getCurrentCar(userId);
+            //TODO 添加使用本地缓存的车辆作为显示信息
+            if (null == Constant.carBean) {
+                mCarInfoPresenter.getCurrentCar(userId);
+            } else {
+                showPage(Constant.carBean);
+            }
 
         } else {
             LogUtils.d("没有设置车辆信息");
@@ -163,17 +174,10 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView, MissSc
 
     @Override
     public void showProgress() {
-        //progress.startAnim();
     }
 
     @Override
     public void hideProgress() {
-        //progress.stopAnim();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
     }
 
     @Override
@@ -268,12 +272,10 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView, MissSc
                     .getDrawable(R.drawable.progress_yellow_background));
         } else if (carOilProgress.getProgress() >= 50) {
             carOil.setTextColor(getActivity().getResources().getColor(R.color.color_progress_greed));
-            //carOilProgress.setBackgroundResource(R.color.color_progress_greed);
             carOilProgress.setProgressDrawable(getActivity().getResources()
                     .getDrawable(R.drawable.progress_gree_background));
         } else {
             carOil.setTextColor(getActivity().getResources().getColor(R.color.color_progress_red));
-            //carOilProgress.setBackgroundResource(R.color.color_progress_red);
             carOilProgress.setProgressDrawable(getActivity().getResources().getDrawable(R.drawable.progress_red_background));
         }
     }

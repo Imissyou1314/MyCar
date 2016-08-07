@@ -141,11 +141,11 @@ public abstract class BaseActivity extends FragmentActivity {
     @Override public void onBackPressed() {
         //如果Fragment没有消费OnBackPressed事件，交由Activity处理
         if (!BackHandlerHelper.handleBackPress(this))
-            if (System.currentTimeMillis() - lastBackPress < 2000) {
+//            if (System.currentTimeMillis() - lastBackPress < 2000) {
                 super.onBackPressed();
-            } else {
-                lastBackPress = System.currentTimeMillis();
-                Toast.makeText(BaseActivity.this, "再按一次退出", Toast.LENGTH_SHORT).show();
-            }
+//            } else {
+//                lastBackPress = System.currentTimeMillis();
+//                Toast.makeText(BaseActivity.this, "再按一次退出", Toast.LENGTH_SHORT).show();
+//            }
     }
 }

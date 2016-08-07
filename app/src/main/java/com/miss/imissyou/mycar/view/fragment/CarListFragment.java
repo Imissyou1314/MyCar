@@ -195,20 +195,6 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
                         .load(Constant.SERVER_URL + car.getMark())
                         .into((ImageView) holder.getView(R.id.car_list_item_carImage));
                 /**设置背景色*/
-                //int nowList = holder.getmPosition();
-                //if (nowList % 4 == 0) {
-                //   holder.setViewBackGround(R.id.car_list_item_carBackground,R.color.color_gree_background);
-                // } else if (nowList % 3 == 0) {
-                //     holder.setViewBackGround(R.id.car_list_item_carBackground,R.color.color_yellow_background);
-                //} else if(nowList % 2 == 0 ) {
-                //   holder.setViewBackGround(R.id.car_list_item_carBackground,R.color.color_red_background);
-                //} else {
-                //    holder.setViewBackGround(R.id.car_list_item_carBackground, R.color.color_blue_background);
-                // }
-
-                // if (!car.getMark().equals("")) {
-                //Glide.with(this).load(Constant.SERVER_URL + car.getMark()).into()
-                // }
             }
         };
         carInfoList.setAdapter(adapter);
@@ -225,10 +211,6 @@ public class CarListFragment extends BaseFragment implements CarListFragmentView
     @Override
     public void onDestroy() {
         super.onDestroy();
-    }
-
-    private String isGood(boolean check) {
-        return check ? "好" : "坏";
     }
 
     /**
