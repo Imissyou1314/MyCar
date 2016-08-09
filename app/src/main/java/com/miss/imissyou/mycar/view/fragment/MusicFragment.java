@@ -24,8 +24,10 @@ import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.service.impl.MusicPlayService;
 import com.miss.imissyou.mycar.bean.Music;
+import com.miss.imissyou.mycar.ui.CircleButton;
 import com.miss.imissyou.mycar.ui.adapterutils.CommonAdapter;
 import com.miss.imissyou.mycar.ui.adapterutils.ViewHolder;
+import com.miss.imissyou.mycar.ui.circleProgress.CircleProgress;
 import com.miss.imissyou.mycar.ui.sidemenu.interfaces.ScreenShotable;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.FindSongs;
@@ -44,13 +46,10 @@ import java.util.List;
  */
 public class MusicFragment extends Fragment implements ScreenShotable {
 
-    private CheckBox mBtnBeforeMusic;
-    private CheckBox mBtnPauseMusic;
-    private CheckBox mBtnNextMusic;
+    private CircleButton mBtnPauseMusic;
     private SeekBar mSeekBar;
     private ListView mListView;
     private TextView mTextViewAllTime;
-    private TextView mTextViewCurrentTime;
     private TextView mTextViewMusicName;
     private MyBroadCastService myBroad;
     private int mPosition = 0;
@@ -109,15 +108,13 @@ public class MusicFragment extends Fragment implements ScreenShotable {
     private void initView(View view) {
         this.upView = view;
 
-        mBtnBeforeMusic = (CheckBox) view.findViewById(R.id.btn_brfore_music);
-        mBtnNextMusic = (CheckBox) view.findViewById(R.id.btn_next_music);
-        mBtnPauseMusic = (CheckBox) view.findViewById(R.id.btn_pause_music);
+
+        mBtnPauseMusic = (CircleButton) view.findViewById(R.id.btn_pause_music);
 
         mListView = (ListView) view.findViewById(R.id.music_list_listview);
         mSeekBar = (SeekBar) view.findViewById(R.id.seekbar);
         mTextViewAllTime = (TextView) view.findViewById(R.id.textview_all_time);
-        mTextViewMusicName = (TextView) view.findViewById(R.id.music_title_text);
-        mTextViewCurrentTime = (TextView) view.findViewById(R.id.textview_current_time);
+        mTextViewMusicName = (TextView) view.findViewById(R.id.play_music_name_tv);
     }
 
     /**
@@ -160,33 +157,10 @@ public class MusicFragment extends Fragment implements ScreenShotable {
             }
         });
 
-        mBtnNextMusic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        mBtnPauseMusic.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                /**不是最后一首音乐*/
-                if (mPosition != (mMusics.size() - 1)) {
-                    mPosition++;
-                }
-                /**播放下一首哥*/
-                palyMusic(Constant.MUSIC_NEXT, mPosition);
-
-            }
-        });
-
-        mBtnBeforeMusic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (mPosition != 0)
-                    mPosition--;
-                /**播放上一首歌*/
-                palyMusic(Constant.MUSIC_PREVIOUS, mPosition);
-            }
-        });
-
-        mBtnPauseMusic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
+            public void onClick(View v) {
                 if (isfirstTouch) {
                     palyMusic(Constant.MUSIC_PREVIOUS, mPosition);
                     isfirstTouch = false;
@@ -201,7 +175,6 @@ public class MusicFragment extends Fragment implements ScreenShotable {
                 }
                 flag = !flag;
                 LogUtils.d("当前状态:" + flag);
-
             }
         });
         /** 点击Item 播放*/
@@ -302,8 +275,6 @@ public class MusicFragment extends Fragment implements ScreenShotable {
                         palyMusic(Constant.MUSIC_NEXT, mPosition);
                     } else {
                         mSeekBar.setProgress(playTime);
-                        String timeStr = StringUtil.timeToString(playTime, "mm:ss");
-                        mTextViewCurrentTime.setText(timeStr);
                     }
                     break;
                 default:

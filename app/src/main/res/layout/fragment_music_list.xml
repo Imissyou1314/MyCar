@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
     android:background="#eeeeee"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:orientation="vertical">
+
+    <View
+        android:background="@color/color_back_gui"
+        android:layout_width="match_parent"
+        android:layout_height="12dp"/>
 
     <ListView
         android:id="@+id/music_list_listview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
         android:dividerHeight="10dp"
         android:cacheColorHint="#00000000"
         android:background="#eeeeee"
@@ -23,79 +27,61 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/background"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center">
-
-            <TextView
-                android:id="@+id/textview_current_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:textColor="@color/color_carView_mainMesage"
-                android:text="00:00" />
-
-            <TextView
-                android:id="@+id/music_title_text"
-                android:layout_toRightOf="@+id/textview_current_time"
-                android:layout_toLeftOf="@+id/textview_all_time"
-                android:layout_width="wrap_content"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:layout_margin="5dp"
-                android:text="音乐名"
-                android:textColor="@color/color_back"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/textview_all_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_margin="5dp"
-                android:textColor="@color/color_back"
-                android:text="00:00" />
-
-        </RelativeLayout>
-
-        <SeekBar
-            android:id="@+id/seekbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        android:layout_height="80dp"
+        android:clipChildren="false"
+        android:background="@color/color_carView_mainMesage"
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:gravity="center">
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
 
-            <CheckBox
-                android:id="@+id/btn_brfore_music"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@mipmap/previous_music"
-                android:button="@null" />
+            <TextView
+                android:id="@+id/play_music_name_tv"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#ffffff"
+                android:gravity="center|left"
+                android:paddingLeft="30dp"
+                android:text="HelloWord"
+                android:layout_width="match_parent"
+                android:layout_weight="3"
+                android:layout_height="0dp" />
 
-            <CheckBox
-                android:id="@+id/btn_pause_music"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:background="@mipmap/start_pause_press"
-                android:button="@null" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:gravity="center">
 
-            <CheckBox
-                android:id="@+id/btn_next_music"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@mipmap/next_music"
-                android:button="@null" />
+                <SeekBar
+                    android:id="@+id/seekbar"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/textview_all_time"
+                    android:text="00:00"
+                    android:textSize="16sp"
+                    android:textColor="#ffffff"
+                    android:layout_width="50dp"
+                    android:gravity="center"
+                    android:paddingLeft="5dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
         </LinearLayout>
+
+        <com.miss.imissyou.mycar.ui.CircleButton
+            android:id="@+id/btn_pause_music"
+            app:cb_color="#ffffff"
+            android:layout_marginBottom="60dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="60dp"
+            android:layout_height="120dp" />
     </LinearLayout>
+
 </LinearLayout>

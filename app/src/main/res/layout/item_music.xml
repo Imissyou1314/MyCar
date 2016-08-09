@@ -6,21 +6,69 @@
     android:layout_height="80dp">
 
     <TextView
-        android:id="@+id/textview_music_name"
-        android:layout_width="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:id="@+id/textview_music_number"
+        android:textSize="23sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:text="1"
+        android:layout_width="55dp"
         android:textColor="@color/color_back"
-        android:textSize="@dimen/FontSize"
-        android:text="音乐名称"/>
-    <TextView
-        android:id="@+id/tv_music_auther"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/FontSize"
-        android:textColor="@color/color_back"
-        android:text="作家"
-        android:layout_margin="10dp" />
+        android:layout_height="match_parent" />
+
+
+
+
+    <!--歌手名和歌名-->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/textview_music_name"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/color_back"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:text="音乐名称"/>
+        <TextView
+            android:id="@+id/tv_music_auther"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:textSize="16sp"
+            android:textColor="@color/color_back"
+            android:text="作家" />
+        <View
+            android:background="#eee"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"/>
+    </LinearLayout>
+    <!--更多操作-->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="80dp"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/img_music_functionBtn"
+            android:layout_width="match_parent"
+            android:padding="20dp"
+            android:src="@mipmap/more"
+            android:layout_weight="1"
+            android:layout_height="0dp" />
+        <View
+            android:background="#eee"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"/>
+    </LinearLayout>
+
+
 
 </LinearLayout>

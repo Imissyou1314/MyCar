@@ -144,7 +144,6 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
                 resultParm.get("charge").toString() : "";
 
         Log.v("test===>", charge);
-
         Intent intent = new Intent(PayActivity.this, PaymentActivity.class);
         intent.putExtra(PaymentActivity.EXTRA_CHARGE, charge);
         startActivityForResult(intent, REQUEST_CODE_PAYMENT);
@@ -163,12 +162,7 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
             if (resultCode == Activity.RESULT_OK) {
                 String result = data.getExtras().getString("pay_result");
                 Log.d("miss", result);
-                /* 返回值处理
-                 * "success" - payment succeed
-                 * "fail"    - payment failed
-                 * "cancel"  - user canceld
-                 * "invalid" - payment plugin not installed
-                 */
+
                 String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
                 String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
                 showMsg(result, errorMsg, extraMsg);
@@ -201,6 +195,4 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
         });
         builder.create().show();
     }
-
-
 }
