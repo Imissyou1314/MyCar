@@ -79,7 +79,6 @@ public class MusicFragment extends Fragment implements ScreenShotable {
      * 展现数据
      */
     private void showView() {
-
         /**
          * 设置Item
          */
@@ -87,6 +86,7 @@ public class MusicFragment extends Fragment implements ScreenShotable {
             @Override
             public void convert(ViewHolder holder, Music music) {
 
+                holder.setText(R.id.textview_music_number, (holder.getmPosition() + 1) + "");
                 holder.setText(R.id.tv_music_auther, music.getMusicArtist());
                 if (music.getMusicName() == null || music.getMusicName().equals("")) {
                     holder.setText(R.id.textview_music_name, music.getMusicName());
@@ -108,9 +108,7 @@ public class MusicFragment extends Fragment implements ScreenShotable {
     private void initView(View view) {
         this.upView = view;
 
-
         mBtnPauseMusic = (CircleButton) view.findViewById(R.id.btn_pause_music);
-
         mListView = (ListView) view.findViewById(R.id.music_list_listview);
         mSeekBar = (SeekBar) view.findViewById(R.id.seekbar);
         mTextViewAllTime = (TextView) view.findViewById(R.id.textview_all_time);
@@ -317,9 +315,9 @@ public class MusicFragment extends Fragment implements ScreenShotable {
     private void changePlayIcon(boolean state) {
         LogUtils.d("当前状态：" + state);
         if (state) {
-            mBtnPauseMusic.setBackgroundResource(R.mipmap.start_pause_press);
+            mBtnPauseMusic.setImageResource(R.mipmap.music_stop);
         } else {
-            mBtnPauseMusic.setBackgroundResource(R.mipmap.start_play_press);
+            mBtnPauseMusic.setImageResource(R.mipmap.music_start);
         }
     }
 }

@@ -222,6 +222,10 @@ public class MainActivity extends ActionBarActivity
         SPUtils.init(this);
         String password = SPUtils.getSp_user().getString(Constant.UserPassID, "");
         String account = SPUtils.getSp_user().getString(Constant.UserAccountID, "");
+        String carJson = SPUtils.getSp_user().getString(Constant.UserPassID + Constant.UserAccountID,"");
+        if(!"".equals(carJson)) {
+            Constant.carBean = GsonUtils.Instance().fromJson(carJson,CarInfoBean.class);
+        }
 
         if (password.equals("") || account.equals("")) {
             builder.setTitle("欢迎使用")
@@ -336,7 +340,6 @@ public class MainActivity extends ActionBarActivity
     /**
      * 创建侧滑菜单项
      */
-    //TODO 更换布局
     private void createMenuList() {
         SlideMenuItem menuItem0 = new SlideMenuItem(ContentFragment.CLOSE, R.mipmap.icn_close);
         list.add(menuItem0);

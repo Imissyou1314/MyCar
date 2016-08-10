@@ -292,6 +292,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 ResultBean resultBean = GsonUtils.getResultBean(t);
                 CarInfoBean carInfoBean = GsonUtils.getParam(resultBean, "car", CarInfoBean.class);
                 Constant.carBean = carInfoBean;
+                saveUserCar(carInfoBean);
             }
         };
         RxVolleyUtils.getInstance().get(url,null,callback);
@@ -335,6 +336,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         if (length < 16 && length > 4) {
             SPUtils.putCacheData(this, Constant.UserPassLength, length);
         }
+    }
+
+    /**
+     * 保存用户车辆信息
+     * @param carInfo
+     */
+    private void saveUserCar(CarInfoBean carInfo){
+        if (null != carInfo) {
+            SPUtils.putUserData(this,Constant.UserPassID + Constant.UserAccountID,
+                    GsonUtils.Instance().toJson(carInfo));
+        } else {
+            LogUtils.d("<=== the carInfo Is NULL");
+        }
+
     }
     @Override
     protected void onDestroy() {

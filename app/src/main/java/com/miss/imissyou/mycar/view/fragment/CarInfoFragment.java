@@ -23,6 +23,7 @@ import com.miss.imissyou.mycar.ui.MissScrollView;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.DialogUtils;
 import com.miss.imissyou.mycar.util.GsonUtils;
+import com.miss.imissyou.mycar.util.SPUtils;
 import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.view.CarInfoView;
 import com.miss.imissyou.mycar.presenter.CarInfoPresenter;
@@ -68,7 +69,6 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView, MissSc
 
     private MissScrollView mcarScrollView;     //设置滑动刷新
 
-    private Long mCarId;
     private Long mUserId;
 
 
@@ -126,7 +126,6 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView, MissSc
             Long userId = getArguments().getLong(Constant.USER_ID);
             Long carId = getArguments().getLong(Constant.CAR_ID);
             this.mUserId = userId;
-            this.mCarId = carId;
             //TODO 添加使用本地缓存的车辆作为显示信息
             if (null == Constant.carBean) {
                 mCarInfoPresenter.getCurrentCar(userId);
@@ -169,6 +168,19 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView, MissSc
         } else {
             LogUtils.d("更改车辆信息完成:" + resultBean.getResultInfo());
             ToastUtil.asLong(resultBean.getResultInfo());
+            changeCarSaveData(Constant.carBean);
+
+        }
+    }
+
+    /**
+     * 更改缓存里面的车辆信息
+     * @param carBean
+     */
+    private void changeCarSaveData(CarInfoBean carBean) {
+        if (null != carBean) {
+            String carJson = GsonUtils.Instance().toJson(carBean);
+            SPUtils.putUserData(getActivity(), Constant.UserPassID + Constant.UserAccountID, carJson);
         }
     }
 

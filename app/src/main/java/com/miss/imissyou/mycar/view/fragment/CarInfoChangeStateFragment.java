@@ -34,8 +34,6 @@ import com.miss.imissyou.mycar.view.CarInfoView;
 public class CarInfoChangeStateFragment extends BaseFragment
         implements CarInfoView, View.OnClickListener, View.OnFocusChangeListener {
 
-    //private CircleProgress progress;
-
     private CarInfoPresenter mCarInfoPresenter;
 
     /**
