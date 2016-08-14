@@ -158,7 +158,6 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView, MissSc
             title = Constant.SUCCESS_TITLE;
         }
         new DialogUtils(getActivity()).errorMessage(errorMag, title);
-
     }
 
     @Override
@@ -169,7 +168,6 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView, MissSc
             LogUtils.d("更改车辆信息完成:" + resultBean.getResultInfo());
             ToastUtil.asLong(resultBean.getResultInfo());
             changeCarSaveData(Constant.carBean);
-
         }
     }
 

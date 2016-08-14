@@ -35,17 +35,12 @@ import java.util.Map;
  * 支付页面
  * Created by Imissyou on 2016/6/14.
  */
-public class PayActivity extends BaseActivity implements View.OnClickListener {
+public class PayActivity extends Activity implements View.OnClickListener {
 
-    @FindViewById(id = R.id.pay_title)
     private TitleFragment title;
-    @FindViewById(id = R.id.pay_zhifubao_linear)
     private LinearLayout  zhifubaoLinear;
-    @FindViewById(id = R.id.pay_weixi_linear)
     private LinearLayout weixiLinear;
-    @FindViewById(id = R.id.pay_zhifubao_image)
     private ImageView zhifubaoImage;
-    @FindViewById(id = R.id.pay_weixi_image)
     private ImageView weixiImage;
 
     private String channel = "";
@@ -62,18 +57,38 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState, R.layout.activity_pay);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_pay);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        initView();
+        addListeners();
+        initData();
     }
 
-    @Override
+    /**
+     * 加载View
+     */
+    private void initView() {
+        title = (TitleFragment) findViewById(R.id.pay_title);
+        zhifubaoLinear = (LinearLayout) findViewById(R.id.pay_zhifubao_linear);
+        zhifubaoImage = (ImageView) findViewById(R.id.pay_zhifubao_image);
+        weixiLinear = (LinearLayout) findViewById(R.id.pay_weixi_linear);
+        weixiImage = (ImageView) findViewById(R.id.pay_weixi_image);
+    }
+
+    /**
+     * 加载页面的数据
+     */
     protected void initData() {
         title.setTitleText("订单支付");
         Intent intent = getIntent();
         ordersId = intent.getLongExtra("orderId",0);
     }
 
-    @Override
+    /**
+     * 添加页面控件的监听事件
+     */
     public void addListeners() {
         zhifubaoLinear.setOnClickListener(this);
         zhifubaoImage.setOnClickListener(this);
@@ -85,8 +100,8 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         //按键点击之后的禁用，防止重复点击
-        weixiImage.setOnClickListener(null);
-        zhifubaoImage.setOnClickListener(null);
+        weixiImage.setEnabled(false);
+        zhifubaoImage.setEnabled(false);
 
         if (v.getId() == R.id.pay_zhifubao_image || v.getId() == R.id.pay_zhifubao_linear) {
             channel = CHANNEL_ALIPAY;
@@ -124,7 +139,8 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
                 //TODO 获取charge
                 goPayActivity(resultBean.getResultParm());
             } else {
-                onFailure(0, resultBean.getResultInfo().equals("") ? "调用接口失败" : resultBean.getResultInfo());
+                onFailure(0, resultBean.getResultInfo().equals("") ?
+                        "调用接口失败" : resultBean.getResultInfo());
             }
         }
 
@@ -140,13 +156,15 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
      */
     private void goPayActivity(Map<String, Object> resultParm) {
 
+        LogUtils.d("Now charge is " + resultParm.get("charge").toString());
         String charge = resultParm.get("charge") != null ?
-                resultParm.get("charge").toString() : "";
+                GsonUtils.Instance().toJson(resultParm.get("charge")) : "";
+        charge = charge.replace(".0","");
 
-        Log.v("test===>", charge);
+        Log.v("Charge===>", charge);
         Intent intent = new Intent(PayActivity.this, PaymentActivity.class);
         intent.putExtra(PaymentActivity.EXTRA_CHARGE, charge);
-        startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+        this.startActivityForResult(intent, REQUEST_CODE_PAYMENT);
     }
 
     /**
@@ -155,8 +173,8 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
      */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        zhifubaoImage.setOnClickListener(PayActivity.this);
-        weixiImage.setOnClickListener(PayActivity.this);
+        zhifubaoImage.setEnabled(true);
+        weixiImage.setEnabled(true);
         //支付页面返回处理
         if (requestCode == REQUEST_CODE_PAYMENT) {
             if (resultCode == Activity.RESULT_OK) {

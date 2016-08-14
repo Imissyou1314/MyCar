@@ -109,6 +109,7 @@
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <!-- 微信支付 -->
         <activity-alias
             android:name=".wxapi.WXPayEntryActivity"

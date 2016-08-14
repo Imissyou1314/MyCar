@@ -179,8 +179,6 @@ public class MainActivity extends ActionBarActivity
         /**加载页面数据*/
 
         startMusic();
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
@@ -274,10 +272,13 @@ public class MainActivity extends ActionBarActivity
                     if (resultBean.isServiceResult()) {
                         Constant.userBean = GsonUtils.getParam(resultBean, "user", UserBean.class);
                         setAlias(Constant.userBean.getId());
+                        //TODO加载页面
+                        startMainFragment();
                         // TODO: 2016-06-07 获取当前车辆
                         if (checkUserHasCar(Constant.userBean.getId())) {
                             LogUtils.d("当前用户没有车辆");
                         }
+
                     } else {
                         if (resultBean.getResultInfo().equals(Constant.FileCOOKIE)){
                             RxVolleyUtils.getInstance().restartLogin();
@@ -424,7 +425,8 @@ public class MainActivity extends ActionBarActivity
      * 启动默认主页
      */
     private void startMainFragment() {
-        if (null != Constant.carBean && null != Constant.carBean.getId()) {
+        if ((null != Constant.carBean && null != Constant.carBean.getId()) &&
+                (null != Constant.userBean && null != Constant.userBean.getId())) {
             if (!carInfoFragment.isAdded()) {
                 Bundle bundle = new Bundle();
                 LogUtils.w("<======================启动车辆信息页面======================>");

@@ -197,6 +197,8 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     public void showResultSuccess(ResultBean resultBean) {
         if (resultBean.isServiceResult()) {
             OrderBean order = GsonUtils.getParam(resultBean,"order",OrderBean.class);
+            //TODO改变两个输入框的焦点
+            oilNumberInput.setSelectAllOnFocus(false);
 
             if (null == order) {
                 LogUtils.d("结束：");
@@ -230,6 +232,10 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     @Override
     public void onClick(View v) {
         Intent intent = new Intent();
+
+        oilNumberInput.setFocusable(false);
+        priceInput.setFocusable(false);
+
         switch (v.getId()) {
             case R.id.sumbit_play_playAfter:
                 isReadOrder = initOrder(gasStation);
@@ -263,7 +269,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
             oilNumber = getoilNumber(price);
             String tempNumber = (oilNumber + "");
             String Number = tempNumber.substring(0, tempNumber.indexOf(".") + 2);
-           doubleformat.format(oilNumber);
+            doubleformat.format(oilNumber);
             oilNumberInput.setText(Number);
         }
     }
