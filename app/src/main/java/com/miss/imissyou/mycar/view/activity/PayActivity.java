@@ -44,6 +44,7 @@ public class PayActivity extends Activity implements View.OnClickListener {
     private String channel = "";
     private Long ordersId;
 
+    private static final String testurl = "http://218.244.151.190/demo/charge";  //TODO测试接口
     private static final String url = Constant.SERVER_URL + "order/payOrder";   //TODO 等待接口
 
     /**
@@ -97,8 +98,8 @@ public class PayActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         //按键点击之后的禁用，防止重复点击
-        weixiImage.setEnabled(false);
-        zhifubaoImage.setEnabled(false);
+        weixiImage.setOnClickListener(null);
+        zhifubaoImage.setOnClickListener(null);
 
         if (v.getId() == R.id.pay_zhifubao_image || v.getId() == R.id.pay_zhifubao_linear) {
             channel = CHANNEL_ALIPAY;
@@ -115,8 +116,8 @@ public class PayActivity extends Activity implements View.OnClickListener {
             params.put("orderId", ordersId + "");
             params.put("channel", channel);
 
-            LogUtils.d("请求路径:" + url);
-            RxVolley.post(url, params, callback);
+            LogUtils.d("请求路径:" + testurl);
+            RxVolley.post(testurl, params, callback);
         } else {
             LogUtils.e("Error ===============>定单没有ID");
         }
@@ -153,9 +154,9 @@ public class PayActivity extends Activity implements View.OnClickListener {
 
         String charge = resultParm.get("charge") != null ?
                 GsonUtils.Instance().toJson(resultParm.get("charge")) : "";
-        charge = charge.replace(".0","");
+//        charge = charge.replace(".0","");
 
-        LogUtils.d("Charge===>" + charge);
+//        LogUtils.d("Charge===>" + charge);
         Intent intent = new Intent(this, PaymentActivity.class);
         intent.putExtra(PaymentActivity.EXTRA_CHARGE, charge);
         //启动到支付页面
@@ -171,8 +172,8 @@ public class PayActivity extends Activity implements View.OnClickListener {
      */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        zhifubaoImage.setEnabled(true);
-        weixiImage.setEnabled(true);
+        zhifubaoImage.setOnClickListener(PayActivity.this);
+        weixiImage.setOnClickListener(PayActivity.this);
         //支付页面返回处理
         if (requestCode == Pingpp.REQUEST_CODE_PAYMENT) {
             if (resultCode == Activity.RESULT_OK) {
