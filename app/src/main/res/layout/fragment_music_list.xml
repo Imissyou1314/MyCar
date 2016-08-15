@@ -82,12 +82,13 @@
             app:cb_color="#ffffff"
             app:cb_pressedRingWidth="5dp"
             android:layout_gravity="bottom"
-            android:layout_marginRight="20dip"
-            android:layout_width="80dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_width="60dp"
             android:src="@mipmap/music_start"
             android:background="@mipmap/music_btn_back"
-            android:layout_marginBottom="40dip"
-            android:layout_height="80dip"
+            android:layout_height="60dp"
             android:adjustViewBounds="false" />
     </LinearLayout>
 

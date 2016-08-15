@@ -27,6 +27,7 @@ import com.miss.imissyou.mycar.util.FindViewById;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.util.ToastUtil;
 import com.pingplusplus.android.PaymentActivity;
+import com.pingplusplus.android.Pingpp;
 import com.pingplusplus.android.PingppLog;
 
 import java.util.Map;
@@ -46,7 +47,6 @@ public class PayActivity extends Activity implements View.OnClickListener {
     private String channel = "";
     private Long ordersId;
 
-    private static final int REQUEST_CODE_PAYMENT = 1;
     private static final String url = Constant.SERVER_URL + "order/payOrder";   //TODO 等待接口
 
     /**
@@ -164,7 +164,7 @@ public class PayActivity extends Activity implements View.OnClickListener {
         Log.v("Charge===>", charge);
         Intent intent = new Intent(PayActivity.this, PaymentActivity.class);
         intent.putExtra(PaymentActivity.EXTRA_CHARGE, charge);
-        this.startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+        this.startActivityForResult(intent, Pingpp.REQUEST_CODE_PAYMENT);
     }
 
     /**
@@ -176,7 +176,7 @@ public class PayActivity extends Activity implements View.OnClickListener {
         zhifubaoImage.setEnabled(true);
         weixiImage.setEnabled(true);
         //支付页面返回处理
-        if (requestCode == REQUEST_CODE_PAYMENT) {
+        if (requestCode == Pingpp.REQUEST_CODE_PAYMENT) {
             if (resultCode == Activity.RESULT_OK) {
                 String result = data.getExtras().getString("pay_result");
                 Log.d("miss", result);

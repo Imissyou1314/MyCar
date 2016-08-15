@@ -118,7 +118,8 @@ public class GasStationFragment extends BaseFragment
     @Override public void showResultSuccess(List<GasStationBean> resultBeans) {
         this.gasStationBeens = resultBeans;
 
-        gasListView.setAdapter(new CommonAdapter<GasStationBean>(getActivity(), resultBeans, R.layout.item_gasstionlist) {
+        gasListView.setAdapter(new CommonAdapter<GasStationBean>(getActivity(), resultBeans,
+                R.layout.item_gasstionlist) {
 
             @Override public void convert(ViewHolder holder, final GasStationBean gasStationBean) {
                 StringBuffer oilTypeStr = new StringBuffer();

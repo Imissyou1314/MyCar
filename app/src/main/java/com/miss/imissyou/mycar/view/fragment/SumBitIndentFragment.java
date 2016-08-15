@@ -83,7 +83,6 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
     private OrderBean orderBean = new OrderBean();
     private double lat;            //经度
     private double lot;            //纬度
-    //private String address;        //地址
     private GasStationBean gasStation;
 
     private String date;            //日期
@@ -492,6 +491,7 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
                     oil = new OilBean();
                     oil.setOilType(key);
                     oil.setPrice(oilTypeBean.get(key));
+
                     LogUtils.d("油价类型:" + key + "油价:" + oil.getPrice());
                     showselectPrice(oilTypeBean.get(key));
                     tv1.setBackgroundResource(R.drawable.sumbit_text_bord);
@@ -519,7 +519,9 @@ public class SumBitIndentFragment extends BaseFragment implements SumbitIndentVi
      */
     private void showselectPrice(String price) {
         oilNumberInput.setText("1");
+        oilNumber = 1.0;
         priceInput.setText(price);
+        this.price = getPrice(1.0);
     }
 
     /**
