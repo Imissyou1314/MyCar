@@ -1,7 +1,6 @@
 package com.miss.imissyou.mycar.view.activity;
 
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -14,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.alipay.tscenter.biz.rpc.vkeydfp.result.BaseResult;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
@@ -23,7 +21,6 @@ import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.ui.TitleFragment;
 import com.miss.imissyou.mycar.util.Constant;
-import com.miss.imissyou.mycar.util.FindViewById;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.util.ToastUtil;
 import com.pingplusplus.android.PaymentActivity;
@@ -82,8 +79,7 @@ public class PayActivity extends Activity implements View.OnClickListener {
      */
     protected void initData() {
         title.setTitleText("订单支付");
-        Intent intent = getIntent();
-        ordersId = intent.getLongExtra("orderId",0);
+        ordersId = getIntent().getLongExtra("orderId",0);
     }
 
     /**
@@ -94,6 +90,7 @@ public class PayActivity extends Activity implements View.OnClickListener {
         zhifubaoImage.setOnClickListener(this);
         weixiLinear.setOnClickListener(this);
         weixiImage.setOnClickListener(this);
+
         PingppLog.DEBUG = true;             //开启日志
     }
 
@@ -105,7 +102,6 @@ public class PayActivity extends Activity implements View.OnClickListener {
 
         if (v.getId() == R.id.pay_zhifubao_image || v.getId() == R.id.pay_zhifubao_linear) {
             channel = CHANNEL_ALIPAY;
-
         } else if(v.getId() == R.id.pay_weixi_image || v.getId() == R.id.pay_weixi_linear) {
             channel = CHANNEL_WECHAT;
         } else {
@@ -122,23 +118,22 @@ public class PayActivity extends Activity implements View.OnClickListener {
             LogUtils.d("请求路径:" + url);
             RxVolley.post(url, params, callback);
         } else {
-            LogUtils.d("定单没有ID");
+            LogUtils.e("Error ===============>定单没有ID");
         }
     }
 
     /**
-     * 调用Ping++ 的SDK
+     * 调用Ping++ 的SDK的回调构造函数
      */
-
     HttpCallback callback = new HttpCallback() {
         @Override
         public void onSuccess(String t) {
             LogUtils.d("t" + t);
             ResultBean resultBean = GsonUtils.getResultBean(t);
             if (resultBean.isServiceResult()) {
-                //TODO 获取charge
                 goPayActivity(resultBean.getResultParm());
             } else {
+                LogUtils.e("Error ===============>请求charge不成功");
                 onFailure(0, resultBean.getResultInfo().equals("") ?
                         "调用接口失败" : resultBean.getResultInfo());
             }
@@ -156,20 +151,23 @@ public class PayActivity extends Activity implements View.OnClickListener {
      */
     private void goPayActivity(Map<String, Object> resultParm) {
 
-        LogUtils.d("Now charge is " + resultParm.get("charge").toString());
         String charge = resultParm.get("charge") != null ?
                 GsonUtils.Instance().toJson(resultParm.get("charge")) : "";
         charge = charge.replace(".0","");
 
-        Log.v("Charge===>", charge);
-        Intent intent = new Intent(PayActivity.this, PaymentActivity.class);
+        LogUtils.d("Charge===>" + charge);
+        Intent intent = new Intent(this, PaymentActivity.class);
         intent.putExtra(PaymentActivity.EXTRA_CHARGE, charge);
+        //启动到支付页面
         this.startActivityForResult(intent, Pingpp.REQUEST_CODE_PAYMENT);
     }
 
     /**
      * onActivityResult 获得支付结果，如果支付成功，服务器会收到ping++ 服务器发送的异步通知。
      * 最终支付成功根据异步通知为准
+     * @param requestCode 回执响应吗
+     * @param resultCode  结果响应码
+     * @param data  携带的回执信息
      */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -190,6 +188,9 @@ public class PayActivity extends Activity implements View.OnClickListener {
 
     /**
      * 显示返回的信息
+     * @param title 标题
+     * @param msg1
+     * @param msg2
      *
      * @return void
      */
@@ -207,7 +208,6 @@ public class PayActivity extends Activity implements View.OnClickListener {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //TODO 下一步的执行页面
                 dialog.dismiss();
             }
         });
