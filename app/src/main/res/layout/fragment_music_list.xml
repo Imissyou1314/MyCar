@@ -22,74 +22,78 @@
         android:listSelector="#000ff0"
         android:layout_weight="1"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dip"
-        android:gravity="center"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:verticalScrollbarPosition="defaultPosition"
-        android:background="@color/color_carView_mainMesage"
-        android:orientation="horizontal">
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="80dip"-->
+        <!--android:gravity="center"-->
+        <!--android:clipChildren="false"-->
+        <!--android:clipToPadding="false"-->
+        <!--android:verticalScrollbarPosition="defaultPosition"-->
+        <!--android:background="@color/color_carView_mainMesage"-->
+        <!--android:orientation="horizontal">-->
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="80dp">
+        <!--<LinearLayout-->
+            <!--android:orientation="vertical"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="80dp">-->
 
-            <TextView
-                android:id="@+id/play_music_name_tv"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:textColor="#ffffff"
-                android:gravity="center|left"
-                android:singleLine="true"
-                android:ellipsize="end"
-                android:paddingLeft="30dp"
-                android:text="HelloWord"
-                android:layout_width="match_parent"
-                android:layout_weight="3"
-                android:layout_height="0dp" />
+            <!--<TextView-->
+                <!--android:id="@+id/play_music_name_tv"-->
+                <!--android:textSize="24sp"-->
+                <!--android:textStyle="bold"-->
+                <!--android:textColor="#ffffff"-->
+                <!--android:gravity="center|left"-->
+                <!--android:singleLine="true"-->
+                <!--android:ellipsize="end"-->
+                <!--android:paddingLeft="30dp"-->
+                <!--android:text="HelloWord"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_weight="3"-->
+                <!--android:layout_height="0dp" />-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:layout_gravity="center"
-                android:orientation="horizontal"
-                android:gravity="center">
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="0dp"-->
+                <!--android:layout_weight="2"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:gravity="center">-->
 
-                <SeekBar
-                    android:id="@+id/seekbar"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/textview_all_time"
-                    android:text="00:00"
-                    android:textSize="16sp"
-                    android:textColor="#ffffff"
-                    android:layout_width="50dp"
-                    android:gravity="center"
-                    android:paddingLeft="5dp"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-        </LinearLayout>
+                <!--<SeekBar-->
+                    <!--android:id="@+id/seekbar"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:layout_height="wrap_content" />-->
+                <!--<TextView-->
+                    <!--android:id="@+id/textview_all_time"-->
+                    <!--android:text="00:00"-->
+                    <!--android:textSize="16sp"-->
+                    <!--android:textColor="#ffffff"-->
+                    <!--android:layout_width="50dp"-->
+                    <!--android:gravity="center"-->
+                    <!--android:paddingLeft="5dp"-->
+                    <!--android:layout_height="wrap_content" />-->
+            <!--</LinearLayout>-->
+        <!--</LinearLayout>-->
 
-        <com.miss.imissyou.mycar.ui.CircleButton
-            android:id="@+id/btn_pause_music"
-            app:cb_color="#ffffff"
-            app:cb_pressedRingWidth="5dp"
-            android:layout_gravity="bottom"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_width="60dp"
-            android:src="@mipmap/music_start"
-            android:background="@mipmap/music_btn_back"
-            android:layout_height="60dp"
-            android:adjustViewBounds="false" />
-    </LinearLayout>
+        <!--<com.miss.imissyou.mycar.ui.CircleButton-->
+            <!--android:id="@+id/btn_pause_music"-->
+            <!--app:cb_color="#ffffff"-->
+            <!--app:cb_pressedRingWidth="5dp"-->
+            <!--android:layout_gravity="bottom"-->
+            <!--android:layout_marginRight="20dp"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:layout_marginBottom="20dp"-->
+            <!--android:layout_width="60dp"-->
+            <!--android:src="@mipmap/music_start"-->
+            <!--android:background="@mipmap/music_btn_back"-->
+            <!--android:layout_height="60dp"-->
+            <!--android:adjustViewBounds="false" />-->
+    <!--</LinearLayout>-->
+
+    <include
+        android:id="@+id/music_foot_top"
+        layout="@layout/music_foot"/>
 
 </LinearLayout>

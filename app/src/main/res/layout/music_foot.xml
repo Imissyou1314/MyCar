@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_gravity="center"
+    android:layout_height="100dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <FrameLayout
+        android:id="@+id/music_foot_top"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dip"
+        android:layout_below="@+id/music_foot_top"
+        android:background="@color/color_carView_mainMesage"/>
+
+        <LinearLayout
+            android:id="@+id/music_desc"
+            android:layout_below="@+id/music_foot_top"
+            android:orientation="vertical"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_toLeftOf="@+id/btn_pause_music"
+            android:layout_height="80dp">
+            <TextView
+                android:id="@+id/play_music_name_tv"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#ffffff"
+                android:gravity="center|left"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:paddingLeft="30dp"
+                android:text="HelloWord"
+                android:layout_width="match_parent"
+                android:layout_weight="3"
+                android:layout_height="0dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <SeekBar
+                    android:id="@+id/seekbar"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/textview_all_time"
+                    android:text="00:00"
+                    android:textSize="16sp"
+                    android:textColor="#ffffff"
+                    android:layout_width="50dp"
+                    android:gravity="center"
+                    android:paddingLeft="5dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.miss.imissyou.mycar.ui.CircleButton
+            android:id="@+id/btn_pause_music"
+            android:layout_alignParentRight="true"
+            app:cb_color="#ffffff"
+            app:cb_pressedRingWidth="5dp"
+            android:layout_gravity="bottom"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_width="80dp"
+            android:src="@mipmap/music_start"
+            android:background="@mipmap/music_btn_back"
+            android:layout_height="80dp"
+            android:adjustViewBounds="false"
+            android:foregroundGravity="top" />
+
+</RelativeLayout>
