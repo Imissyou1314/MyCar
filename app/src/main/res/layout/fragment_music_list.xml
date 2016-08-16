@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="#eeeeee"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#eeeeee">
 
     <View
         android:background="@color/color_back_gui"
@@ -21,6 +21,7 @@
         android:divider="#eeeeee"
         android:listSelector="#000ff0"
         android:layout_weight="1"/>
+
 
     <!--<LinearLayout-->
         <!--android:layout_width="match_parent"-->
@@ -91,9 +92,14 @@
             <!--android:layout_height="60dp"-->
             <!--android:adjustViewBounds="false" />-->
     <!--</LinearLayout>-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:background="#00ffffff"
+        android:layout_height="100dp">
+        <include
+            android:id="@+id/music_foot_top"
+            layout="@layout/music_foot"/>
+    </FrameLayout>
 
-    <include
-        android:id="@+id/music_foot_top"
-        layout="@layout/music_foot"/>
 
 </LinearLayout>
