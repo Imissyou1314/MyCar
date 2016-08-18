@@ -30,10 +30,6 @@
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
         </activity>
 
         <!--Activity-->
@@ -122,12 +118,12 @@
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
-            android:screenOrientation="behind"></activity>
+            android:screenOrientation="behind"/>
         <activity
             android:name="com.alipay.sdk.auth.AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
-            android:screenOrientation="behind"></activity>
+            android:screenOrientation="behind"/>
 
         <!--违章查询-->
         <activity
@@ -146,7 +142,6 @@
             android:name=".view.activity.WeizhangResult"
             android:screenOrientation="portrait" />
 
-
         <!--注册服务-->
         <service android:name=".service.impl.MusicPlayService" />
         <service android:name=".service.impl.UpdateCarInfoService" />
@@ -154,7 +149,6 @@
 
         <!--车违章查询-->
         <service android:name="com.cheshouye.api.client.WeizhangIntentService" />
-
 
         <!--Jpush推送-->
         <service
@@ -186,7 +180,6 @@
 
         </service>
 
-
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
             android:enabled="true"
@@ -206,7 +199,6 @@
 
                 <data android:scheme="package" />
             </intent-filter>
-
         </receiver>
 
         <!-- User defined.  For test only  用户自定义的广播接收器-->
@@ -235,7 +227,6 @@
             android:exported="false">
             <intent-filter>
                 <action android:name="cn.jpush.android.ui.PushActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="com.miss.imissyou.mycar" />
             </intent-filter>
@@ -265,25 +256,17 @@
         <meta-data
             android:name="com.miss.imissyou.mycar.util.GlideConfiguration"
             android:value="GlideModule" /><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
-        <!-- <meta-data
-             android:name="com.bumptech.glide.integration.volley.VolleyGlideModule"
-             android:value="GlideModule" />-->
 
     </application>
 
     <!--权限-->
 
     <!--地图包,搜索包需要的基本权限-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
     <!--用于进行网络定位-->
@@ -310,14 +293,10 @@
 
     <uses-permission android:name="com.miss.imissyou.mycar.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
@@ -325,9 +304,13 @@
 
     <!--打电话-->
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <!-- Ping++　权限声明 -->
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.READ_SMS" />
 
 
 </manifest>

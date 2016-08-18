@@ -22,6 +22,7 @@ import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.ui.TitleFragment;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
+import com.miss.imissyou.mycar.util.RxVolleyUtils;
 import com.miss.imissyou.mycar.util.ToastUtil;
 import com.pingplusplus.android.PaymentActivity;
 import com.pingplusplus.android.Pingpp;
@@ -115,9 +116,11 @@ public class PayActivity extends Activity implements View.OnClickListener {
             LogUtils.d("请求参数:" + ordersId + "::::" + channel);
             params.put("orderId", ordersId + "");
             params.put("channel", channel);
-
-            LogUtils.d("请求路径:" + testurl);
-            RxVolley.post(testurl, params, callback);
+//            String temp_json = "[{\"channel\":\"wx\",\"amount\":\"14\"}]";
+//            params.putJsonParams(temp_json);
+//            RxVolleyUtils.getInstance().postJson(testurl , params, callback);
+            LogUtils.d("请求路径:" + url);
+            RxVolley.post(url, params, callback);
         } else {
             LogUtils.e("Error ===============>定单没有ID");
         }
@@ -135,11 +138,8 @@ public class PayActivity extends Activity implements View.OnClickListener {
                 goPayActivity(resultBean.getResultParm());
             } else {
                 LogUtils.e("Error ===============>请求charge不成功");
-                onFailure(0, resultBean.getResultInfo().equals("") ?
-                        "调用接口失败" : resultBean.getResultInfo());
             }
         }
-
         @Override
         public void onFailure(int errorNo, String strMsg) {
             ToastUtil.asLong(strMsg);

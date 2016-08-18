@@ -139,12 +139,11 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
      */
     @Override
     public void onClick(View v) {
-
         switch (v.getId()) {
             case R.id.station_show_list:
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.content_frame,new GasStationFragment(),Constant.GasStationFragmetn)
+                        .replace(R.id.content_frame,new GasStationFragment(), Constant.GasStationFragmetn)
                         .commit();
                 break;
             default:
@@ -396,7 +395,6 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
         showInPage(stations);
     }
 
-
     @Override
     public void loadSuccessGasStation(GasStationResultBean resultBean) {
         if (resultBean.getResultcode() == Constant.HTTP_OK) {
@@ -405,7 +403,6 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
             LogUtils.d("加油站的数量" + gasStationBeens.size());
             showGasStation(gasStationBeens);            //展示地图上的加油站
         }
-
     }
 
     /**
@@ -442,6 +439,7 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
      */
     private void showInPage(List<StopStation> stations) {
 
+        showList.setVisibility(View.GONE);
         if (null != stations) {
             if (type == Constant.MAP_PARK) {
                 Toast.makeText(getActivity(), "附近停车场数量:" + stations.size(), Toast.LENGTH_SHORT).show();
@@ -453,11 +451,9 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
             Toast.makeText(getActivity(),"没有数据",Toast.LENGTH_LONG).show();
             return;
         }
-
         LogUtils.d("订单列表:" + GsonUtils.Instance().toJson(stations));
         int i = 0;
 
-        showList.setVisibility(View.GONE);
         for (StopStation station : stations) {
             View view = null;
             if (null != station.getLat() && null != station.getLon() && null != station.getName()) {
@@ -544,9 +540,9 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
 
         // 定位后自动 刷新页面
        if (null != mlocationClient){
-//           onCreate(null);
             mlocationClient.startLocation();
            LogUtils.d("重新进入地图页面");
+           showList.setVisibility(View.GONE);
         }
     }
 }
