@@ -1,16 +1,23 @@
 package com.miss.imissyou.mycar.view.activity;
 
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnKeyListener;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.kymjs.rxvolley.RxVolley;
@@ -19,10 +26,11 @@ import com.kymjs.rxvolley.client.HttpParams;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
 import com.miss.imissyou.mycar.bean.ResultBean;
+import com.miss.imissyou.mycar.ui.OnPasswordInputFinish;
+import com.miss.imissyou.mycar.ui.PasswordView;
 import com.miss.imissyou.mycar.ui.TitleFragment;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
-import com.miss.imissyou.mycar.util.RxVolleyUtils;
 import com.miss.imissyou.mycar.util.ToastUtil;
 import com.pingplusplus.android.PaymentActivity;
 import com.pingplusplus.android.Pingpp;
@@ -45,7 +53,6 @@ public class PayActivity extends Activity implements View.OnClickListener {
     private String channel = "";
     private Long ordersId;
 
-    private static final String testurl = "http://218.244.151.190/demo/charge";  //TODO测试接口
     private static final String url = Constant.SERVER_URL + "order/payOrder";   //TODO 等待接口
 
     /**
@@ -116,9 +123,6 @@ public class PayActivity extends Activity implements View.OnClickListener {
             LogUtils.d("请求参数:" + ordersId + "::::" + channel);
             params.put("orderId", ordersId + "");
             params.put("channel", channel);
-//            String temp_json = "[{\"channel\":\"wx\",\"amount\":\"14\"}]";
-//            params.putJsonParams(temp_json);
-//            RxVolleyUtils.getInstance().postJson(testurl , params, callback);
             LogUtils.d("请求路径:" + url);
             RxVolley.post(url, params, callback);
         } else {
@@ -154,13 +158,33 @@ public class PayActivity extends Activity implements View.OnClickListener {
 
         String charge = resultParm.get("charge") != null ?
                 GsonUtils.Instance().toJson(resultParm.get("charge")) : "";
-//        charge = charge.replace(".0","");
 
-//        LogUtils.d("Charge===>" + charge);
-        Intent intent = new Intent(this, PaymentActivity.class);
-        intent.putExtra(PaymentActivity.EXTRA_CHARGE, charge);
+        LogUtils.d("charge==>" + charge);
+
+        charge = charge.replace(".0","");
+
+        LogUtils.d("Charge===>" + charge);
+//        Intent intent = new Intent(this, PaymentActivity.class);
+//        String packageName = getPackageName();
+//        ComponentName componentName = new ComponentName(packageName,
+//                packageName + ".wxapi.WXPayEntryActivity");
+//        intent.setComponent(componentName);
+//        intent.putExtra(PaymentActivity.EXTRA_CHARGE, charge);
         //启动到支付页面
-        this.startActivityForResult(intent, Pingpp.REQUEST_CODE_PAYMENT);
+//        startActivityForResult(intent, Pingpp.REQUEST_CODE_PAYMENT);
+//        Pingpp.createPayment(PayActivity.this, charge);
+        //TODO 添加弹框输入密码
+        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View contentview = inflater.inflate(R.layout.pop_input_password_dialog, null);
+
+        contentview.setFocusable(true); // 这个很重要
+        contentview.setFocusableInTouchMode(true);
+        final PopupWindow popupWindow = new PopupWindow(contentview
+                , LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(false);
+
+        popupWindow.showAtLocation(contentview,  Gravity.BOTTOM, 0, 0);
     }
 
     /**

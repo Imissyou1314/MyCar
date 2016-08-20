@@ -3,6 +3,8 @@ package com.miss.imissyou.mycar.util;
 import com.miss.imissyou.mycar.bean.CarInfoBean;
 import com.miss.imissyou.mycar.bean.UserBean;
 
+import java.util.List;
+
 /**
  * 全局常量
  * Created by Imissyou on 2016/4/14.

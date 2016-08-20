@@ -8,6 +8,7 @@
 
     <FrameLayout
         android:id="@+id/music_foot_top"
+        android:background="#00ffffff"
         android:layout_width="match_parent"
         android:layout_height="20dp"/>
 
@@ -15,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dip"
         android:layout_below="@+id/music_foot_top"
-        android:background="@color/color_carView_mainMesage"/>
+        android:background="#4F11CBAC"/>
 
         <LinearLayout
             android:id="@+id/music_desc"

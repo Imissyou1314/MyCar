@@ -16,6 +16,7 @@ import com.kymjs.rxvolley.client.HttpParams;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.MainActivity;
 import com.miss.imissyou.mycar.R;
+import com.miss.imissyou.mycar.bean.CarBean;
 import com.miss.imissyou.mycar.bean.CarInfoBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.bean.UserBean;
@@ -207,11 +208,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
             @Override
             public void onSuccess(Map<String, String> headers, byte[] t) {
-                ResultBean resultBean = GsonUtils.Instance().fromJson(StringUtil.bytesToString(t), ResultBean.class);
+                ResultBean resultBean = GsonUtils.Instance().fromJson(StringUtil.bytesToString(t),
+                        ResultBean.class);
                 LogUtils.d("收到的数据::" + StringUtil.bytesToString(t));
+
                 if (resultBean.isServiceResult()) {
                     Constant.COOKIE = headers.get("cookie");
                     Constant.userBean = GsonUtils.getParam(resultBean, "user", UserBean.class);
+                    Constant.carBean = (CarInfoBean) GsonUtils.getParams(resultBean,
+                            "car", CarInfoBean.class);
+                    //保存车辆信息
+                    if (null == Constant.carBean)
+                        saveUserCar(Constant.carBean);
+                    //设置别名
                     setAlias(Constant.userBean.getId());
                     toMainView();
                 } else {
