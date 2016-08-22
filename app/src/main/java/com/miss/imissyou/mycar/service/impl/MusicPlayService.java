@@ -95,7 +95,6 @@ public class MusicPlayService extends Service{
             MusicSeekBar seekBar = new MusicSeekBar();
             seekBar.start();
         }
-
     }
 
     /**

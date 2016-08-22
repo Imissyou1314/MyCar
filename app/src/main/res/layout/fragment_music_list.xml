@@ -95,7 +95,8 @@
         android:layout_height="100dp">
         <include
             android:id="@+id/music_foot_top"
-            layout="@layout/music_foot"/>
+            layout="@layout/music_foot"
+            android:layout_height="112dp" />
     </FrameLayout>
 
 

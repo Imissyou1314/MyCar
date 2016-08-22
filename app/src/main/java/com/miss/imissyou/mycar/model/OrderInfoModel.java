@@ -11,4 +11,11 @@ public interface OrderInfoModel {
      * @param orderId
      */
     void loadOrderFormService(long orderId);
+
+    /**
+     * 根据订单号更改订单状态
+     * @param orderId  订单号
+     * @param orderStatu  订单状态码
+     */
+    void updateOrderInfo(Long orderId, Integer orderStatu);
 }

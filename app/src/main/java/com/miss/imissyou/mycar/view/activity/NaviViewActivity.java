@@ -261,10 +261,9 @@ public class NaviViewActivity extends BaseActivity implements AMapNaviViewListen
         //种驾车算路calculateDriveRoute的重载函数，算路方法中，起点坐标和终点坐标可以以列表形式存放，
         // 按车行方向排列，带有方向信息，可有效避免算路到马路的另一侧，也可以只传入一个坐标。
         /**选择省钱的算路方法*/
-
-
         LogUtils.d("开启导航计算路径模式");
-        boolean resultState = mAMapNavi.calculateDriveRoute(mStartList, mEndList, mWayPointList, PathPlanningStrategy.DRIVING_SAVE_MONEY);
+        boolean resultState = mAMapNavi.calculateDriveRoute(mStartList, mEndList, mWayPointList,
+                PathPlanningStrategy.DRIVING_SAVE_MONEY);
 
         if (resultState) {
             Toast.makeText(this, "设置计算路线成功", Toast.LENGTH_LONG).show();

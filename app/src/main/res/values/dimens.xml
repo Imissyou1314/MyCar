@@ -34,4 +34,6 @@
     <dimen name="csy_tip_ts">14.0sp</dimen>
     <dimen name="csy_text_ts">16.0sp</dimen>
     <dimen name="csy_title_ts">18.0sp</dimen>
+
+    <dimen name="password_input">15dp</dimen>
 </resources>

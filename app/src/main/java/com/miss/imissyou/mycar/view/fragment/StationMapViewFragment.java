@@ -121,8 +121,10 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
         mAMap = mMapView.getMap();
         mAMap.setLocationSource(this);
         mAMap.getUiSettings().setZoomPosition(1);
-        mAMap.getUiSettings().setZoomPosition(AMapOptions.ZOOM_POSITION_RIGHT_CENTER);// 设置默认定位按钮是否显示
-        mAMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
+        // 设置默认定位按钮是否显示
+        mAMap.getUiSettings().setZoomPosition(AMapOptions.ZOOM_POSITION_RIGHT_CENTER);
+        // 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
+        mAMap.setMyLocationEnabled(true);
         // 设置定位的类型为定位模式，参见类AMap。
         //跟随模式
         mAMap.setMyLocationType(AMap.LOCATION_TYPE_MAP_FOLLOW);
@@ -143,7 +145,8 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
             case R.id.station_show_list:
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.content_frame,new GasStationFragment(), Constant.GasStationFragmetn)
+                        .replace(R.id.content_frame,
+                                new GasStationFragment(), Constant.GasStationFragmetn)
                         .commit();
                 break;
             default:
@@ -196,9 +199,11 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
                 LogUtils.w("城市名称" + cityName);
                 cityCode = aMapLocation.getCityCode();
                 LogUtils.w("城市名称" + cityCode);
-                mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()), 13));
+                mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                        new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()), 11));
                 mLocation.onLocationChanged(aMapLocation);      //显示系统小蓝点
-                JZLocationConverter.LatLng location = new JZLocationConverter.LatLng(mStartLat,mStartLon);
+                JZLocationConverter.LatLng location = new JZLocationConverter
+                        .LatLng(mStartLat,mStartLon);
                 //转百度地图经纬度
                 baiduLatlng = JZLocationConverter.gcj02ToBd09(location);
 
@@ -208,7 +213,8 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
                 LogUtils.w("返回类型" + type);
                 loadMapData();
             } else {
-                LogUtils.w("定位失败" + aMapLocation.getErrorCode() + ":" + aMapLocation.getErrorCode());
+                LogUtils.w("定位失败" + aMapLocation.getErrorCode() +
+                        ":" + aMapLocation.getErrorCode());
             }
         }
     }
@@ -228,13 +234,13 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
             //设置定位监听
             mlocationClient.setLocationListener(this);
             //设置为高精度定位模式
-            mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+            mLocationOption.setLocationMode(
+                    AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
             mLocationOption.setInterval(10000);
             //设置定位参数
             mlocationClient.setLocationOption(mLocationOption);
             mlocationClient.startLocation();
         }
-
     }
 
     /**
@@ -302,7 +308,9 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
         LogUtils.w("传过去的经度:" + mEndLat + "传过去的纬度：" + mEndLon);
         LogUtils.w("你点击的是哪个:" + marker.getTitle());
         if (type == Constant.MAP_GASSTATION) {
-            new MissDialog.Builder(getActivity()).setTitle(marker.getTitle()).setMessage(marker.getSnippet())
+            new MissDialog.Builder(getActivity())
+                    .setTitle(marker.getTitle())
+                    .setMessage(marker.getSnippet())
                     .setPositiveButton("到这里去", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -321,7 +329,9 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
                 }
             }).create().show();
         } else {
-            new MissDialog.Builder(getActivity()).setTitle(marker.getTitle()).setMessage(marker.getSnippet())
+            new MissDialog.Builder(getActivity())
+                    .setTitle(marker.getTitle())
+                    .setMessage(marker.getSnippet())
                     .setPositiveButton("到这里去", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -335,10 +345,14 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
                     dialog.dismiss();
                     if (null != stations.get(marker.getPeriod()).getPhoneNumber()) {
                         Intent intent = new Intent(Intent.ACTION_CALL,
-                                Uri.parse("tel:" + stations.get(marker.getPeriod()).getPhoneNumber() + ""));
+                                Uri.parse("tel:" +
+                                        stations.get(marker.getPeriod()).getPhoneNumber() + ""));
                         getActivity().startActivity(intent);
                     } else {
-                        Toast.makeText(getActivity(), type.equals(Constant.MAP_PARK) ? "没有该停车场的电话" : "没有该维修店的电话",
+                        Toast.makeText(getActivity(),
+                                type.equals(Constant.MAP_PARK) ?
+                                        "没有该停车场的电话" :
+                                        "没有该维修店的电话",
                                 Toast.LENGTH_SHORT).show();
                     }
 
@@ -379,7 +393,7 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
 
     @Override
     public void loadFail(int errorNumber, String errMsg) {
-        LogUtils.d("错误信息:" + errMsg + ">>>>>>>" + errorNumber);
+        LogUtils.d("错误信息:" + errMsg + "===>" + errorNumber);
         Toast.makeText(getActivity(), errMsg, Toast.LENGTH_SHORT).show();
     }
 
@@ -442,9 +456,11 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
         showList.setVisibility(View.GONE);
         if (null != stations) {
             if (type == Constant.MAP_PARK) {
-                Toast.makeText(getActivity(), "附近停车场数量:" + stations.size(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "附近停车场数量:" +
+                        stations.size(), Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(getActivity(), "附近维修站数量:" + stations.size(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "附近维修站数量:" +
+                        stations.size(), Toast.LENGTH_SHORT).show();
             }
             LogUtils.e("获取数据为空");
         } else {
@@ -456,7 +472,9 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
 
         for (StopStation station : stations) {
             View view = null;
-            if (null != station.getLat() && null != station.getLon() && null != station.getName()) {
+            if (null != station.getLat() &&
+                    null != station.getLon() &&
+                    null != station.getName()) {
                 LatLng latLng = new LatLng(station.getLat(), station.getLon());
                 if (type == Constant.MAP_PARK) {
                     view = View.inflate(getActivity(), R.layout.marker_icon, null);
@@ -505,7 +523,8 @@ public class StationMapViewFragment extends BaseFragment implements View.OnClick
             switch (type) {
                 case Constant.MAP_GASSTATION:
                     //TODO 显示可点击的列表
-                    mNaviViewPresenter.loadGasStation(baiduLatlng.getLongitude(), baiduLatlng.getLatitude());
+                    mNaviViewPresenter.loadGasStation(baiduLatlng.getLongitude(),
+                            baiduLatlng.getLatitude());
                     break;
                 case Constant.MAP_PARK:
                     LogUtils.d("加载停车场");

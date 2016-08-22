@@ -33,7 +33,7 @@ import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.FindSongs;
 import com.miss.imissyou.mycar.util.StringUtil;
 import com.miss.imissyou.mycar.util.ToastUtil;
-
+import com.miss.imissyou.mycar.util.zxing.camera.ServiceUtils;
 
 
 import java.util.ArrayList;
@@ -165,7 +165,14 @@ public class MusicFragment extends Fragment implements ScreenShotable {
                     changePlayIcon(true);
                     flag = false;
                 } else {
-                    Intent intent = new Intent(getActivity().getApplicationContext(), MusicPlayService.class);
+                    //ToDO 添加音乐播放服务监听
+//                    if (ServiceUtils.Instance().isServiceRunning(
+//                            getActivity().getApplicationContext(),
+//                            MusicPlayService.class.getName()))
+//                        return;
+
+                    Intent intent = new Intent(getActivity().getApplicationContext(),
+                            MusicPlayService.class);
                     intent.putExtra("flag", flag);    //false 停止播放
                     intent.putExtra("type", Constant.MUSIC_BUTTON_PAUSE);
                     getActivity().startService(intent);
