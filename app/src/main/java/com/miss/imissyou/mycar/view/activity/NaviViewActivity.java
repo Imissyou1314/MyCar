@@ -48,6 +48,7 @@ public class NaviViewActivity extends BaseActivity implements AMapNaviViewListen
     AMapNaviView mapNaviView;
 
     AMapNavi mAMapNavi;
+    int mNaivRouteTpye = 0;       //导航模型
     TTSController mTtsManager;
     //NaviLatLng mEndLatlng;
     // NaviLatLng mStartLatlng;
@@ -261,16 +262,35 @@ public class NaviViewActivity extends BaseActivity implements AMapNaviViewListen
         //种驾车算路calculateDriveRoute的重载函数，算路方法中，起点坐标和终点坐标可以以列表形式存放，
         // 按车行方向排列，带有方向信息，可有效避免算路到马路的另一侧，也可以只传入一个坐标。
         /**选择省钱的算路方法*/
-
-
         LogUtils.d("开启导航计算路径模式");
-        boolean resultState = mAMapNavi.calculateDriveRoute(mStartList, mEndList, mWayPointList, PathPlanningStrategy.DRIVING_SAVE_MONEY);
+        boolean resultState = mAMapNavi.calculateDriveRoute(mStartList, mEndList, mWayPointList,
+                getModel(mNaivRouteTpye));
 
         if (resultState) {
             Toast.makeText(this, "设置计算路线成功", Toast.LENGTH_LONG).show();
             LogUtils.d("设置计算路线成功");
         } else {
             LogUtils.d("设置计算路线失败");
+        }
+    }
+
+    /**
+     * 选择导航模型
+     * @param naviType 导航模型
+     * @return
+     */
+    private int getModel(int naviType) {
+        switch (naviType) {
+            case 0:
+                return PathPlanningStrategy.DRIVING_NO_EXPRESS_WAYS;
+            case 1:
+                return PathPlanningStrategy.DRIVING_FASTEST_TIME;
+            case 2:
+                return PathPlanningStrategy.DRIVING_SAVE_MONEY;
+            case 3:
+                return PathPlanningStrategy.DRIVING_SHORT_DISTANCE;
+            default:
+                return PathPlanningStrategy.DRIVING_AVOID_CONGESTION;
         }
     }
 

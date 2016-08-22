@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ListView;
@@ -33,7 +34,7 @@ import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.FindSongs;
 import com.miss.imissyou.mycar.util.StringUtil;
 import com.miss.imissyou.mycar.util.ToastUtil;
-
+import com.miss.imissyou.mycar.util.zxing.camera.ServiceUtils;
 
 
 import java.util.ArrayList;
@@ -51,6 +52,9 @@ public class MusicFragment extends Fragment implements ScreenShotable {
     private ListView mListView;
     private TextView mTextViewAllTime;
     private TextView mTextViewMusicName;
+    private Button nextMusic;       //下一首歌
+    private Button fontMusic;       //上一首歌
+
     private MyBroadCastService myBroad;
     private int mPosition = 0;
 
@@ -113,6 +117,9 @@ public class MusicFragment extends Fragment implements ScreenShotable {
         mSeekBar = (SeekBar) view.findViewById(R.id.seekbar);
         mTextViewAllTime = (TextView) view.findViewById(R.id.textview_all_time);
         mTextViewMusicName = (TextView) view.findViewById(R.id.play_music_name_tv);
+
+        fontMusic = (Button) view.findViewById(R.id.btn_font_music);
+        nextMusic = (Button) view.findViewById(R.id.btn_next_music);
     }
 
     /**
@@ -165,7 +172,14 @@ public class MusicFragment extends Fragment implements ScreenShotable {
                     changePlayIcon(true);
                     flag = false;
                 } else {
-                    Intent intent = new Intent(getActivity().getApplicationContext(), MusicPlayService.class);
+                    //ToDO 添加音乐播放服务监听
+//                    if (ServiceUtils.Instance().isServiceRunning(
+//                            getActivity().getApplicationContext(),
+//                            MusicPlayService.class.getName()))
+//                        return;
+
+                    Intent intent = new Intent(getActivity().getApplicationContext(),
+                            MusicPlayService.class);
                     intent.putExtra("flag", flag);    //false 停止播放
                     intent.putExtra("type", Constant.MUSIC_BUTTON_PAUSE);
                     getActivity().startService(intent);
@@ -210,8 +224,40 @@ public class MusicFragment extends Fragment implements ScreenShotable {
                 getActivity().startService(intent);
             }
         });
+
+        nextMusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changePlayIcon(true);
+                if (mMusics.size() <= (mPosition + 1)) {
+                    palyMusic(Constant.MUSIC_NEXT, 0);
+                    mPosition = 0;
+                } else {
+                    palyMusic(Constant.MUSIC_NEXT, ++mPosition);
+                }
+            }
+        });
+
+        fontMusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changePlayIcon(true);
+                if (mPosition == 0) {
+                    palyMusic(Constant.MUSIC_PREVIOUS, mMusics.size() - 1);
+                    mPosition = mMusics.size() - 1;
+                } else {
+                    palyMusic(Constant.MUSIC_PREVIOUS, --mPosition);
+                }
+            }
+        });
+
     }
 
+    /**
+     * 播放音乐
+     * @param type 播放类型
+     * @param mPosition 播放那一首歌
+     */
     private void palyMusic(int type, int mPosition) {
         LogUtils.w("当前播放音乐:" + mPosition);
         LogUtils.w("总音乐数量:" + mMusics.size());

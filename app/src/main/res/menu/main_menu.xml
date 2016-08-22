@@ -17,12 +17,12 @@
         android:title="系统消息"
         android:orderInCategory="100"
         app:showAsAction="never"/>
-    <item
-        android:id="@+id/action_about"
-        android:title="@string/action_setAbout"
-        android:background="@color/color_carView_mainMesage"
-        android:orderInCategory="100"
-        app:showAsAction="never"/>
+    <!--<item-->
+        <!--android:id="@+id/action_about"-->
+        <!--android:title="@string/action_setAbout"-->
+        <!--android:background="@color/color_carView_mainMesage"-->
+        <!--android:orderInCategory="100"-->
+        <!--app:showAsAction="never"/>-->
 
     <!--<item-->
         <!--android:id="@+id/action_unregister"-->

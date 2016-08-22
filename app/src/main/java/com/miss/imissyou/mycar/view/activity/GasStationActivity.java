@@ -51,7 +51,6 @@ public class GasStationActivity extends BaseActivity{
 
     }
 
-
     /**
      * 展现提交订单页面
      */

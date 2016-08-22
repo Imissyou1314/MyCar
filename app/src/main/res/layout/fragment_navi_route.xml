@@ -2,33 +2,90 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite"
+    android:background="@mipmap/navi_background"
     android:orientation="vertical">
 
     <!--选择导航起点和目标地的页面-->
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:background="@color/color_carView_mainMesage"-->
+        <!--android:paddingLeft="10dp">-->
 
+        <!--<TextView-->
+            <!--android:id="@+id/select_route_go_back"-->
+            <!--android:layout_width="40dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@mipmap/ic_go_left_white_icon"-->
+            <!--android:padding="10dp"-->
+            <!--android:paddingLeft="50dp"-->
+            <!--android:paddingRight="25dp" />-->
+    <!--</LinearLayout>-->
+
+    <!--选择导航方式-->
     <LinearLayout
+        android:id="@+id/input_navi_title"
+        android:orientation="horizontal"
+        android:background="#ffffff"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/color_select_route_title"
-        android:paddingLeft="10dp">
+        android:layout_height="40dp">
+
+        <View
+            android:layout_width="85dp"
+            android:layout_height="match_parent"/>
 
         <TextView
-            android:id="@+id/select_route_go_back"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:background="@mipmap/ic_go_left_white_icon"
-            android:padding="10dp"
-            android:paddingLeft="50dp"
-            android:paddingRight="25dp" />
+            android:id="@+id/input_distance"
+            android:background="@mipmap/not_selet_diatanc"
+            android:layout_margin="@dimen/input_navi_select"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/input_first"
+            android:layout_margin="@dimen/input_navi_select"
+            android:background="@mipmap/not_selete_first"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/input_time"
+            android:background="@mipmap/not_select_time"
+            android:layout_margin="@dimen/input_navi_select"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/input_money"
+            android:background="@mipmap/not_select_money"
+            android:layout_margin="@dimen/input_navi_select"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <View
+            android:layout_width="85dp"
+            android:layout_height="match_parent"/>
+
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/navi_route_select"
+        android:textSize="20sp"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:background="@color/color_carView_mainMesage"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
 
     <LinearLayout
         android:id="@+id/select_route_linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_select_route_title"
+        android:background="#ffffff"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -36,75 +93,91 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:orientation="vertical"
             android:paddingTop="20dp">
             <!--从XXX到XXXX-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="50dp"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:paddingLeft="20dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:gravity="right|center|top"
-                    android:text="从"
-                    android:textColor="@color/colorWhite" />
+                    android:background="@mipmap/my_loaction"
+                    android:textColor="#eeeeee" />
 
-                <TextView
+                <AutoCompleteTextView
                     android:id="@+id/select_route_start_input"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:imeOptions="actionDone"
+                    android:inputType="text|textAutoComplete"
+                    android:completionThreshold="1"
+                    android:dropDownVerticalOffset="1.0dip"
+                    android:maxLength="20"
                     android:layout_marginLeft="15dp"
                     android:gravity="left|top"
-                    android:hint="输入起点"
+                    android:hint="我的位置"
+                    android:textColorHint="#eeeeee"
+                    android:backgroundTint="#eeeeee"
+                    android:textColor="#000000"
                     android:textSize="20sp" />
             </LinearLayout>
 
             <!--中间的线-->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:gravity="center_horizontal|center"
-                android:orientation="horizontal"
-                android:paddingLeft="20dp">
+            <!--<LinearLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="50dp"-->
+                <!--android:gravity="center_horizontal|center"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:paddingLeft="20dp">-->
 
-                <View
-                    android:layout_width="30dp"
-                    android:layout_gravity="center|left"
-                    android:layout_height="match_parent"
-                    android:background="@mipmap/ic_select_show_sanjiaoxing_icon" />
+                <!--<View-->
+                    <!--android:layout_width="30dp"-->
+                    <!--android:layout_gravity="center|left"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:background="@mipmap/ic_select_show_sanjiaoxing_icon" />-->
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:paddingLeft="4dp"
-                    android:background="@color/colorWhite" />
-            </LinearLayout>
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:paddingLeft="4dp"-->
+                    <!--android:background="#eeeeee" />-->
+            <!--</LinearLayout>-->
             <!--到哪里去-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="50dp"
                 android:orientation="horizontal"
                 android:paddingLeft="20dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:gravity="right|center|bottom"
-                    android:text="到"
-                    android:textColor="@color/colorWhite" />
+                    android:background="@mipmap/to_location"
+                    android:textColor="#eeeeee" />
 
-                <TextView
+                <AutoCompleteTextView
                     android:id="@+id/select_route_end_input"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:completionThreshold="1"
+                    android:dropDownVerticalOffset="1.0dip"
+                    android:imeOptions="actionDone"
+                    android:inputType="text|textAutoComplete"
+                    android:maxLength="20"
                     android:layout_marginLeft="15dp"
                     android:gravity="left|bottom"
                     android:hint="输入终点"
+                    android:textColorHint="#eeeeee"
+                    android:backgroundTint="#eeeeee"
+                    android:textColor="#000000"
                     android:textSize="20sp" />
             </LinearLayout>
 
@@ -119,14 +192,31 @@
             <ImageButton
                 android:id="@+id/select_route_changeSeclet"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@mipmap/ic_select_route_change" />
+                android:layout_height="40dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="20dp"
+                android:background="@mipmap/change_place" />
         </LinearLayout>
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/color_select_route_title" />
+        android:layout_height="20dp"
+        android:background="#ffffff" />
+
+    <View
+        android:background="#0f000000"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"/>
+    <Button
+        android:id="@+id/navi_route_goNavi"
+        android:background="@color/color_carView_mainMesage"
+        android:layout_marginRight="80dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="20dp"
+        android:text="导航"
+        android:textSize="25sp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
 
 </LinearLayout>

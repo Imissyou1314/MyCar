@@ -215,14 +215,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 if (resultBean.isServiceResult()) {
                     Constant.COOKIE = headers.get("cookie");
                     Constant.userBean = GsonUtils.getParam(resultBean, "user", UserBean.class);
-                    Constant.carBean = (CarInfoBean) GsonUtils.getParams(resultBean,
-                            "car", CarInfoBean.class);
+//                    Constant.carBean = (CarInfoBean) GsonUtils.getParams(resultBean,
+//                            "car", CarInfoBean.class);
                     //保存车辆信息
-                    if (null == Constant.carBean)
-                        saveUserCar(Constant.carBean);
+//                    if (null == Constant.carBean)
+//                        saveUserCar(Constant.carBean);
                     //设置别名
                     setAlias(Constant.userBean.getId());
-                    toMainView();
+                    //获取用户当前车辆
+                    getUserCar(Constant.userBean.getId());
                 } else {
                     if (resultBean.getResultInfo().equals(Constant.FileCOOKIE)) {
                         RxVolleyUtils.getInstance().restartLogin();
@@ -276,8 +277,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
      */
     private void toMainView() {
         //TODO 添加请求车辆信息链接
-
-        getUserCar(Constant.userBean.getId());
         Intent intent = new Intent();
         intent.setClass(this, MainActivity.class);
         startActivity(intent);
@@ -300,8 +299,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 LogUtils.d("收到的数据===>" + t);
                 ResultBean resultBean = GsonUtils.getResultBean(t);
                 CarInfoBean carInfoBean = GsonUtils.getParam(resultBean, "car", CarInfoBean.class);
-                Constant.carBean = carInfoBean;
-                saveUserCar(carInfoBean);
+                if (null == carInfoBean) {
+                    Constant.carBean = carInfoBean;
+                    saveUserCar(carInfoBean);
+                } else {
+                    LogUtils.d("当前用户没有车辆");
+                }
+                toMainView();
             }
         };
         RxVolleyUtils.getInstance().get(url,null,callback);
@@ -360,6 +364,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
 
     }
+
     @Override
     protected void onDestroy() {
         LoadImageView.releaseImageViewResouce(userHeadImage);

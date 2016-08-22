@@ -76,6 +76,16 @@ public class OrderInfoFragment extends BaseFragment implements OrderInfoView {
         setupPage(orderBean);
     }
 
+    @Override
+    public void updateSuccess(ResultBean resultBean) {
+
+    }
+
+    @Override
+    public void updateFaile(Integer errorCode, String errorStr) {
+
+    }
+
     @Override public void showResultError(int errorNo, String errorMag) {
 
     }

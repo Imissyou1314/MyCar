@@ -1,6 +1,7 @@
 package com.miss.imissyou.mycar.model.impl;
 
 import com.kymjs.rxvolley.client.HttpCallback;
+import com.kymjs.rxvolley.client.HttpParams;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.bean.ResultBean;
 import com.miss.imissyou.mycar.model.OrderInfoModel;
@@ -54,5 +55,35 @@ public class OrderInfoModelImpl implements OrderInfoModel {
         };
 
         RxVolleyUtils.getInstance().get(url, null, callback);
+    }
+
+
+    @Override
+    public void updateOrderInfo(Long orderId, Integer orderStatu) {
+        String url = Constant.SERVER_URL + "/order/update";
+        LogUtils.w("请求路径:" + url);
+
+        HttpParams params = new HttpParams();
+        params.put("id",orderId + "");
+        params.put("state", orderStatu + "");
+
+        HttpCallback callback = new HttpCallback() {
+            @Override
+            public void onSuccess(String t) {
+                ResultBean resultBean = GsonUtils.getResultBean(t);
+                if (resultBean.isServiceResult()) {
+                    mOrderInfoPresenter.updateSuccess(resultBean);
+                } else {
+                    onFailure(0,"支付订单失败");
+                }
+            }
+
+            @Override
+            public void onFailure(int errorNo, String strMsg) {
+                mOrderInfoPresenter.updateFaile(errorNo, strMsg);
+            }
+        };
+
+        RxVolleyUtils.getInstance().post(url, params, callback);
     }
 }

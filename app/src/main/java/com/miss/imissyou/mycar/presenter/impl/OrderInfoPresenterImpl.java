@@ -28,6 +28,22 @@ public class OrderInfoPresenterImpl implements OrderInfoPresenter {
     }
 
     @Override
+    public void updateOrderInfo(Long orderId, Integer orderStatu) {
+
+        mOrderInfoModel.updateOrderInfo(orderId, orderStatu);
+    }
+
+    @Override
+    public void updateSuccess(ResultBean resultBean) {
+        mOrderInfoView.updateSuccess(resultBean);
+    }
+
+    @Override
+    public void updateFaile(Integer errorCode, String errorStr) {
+        mOrderInfoView.updateFaile(errorCode,errorStr);
+    }
+
+    @Override
     public void onFailure(int errorNo, String strMsg) {
         mOrderInfoView.showResultError(errorNo, strMsg);
     }

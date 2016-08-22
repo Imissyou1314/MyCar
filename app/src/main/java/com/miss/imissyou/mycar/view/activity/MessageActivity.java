@@ -30,7 +30,9 @@ import com.miss.imissyou.mycar.util.SPUtils;
 import com.miss.imissyou.mycar.util.StringUtil;
 import com.miss.imissyou.mycar.util.SystemUtils;
 import com.miss.imissyou.mycar.util.ToastUtil;
+import com.miss.imissyou.mycar.view.BackHandledInterface;
 import com.miss.imissyou.mycar.view.MessageView;
+import com.miss.imissyou.mycar.view.fragment.BaseFragment;
 import com.miss.imissyou.mycar.view.fragment.StationMapViewFragment;
 
 import java.util.ArrayList;
@@ -43,7 +45,7 @@ import cn.jpush.android.api.JPushInterface;
  * 消息页面
  * Created by Imissyou on 2016/5/2.
  */
-public class MessageActivity extends BaseActivity implements MessageView {
+public class MessageActivity extends BaseActivity implements MessageView, BackHandledInterface {
 
     @FindViewById(id = R.id.message_title)
     private TitleFragment titleView;
@@ -235,6 +237,11 @@ public class MessageActivity extends BaseActivity implements MessageView {
      */
     private void removeMessage(int dismissPosition) {
         this.messages.remove(dismissPosition);
+    }
+
+    @Override
+    public void setSelectedFragment(BaseFragment selectedFragment) {
+
     }
 
     /**

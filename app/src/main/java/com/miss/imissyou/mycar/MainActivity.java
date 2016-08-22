@@ -29,7 +29,6 @@ import android.widget.Toast;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.lidroid.xutils.util.LogUtils;
@@ -51,6 +50,7 @@ import com.miss.imissyou.mycar.util.RxVolleyUtils;
 import com.miss.imissyou.mycar.util.SPUtils;
 import com.miss.imissyou.mycar.util.StringUtil;
 import com.miss.imissyou.mycar.util.ToastUtil;
+import com.miss.imissyou.mycar.util.zxing.camera.ServiceUtils;
 import com.miss.imissyou.mycar.view.BackHandledInterface;
 import com.miss.imissyou.mycar.view.activity.AboutActivity;
 import com.miss.imissyou.mycar.view.activity.LoginActivity;
@@ -62,14 +62,13 @@ import com.miss.imissyou.mycar.view.fragment.CarInfoFragment;
 import com.miss.imissyou.mycar.view.fragment.FirstAddCarFragment;
 import com.miss.imissyou.mycar.view.fragment.CarListFragment;
 import com.miss.imissyou.mycar.view.fragment.ContentFragment;
-import com.miss.imissyou.mycar.view.fragment.GasStationFragment;
 import com.miss.imissyou.mycar.view.fragment.MusicFragment;
 import com.miss.imissyou.mycar.view.fragment.NaviViewFragment;
 import com.miss.imissyou.mycar.view.fragment.OrderFragment;
+import com.miss.imissyou.mycar.view.fragment.RouteSelectFragment;
 import com.miss.imissyou.mycar.view.fragment.StationMapViewFragment;
 import com.miss.imissyou.mycar.view.fragment.UserInfoFragment;
 import com.miss.imissyou.mycar.view.fragment.WZCXFragment;
-import com.miss.imissyou.mycar.view.fragment.WeiZhangChaXunFragment;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.util.ArrayList;
@@ -111,6 +110,7 @@ public class MainActivity extends ActionBarActivity
     private CarInfoFragment carInfoFragment;
     private FirstAddCarFragment firstAddCarFragment;
     private StationMapViewFragment stationMapViewFrament;
+    private RouteSelectFragment routeSelectFragment;
 
     /**
      * 双击退出程序
@@ -417,6 +417,7 @@ public class MainActivity extends ActionBarActivity
         stationMapViewFrament = new StationMapViewFragment();
         carInfoFragment = new CarInfoFragment();
         firstAddCarFragment = new FirstAddCarFragment();
+        routeSelectFragment = new RouteSelectFragment();
         //编写自己的布
         startMainFragment();
     }
@@ -485,7 +486,9 @@ public class MainActivity extends ActionBarActivity
             case ContentFragment.MUSIC:
                 return replaceFragment(musicFragment, position, Constant.MusicFragment);
             case ContentFragment.NAVIGATION:
-                return replaceFragment(naviViewFragment, position, Constant.NaviViewFragment);
+
+                //TODO
+                return replaceFragment(routeSelectFragment, position, Constant.NaviViewFragment);
             default:
                 return screenShotable;
         }
@@ -583,10 +586,11 @@ public class MainActivity extends ActionBarActivity
                         .replace(R.id.content_frame, userInfoFragment)
                         .commit();
                 return true;
-            case R.id.action_about:
-                intent.setClass(this, AboutActivity.class);
-                startActivity(intent);
-                return true;
+            //TODO 去掉关于页面
+//            case R.id.action_about:
+//                intent.setClass(this, AboutActivity.class);
+//                startActivity(intent);
+//                return true;
             case R.id.action_meaasge:
                 intent.setClass(this, MessageActivity.class);
                 startActivity(intent);
@@ -692,14 +696,22 @@ public class MainActivity extends ActionBarActivity
     private void palyMusic(int type, int mPosition) {
         LogUtils.w("当前播放音乐:" + mPosition);
         LogUtils.w("总音乐数量:" + mMusics.size());
-        // TODO: 2016/6/13 添加显示播放音乐的
 
         Music music = mMusics.get(mPosition);
-        Intent intent = new Intent(getApplicationContext(), MusicPlayService.class);
-        intent.putExtra("musicPath", music.getMusicPath());
-        intent.putExtra("musicName", music.getMusicName());
-        intent.putExtra("type", type);
-        startService(intent);
+        //ToDO 添加音乐播放服务监听
+        if (ServiceUtils.Instance().isServiceRunning(this.getApplicationContext(),
+                MusicPlayService.class.getName())) {
+            LogUtils.d("音乐已经播放了");
+            return;
+        } else {
+
+            Intent intent = new Intent(getApplicationContext(), MusicPlayService.class);
+            intent.putExtra("musicPath", music.getMusicPath());
+            intent.putExtra("musicName", music.getMusicName());
+            intent.putExtra("type", type);
+
+            startService(intent);
+        }
     }
 
     @Override

@@ -184,6 +184,7 @@ public class NaviViewFragment extends BaseFragment implements View.OnClickListen
                 break;
             case R.id.navi_view_startButton:
                 setMapStart();
+                break;
             default:
                 break;
         }

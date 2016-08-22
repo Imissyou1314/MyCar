@@ -1,10 +1,8 @@
 package com.miss.imissyou.mycar.view.activity;
 
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnKeyListener;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -12,12 +10,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.kymjs.rxvolley.RxVolley;
@@ -25,14 +23,20 @@ import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.lidroid.xutils.util.LogUtils;
 import com.miss.imissyou.mycar.R;
+import com.miss.imissyou.mycar.bean.OrderBean;
 import com.miss.imissyou.mycar.bean.ResultBean;
+import com.miss.imissyou.mycar.presenter.OrderInfoPresenter;
+import com.miss.imissyou.mycar.presenter.impl.OrderInfoPresenterImpl;
 import com.miss.imissyou.mycar.ui.OnPasswordInputFinish;
 import com.miss.imissyou.mycar.ui.PasswordView;
 import com.miss.imissyou.mycar.ui.TitleFragment;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.util.ToastUtil;
-import com.pingplusplus.android.PaymentActivity;
+import com.miss.imissyou.mycar.view.BackHandledInterface;
+import com.miss.imissyou.mycar.view.OrderInfoView;
+import com.miss.imissyou.mycar.view.fragment.BaseFragment;
+import com.miss.imissyou.mycar.view.fragment.OrderInfoFragment;
 import com.pingplusplus.android.Pingpp;
 import com.pingplusplus.android.PingppLog;
 
@@ -42,7 +46,8 @@ import java.util.Map;
  * 支付页面
  * Created by Imissyou on 2016/6/14.
  */
-public class PayActivity extends Activity implements View.OnClickListener {
+public class PayActivity extends BaseActivity implements View.OnClickListener, OrderInfoView,
+        BackHandledInterface {
 
     private TitleFragment title;
     private LinearLayout  zhifubaoLinear;
@@ -52,8 +57,9 @@ public class PayActivity extends Activity implements View.OnClickListener {
 
     private String channel = "";
     private Long ordersId;
+    private OrderInfoPresenter mOrderInfoPresenter;
 
-    private static final String url = Constant.SERVER_URL + "order/payOrder";   //TODO 等待接口
+    private static final String url = Constant.SERVER_URL + "order/payOrder";
 
     /**
      * 微信支付渠道
@@ -89,6 +95,7 @@ public class PayActivity extends Activity implements View.OnClickListener {
     protected void initData() {
         title.setTitleText("订单支付");
         ordersId = getIntent().getLongExtra("orderId",0);
+        mOrderInfoPresenter = new OrderInfoPresenterImpl(this);
     }
 
     /**
@@ -182,9 +189,36 @@ public class PayActivity extends Activity implements View.OnClickListener {
         final PopupWindow popupWindow = new PopupWindow(contentview
                 , LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         popupWindow.setFocusable(true);
-        popupWindow.setOutsideTouchable(false);
+        popupWindow.setOutsideTouchable(true);
 
         popupWindow.showAtLocation(contentview,  Gravity.BOTTOM, 0, 0);
+
+        //TODO 添加输入完成监听
+        ((PasswordView)((RelativeLayout)popupWindow.getContentView()).getChildAt(0))
+                .setOnFinishInput(new OnPasswordInputFinish() {
+            @Override
+            public void inputFinish() {
+                popupWindow.dismiss();
+                //TODO更新订单状态
+                ToastUtil.asLong("支付成功");
+                mOrderInfoPresenter.updateOrderInfo(ordersId, 0);
+            }
+        });
+    }
+
+    /**
+     * 跳转到定单详型页面
+     * @param ordersId
+     */
+    private void toOrderInfoPage(Long ordersId) {
+        OrderInfoFragment orderInfo = new OrderInfoFragment();
+        Bundle bundle = new Bundle();
+        bundle.putLong("orderId", ordersId);
+        orderInfo.setArguments(bundle);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.pay_activity_fragment, orderInfo)
+                .commit();
     }
 
     /**
@@ -237,5 +271,46 @@ public class PayActivity extends Activity implements View.OnClickListener {
             }
         });
         builder.create().show();
+    }
+
+    @Override
+    public void callBackOderBean(OrderBean orderBean) {
+
+    }
+
+    @Override
+    public void updateSuccess(ResultBean resultBean) {
+        Toast.makeText(this, "支付成功", Toast.LENGTH_SHORT).show();
+        toOrderInfoPage(ordersId);
+    }
+
+    @Override
+    public void updateFaile(Integer errorCode, String errorStr) {
+        ToastUtil.asLong("支付不成功");
+    }
+
+    @Override
+    public void showResultError(int errorNo, String errorMag) {
+
+    }
+
+    @Override
+    public void showResultSuccess(ResultBean resultBean) {
+
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
+    public void setSelectedFragment(BaseFragment selectedFragment) {
+
     }
 }

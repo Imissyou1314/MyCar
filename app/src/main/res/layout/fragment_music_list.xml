@@ -92,10 +92,10 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:background="#00ffffff"
-        android:layout_height="100dp">
+        android:layout_height="120dp">
         <include
             android:id="@+id/music_foot_top"
-            layout="@layout/music_foot"/>
+            layout="@layout/music_foot" />
     </FrameLayout>
 
 
