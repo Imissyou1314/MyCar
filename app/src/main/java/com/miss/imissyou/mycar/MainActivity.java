@@ -52,7 +52,6 @@ import com.miss.imissyou.mycar.util.StringUtil;
 import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.util.zxing.camera.ServiceUtils;
 import com.miss.imissyou.mycar.view.BackHandledInterface;
-import com.miss.imissyou.mycar.view.activity.AboutActivity;
 import com.miss.imissyou.mycar.view.activity.LoginActivity;
 import com.miss.imissyou.mycar.view.activity.MessageActivity;
 import com.miss.imissyou.mycar.view.activity.SettingActivity;

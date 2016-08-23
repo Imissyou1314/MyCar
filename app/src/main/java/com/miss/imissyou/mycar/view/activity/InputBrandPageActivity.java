@@ -18,6 +18,7 @@ import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.DialogUtils;
 import com.miss.imissyou.mycar.util.FindViewById;
 import com.miss.imissyou.mycar.util.GsonUtils;
+import com.miss.imissyou.mycar.util.SPUtils;
 import com.miss.imissyou.mycar.view.AddNewCarInputView;
 import com.rey.material.widget.Spinner;
 
@@ -131,10 +132,26 @@ public class InputBrandPageActivity extends BaseActivity implements View.OnClick
         LogUtils.d("添加车辆成功" + GsonUtils.Instance().toJson(resultBean));
         if (resultBean.isServiceResult()) {
             Constant.carBean = carInfoBean;
+            //保存车辆信息
+            saveUserCar(carInfoBean);
             this.finish();
         } else {
             showResultError(0, resultBean.getResultInfo());
         }
+    }
+
+    /**
+     * 保存用户车辆信息
+     * @param carInfo
+     */
+    private void saveUserCar(CarInfoBean carInfo){
+        if (null != carInfo) {
+            SPUtils.putUserData(this,Constant.UserPassID + Constant.UserAccountID,
+                    GsonUtils.Instance().toJson(carInfo));
+        } else {
+            LogUtils.d("<=== the carInfo Is NULL");
+        }
+
     }
 
     @Override

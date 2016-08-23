@@ -22,7 +22,9 @@ import com.miss.imissyou.mycar.ui.ToggleButton;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.FindViewById;
 import com.miss.imissyou.mycar.util.SystemUtils;
+import com.miss.imissyou.mycar.view.BackHandledInterface;
 import com.miss.imissyou.mycar.view.CarInfoView;
+import com.miss.imissyou.mycar.view.fragment.BaseFragment;
 import com.miss.imissyou.mycar.view.fragment.FirstAddNewCarFragment;
 import com.miss.imissyou.mycar.view.fragment.LocationMapFragment;
 
@@ -32,7 +34,7 @@ import cn.jpush.android.api.JPushInterface;
  * 车辆与安全
  * Created by Administrator on 2016-06-11.
  */
-public class CarAndSaftActivity extends BaseActivity implements CarInfoView, View.OnClickListener {
+public class CarAndSaftActivity extends BaseActivity implements CarInfoView, View.OnClickListener , BackHandledInterface {
 
     @FindViewById(id = R.id.car_and_saft_title)
     private TitleFragment title;
@@ -172,6 +174,11 @@ public class CarAndSaftActivity extends BaseActivity implements CarInfoView, Vie
                     .replace(R.id.car_and_saft_frame,new LocationMapFragment())
                     .commit();
         }
+
+    }
+
+    @Override
+    public void setSelectedFragment(BaseFragment selectedFragment) {
 
     }
 

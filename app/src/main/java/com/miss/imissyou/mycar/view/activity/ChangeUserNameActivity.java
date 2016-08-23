@@ -19,6 +19,8 @@ import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.FindViewById;
 import com.miss.imissyou.mycar.util.GsonUtils;
 import com.miss.imissyou.mycar.util.RxVolleyUtils;
+import com.miss.imissyou.mycar.view.BackHandledInterface;
+import com.miss.imissyou.mycar.view.fragment.BaseFragment;
 
 import java.util.Map;
 
@@ -26,7 +28,7 @@ import java.util.Map;
  * 更改用户名
  * Created by Administrator on 2016-06-11.
  */
-public class ChangeUserNameActivity extends BaseActivity {
+public class ChangeUserNameActivity extends BaseActivity implements BackHandledInterface {
 
     @FindViewById(id = R.id.change_username_input)
     private EditText input;         //输入框
@@ -154,5 +156,10 @@ public class ChangeUserNameActivity extends BaseActivity {
         }
         LogUtils.d("用户输入的是:" + name);
         return params;
+    }
+
+    @Override
+    public void setSelectedFragment(BaseFragment selectedFragment) {
+
     }
 }

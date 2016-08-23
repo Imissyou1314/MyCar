@@ -164,6 +164,7 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView, MissSc
     public void showResultSuccess(ResultBean resultBean) {
         if (resultBean.isServiceResult()) {
             showResultError(Constant.SUCCESS_NO, resultBean.getResultInfo());
+            changeCarSaveData(Constant.carBean);
         } else {
             LogUtils.d("更改车辆信息完成:" + resultBean.getResultInfo());
             ToastUtil.asLong(resultBean.getResultInfo());
@@ -178,7 +179,8 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView, MissSc
     private void changeCarSaveData(CarInfoBean carBean) {
         if (null != carBean) {
             String carJson = GsonUtils.Instance().toJson(carBean);
-            SPUtils.putUserData(getActivity(), Constant.UserPassID + Constant.UserAccountID, carJson);
+            SPUtils.putUserData(getActivity(), Constant.UserPassID +
+                    Constant.UserAccountID, carJson);
         }
     }
 
@@ -194,11 +196,24 @@ public class CarInfoFragment extends BaseFragment implements CarInfoView, MissSc
     public void showResultSuccess(CarInfoBean resultBean) {
         LogUtils.w(resultBean.getBrand());
         LogUtils.d("设置车辆信息页面:" + GsonUtils.Instance().toJson(resultBean));
-        showPage(resultBean);
+        if (null != resultBean) {
+            changeCarSaveData(resultBean);
+            Constant.carBean = resultBean;
+            showPage(resultBean);
+        }
     }
     @Override
     public void onScrollBottomListener(boolean isBottom) {
-        mCarInfoPresenter.getCurrentCar(mUserId);
+        LogUtils.d("是否互动到最低部了" + isBottom);
+        if (isBottom)
+            mCarInfoPresenter.getCurrentCar(mUserId);
+    }
+
+    @Override
+    public void onScrollTopListener(boolean isTop) {
+        LogUtils.d("是否互动到最顶部了" + isTop);
+        if (isTop)
+            mCarInfoPresenter.getCurrentCar(mUserId);
     }
 
     /**

@@ -28,8 +28,13 @@ public class MissScrollView extends ScrollView {
                                   boolean clampedY) {
         super.onOverScrolled(scrollX, scrollY, clampedX, clampedY);
         LogUtils.d("刷新信息" + scrollX + ">>>>" + scrollY + ">>>>" + clampedX + ">>>>>" + clampedY);
-        if (scrollY == 0 && null != onScrollToBottom) {
-            onScrollToBottom.onScrollBottomListener(clampedX);
+        if (scrollY == 0 && scrollX == 0 && null != onScrollToBottom) {
+            onScrollToBottom.onScrollTopListener(clampedY);
+        }
+
+        //更新实现可以下拉刷新
+        if (clampedY && scrollY > 0) {
+            onScrollToBottom.onScrollBottomListener(clampedY);
         }
     }
 
@@ -38,7 +43,13 @@ public class MissScrollView extends ScrollView {
     }
 
     public interface OnScrollToBottomListener {
-        public void onScrollBottomListener(boolean isBottom);
+        void onScrollTopListener(boolean isTop);
+
+        /**
+         * 滑动到底部了
+         * @param isBootom
+         */
+        void onScrollBottomListener(boolean isBootom);
     }
 
 }

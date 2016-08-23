@@ -33,6 +33,7 @@ import com.miss.imissyou.mycar.ui.sidemenu.interfaces.ScreenShotable;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.FindSongs;
 import com.miss.imissyou.mycar.util.StringUtil;
+import com.miss.imissyou.mycar.util.SystemUtils;
 import com.miss.imissyou.mycar.util.ToastUtil;
 import com.miss.imissyou.mycar.util.zxing.camera.ServiceUtils;
 
@@ -102,6 +103,13 @@ public class MusicFragment extends Fragment implements ScreenShotable {
         mListView.setAdapter(adapter);
 
         changePlayIcon(flag);           //设置开始是的按钮状态
+
+        if (ServiceUtils.Instance()
+                .isServiceRunning(getActivity(), MusicPlayService.class.getName())) {
+            changePlayIcon(true);
+        } else {
+            changePlayIcon(false);
+        }
     }
 
     /**

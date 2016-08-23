@@ -86,8 +86,8 @@ public class RouteSelectFragment extends BaseFragment implements
 
     private final int EndTag = 0;                       //终点标志
 
-    private String startAd;
-    private String endAd;
+    private String startAd;                     //起点的标准
+    private String endAd;                       //终点的标识
 
     private Integer selectDriveType = 0;
     private String startPlace;
@@ -269,6 +269,9 @@ public class RouteSelectFragment extends BaseFragment implements
         String tmpString = startRouteInput.getText().toString();
         startRouteInput.setText(endRouteInput.getText().toString());
         endRouteInput.setText(tmpString);
+        String tempAd = startAd;
+        startAd = endAd;
+        endAd = tempAd;
     }
 
     /**

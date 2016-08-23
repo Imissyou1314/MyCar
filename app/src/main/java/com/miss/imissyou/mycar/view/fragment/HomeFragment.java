@@ -19,6 +19,7 @@ import com.miss.imissyou.mycar.presenter.impl.HomePresenterImpl;
 import com.miss.imissyou.mycar.ui.RoundImageView;
 import com.miss.imissyou.mycar.util.Constant;
 import com.miss.imissyou.mycar.util.GsonUtils;
+import com.miss.imissyou.mycar.util.SPUtils;
 import com.miss.imissyou.mycar.view.HomeView;
 import com.tumblr.backboard.performer.Performer;
 
@@ -52,7 +53,8 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
     private HomePresenter homePresenter;
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                       Bundle savedInstanceState) {
        return super.onCreateView(R.layout.fragment_home,
                inflater, container, savedInstanceState);
     }
@@ -93,8 +95,6 @@ public class HomeFragment extends BaseFragment implements HomeView {
     @Override protected void addViewsListener() {
         Spring spring = SpringSystem.create().createSpring();
         spring.addListener(new Performer(carImageView, View.TRANSLATION_X));
-
-
     }
 
     @Override public void showResultError(int errorNo, String errorMag) {
@@ -103,7 +103,19 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
     @Override public void showResultSuccess(ResultBean resultBean) {
         CarInfoBean myCar = GsonUtils.getParam(resultBean, "car", CarInfoBean.class);
+        changeCarSaveData(myCar);
         loadPageData(myCar);
+    }
+
+    /**
+     * 更改缓存里面的车辆信息
+     * @param carBean
+     */
+    private void changeCarSaveData(CarInfoBean carBean) {
+        if (null != carBean) {
+            String carJson = GsonUtils.Instance().toJson(carBean);
+            SPUtils.putUserData(getActivity(), Constant.UserPassID + Constant.UserAccountID, carJson);
+        }
     }
 
     /**
