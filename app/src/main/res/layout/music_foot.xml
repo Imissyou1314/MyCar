@@ -73,6 +73,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp" />
 
+
         <com.miss.imissyou.mycar.ui.CircleButton
             android:id="@+id/btn_pause_music"
             android:layout_toLeftOf="@+id/btn_next_music"
@@ -86,7 +87,6 @@
             android:layout_height="80dp"
             android:adjustViewBounds="false"
             android:foregroundGravity="top" />
-
         <Button
             android:id="@+id/btn_next_music"
             android:layout_marginRight="10dp"

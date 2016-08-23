@@ -213,6 +213,7 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, O
     private void toOrderInfoPage(Long ordersId) {
         OrderInfoFragment orderInfo = new OrderInfoFragment();
         Bundle bundle = new Bundle();
+
         bundle.putLong("orderId", ordersId);
         orderInfo.setArguments(bundle);
         getSupportFragmentManager()
@@ -308,6 +309,7 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, O
     public void hideProgress() {
 
     }
+
 
     @Override
     public void setSelectedFragment(BaseFragment selectedFragment) {

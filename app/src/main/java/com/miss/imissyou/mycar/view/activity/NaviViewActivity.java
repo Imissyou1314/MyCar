@@ -264,6 +264,7 @@ public class NaviViewActivity extends BaseActivity implements AMapNaviViewListen
         /**选择省钱的算路方法*/
         LogUtils.d("开启导航计算路径模式");
         boolean resultState = mAMapNavi.calculateDriveRoute(mStartList, mEndList, mWayPointList,
+
                 getModel(mNaivRouteTpye));
 
         if (resultState) {
