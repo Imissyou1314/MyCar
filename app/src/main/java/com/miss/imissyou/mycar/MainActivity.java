@@ -622,9 +622,11 @@ public class MainActivity extends ActionBarActivity
         super.onDestroy();
     }
 
+    /**
+     * 按放回键退出程序
+     */
     @Override
     public void onBackPressed() {
-
         if (!isQuit) {
             isQuit = true;
             Toast.makeText(getBaseContext(),
@@ -673,7 +675,6 @@ public class MainActivity extends ActionBarActivity
             IntentFilter fiter = new IntentFilter();
             fiter.addAction(Constant.MUSIC_TIME);
             registerReceiver(myBroad, fiter);
-
             palyMusic(Constant.MUSIC_NEXT, mPosition);
         } else {
             LogUtils.d("不进行播放");
@@ -689,12 +690,12 @@ public class MainActivity extends ActionBarActivity
 
     /**
      *  播放音乐
-     * @param type
-     * @param mPosition
+     * @param type      播出类型
+     * @param mPosition 播放条数
      */
     private void palyMusic(int type, int mPosition) {
-        LogUtils.w("当前播放音乐:" + mPosition);
-        LogUtils.w("总音乐数量:" + mMusics.size());
+//        LogUtils.w("当前播放音乐:" + mPosition);
+//        LogUtils.w("总音乐数量:" + mMusics.size());
 
         Music music = mMusics.get(mPosition);
         //ToDO 添加音乐播放服务监听
@@ -708,7 +709,6 @@ public class MainActivity extends ActionBarActivity
             intent.putExtra("musicPath", music.getMusicPath());
             intent.putExtra("musicName", music.getMusicName());
             intent.putExtra("type", type);
-
             startService(intent);
         }
     }

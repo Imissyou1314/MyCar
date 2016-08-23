@@ -215,11 +215,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 if (resultBean.isServiceResult()) {
                     Constant.COOKIE = headers.get("cookie");
                     Constant.userBean = GsonUtils.getParam(resultBean, "user", UserBean.class);
-//                    Constant.carBean = (CarInfoBean) GsonUtils.getParams(resultBean,
-//                            "car", CarInfoBean.class);
-                    //保存车辆信息
-//                    if (null == Constant.carBean)
-//                        saveUserCar(Constant.carBean);
                     //设置别名
                     setAlias(Constant.userBean.getId());
                     //获取用户当前车辆
@@ -240,7 +235,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         builder.create().show();
                     }
                 }
-
             }
         });
 
